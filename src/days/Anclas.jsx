@@ -1,328 +1,303 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  DayChrome,
-  Eyebrow,
-  Reveal,
-  VerseCard,
-  Quote,
-  KeyPoint,
-  Flame,
+  SceneShell,
+  SceneHeader,
+  BottomSheet,
+  Takeover,
 } from "../ui.jsx";
+import { useHoldPress } from "../hooks.js";
 
 /* =================================================================
-   ANCLAS DE LA SEMANA
-   The closing — seven anchors to move from mind to heart.
-   ================================================================ */
+   ANCLAS · Cierre
+   Scene: 7 anchor cards (one per day) + a final anchor for the week.
+   TAP-AND-HOLD on each anchor → a ring fills, the anchor ignites and
+   "se fija al corazón". All 7 fixed → Salmo 119:105 takeover + bendición.
+   ================================================================= */
 
 const ANCHORS = [
-  {
-    n: "I",
-    day: "SÁBADO",
-    title: "Está viva",
-    body:
-      "La Biblia no es un libro antiguo. Es Palabra viva. Ha sobrevivido imperios, prohibiciones y profecías de su muerte — porque quien habla en ella no ha muerto.",
-    verse: "La palabra de Dios es viva y eficaz.",
-    ref: "Hebreos 4:12",
-  },
-  {
-    n: "II",
-    day: "DOMINGO",
-    title: "Es tu arma",
-    body:
-      "En la guerra espiritual no hay otra espada. El enemigo no teme tu inteligencia, tu moral, tu religión — teme la Palabra que se pronuncia, se recuerda, se cree.",
-    verse: "Tomad la espada del Espíritu, que es la palabra de Dios.",
-    ref: "Efesios 6:17",
-  },
-  {
-    n: "III",
-    day: "LUNES",
-    title: "Es la autoridad",
-    body:
-      "No la razón, no la tradición, no la experiencia. La Escritura es la norma sobre la cual todo lo demás se mide — incluyendo lo que tú crees sobre Dios.",
-    verse: "Santifícalos en tu verdad; tu palabra es verdad.",
-    ref: "Juan 17:17",
-  },
-  {
-    n: "IV",
-    day: "MARTES",
-    title: "Es pura",
-    body:
-      "Refinada siete veces, probada sin hallarle defecto. Puedes confiarle lo que más tema perderías. No te engañará. Lo que dice, cumple.",
-    verse: "Las palabras de Jehová son palabras limpias.",
-    ref: "Salmo 12:6",
-  },
-  {
-    n: "V",
-    day: "MIÉRCOLES",
-    title: "Te corta",
-    body:
-      "No para matar — para operar. Lo que hay entre tú y Cristo, la espada lo divide. Obedece lo que lees. La Biblia no premia admiradores; forma discípulos.",
-    verse: "Sed hacedores de la palabra, y no tan solamente oidores.",
-    ref: "Santiago 1:22",
-  },
-  {
-    n: "VI",
-    day: "JUEVES",
-    title: "Pide suelo",
-    body:
-      "El mismo versículo cae en dos corazones y produce frutos distintos. Prepara la tierra. Pídele a Dios que ablande lo endurecido antes de sembrar la semilla.",
-    verse: "Fueron halladas tus palabras, y yo las comí.",
-    ref: "Jeremías 15:16",
-  },
-  {
-    n: "VII",
-    day: "VIERNES",
-    title: "Sale por tu boca",
-    body:
-      "Lo que llena tu corazón se reporta en tus palabras. Si la Escritura es tu abundancia, tus palabras lo dirán. Si es otra cosa — también.",
-    verse: "De la abundancia del corazón habla la boca.",
-    ref: "Mateo 12:34",
-  },
+  { key: "sabado",    roman: "I",   title: "Sobrevive",  vref: "Isaías 40:8",     line: "La palabra de Dios permanece para siempre." },
+  { key: "domingo",   roman: "II",  title: "Es arma",    vref: "Efesios 6:17",    line: "La espada del Espíritu es la palabra de Dios." },
+  { key: "lunes",     roman: "III", title: "Es autoridad", vref: "Juan 17:17",    line: "Tu palabra es verdad." },
+  { key: "martes",    roman: "IV",  title: "Es pura",    vref: "Salmo 12:6",      line: "Plata refinada siete veces." },
+  { key: "miercoles", roman: "V",   title: "Pide respuesta", vref: "Santiago 1:22", line: "Sé hacedor de la palabra." },
+  { key: "jueves",    roman: "VI",  title: "Pide corazón", vref: "Marcos 4:20",   line: "Los que oyen, reciben y dan fruto." },
+  { key: "viernes",   roman: "VII", title: "Es lámpara", vref: "Salmo 119:105",   line: "Lámpara a mis pies, lumbrera a mi camino." },
 ];
 
-function AnchorCard({ a, fixed, onFix, i }) {
-  return (
-    <motion.button
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.7, delay: i * 0.08 }}
-      onClick={onFix}
-      className={`group relative w-full text-left border p-5 md:p-6 transition-all hover-lift ${
-        fixed ? "b-gold bg-gold-10" : "b-stone-40 hover:b-gold bg-night"
-      }`}
-    >
-      <div className="flex items-start gap-4">
-        <div className="shrink-0">
-          <svg
-            viewBox="0 0 60 60"
-            className={`w-10 h-10 md:w-12 md:h-12 transition-all ${fixed ? "" : "opacity-60"}`}
-          >
-            <g fill="none" stroke={fixed ? "#a67f1c" : "#a59584"} strokeWidth="1.5">
-              <circle cx="30" cy="12" r="5" />
-              <line x1="30" y1="17" x2="30" y2="48" />
-              <path d="M15 40 C15 50 24 55 30 55 C36 55 45 50 45 40" />
-              <line x1="22" y1="22" x2="38" y2="22" />
-            </g>
-          </svg>
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className={`font-sc fs-10 t-wide-3 ${fixed ? "c-gold" : "c-gold-60"}`}>
-            {a.n} · {a.day}
-          </div>
-          <div
-            className={`font-display text-xl md:text-2xl lh-105 mt-1 ${
-              fixed ? "c-parchment" : "c-parchment-80"
-            }`}
-          >
-            {a.title}
-          </div>
-          <p
-            className={`font-body text-base md:text-lg leading-relaxed mt-3 ${
-              fixed ? "c-parchment-90" : "c-parchment-75"
-            }`}
-          >
-            {a.body}
-          </p>
-          <div className={`mt-4 pt-4 border-t ${fixed ? "b-gold-15" : "b-stone-40"}`}>
-            <blockquote className={`font-body italic text-base md:text-lg leading-snug ${fixed ? "c-parchment" : "c-parchment-80"}`}>
-              «{a.verse}»
-            </blockquote>
-            <div className={`font-sc fs-10 t-wide-3 mt-2 ${fixed ? "c-gold" : "c-ash"}`}>
-              {a.ref}
-            </div>
-          </div>
-          <div className={`mt-4 font-sc fs-10 t-wide-3 transition-colors ${fixed ? "c-gold" : "c-stone group-hover:c-gold"}`}>
-            {fixed ? "· FIJADA AL CORAZÓN ·" : "· TOCAR PARA FIJAR AL CORAZÓN ·"}
-          </div>
-        </div>
-      </div>
-    </motion.button>
-  );
-}
+export default function Anclas({
+  onSwipe,
+  onMarkComplete,
+  onRefrain,
+  onRestart,
+  goTo,
+  completed,
+}) {
+  const [fixed, setFixed] = useState(() => new Set());
+  const [takeover, setTakeover] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const [activeRead, setActiveRead] = useState(null);
 
-export default function Anclas({ onRestart, onPick, onOpenPicker, onRefrain }) {
-  const [fixed, setFixed] = useState(new Set());
+  const all = fixed.size === ANCHORS.length;
 
-  const fixOne = (i) => {
+  const fix = (key) => {
     setFixed((prev) => {
-      if (prev.has(i)) return prev;
+      if (prev.has(key)) return prev;
       const next = new Set(prev);
-      next.add(i);
-      if (next.size === ANCHORS.length && onRefrain) {
-        setTimeout(() => onRefrain(), 500);
-      }
+      next.add(key);
       return next;
     });
   };
 
-  const allFixed = fixed.size === ANCHORS.length;
+  useEffect(() => {
+    if (all) {
+      if (!completed.has("anclas")) onMarkComplete("anclas");
+      onRefrain && onRefrain();
+      const t = setTimeout(() => setTakeover(true), 900);
+      return () => clearTimeout(t);
+    }
+  }, [all, completed, onMarkComplete, onRefrain]);
+
+  const meta = {
+    roman: "✦",
+    date: "Cierre · semana completa",
+    title: "Anclas de la semana",
+    subtitle: "Mantén presionada cada ancla para fijarla al corazón",
+  };
 
   return (
-    <div className="relative">
-      <DayChrome
-        day={{ roman: "✦", label: "Anclas" }}
-        onOpenPicker={onOpenPicker}
-      />
-      <div className="day-container">
-        {/* Header */}
-        <header className="relative pt-16 md:pt-24 pb-10 md:pb-16 px-6 md:px-12 max-w-5xl mx-auto">
-          <div className="absolute top-0 left-0 right-0 h-24 g-day-top" />
-          <Reveal>
-            <div className="flex items-center gap-4 mb-8">
-              <div className="font-sc fs-11 t-wide-35 c-gold-80">✦</div>
-              <div className="h-px flex-1 bg-gold-10" style={{ maxWidth: 120 }} />
-              <div className="font-sc fs-11 t-wide-35 c-ash">CIERRE DE LA SEMANA</div>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <h1 className="font-display c-parchment text-5xl md:text-7xl font-light lh-105 mb-4">
-              Anclas <span className="italic c-gold">de la semana</span>
-            </h1>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <p className="font-body italic c-parchment-75 text-lg md:text-xl max-w-2xl">
-              Siete verdades — una por día. Ancla la semana en el lugar correcto:
-              no en tu mente, en tu <span className="c-gold">corazón</span>.
-            </p>
-          </Reveal>
-        </header>
+    <SceneShell screenKey="anclas" onSwipe={onSwipe}>
+      <SceneHeader meta={meta} onOpenMore={() => setMoreOpen(true)} />
 
-        {/* Why anchors */}
-        <section className="max-w-3xl mx-auto px-6 md:px-12 pb-10">
-          <Reveal>
-            <p className="font-body c-parchment-85 text-lg md:text-xl leading-relaxed mb-6">
-              Un ancla mantiene el barco en su lugar cuando la marea empuja.
-              En los próximos días, algo empujará: el ruido, el cansancio, la
-              distracción, la duda. Estas siete frases son anclas — las echas
-              al fondo del corazón y te mantienen donde la Palabra te puso.
-            </p>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <VerseCard cite="HEBREOS 6:19" large>
-              La cual tenemos como <span className="c-gold">ancla del alma</span>,
-              segura y firme, y que penetra hasta dentro del velo.
-            </VerseCard>
-          </Reveal>
-        </section>
-
-        {/* The seven anchors */}
-        <section className="relative py-12 md:py-16 px-6 md:px-12 bg-midnight border-t border-b b-gold-10">
-          <div className="max-w-4xl mx-auto">
-            <Reveal>
-              <div className="text-center mb-10">
-                <Eyebrow>LAS SIETE</Eyebrow>
-                <h3 className="font-display c-parchment text-3xl md:text-5xl font-light lh-105 mt-3">
-                  Toca cada una. Fíjala <span className="italic c-gold">al corazón</span>.
-                </h3>
-                <p className="font-body italic c-parchment-75 mt-4">
-                  {fixed.size} / 7 fijadas
-                </p>
-              </div>
-            </Reveal>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              {ANCHORS.map((a, i) => (
-                <AnchorCard
-                  key={i}
-                  a={a}
-                  i={i}
-                  fixed={fixed.has(i)}
-                  onFix={() => fixOne(i)}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Final blessing when all seven fixed */}
-        <AnimatePresence>
-          {allFixed && (
-            <motion.section
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.5 }}
-              className="py-16 md:py-24 px-6 md:px-12"
+      <div className="scene-stage">
+        <div
+          className="grid w-full"
+          style={{
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 8,
+            maxWidth: 440,
+          }}
+        >
+          {ANCHORS.map((a) => (
+            <AnchorCard
+              key={a.key}
+              anchor={a}
+              fixed={fixed.has(a.key)}
+              onFixed={() => fix(a.key)}
+              onRead={() => setActiveRead(a)}
+            />
+          ))}
+          {/* final spacer card: count */}
+          <div
+            className="card flex flex-col items-center justify-center"
+            style={{
+              padding: 8,
+              aspectRatio: "1 / 1.15",
+              background: "rgba(166,127,28,0.08)",
+              borderColor: "rgba(166,127,28,0.35)",
+            }}
+          >
+            <div
+              className="font-display c-gold"
+              style={{ fontSize: 22, fontWeight: 500, lineHeight: 1 }}
             >
-              <div className="max-w-3xl mx-auto relative">
-                <div className="absolute inset-0 -inset-x-8 rg-page-glow pointer-events-none" />
-                <div className="relative text-center">
-                  <div className="flex justify-center mb-6">
-                    <Flame size={48} />
-                  </div>
-                  <Eyebrow>BENDICIÓN DE CIERRE</Eyebrow>
-                  <h3 className="font-display c-parchment text-3xl md:text-5xl font-light lh-105 mt-4 mb-8">
-                    De tu <span className="italic c-gold">mente</span> — a tu{" "}
-                    <span className="italic c-rubric">corazón</span>.
-                  </h3>
-                  <p className="font-body c-parchment-90 text-lg md:text-xl leading-relaxed mb-8">
-                    Has recorrido siete días. Has leído, respondido, respondido con
-                    silencio, respondido con espada. Ahora — la parte más importante
-                    es la que ya no depende de leer: deja que la Palabra{" "}
-                    <span className="c-gold italic">haga</span>.
-                  </p>
-                  <div className="border-l-2 b-gold pl-6 py-3 max-w-2xl mx-auto text-left mb-8">
-                    <blockquote className="font-display italic c-parchment text-xl md:text-2xl leading-snug">
-                      «Lámpara es a mis pies tu palabra, y lumbrera a mi camino.»
-                    </blockquote>
-                    <div className="font-sc fs-10 t-wide-3 c-gold mt-3">SALMO 119:105</div>
-                  </div>
-                  <p className="font-body italic c-parchment-85 text-lg leading-relaxed max-w-xl mx-auto">
-                    Vete en paz. Y que la Palabra que has escuchado — viva, eficaz,
-                    purificada siete veces — sea <span className="c-gold">tu pan esta semana</span>.
-                  </p>
-                </div>
-              </div>
-            </motion.section>
-          )}
-        </AnimatePresence>
-
-        {/* White quote */}
-        <section className="relative py-12 md:py-16 px-6 md:px-12 bg-midnight border-t border-b b-gold-10">
-          <div className="max-w-3xl mx-auto">
-            <Reveal>
-              <Quote cite="ELENA G. DE WHITE · EL CAMINO A CRISTO, P. 89">
-                Cuando os entreguéis a la lectura diaria de la Biblia como alimento
-                espiritual, la Palabra llegará a ser para vuestra alma lo que el pan
-                es para el cuerpo. Y Cristo morará en vosotros, y vosotros en él.
-              </Quote>
-            </Reveal>
+              {fixed.size}
+            </div>
+            <div
+              className="font-sc c-muted"
+              style={{ fontSize: 8, letterSpacing: "0.25em", marginTop: 4 }}
+            >
+              DE 7
+            </div>
+            <div
+              className="font-sc c-muted"
+              style={{ fontSize: 8, letterSpacing: "0.22em", marginTop: 6, textAlign: "center" }}
+            >
+              ANCLADAS
+            </div>
           </div>
-        </section>
-
-        {/* Final actions */}
-        <section className="py-12 md:py-16 px-6 md:px-12">
-          <div className="max-w-3xl mx-auto text-center">
-            <Reveal>
-              <Eyebrow>HASTA EL PRÓXIMO SÁBADO</Eyebrow>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <h3 className="font-display c-parchment text-2xl md:text-4xl font-light lh-105 mt-3 mb-8">
-                La lección termina aquí —
-                <br />
-                <span className="italic c-gold">la vida que produce, no.</span>
-              </h3>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <button className="nav-btn hover-lift" onClick={onOpenPicker}>
-                  <span>Volver a un día</span>
-                </button>
-                <button className="nav-btn primary hover-lift" onClick={onRestart}>
-                  <span>Volver al principio</span>
-                  <span aria-hidden>↺</span>
-                </button>
-              </div>
-            </Reveal>
-            <Reveal delay={0.3}>
-              <p className="font-sc fs-10 t-wide-3 c-ash mt-12">
-                ✦ &nbsp; LECCIÓN 4 · EL PAPEL DE LA BIBLIA · 25 DE ABRIL DE 2026 &nbsp; ✦
-              </p>
-            </Reveal>
-          </div>
-        </section>
+        </div>
       </div>
+
+      <Takeover
+        show={takeover}
+        vref="Salmo 119:105"
+        text="Lámpara es a mis pies tu palabra, y lumbrera a mi camino."
+      >
+        <div
+          className="font-sc c-gold mt-6"
+          style={{
+            fontSize: 11,
+            letterSpacing: "0.3em",
+            textTransform: "uppercase",
+          }}
+        >
+          De tu mente · a tu corazón
+        </div>
+        <div className="flex flex-col items-center gap-2 mt-5">
+          <button className="btn-primary" data-gold="true" onClick={() => goTo("home")}>
+            Ir al mapa
+          </button>
+          <button className="btn-ghost" onClick={() => goTo("sabado")}>
+            Volver a un día
+          </button>
+          <button className="btn-ghost" onClick={onRestart}>
+            Reiniciar la semana
+          </button>
+        </div>
+      </Takeover>
+
+      <BottomSheet
+        open={!!activeRead}
+        onClose={() => setActiveRead(null)}
+        title={activeRead ? activeRead.title : ""}
+      >
+        {activeRead ? (
+          <>
+            <div className="scripture-ref mb-1">{activeRead.vref}</div>
+            <p className="font-display c-ink" style={{ fontSize: 17, lineHeight: 1.45 }}>
+              {activeRead.line}
+            </p>
+            <p className="c-muted mt-4" style={{ fontSize: 13 }}>
+              Mantén presionada la tarjeta hasta que el círculo se llene y el ancla
+              se encienda.
+            </p>
+          </>
+        ) : null}
+      </BottomSheet>
+
+      <BottomSheet
+        open={moreOpen}
+        onClose={() => setMoreOpen(false)}
+        title="Siete anclas, una semana"
+      >
+        <p className="mb-3">
+          En la navegación antigua, el ancla no impedía moverse — sostenía al
+          barco cuando la tormenta intentaba arrastrarlo. La Palabra hace lo
+          mismo. Después de esta semana, cuando llegue un miércoles en la
+          oficina o un jueves en el hospital o un viernes en la cocina, vuelves
+          a estas siete anclas.
+        </p>
+        <p className="italic">
+          «Esperanza que tenemos como segura y firme ancla del alma.»
+        </p>
+        <div className="scripture-ref mb-3">Hebreos 6:19</div>
+        <p className="c-muted">
+          La Palabra no te da una posición cómoda; te da una <em>sujeción</em>.
+        </p>
+      </BottomSheet>
+    </SceneShell>
+  );
+}
+
+/* ---- AnchorCard with tap-and-hold to fix ---- */
+function AnchorCard({ anchor, fixed, onFixed, onRead }) {
+  const { handlers, fill, active } = useHoldPress({
+    duration: 900,
+    onComplete: onFixed,
+  });
+
+  const progress = fixed ? 1 : fill;
+  const dash = 2 * Math.PI * 26; // r = 26
+
+  return (
+    <div
+      {...handlers}
+      className="card tap-target"
+      onDoubleClick={onRead}
+      style={{
+        padding: 8,
+        aspectRatio: "1 / 1.15",
+        position: "relative",
+        overflow: "hidden",
+        background: fixed ? "rgba(166,127,28,0.12)" : "#faf7f0",
+        border: fixed
+          ? "1px solid rgba(166,127,28,0.55)"
+          : "1px solid rgba(26,21,16,0.08)",
+        boxShadow: fixed ? "0 0 14px rgba(166,127,28,0.25)" : "none",
+        transition: "background 300ms ease, box-shadow 400ms ease, border 300ms ease",
+        userSelect: "none",
+        touchAction: "manipulation",
+      }}
+      aria-label={anchor.title}
+    >
+      <div
+        className="font-display c-gold"
+        style={{ fontSize: 11, letterSpacing: "0.14em" }}
+      >
+        {anchor.roman}
+      </div>
+
+      <div style={{ position: "relative", display: "flex", justifyContent: "center", marginTop: 2 }}>
+        <svg width="60" height="60" viewBox="0 0 60 60" aria-hidden="true">
+          {/* hold ring */}
+          <circle
+            cx="30"
+            cy="30"
+            r="26"
+            fill="none"
+            stroke="rgba(26,21,16,0.1)"
+            strokeWidth="2"
+          />
+          <circle
+            cx="30"
+            cy="30"
+            r="26"
+            fill="none"
+            stroke={fixed ? "#a67f1c" : active ? "#a67f1c" : "transparent"}
+            strokeWidth="2"
+            strokeDasharray={dash}
+            strokeDashoffset={dash * (1 - progress)}
+            strokeLinecap="round"
+            transform="rotate(-90 30 30)"
+            style={{ transition: "stroke-dashoffset 120ms linear" }}
+          />
+          {/* anchor icon */}
+          <g
+            stroke={fixed ? "#a67f1c" : "#6b5a42"}
+            strokeWidth="2"
+            fill="none"
+            strokeLinecap="round"
+          >
+            <circle cx="30" cy="19" r="3" />
+            <line x1="30" y1="22" x2="30" y2="40" />
+            <line x1="25" y1="26" x2="35" y2="26" />
+            <path d="M20 38 Q 30 46 40 38" />
+          </g>
+        </svg>
+      </div>
+
+      <div
+        className="font-display c-parchment text-center mt-1"
+        style={{
+          fontSize: 12,
+          fontWeight: 500,
+          lineHeight: 1.15,
+          padding: "0 2px",
+        }}
+      >
+        {anchor.title}
+      </div>
+
+      <AnimatePresence>
+        {fixed ? (
+          <motion.div
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-sc c-gold text-center mt-1"
+            style={{ fontSize: 8, letterSpacing: "0.22em" }}
+          >
+            ANCLADA
+          </motion.div>
+        ) : (
+          <div
+            className="font-sc c-muted text-center mt-1"
+            style={{ fontSize: 8, letterSpacing: "0.22em" }}
+          >
+            MANTÉN
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
