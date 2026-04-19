@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /* =================================================================
-   UI PRIMITIVES · V5
-   Mobile-first single-screen shell + shared components.
+   UI PRIMITIVES · V6
+   Mobile-first single-screen shell + ambient life + codex navigator.
+   The stage, not the sheet, is where meaning happens.
    ================================================================= */
 
 /* -----------------------------------------------------------------
@@ -152,7 +153,100 @@ export function RefrainMark({ trigger }) {
 }
 
 /* -----------------------------------------------------------------
-   DAY STRIP — persistent bottom navigator
+   AMBIENT LAYER — always-on motion under every scene.
+   Parchment shift + drifting embers + occasional ink flicker.
+   Purely decorative, non-interactive.
+   ----------------------------------------------------------------- */
+const EMBER_SEEDS = [
+  { left: "12%", bottom: "4%",  variant: "a", delay: "0s"   },
+  { left: "28%", bottom: "0%",  variant: "b", delay: "1.4s" },
+  { left: "46%", bottom: "6%",  variant: "c", delay: "2.8s" },
+  { left: "62%", bottom: "2%",  variant: "a", delay: "4.0s" },
+  { left: "78%", bottom: "5%",  variant: "b", delay: "5.2s" },
+  { left: "90%", bottom: "1%",  variant: "c", delay: "6.6s" },
+  { left: "20%", bottom: "30%", variant: "c", delay: "3.3s" },
+  { left: "74%", bottom: "36%", variant: "a", delay: "7.8s" },
+];
+
+const INK_SEEDS = [
+  { top: "22%", left: "14%", w: 8,  h: 8,  delay: "0s"   },
+  { top: "58%", left: "82%", w: 10, h: 10, delay: "4.5s" },
+  { top: "76%", left: "32%", w: 6,  h: 6,  delay: "8.2s" },
+];
+
+export function AmbientLayer() {
+  return (
+    <div className="ambient-layer" aria-hidden="true">
+      <div className="ambient-grain" />
+      <div className="ambient-breath" />
+      {EMBER_SEEDS.map((e, i) => (
+        <span
+          key={`e-${i}`}
+          className={`ambient-ember ${e.variant}`}
+          style={{
+            left: e.left,
+            bottom: e.bottom,
+            animationDelay: e.delay,
+          }}
+        />
+      ))}
+      {INK_SEEDS.map((k, i) => (
+        <span
+          key={`k-${i}`}
+          className="ambient-ink"
+          style={{
+            top: k.top,
+            left: k.left,
+            width: k.w,
+            height: k.h,
+            animationDelay: k.delay,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* -----------------------------------------------------------------
+   ILLUMINATED RIBBON — V6 codex-style bottom navigator.
+   Thin gold thread + 9 illuminated chapter marks.
+   Replaces the V5 pill strip.
+   ----------------------------------------------------------------- */
+export function IllumRibbon({ currentKey, completed, onPick }) {
+  return (
+    <nav className="illum-ribbon" aria-label="Índice del códice">
+      <div className="illum-thread" />
+      <div className="illum-marks">
+        {SCREENS.map((s) => {
+          const isActive = s.key === currentKey;
+          const isDone = completed.has(s.key);
+          const showGlyph = s.key === "home" || s.key === "anclas";
+          return (
+            <button
+              key={s.key}
+              className="illum-mark"
+              data-active={isActive}
+              data-done={isDone}
+              onClick={() => onPick(s.key)}
+              aria-label={s.label}
+              aria-current={isActive ? "page" : undefined}
+            >
+              {showGlyph ? (
+                <span className="glyph">{s.short}</span>
+              ) : (
+                <span className="roman">{s.roman}</span>
+              )}
+              <span className="flourish" />
+            </button>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
+
+/* -----------------------------------------------------------------
+   DAY STRIP — legacy V5 pill strip. Kept exported for fallback only.
    ----------------------------------------------------------------- */
 export function DayStrip({ currentKey, completed, onPick }) {
   return (
@@ -224,10 +318,21 @@ export function SceneHeader({ meta, onOpenMore, rightSlot }) {
 }
 
 /* -----------------------------------------------------------------
-   SCENE SHELL — full-viewport canvas with horizontal swipe
+   SCENE SHELL — full-viewport canvas with horizontal swipe + ambient
+   life. V6 wraps each scene with cinematic dust-in transition.
+   Pass `dragDisabled` when an in-stage gesture (grip, press, drag)
+   owns the touch. Pass `showAmbient={false}` to suppress ambient
+   layer for scenes that need a cleaner canvas.
    ----------------------------------------------------------------- */
-export function SceneShell({ screenKey, onSwipe, children }) {
+export function SceneShell({
+  screenKey,
+  onSwipe,
+  children,
+  dragDisabled = false,
+  showAmbient = true,
+}) {
   const handleDragEnd = (_e, info) => {
+    if (dragDisabled) return;
     const dx = info.offset.x;
     const vx = info.velocity.x;
     const threshold = 70;
@@ -238,18 +343,21 @@ export function SceneShell({ screenKey, onSwipe, children }) {
   return (
     <motion.div
       key={screenKey}
-      className="scene-canvas scene-enter"
-      drag="x"
+      className="scene-canvas scene-dust-enter"
+      drag={dragDisabled ? false : "x"}
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.16}
       onDragEnd={handleDragEnd}
-      initial={{ opacity: 0, x: 24 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -24 }}
-      transition={{ duration: 0.35, ease: [0.22, 0.9, 0.4, 1] }}
+      initial={{ opacity: 0, x: 24, filter: "blur(6px)" }}
+      animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+      exit={{ opacity: 0, x: -24, filter: "blur(4px)" }}
+      transition={{ duration: 0.42, ease: [0.22, 0.9, 0.4, 1] }}
     >
+      {showAmbient ? <AmbientLayer /> : null}
       <div className="sword-bg" />
-      {children}
+      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", flex: 1, minHeight: 0 }}>
+        {children}
+      </div>
     </motion.div>
   );
 }

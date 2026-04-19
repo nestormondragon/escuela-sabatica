@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { AnimatePresence } from "framer-motion";
 
 import GlobalStyles from "./styles.jsx";
-import { DayStrip, RefrainMark, neighborKey } from "./ui.jsx";
+import { IllumRibbon, RefrainMark, neighborKey } from "./ui.jsx";
 import { useCurrentScreen, useCompleted, useRefrain } from "./hooks.js";
 
 import Home from "./days/Home.jsx";
@@ -16,8 +16,9 @@ import Viernes from "./days/Viernes.jsx";
 import Anclas from "./days/Anclas.jsx";
 
 /* =================================================================
-   APP · El Papel de la Biblia · V5
+   APP · El Papel de la Biblia · V6
    Mobile-first, single-screen, touch-driven.
+   The stage is where meaning happens — bottom sheets are secondary.
    ================================================================= */
 
 export default function App() {
@@ -97,7 +98,7 @@ export default function App() {
 
       <AnimatePresence mode="wait">{renderScreen()}</AnimatePresence>
 
-      <DayStrip
+      <IllumRibbon
         currentKey={currentKey}
         completed={completed}
         onPick={goTo}
