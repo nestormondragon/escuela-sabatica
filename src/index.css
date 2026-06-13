@@ -384,6 +384,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .mtf .halo { transform-box: fill-box; transform-origin: 50% 50%; animation: mtf-halo 7s ease-in-out infinite; }
 .mtf .star { animation: mtf-twinkle 3s ease-in-out infinite; }
 .mtf .shoot { transform-box: fill-box; animation: mtf-shoot 9s ease-in infinite; }
+.mtf .sway { transform-box: fill-box; transform-origin: 50% 100%; animation: mtf-sway 6s ease-in-out infinite; }
+@keyframes mtf-sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
 
 @keyframes mtf-rain { 0% { transform: translateY(-14px); opacity: 0; } 15% { opacity: 0.75; } 100% { transform: translateY(40px); opacity: 0; } }
 @keyframes mtf-wave { 0%, 100% { transform: translateX(-7px); } 50% { transform: translateX(7px); } }

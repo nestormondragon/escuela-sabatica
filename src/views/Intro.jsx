@@ -5,12 +5,19 @@ import Icon from "../components/Icon.jsx";
 import { listItem, listParent, t, viewVariants } from "../lib/motion.js";
 import { formatLong } from "../lib/date.js";
 import { persistent } from "../lib/storage.js";
-import { firstName, lcFirst } from "../lib/name.js";
+import { firstName, lcFirst, fillName } from "../lib/name.js";
 
 /* The opening promise + the empty kit (ghost slots visible). The name
    has already been given on the Welcome screen, so here we greet. */
 export default function Intro({ lesson, userName, onStart }) {
   const fn = firstName(userName);
+  // Promise may embed {name} (ported lessons) — resolve it; otherwise prepend
+  // the name as a warm vocative (hand-authored l11/12/13 have no token).
+  const promiseText = /\{name\}/.test(lesson.promise)
+    ? fillName(lesson.promise, userName)
+    : fn
+    ? `${fn}, ${lcFirst(lesson.promise)}`
+    : lesson.promise;
 
   return (
     <motion.section className="view" variants={viewVariants} initial="initial" animate="animate" exit="exit">
@@ -24,7 +31,7 @@ export default function Intro({ lesson, userName, onStart }) {
       <Centerpiece lesson={lesson} filled={0} size={300} />
 
       <p className="lead center serif" style={{ fontSize: "1.16rem", color: "var(--text)", marginTop: 16, fontFamily: "var(--scripture)" }}>
-        {fn ? <><b>{fn}, </b>{lcFirst(lesson.promise)}</> : lesson.promise}
+        {promiseText}
       </p>
 
       <div className="verse" style={{ marginTop: 16 }}>

@@ -12,7 +12,12 @@ import React from "react";
 const EASE = "1s cubic-bezier(0.23,1,0.32,1)";
 
 export default function Motif({ kind = "boat", stageIndex = 0, size = 300 }) {
-  const Comp = kind === "flame" ? Flame : kind === "road" ? Road : Boat;
+  const Comp =
+    kind === "flame" ? Flame :
+    kind === "road" ? Road :
+    kind === "seed" ? Seed :
+    kind === "sky" ? Sky :
+    Boat;
   return (
     <svg
       className="mtf"
@@ -175,6 +180,92 @@ function Road({ i }) {
       <g style={{ transform: `translateY(${fy - 252}px) scale(${fscale})`, transformOrigin: "160px 252px", transition: `transform ${EASE}` }}>
         <circle cx="160" cy="238" r="6.5" fill="#e8d4b6" />
         <path d="M153 245 Q160 241 167 245 L165 262 L155 262 Z" fill="#243a55" />
+      </g>
+    </g>
+  );
+}
+
+/* ---------- seed → tree (humility / the word sown / growth) ---------- */
+function Seed({ i }) {
+  const grow = [0.02, 0.22, 0.5, 0.8, 1][i]; // trunk + branches scale up
+  const leaves = [0, 0, 0.55, 0.9, 1][i];
+  const fruit = i >= 4 ? 1 : 0;
+  const seedDot = i <= 1 ? 1 : 0;
+  const motes = i >= 2 ? (i - 1) * 2 : 0;
+  return (
+    <g>
+      <circle className="halo" cx="160" cy="150" r="120" fill="url(#mtf-warm)"
+        style={{ opacity: 0.12 + i * 0.16, transition: `opacity ${EASE}` }} />
+
+      {/* soil */}
+      <path d="M60 252 Q160 234 260 252 L260 280 L60 280 Z" fill="#3a2a18" />
+      <ellipse cx="160" cy="252" rx="100" ry="11" fill="#46341f" />
+      {/* buried seed / first sprout */}
+      <g style={{ opacity: seedDot, transition: `opacity ${EASE}` }}>
+        <ellipse cx="160" cy="246" rx="5" ry="7" fill="#caa46a" />
+        <path d="M160 246 q0 -12 0 -20" stroke="#5b8a3c" strokeWidth="2.5" fill="none" strokeLinecap="round"
+          style={{ opacity: i === 1 ? 1 : 0 }} />
+      </g>
+
+      {/* trunk + branches (grow) */}
+      <g style={{ transform: `scaleY(${grow})`, transformOrigin: "160px 252px", transition: `transform ${EASE}` }}>
+        <line x1="160" y1="252" x2="160" y2="132" stroke="#5a3f22" strokeWidth="8" strokeLinecap="round" />
+        <line x1="160" y1="172" x2="128" y2="150" stroke="#5a3f22" strokeWidth="5" strokeLinecap="round" />
+        <line x1="160" y1="172" x2="192" y2="150" stroke="#5a3f22" strokeWidth="5" strokeLinecap="round" />
+      </g>
+
+      {/* canopy (sways) */}
+      <g className="sway" style={{ opacity: leaves, transition: `opacity ${EASE}` }}>
+        <circle cx="160" cy="118" r="44" fill="#4f7a34" />
+        <circle cx="126" cy="140" r="30" fill="#5b8a3c" />
+        <circle cx="194" cy="140" r="30" fill="#5b8a3c" />
+        <g style={{ opacity: fruit, transition: `opacity ${EASE}` }}>
+          {[[146, 118], [176, 128], [160, 142], [130, 134], [190, 116]].map(([x, y], k) => (
+            <circle key={k} cx={x} cy={y} r="4.2" fill="#e6a94b" />
+          ))}
+        </g>
+      </g>
+
+      {/* rising pollen motes */}
+      {Array.from({ length: motes }).map((_, k) => {
+        const x = 120 + ((k * 53) % 80);
+        return <circle key={k} className="ember" cx={x} cy="190" r="1.6" fill="#cfe0a0"
+          style={{ animationDelay: `${(k % 5) * 0.7}s`, animationDuration: `${4 + (k % 3)}s` }} />;
+      })}
+    </g>
+  );
+}
+
+/* ---------- starfield → sunrise (self-examination / communion) ---------- */
+function Sky({ i }) {
+  const dawn = i / 4;
+  const sunShift = -(dawn * 120);
+  const sun = [0, 0.18, 0.42, 0.7, 1][i];
+  const stars = [1, 0.78, 0.5, 0.2, 0][i];
+  const rays = [0, 0, 0.2, 0.5, 0.9][i];
+  return (
+    <g>
+      <ellipse cx="160" cy="252" rx="170" ry="70" fill="url(#mtf-warm)"
+        style={{ opacity: 0.08 + dawn * 0.7, transition: `opacity ${EASE}` }} />
+
+      <g style={{ opacity: stars, transition: `opacity ${EASE}` }}>
+        {[[40, 50], [70, 30], [110, 60], [150, 26], [196, 52], [232, 34], [268, 64], [292, 42], [90, 86], [250, 90], [180, 96], [60, 110]].map(([x, y], k) => (
+          <circle key={k} className="star" cx={x} cy={y} r={0.9 + (k % 3) * 0.5} fill="#eef2fb"
+            style={{ animationDelay: `${(k % 5) * 0.4}s`, animationDuration: `${2 + (k % 4)}s` }} />
+        ))}
+        <line className="shoot" x1="40" y1="40" x2="58" y2="48" stroke="#eef2fb" strokeWidth="1.4" strokeLinecap="round" />
+      </g>
+
+      {/* rising sun */}
+      <g style={{ transform: `translateY(${sunShift}px)`, transformOrigin: "160px 252px", transition: `transform ${EASE}` }}>
+        <g style={{ opacity: rays, transition: `opacity ${EASE}` }}>
+          {Array.from({ length: 10 }).map((_, k) => {
+            const a = (k / 10) * Math.PI * 2;
+            return <line key={k} x1={160 + Math.cos(a) * 40} y1={252 + Math.sin(a) * 40} x2={160 + Math.cos(a) * 58} y2={252 + Math.sin(a) * 58} stroke="#ffe6ac" strokeWidth="2" strokeLinecap="round" />;
+          })}
+        </g>
+        <circle cx="160" cy="252" r="32" fill="url(#mtf-warm)" style={{ opacity: sun, transition: `opacity ${EASE}` }} />
+        <circle cx="160" cy="252" r="17" fill="#fff3d4" style={{ opacity: sun, transition: `opacity ${EASE}` }} />
       </g>
     </g>
   );

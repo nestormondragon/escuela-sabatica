@@ -63,6 +63,22 @@ export function weave(name, sentence, seed) {
   return `${ucFirst(trimmed)}, ${fn}.`;
 }
 
+/* Resolve {name} tokens already embedded in authored copy (cues, promises).
+   With a name → substitute it; without → remove the vocative cleanly so no
+   stray "{name}" or dangling comma/colon remains. */
+export function fillName(text, rawName) {
+  const fn = firstName(rawName);
+  let s = String(text || "");
+  if (fn) return s.replace(/\{name\}/g, fn);
+  return s
+    .replace(/\{name\}\s*[,:]\s*/g, "")
+    .replace(/\s*[,:]\s*\{name\}/g, "")
+    .replace(/\{name\}/g, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([.,:;!?])/g, "$1")
+    .trim();
+}
+
 /* A short, reverent, scene-neutral cue that always carries the name —
    used so EVERY station screen greets the reader once, warmly, without
    repeating the same phrasing. Returns "" when there is no name. */

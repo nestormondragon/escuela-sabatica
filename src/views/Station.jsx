@@ -6,14 +6,14 @@ import Centerpiece from "../components/Centerpiece.jsx";
 import { PersonalNote } from "../modules/common.jsx";
 import Icon from "../components/Icon.jsx";
 import { viewVariants } from "../lib/motion.js";
-import { warmCue, weave } from "../lib/name.js";
+import { warmCue, fillName } from "../lib/name.js";
 
 /* A single station: one day, one decision that forges one piece.
    Every station greets the reader by name once (authored station.cue if
    present, else a varied reverent fallback) — natural, never mail-merge. */
 export default function Station({ lesson, station, state, filledCount, maestro, onFill, onSkip }) {
   const cue = station.cue
-    ? weave(state.userName, station.cue, station.id)
+    ? fillName(station.cue, state.userName)
     : warmCue(state.userName, lesson.id + ":" + station.id);
 
   // contextual callback to an earlier answer (no name — the cue carries it)

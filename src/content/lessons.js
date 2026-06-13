@@ -1,4 +1,14 @@
 import { pickLessonForDate, todayISO } from "../lib/date.js";
+import l1 from "./l1.js";
+import l2 from "./l2.js";
+import l3 from "./l3.js";
+import l4 from "./l4.js";
+import l5 from "./l5.js";
+import l6 from "./l6.js";
+import l7 from "./l7.js";
+import l8 from "./l8.js";
+import l9 from "./l9.js";
+import l10 from "./l10.js";
 import l11 from "./l11.js";
 import l12 from "./l12.js";
 import l13 from "./l13.js";
@@ -7,14 +17,10 @@ import l13 from "./l13.js";
    lessons.js — the quarter registry + "which lesson today?"
 
    Q2 2026 runs as weekly units closing on consecutive Saturdays.
-   Three known anchors fix the cadence exactly:
-     · Lección 4  — "El Papel de la Biblia" — 25 abr 2026
-     · Lección 10 — "El Camino de Regreso"  —  6 jun 2026
-     · Lección 11 — "Contratiempos"          — 13 jun 2026  (esta semana)
-
-   Fully-authored lessons live in FULL. Every other week is registered
-   as a graceful stub so date-routing and the schedule work all quarter;
-   add its station data later and it "lights up" automatically.
+   All 13 lessons are fully authored and run on the same engine.
+   Date routing picks the lesson whose week contains today (preferring
+   the one that *closes* on a Saturday). An override lets the reader
+   open any lesson from the picker.
    ================================================================= */
 
 // Closing Saturdays for Q2 2026 (Lección 1 … 13).
@@ -25,17 +31,8 @@ const FOR_DATES = [
   "2026-06-27",
 ];
 
-// Titles we can state truthfully; others stay generic until authored.
-const TITLES = {
-  4: "El Papel de la Biblia",
-  10: "El Camino de Regreso",
-  11: "Contratiempos",
-  12: "Compártelo",
-  13: "Hacia la Eternidad",
-};
-
-// Fully-built lesson experiences, keyed by lesson number.
-const FULL = { 11: l11, 12: l12, 13: l13 };
+// Every lesson, keyed by number — all complete.
+const FULL = { 1: l1, 2: l2, 3: l3, 4: l4, 5: l5, 6: l6, 7: l7, 8: l8, 9: l9, 10: l10, 11: l11, 12: l12, 13: l13 };
 
 function minusDays(iso, n) {
   const [y, m, d] = iso.split("-").map(Number);
@@ -51,7 +48,7 @@ function stub(number, forDate) {
     quarter: "2026-Q2",
     weekStart: minusDays(forDate, 7),
     forDate,
-    title: TITLES[number] || `Lección ${number}`,
+    title: `Lección ${number}`,
     subtitle: "Esta experiencia se está preparando.",
     complete: false,
   };
@@ -63,7 +60,6 @@ export const LESSONS = FOR_DATES.map((forDate, i) => {
   if (full) {
     return {
       ...full,
-      title: TITLES[number] || full.title,
       forDate: full.forDate || forDate,
       weekStart: full.weekStart || minusDays(full.forDate || forDate, 7),
       complete: true,
