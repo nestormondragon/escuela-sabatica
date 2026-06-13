@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, MotionConfig } from "framer-motion";
 
-import { ToastProvider } from "./components/Toast.jsx";
+import { ToastProvider, useToast } from "./components/Toast.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import Backdrop from "./components/Backdrop.jsx";
 import Topbar from "./components/Topbar.jsx";
@@ -18,9 +18,14 @@ import LessonPicker from "./views/LessonPicker.jsx";
 
 import { useSettings } from "./state/useSettings.js";
 import { useKit } from "./state/useKit.js";
+import { useStreak, welcomeBackLine } from "./state/useStreak.js";
 import { LESSONS, currentLesson } from "./content/lessons.js";
 import { formatLong } from "./lib/date.js";
+import { firstName } from "./lib/name.js";
 import { buzz } from "./lib/haptics.js";
+
+// show the gentle "welcome back" at most once per app session
+let streakWelcomed = false;
 
 export default function App() {
   const { settings, toggleMaestro, toggleMode, setLessonOverride } = useSettings();
@@ -99,9 +104,21 @@ function LessonApp({ lesson, maestro, topbarProps }) {
   const [stationId, setStationId] = useState(null);
   const [reward, setReward] = useState(null); // {slotLabel, seedSub, verse}
 
+  const toast = useToast();
+  const { streak, returned } = useStreak();
+
   useEffect(() => {
     if (done && !state.completedAt) kit.markComplete();
   }, [done, state.completedAt, kit]);
+
+  // gentle, non-shaming welcome-back (once per session)
+  useEffect(() => {
+    if (streakWelcomed || !returned || !state.started) return;
+    streakWelcomed = true;
+    const id = setTimeout(() => toast(welcomeBackLine(firstName(state.userName), streak)), 800);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const go = (r) => { setRoute(r); window.scrollTo({ top: 0, behavior: "auto" }); };
 
