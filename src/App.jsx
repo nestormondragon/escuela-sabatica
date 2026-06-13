@@ -1,108 +1,214 @@
-import React, { useCallback } from "react";
-import { AnimatePresence } from "framer-motion";
+import React, { useCallback, useEffect, useState } from "react";
+import { AnimatePresence, MotionConfig } from "framer-motion";
 
-import GlobalStyles from "./styles.jsx";
-import { IllumRibbon, RefrainMark, neighborKey } from "./ui.jsx";
-import { useCurrentScreen, useCompleted, useRefrain } from "./hooks.js";
+import { ToastProvider } from "./components/Toast.jsx";
+import ErrorBoundary from "./components/ErrorBoundary.jsx";
+import Backdrop from "./components/Backdrop.jsx";
+import Topbar from "./components/Topbar.jsx";
+import Sheet from "./components/Sheet.jsx";
+import Reward from "./components/Reward.jsx";
 
-import Home from "./days/Home.jsx";
-import Sabado from "./days/Sabado.jsx";
-import Domingo from "./days/Domingo.jsx";
-import Lunes from "./days/Lunes.jsx";
-import Martes from "./days/Martes.jsx";
-import Miercoles from "./days/Miercoles.jsx";
-import Jueves from "./days/Jueves.jsx";
-import Viernes from "./days/Viernes.jsx";
-import Anclas from "./days/Anclas.jsx";
+import Intro from "./views/Intro.jsx";
+import Kit from "./views/Kit.jsx";
+import Station from "./views/Station.jsx";
+import KitDone from "./views/KitDone.jsx";
+import Stub from "./views/Stub.jsx";
+import LessonPicker from "./views/LessonPicker.jsx";
 
-/* =================================================================
-   APP · El Papel de la Biblia · V6
-   Mobile-first, single-screen, touch-driven.
-   The stage is where meaning happens — bottom sheets are secondary.
-   ================================================================= */
+import { useSettings } from "./state/useSettings.js";
+import { useKit } from "./state/useKit.js";
+import { LESSONS, currentLesson } from "./content/lessons.js";
+import { formatLong } from "./lib/date.js";
+import { buzz } from "./lib/haptics.js";
 
 export default function App() {
-  const [currentKey, goTo] = useCurrentScreen();
-  const { completed, markComplete, reset } = useCompleted();
-  const { trigger, fire } = useRefrain();
+  const { settings, toggleMaestro, toggleMode, setLessonOverride } = useSettings();
+  const [pickerOpen, setPickerOpen] = useState(false);
 
-  const handleSwipe = useCallback(
-    (direction) => {
-      const next = neighborKey(currentKey, direction);
-      if (next) goTo(next);
-    },
-    [currentKey, goTo]
-  );
+  const today = currentLesson(null);
+  const lesson = currentLesson(settings.lessonOverride);
 
-  const onRestart = useCallback(() => {
-    reset();
-    goTo("home");
-  }, [reset, goTo]);
+  useEffect(() => {
+    document.documentElement.dataset.mode = settings.mode;
+  }, [settings.mode]);
 
-  const common = {
-    onSwipe: handleSwipe,
-    onMarkComplete: markComplete,
-    onRefrain: fire,
-    goTo,
-    completed,
+  const topbarProps = {
+    mode: settings.mode,
+    onToggleMode: toggleMode,
+    maestro: settings.maestro,
+    onToggleMaestro: toggleMaestro,
+    onOpenLessons: () => setPickerOpen(true),
   };
 
-  const renderScreen = () => {
-    switch (currentKey) {
-      case "home":
-        return (
-          <Home
-            key="home"
-            onSwipe={handleSwipe}
-            onPick={goTo}
-            completed={completed}
-            onRestart={onRestart}
+  return (
+    <MotionConfig reducedMotion="user">
+      <ToastProvider>
+       <ErrorBoundary>
+        {lesson.complete ? (
+          <LessonApp
+            key={lesson.id}
+            lesson={lesson}
+            maestro={settings.maestro}
+            topbarProps={topbarProps}
           />
-        );
-      case "sabado":    return <Sabado    key="sabado"    {...common} />;
-      case "domingo":   return <Domingo   key="domingo"   {...common} />;
-      case "lunes":     return <Lunes     key="lunes"     {...common} />;
-      case "martes":    return <Martes    key="martes"    {...common} />;
-      case "miercoles": return <Miercoles key="miercoles" {...common} />;
-      case "jueves":    return <Jueves    key="jueves"    {...common} />;
-      case "viernes":   return <Viernes   key="viernes"   {...common} />;
-      case "anclas":
-        return (
-          <Anclas
-            key="anclas"
-            onSwipe={handleSwipe}
-            onMarkComplete={markComplete}
-            onRefrain={fire}
-            onRestart={onRestart}
-            goTo={goTo}
-            completed={completed}
+        ) : (
+          <>
+            <Backdrop stage={0} scene={lesson.scene} />
+            <Topbar
+              title={`Lección ${lesson.number}`}
+              subtitle={formatLong(lesson.forDate)}
+              progress={0}
+              onHome={() => setPickerOpen(true)}
+              {...topbarProps}
+            />
+            <div className="app">
+              <AnimatePresence mode="wait">
+                <Stub
+                  key={lesson.id}
+                  lesson={lesson}
+                  todayLesson={today}
+                  onGoToday={() => setLessonOverride(today.id)}
+                  onOpenLessons={() => setPickerOpen(true)}
+                />
+              </AnimatePresence>
+            </div>
+          </>
+        )}
+
+        <Sheet open={pickerOpen} onClose={() => setPickerOpen(false)} title="Lecciones del trimestre">
+          <LessonPicker
+            lessons={LESSONS}
+            activeId={lesson.id}
+            todayId={today.id}
+            onPick={(id) => { setLessonOverride(id === today.id ? null : id); setPickerOpen(false); }}
           />
-        );
-      default:
-        return (
-          <Home
-            key="home"
-            onSwipe={handleSwipe}
-            onPick={goTo}
-            completed={completed}
-            onRestart={onRestart}
-          />
-        );
+        </Sheet>
+       </ErrorBoundary>
+      </ToastProvider>
+    </MotionConfig>
+  );
+}
+
+function LessonApp({ lesson, maestro, topbarProps }) {
+  const slotIds = lesson.slots.map((s) => s.id);
+  const kit = useKit(lesson.id, slotIds);
+  const { state, filledCount, firstUnfilled, done } = kit;
+
+  const [route, setRoute] = useState(() => (state.started ? "kit" : "intro"));
+  const [stationId, setStationId] = useState(null);
+  const [reward, setReward] = useState(null); // {slotLabel, seedSub, verse}
+
+  useEffect(() => {
+    if (done && !state.completedAt) kit.markComplete();
+  }, [done, state.completedAt, kit]);
+
+  const go = (r) => { setRoute(r); window.scrollTo({ top: 0, behavior: "auto" }); };
+
+  const openSlot = (slot) => {
+    setStationId(slot.station);
+    go("station");
+  };
+
+  const station = lesson.stations.find((s) => s.id === stationId) || null;
+
+  const handleFill = (value, extraPatch, seedSub) => {
+    if (!station) return;
+    const fresh = kit.fillSlot(station.slot, value, extraPatch);
+    if (fresh) {
+      buzz.success();
+      const idx = kit.bumpSurprise();
+      const verse = lesson.encourage[idx % lesson.encourage.length];
+      const slot = lesson.slots.find((s) => s.id === station.slot);
+      setReward({ slotLabel: slot?.label, seedSub, verse });
+    } else {
+      go("kit");
+    }
+  };
+
+  const onRewardClose = useCallback(() => { setReward(null); setRoute("kit"); window.scrollTo({ top: 0, behavior: "auto" }); }, []);
+
+  const reset = () => {
+    if (window.confirm("¿Reiniciar todo el recorrido? Se borrará tu ancla de este dispositivo.")) {
+      kit.reset();
+      setStationId(null);
+      go("intro");
     }
   };
 
   return (
-    <div className="scene-viewport bg-night c-parchment parchment-grain">
-      <GlobalStyles />
-      <RefrainMark trigger={trigger} />
-
-      <AnimatePresence mode="wait">{renderScreen()}</AnimatePresence>
-
-      <IllumRibbon
-        currentKey={currentKey}
-        completed={completed}
-        onPick={goTo}
+    <>
+      <Backdrop stage={filledCount / slotIds.length} scene={lesson.scene} />
+      <Topbar
+        title={`${lesson.title}`}
+        subtitle={`Lección ${lesson.number} · ${formatLong(lesson.forDate)}`}
+        progress={filledCount / slotIds.length}
+        onHome={() => go(state.started ? "kit" : "intro")}
+        {...topbarProps}
       />
-    </div>
+      <div className="app">
+        <AnimatePresence mode="wait">
+          {route === "intro" ? (
+            <Intro
+              key="intro"
+              lesson={lesson}
+              kitName={state.kitName}
+              onSetKitName={kit.setKitName}
+              onStart={() => { kit.start(); const first = firstUnfilled || slotIds[0]; const sObj = lesson.slots.find((s) => s.id === first); setStationId(sObj?.station || lesson.stations[0].id); go("station"); }}
+            />
+          ) : route === "kit" ? (
+            <Kit
+              key="kit"
+              lesson={lesson}
+              state={state}
+              filledCount={filledCount}
+              firstUnfilledId={firstUnfilled}
+              done={done}
+              onOpenSlot={openSlot}
+              onOpenDone={() => go("done")}
+            />
+          ) : route === "station" && station ? (
+            <Station
+              key={"station-" + station.id}
+              lesson={lesson}
+              station={station}
+              state={state}
+              filledCount={filledCount}
+              maestro={maestro}
+              onFill={handleFill}
+              onSkip={() => go("kit")}
+            />
+          ) : route === "done" ? (
+            <KitDone
+              key="done"
+              lesson={lesson}
+              state={state}
+              total={slotIds.length}
+              maestro={maestro}
+              onBack={() => go("kit")}
+              onReset={reset}
+            />
+          ) : (
+            <Kit
+              key="kit-fallback"
+              lesson={lesson}
+              state={state}
+              filledCount={filledCount}
+              firstUnfilledId={firstUnfilled}
+              done={done}
+              onOpenSlot={openSlot}
+              onOpenDone={() => go("done")}
+            />
+          )}
+        </AnimatePresence>
+      </div>
+
+      <Reward
+        open={!!reward}
+        slotLabel={reward?.slotLabel}
+        seedSub={reward?.seedSub}
+        verse={reward?.verse}
+        onClose={onRewardClose}
+      />
+    </>
   );
 }
