@@ -5,15 +5,21 @@ import Icon from "../components/Icon.jsx";
 import { listItem, listParent, t, viewVariants } from "../lib/motion.js";
 import { formatLong } from "../lib/date.js";
 import { persistent } from "../lib/storage.js";
+import { firstName } from "../lib/name.js";
 
 /* The opening promise + the empty anchor (ghost slots visible). */
 export default function Intro({ lesson, kitName, onSetKitName, onStart }) {
   const [name, setName] = useState(kitName || "");
+  const fn = firstName(name);
+  const returning = !!firstName(kitName); // had a saved name when this opened
 
   return (
     <motion.section className="view" variants={viewVariants} initial="initial" animate="animate" exit="exit">
       <div className="kicker">
         <span className="tag">Lección {lesson.number} · {formatLong(lesson.forDate)}</span>
+        {returning ? (
+          <span className="eyebrow" style={{ color: "var(--gold)" }}>Bienvenido de nuevo, {firstName(kitName)}</span>
+        ) : null}
         <h1 className="h1 serif">{lesson.title}</h1>
         <span className="sub">{lesson.subtitle}</span>
         <div className="hairline" />
@@ -54,14 +60,24 @@ export default function Intro({ lesson, kitName, onSetKitName, onStart }) {
       </motion.div>
 
       <div className="field" style={{ maxWidth: 380, margin: "18px auto 0" }}>
+        <label htmlFor="kitName" className="center" style={{ fontSize: "0.9rem", color: "var(--text-soft)" }}>
+          ¿Cómo te llamas? <span className="muted">(opcional · para personalizar tu recorrido)</span>
+        </label>
         <input
+          id="kitName"
           type="text"
-          placeholder="Ponle un nombre a tu ancla (opcional)"
+          placeholder="Tu nombre"
           value={name}
           onChange={(e) => setName(e.target.value)}
           maxLength={40}
         />
       </div>
+
+      {fn ? (
+        <p className="center serif" style={{ marginTop: 10, fontFamily: "var(--scripture)", fontStyle: "italic", color: "var(--text-soft)" }}>
+          Hola, {fn}. Este recorrido es tuyo — hagámoslo juntos.
+        </p>
+      ) : null}
 
       <motion.button
         className="btn btn-primary btn-block"

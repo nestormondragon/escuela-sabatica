@@ -1,5 +1,6 @@
 import React from "react";
 import Icon from "./Icon.jsx";
+import { useToast } from "./Toast.jsx";
 
 /* =================================================================
    Topbar — home/kit button, lesson brand, theme + maestro toggles,
@@ -17,6 +18,17 @@ export default function Topbar({
   onHome,
   onOpenLessons,
 }) {
+  const toast = useToast();
+  const handleMaestro = () => {
+    onToggleMaestro();
+    // Immediate, visible confirmation — the facilitator guide only renders
+    // inside a station, so without this the toggle felt like it did nothing.
+    toast(
+      maestro
+        ? "Modo maestro desactivado"
+        : "Modo maestro activado · guía para dirigir la clase"
+    );
+  };
   return (
     <header className="topbar">
       <div className="topbar-inner">
@@ -51,10 +63,11 @@ export default function Topbar({
         <button
           className="switch"
           aria-pressed={maestro}
-          onClick={onToggleMaestro}
-          aria-label="Modo maestro"
-          title="Guía para dirigir la clase"
+          onClick={handleMaestro}
+          aria-label="Modo maestro · guía para dirigir la clase"
+          title="Modo maestro · guía para dirigir la clase"
         >
+          <span className="switch-label">Maestro</span>
           <span className="track"><span className="knob" /></span>
         </button>
       </div>

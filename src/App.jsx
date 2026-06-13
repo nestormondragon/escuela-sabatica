@@ -53,7 +53,7 @@ export default function App() {
           />
         ) : (
           <>
-            <Backdrop stage={0} scene={lesson.scene} />
+            <Backdrop stage={0} scene={lesson.scene} mode={settings.mode} />
             <Topbar
               title={`Lección ${lesson.number}`}
               subtitle={formatLong(lesson.forDate)}
@@ -137,7 +137,7 @@ function LessonApp({ lesson, maestro, topbarProps }) {
 
   return (
     <>
-      <Backdrop stage={filledCount / slotIds.length} scene={lesson.scene} />
+      <Backdrop stage={filledCount / slotIds.length} scene={lesson.scene} mode={topbarProps.mode} />
       <Topbar
         title={`${lesson.title}`}
         subtitle={`Lección ${lesson.number} · ${formatLong(lesson.forDate)}`}
@@ -204,6 +204,7 @@ function LessonApp({ lesson, maestro, topbarProps }) {
 
       <Reward
         open={!!reward}
+        name={state.kitName}
         slotLabel={reward?.slotLabel}
         seedSub={reward?.seedSub}
         verse={reward?.verse}

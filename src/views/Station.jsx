@@ -6,13 +6,17 @@ import Centerpiece from "../components/Centerpiece.jsx";
 import { PersonalNote } from "../modules/common.jsx";
 import Icon from "../components/Icon.jsx";
 import { viewVariants, t } from "../lib/motion.js";
+import { firstName, lcFirst } from "../lib/name.js";
 
 /* A single station: one day, one decision that forges one piece. */
 export default function Station({ lesson, station, state, filledCount, maestro, onFill, onSkip }) {
-  const note =
+  const fn = firstName(state.kitName);
+  const baseNote =
     station.id !== "tormenta" && state.slots.tormenta
       ? `Empezaste nombrando tu tormenta: «${state.slots.tormenta}». Tenla presente aquí.`
       : null;
+  // Address the reader by name at the section transition when we have one.
+  const note = baseNote ? (fn ? `${fn}, ${lcFirst(baseNote)}` : baseNote) : null;
 
   return (
     <motion.section className="view" variants={viewVariants} initial="initial" animate="animate" exit="exit">

@@ -5,6 +5,7 @@ import SlotList from "../components/SlotList.jsx";
 import Odometer from "../components/Odometer.jsx";
 import Icon from "../components/Icon.jsx";
 import { reveal, t, viewVariants } from "../lib/motion.js";
+import { firstName, lcFirst } from "../lib/name.js";
 
 /* The home / spine: the anchor as it stands, the slots, and a
    mid-journey "your pattern" reveal once enough is filled. */
@@ -14,6 +15,13 @@ export default function Kit({ lesson, state, filledCount, firstUnfilledId, done,
   const stageLabel = lesson.stageLabel[lesson.stages[stageIndexFor(filledCount)]];
   const showPattern = filledCount >= 4 && !done;
   const ui = lesson.ui || {};
+  const fn = firstName(state.kitName);
+  const doneTitle = ui.doneTitle || "Tu recorrido está completo";
+  const title = done
+    ? (fn ? `${fn}, ${lcFirst(doneTitle)}` : doneTitle)
+    : remaining === 1
+      ? (ui.lastPiece || "Falta una pieza")
+      : (ui.building || "Cada elección suma una pieza");
 
   return (
     <motion.section className="view" variants={viewVariants} initial="initial" animate="animate" exit="exit">
@@ -29,7 +37,7 @@ export default function Kit({ lesson, state, filledCount, firstUnfilledId, done,
       </p>
 
       <h1 className="serif center" style={{ fontSize: "clamp(1.5rem,5.5vw,2rem)", marginTop: 8 }}>
-        {done ? (ui.doneTitle || "Tu recorrido está completo") : remaining === 1 ? (ui.lastPiece || "Falta una pieza") : (ui.building || "Cada elección suma una pieza")}
+        {title}
       </h1>
       <p className="lead center" style={{ marginTop: 4 }}>
         {done ? (ui.doneSub || "Lo construiste tú, con Dios. Ábrelo, guárdalo, compártelo.") : (ui.buildingHint || "Toca la pieza que brilla.")}

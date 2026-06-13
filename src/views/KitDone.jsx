@@ -7,11 +7,13 @@ import { useToast } from "../components/Toast.jsx";
 import { useLockBodyScroll } from "../lib/useLockBodyScroll.js";
 import { reveal, t, viewVariants, EASE_OUT } from "../lib/motion.js";
 import { formatLong } from "../lib/date.js";
+import { firstName } from "../lib/name.js";
 
 /* The finished anchor: ceremony → keepable card → useful outputs. */
 export default function KitDone({ lesson, state, total, maestro, onBack, onReset }) {
   const toast = useToast();
   const reduced = useReducedMotion();
+  const fn = firstName(state.kitName);
   const [ceremony, setCeremony] = useState(true);
   const cardRef = useRef(null);
   const out = lesson.outputs(state);
@@ -41,7 +43,8 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
   };
 
   const copyAll = () => {
-    const L = [`MI ANCLA — Lección ${lesson.number} · ${lesson.title} · ${formatLong(lesson.forDate)}`, ""];
+    const header = `${fn ? fn.toUpperCase() + " · " : ""}${(lesson.kitName || "Mi recorrido").toUpperCase()} — Lección ${lesson.number} · ${lesson.title} · ${formatLong(lesson.forDate)}`;
+    const L = [header, ""];
     L.push("Mi patrón: " + lesson.pattern(state), "");
     lesson.slots.forEach((s) => { if (state.slots[s.id]) L.push(`${s.label}: ${state.slots[s.id]}`); });
     L.push("", "Oración: " + drafts.oracion, "Mensaje de aliento: " + drafts.aliento, "Paso de 24h: " + drafts.accion24, "Pregunta para la clase: " + drafts.pregunta);
@@ -98,7 +101,7 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
   return (
     <>
       <AnimatePresence>
-        {ceremony ? <Ceremony lesson={lesson} reduced={reduced} onDone={() => setCeremony(false)} /> : null}
+        {ceremony ? <Ceremony lesson={lesson} name={fn} reduced={reduced} onDone={() => setCeremony(false)} /> : null}
       </AnimatePresence>
 
       <motion.section className="view" variants={viewVariants} initial="initial" animate="animate" exit="exit">
@@ -113,7 +116,7 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
           }}
         >
           <div className="center">
-            <span className="tag">{state.kitName ? state.kitName : "Mi Ancla"} · {lesson.title}</span>
+            <span className="tag">{fn ? `${fn} · ${lesson.kitName}` : (lesson.kitName || "Mi recorrido")} · {lesson.title}</span>
           </div>
           <Centerpiece lesson={lesson} filled={total} size={280} />
           <p className="serif center" style={{ fontSize: "1.18rem", lineHeight: 1.5, margin: "12px auto 0", maxWidth: "34ch", fontFamily: "var(--scripture)" }}>
@@ -198,7 +201,7 @@ function Output({ title, kicker, id, rows, drafts, setDrafts, onCopy }) {
   );
 }
 
-function Ceremony({ lesson, reduced, onDone }) {
+function Ceremony({ lesson, name, reduced, onDone }) {
   useLockBodyScroll(true);
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onDone();
@@ -233,6 +236,9 @@ function Ceremony({ lesson, reduced, onDone }) {
       </motion.div>
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.6, ease: EASE_OUT }} className="center">
         <div className="tag">Completo · {lesson.slots.length} de {lesson.slots.length}</div>
+        {name ? (
+          <p className="serif" style={{ marginTop: 8, fontSize: "1.15rem", color: "var(--gold)" }}>{name}, lo lograste.</p>
+        ) : null}
         <p className="scripture" style={{ marginTop: 8 }}>{lesson.verse.text}</p>
         <div className="tag" style={{ marginTop: 8, color: "var(--gold)" }}>{lesson.verse.ref}</div>
       </motion.div>

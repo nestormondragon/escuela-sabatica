@@ -191,6 +191,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   transition: width 0.6s var(--ease-out);
 }
 .switch { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; min-width: 44px; padding: 0 6px; font-family: var(--ui); font-size: 0.66rem; font-weight: 600; color: var(--muted); }
+.switch-label { font-size: 0.66rem; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; white-space: nowrap; }
+.switch[aria-pressed="true"] .switch-label { color: var(--gold); }
+@media (max-width: 360px) { .switch-label { display: none; } }
 .switch .track { width: 38px; height: 21px; border-radius: 999px; background: var(--surface-3); position: relative; transition: background 0.25s var(--ease-out); flex: none; border: 1px solid var(--line); }
 .switch .knob { position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; border-radius: 50%; background: #cdd6ea; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4); transition: left 0.25s var(--ease-out), background 0.25s; }
 .switch[aria-pressed="true"] .track { background: var(--gold-deep); border-color: var(--gold); }
@@ -327,8 +330,13 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .skip:hover { color: var(--text-soft); }
 }
 
+/* Reduced motion: stop the looping/keyframe + auto-scroll motion that can
+   cause discomfort, but KEEP the short, gentle UI transitions (taps, theme
+   colour fades, reveals) so the interface still feels alive rather than
+   completely frozen. The infinite framer-motion ambient loops (rocking boat,
+   rain, sky) are separately gated off in JS via useReducedMotion(). */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
 }
 @media (max-width: 560px) { .btn { width: 100%; } .station-nav { flex-direction: column-reverse; } }
 @media (max-width: 380px) { .grid.two { grid-template-columns: 1fr; } }
