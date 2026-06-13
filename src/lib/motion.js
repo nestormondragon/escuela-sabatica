@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 /* =================================================================
    motion.js — shared framer-motion tokens & variants.
    Easings per Emil Kowalski's spec; UI < 300ms; transform+opacity.
@@ -46,15 +44,6 @@ export const reveal = {
 /* press feedback to spread on tappables */
 export const tapProps = { whileTap: { scale: 0.97 }, transition: t.tap };
 
-/* ----- ambient "alive" pulse, paused when tab hidden ----- */
-export function usePageVisible() {
-  const [visible, setVisible] = useState(
-    typeof document === "undefined" ? true : !document.hidden
-  );
-  useEffect(() => {
-    const on = () => setVisible(!document.hidden);
-    document.addEventListener("visibilitychange", on);
-    return () => document.removeEventListener("visibilitychange", on);
-  }, []);
-  return visible;
-}
+/* NOTE: ambient/looping motion is intentionally pure CSS (see .mtf-* and the
+   Backdrop layers). Do NOT add a usePageVisible/visibilitychange gate for it —
+   that mount-timing race was the original "animations don't start" bug. */

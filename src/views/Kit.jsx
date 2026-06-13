@@ -27,7 +27,7 @@ export default function Kit({ lesson, state, filledCount, firstUnfilledId, done,
     <motion.section className="view" variants={viewVariants} initial="initial" animate="animate" exit="exit">
       <div className="center" style={{ marginBottom: 6 }}>
         <span className="tag">
-          {fn ? fn + " · " : ""}{lesson.kitName} · <Odometer value={filledCount} total={total} />
+          {fn && !done ? fn + " · " : ""}{lesson.kitName} · <Odometer value={filledCount} total={total} />
         </span>
       </div>
 

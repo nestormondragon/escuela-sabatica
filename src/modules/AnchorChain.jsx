@@ -45,8 +45,7 @@ export default function AnchorChain({ config, onFill, onSkip }) {
                 disabled={!isNext}
                 whileTap={isNext ? { scale: 0.98 } : undefined}
                 transition={t.tap}
-                animate={isNext ? { boxShadow: ["0 0 0 0 rgba(230,178,90,0)", "0 0 0 7px rgba(230,178,90,0)"] } : {}}
-                {...(isNext ? { transition: { boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" } } } : {})}
+                data-pulse={isNext ? "glow" : undefined}
                 style={{
                   width: "100%", textAlign: "left", padding: "13px 16px", borderRadius: 14,
                   border: isForged ? "1.5px solid var(--gold)" : isNext ? "1.5px solid var(--gold)" : "1.5px dashed var(--line)",

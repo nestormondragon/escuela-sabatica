@@ -141,7 +141,7 @@ body {
 /* CSS storm — drifting cloud blobs + lightning (the always-on weather) */
 .bg-weather { position: absolute; inset: 0; transition: opacity 1.2s var(--ease-out); }
 .bg-cloud {
-  position: absolute; border-radius: 50%; filter: blur(34px); will-change: transform;
+  position: absolute; border-radius: 50%; filter: blur(18px); will-change: transform;
   background: radial-gradient(circle, rgba(8,13,24,0.92), rgba(8,13,24,0) 70%);
   mix-blend-mode: multiply;
 }
@@ -369,11 +369,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .skip:hover { color: var(--text-soft); }
 }
 
-/* Reduced motion: stop the looping/keyframe + auto-scroll motion that can
-   cause discomfort, but KEEP the short, gentle UI transitions (taps, theme
-   colour fades, reveals) so the interface still feels alive rather than
-   completely frozen. The infinite framer-motion ambient loops (rocking boat,
-   rain, sky) are separately gated off in JS via useReducedMotion(). */
+/* Reduced motion: the @media (prefers-reduced-motion: reduce) block below
+   collapses every CSS keyframe loop (rocking boat, rain, candle, sky) to a
+   single static frame — browser-native, no JS. Base styles are authored so
+   that frozen frame reads as the lit/at-rest state. Short one-shot UI
+   transitions (taps, colour fades, reveals) are kept so the UI feels alive. */
 /* ================= MOTIF ANIMATIONS (pure CSS, reliable everywhere) ================= */
 .mtf .rain { transform-box: fill-box; animation: mtf-rain 0.8s linear infinite; will-change: transform, opacity; }
 .mtf .wave { transform-box: fill-box; transform-origin: 50% 50%; animation: mtf-wave 6s ease-in-out infinite; }
@@ -394,6 +394,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @keyframes mtf-halo { 0%, 100% { opacity: 0.55; transform: scale(0.96); } 50% { opacity: 0.95; transform: scale(1.05); } }
 @keyframes mtf-twinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
 @keyframes mtf-shoot { 0% { transform: translate(0, 0); opacity: 0; } 6% { opacity: 0; } 9% { opacity: 1; } 22% { transform: translate(210px, 38px); opacity: 0; } 100% { transform: translate(210px, 38px); opacity: 0; } }
+
+/* slot / chain pulses — CSS only (box-shadow + opacity, no JS gating) */
+[data-pulse="glow"] { animation: pulse-glow 2.2s ease-in-out infinite; }
+[data-pulse="fade"] { animation: pulse-fade 2.4s ease-in-out infinite; }
+@keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(230, 178, 90, 0); } 50% { box-shadow: 0 0 0 8px rgba(230, 178, 90, 0.14); } }
+@keyframes pulse-fade { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.8; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }

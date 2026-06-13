@@ -35,19 +35,7 @@ export default function SlotList({ slots, values, firstUnfilledId, remaining, on
             aria-disabled={!open}
             whileTap={open ? { scale: 0.98 } : undefined}
             transition={t.tap}
-            animate={
-              isCurrent
-                ? { boxShadow: ["0 0 0 0 rgba(230,178,90,0.0)", "0 0 0 8px rgba(230,178,90,0.0)"], borderColor: "var(--gold)" }
-                : goalGradient && state === "locked"
-                ? { opacity: [0.5, 0.78, 0.5] }
-                : {}
-            }
-            // pulse loops
-            {...(isCurrent
-              ? { transition: { boxShadow: { duration: 2.2, repeat: Infinity, ease: "easeInOut" } } }
-              : goalGradient && state === "locked"
-              ? { transition: { opacity: { duration: 2.4, repeat: Infinity, ease: "easeInOut" } } }
-              : {})}
+            data-pulse={isCurrent ? "glow" : goalGradient && state === "locked" ? "fade" : undefined}
             style={{
               display: "flex", alignItems: "center", gap: 13, width: "100%", textAlign: "left",
               padding: "14px 16px", borderRadius: 16,
