@@ -10,7 +10,7 @@ import { firstName, lcFirst } from "../lib/name.js";
 
 /* A single station: one day, one decision that forges one piece. */
 export default function Station({ lesson, station, state, filledCount, maestro, onFill, onSkip }) {
-  const fn = firstName(state.kitName);
+  const fn = firstName(state.userName);
   const baseNote =
     station.id !== "tormenta" && state.slots.tormenta
       ? `Empezaste nombrando tu tormenta: «${state.slots.tormenta}». Tenla presente aquí.`

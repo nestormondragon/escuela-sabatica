@@ -45,7 +45,7 @@ export const l11 = {
   scene: {
     motif: "boat",
     shader: {
-      sunX: 0.72, hasSea: true,
+      sunX: 0.72, hasSea: true, lightning: true,
       stormTop: [0.027, 0.043, 0.078], stormBot: [0.086, 0.141, 0.231],
       dawnTop: [0.227, 0.290, 0.470], dawnBot: [0.941, 0.760, 0.466],
       sun: [1.0, 0.85, 0.55],

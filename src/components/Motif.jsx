@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { EASE_OUT } from "../lib/motion.js";
 
 /* =================================================================
-   Motif — the foreground subject that floats over the AtmosphereShader.
+   Motif — the foreground subject that floats over the CSS sky (Backdrop).
    No sky here (the shader owns light/colour); just the silhouette +
    glowing accents that react to stageIndex (0..4).
    ================================================================= */
@@ -39,14 +39,18 @@ function Boat({ i, animate }) {
   const rockDur = 2.4 + i * 0.7, rock = 5 - i;
   return (
     <g>
-      {/* rain */}
+      {/* rain — heavy, wind-slanted, staggered */}
       <motion.g initial={false} animate={{ opacity: rain }} transition={TR}>
-        {[40, 80, 120, 160, 200, 240, 280, 60, 140, 220].map((x, k) => (
-          <motion.line key={k} x1={x} y1={(k % 3) * 16 + 40} x2={x - 4} y2={(k % 3) * 16 + 60}
-            stroke="#a2bbe0" strokeWidth="1.4" strokeLinecap="round" opacity="0.6"
-            initial={false} animate={animate ? { y: [0, 22] } : { y: 0 }}
-            transition={animate ? { duration: 0.5, repeat: Infinity, ease: "linear" } : { duration: 0 }} />
-        ))}
+        {Array.from({ length: 22 }).map((_, k) => {
+          const x = (k * 137) % 320;
+          const y0 = ((k * 53) % 90) + 26;
+          return (
+            <motion.line key={k} x1={x} y1={y0} x2={x - 7} y2={y0 + 22}
+              stroke="#a8c0e6" strokeWidth="1.5" strokeLinecap="round" opacity={0.4 + (k % 3) * 0.2}
+              initial={false} animate={animate ? { y: [0, 34], opacity: [0.7, 0.2] } : { y: 0 }}
+              transition={animate ? { duration: 0.34 + (k % 4) * 0.05, repeat: Infinity, ease: "linear", delay: (k % 5) * 0.07 } : { duration: 0 }} />
+          );
+        })}
       </motion.g>
 
       {/* waves */}
@@ -118,6 +122,18 @@ function Flame({ i, animate }) {
         </motion.g>
       ))}
 
+      {/* rising embers (more as the light grows) */}
+      {Array.from({ length: 10 }).map((_, k) => {
+        if (k > i * 2 + 2) return null;
+        const x = 160 + ((k * 47) % 60) - 30;
+        return (
+          <motion.circle key={k} cx={x} cy={196} r={1.2 + (k % 2) * 0.6} fill="#ffd98a"
+            initial={false}
+            animate={animate ? { y: [-((k * 31) % 30), -120], opacity: [0, 0.9, 0], x: [0, ((k % 3) - 1) * 14] } : { opacity: 0 }}
+            transition={animate ? { duration: 3.2 + (k % 4) * 0.6, repeat: Infinity, ease: "easeOut", delay: (k % 5) * 0.5 } : { duration: 0 }} />
+        );
+      })}
+
       {/* central candle */}
       <line x1="160" y1="206" x2="160" y2="252" stroke="#6e5230" strokeWidth="8" strokeLinecap="round" />
       <rect x="150" y="248" width="20" height="8" rx="3" fill="#4a371f" />
@@ -143,11 +159,19 @@ function Road({ i, animate }) {
   const stars = [0.6, 0.45, 0.25, 0.08, 0][i];
   return (
     <g>
-      {/* stars fade as it brightens */}
+      {/* twinkling stars fade as it brightens */}
       <motion.g initial={false} animate={{ opacity: stars }} transition={TR}>
-        {[[60, 50], [110, 34], [210, 44], [262, 30], [150, 60], [240, 70]].map(([x, y], k) => (
-          <circle key={k} cx={x} cy={y} r="1.2" fill="#dfe7f5" />
+        {[[40, 50], [70, 30], [110, 60], [150, 28], [196, 52], [232, 34], [268, 64], [292, 40], [90, 84], [250, 88]].map(([x, y], k) => (
+          <motion.circle key={k} cx={x} cy={y} r={0.9 + (k % 3) * 0.5} fill="#eef2fb"
+            initial={false}
+            animate={animate ? { opacity: [0.3, 1, 0.3] } : { opacity: 0.7 }}
+            transition={animate ? { duration: 2 + (k % 4), repeat: Infinity, ease: "easeInOut", delay: (k % 5) * 0.4 } : { duration: 0 }} />
         ))}
+        {/* a slow shooting star */}
+        <motion.line x1="40" y1="40" x2="58" y2="48" stroke="#eef2fb" strokeWidth="1.4" strokeLinecap="round"
+          initial={false}
+          animate={animate ? { x: [0, 220], y: [0, 36], opacity: [0, 0, 0.9, 0] } : { opacity: 0 }}
+          transition={animate ? { duration: 2.2, repeat: Infinity, repeatDelay: 6, ease: "easeIn" } : { duration: 0 }} />
       </motion.g>
 
       {/* city glow on the horizon */}

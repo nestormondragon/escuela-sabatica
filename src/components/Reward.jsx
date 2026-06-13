@@ -15,7 +15,7 @@ import Icon from "./Icon.jsx";
    ✕, the backdrop, or press Esc.
    ================================================================= */
 
-export default function Reward({ open, slotLabel, seedSub, verse, name, onClose }) {
+export default function Reward({ open, slotLabel, seedSub, verse, userName, onClose }) {
   useLockBodyScroll(open);
   const closeRef = useRef(onClose);
   closeRef.current = onClose;
@@ -26,7 +26,7 @@ export default function Reward({ open, slotLabel, seedSub, verse, name, onClose 
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const fn = firstName(name);
+  const fn = firstName(userName);
 
   return (
     <AnimatePresence>

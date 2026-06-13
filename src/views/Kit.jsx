@@ -15,7 +15,7 @@ export default function Kit({ lesson, state, filledCount, firstUnfilledId, done,
   const stageLabel = lesson.stageLabel[lesson.stages[stageIndexFor(filledCount)]];
   const showPattern = filledCount >= 4 && !done;
   const ui = lesson.ui || {};
-  const fn = firstName(state.kitName);
+  const fn = firstName(state.userName);
   const doneTitle = ui.doneTitle || "Tu recorrido está completo";
   const title = done
     ? (fn ? `${fn}, ${lcFirst(doneTitle)}` : doneTitle)
@@ -27,7 +27,7 @@ export default function Kit({ lesson, state, filledCount, firstUnfilledId, done,
     <motion.section className="view" variants={viewVariants} initial="initial" animate="animate" exit="exit">
       <div className="center" style={{ marginBottom: 6 }}>
         <span className="tag">
-          {state.kitName && state.kitName !== lesson.kitName ? state.kitName + " · " : ""}{lesson.kitName} · <Odometer value={filledCount} total={total} />
+          {fn ? fn + " · " : ""}{lesson.kitName} · <Odometer value={filledCount} total={total} />
         </span>
       </div>
 

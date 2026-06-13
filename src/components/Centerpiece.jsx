@@ -13,7 +13,7 @@ export function stageIndexFor(filled) {
 }
 
 /* The foreground subject (boat / flame / road) floating over the
-   AtmosphereShader. The shader owns the sky/light; this owns the story. */
+   Backdrop sky. The backdrop owns the sky/light; this owns the story. */
 export default function Centerpiece({ lesson, filled = 0, size = 300 }) {
   const reduced = useReducedMotion();
   const visible = usePageVisible();

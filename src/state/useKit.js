@@ -19,6 +19,7 @@ function freshState(slotIds) {
   return {
     v: VERSION,
     started: false,
+    userName: "",
     kitName: "",
     slots,
     extra: {},
@@ -90,6 +91,11 @@ export function useKit(lessonId, slotIds) {
     [commit]
   );
 
+  const setUserName = useCallback(
+    (name) => commit((prev) => ({ ...prev, userName: name })),
+    [commit]
+  );
+
   const start = useCallback(
     () => commit((prev) => ({ ...prev, started: true })),
     [commit]
@@ -139,6 +145,7 @@ export function useKit(lessonId, slotIds) {
     fillSlot,
     setExtra,
     setKitName,
+    setUserName,
     start,
     bumpSurprise,
     markPatternSeen,

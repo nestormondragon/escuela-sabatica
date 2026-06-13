@@ -1,17 +1,15 @@
 import React, { useMemo } from "react";
-import AtmosphereShader, { canWebGL } from "./AtmosphereShader.jsx";
 
 /* =================================================================
-   Backdrop — the living app background.
-   Layers (all fixed, pointer-events:none, behind content):
-     .bg-static  CSS gradient + sun glow (first paint + no-WebGL fallback,
-                 tweened storm→dawn via @property color vars)
-     shader      the ogl atmosphere (when WebGL available)
-     .bg-scrim   readability darkening toward the bottom
-     .bg-grain   film grain for premium texture
+   Backdrop — the living app background (pure CSS + SVG, so it animates
+   on every device and never shows a blank WebGL rectangle).
+   Layers (all behind content, pointer-events:none):
+     .bg-static   storm→dawn gradient + sun glow (tweened via @property)
+     .bg-aurora   slow drifting warm glow
+     .bg-weather  drifting storm clouds + lightning (night only)
+     .bg-scrim    readability darkening toward the bottom
+     .bg-grain    film grain for premium texture
    ================================================================= */
-
-const webgl = typeof window !== "undefined" ? canWebGL() : false;
 
 function lerp(a, b, t) { return a + (b - a) * t; }
 function mixRGB(a, b, t) {
@@ -53,13 +51,22 @@ export default function Backdrop({ stage = 0, scene, mode = "night" }) {
   }, [day, stage, p.stormTop, p.stormBot, p.dawnTop, p.dawnBot, p.sun, p.sunX]);
 
   return (
-    <>
-      <div className="bg-static" style={vars} aria-hidden="true" />
-      {/* The WebGL storm-sky is a night-mode element. In day mode we keep a
-          clean, readable parchment background instead of recolouring it. */}
-      {!day && webgl ? <AtmosphereShader targetStage={stage} scene={scene} /> : null}
-      <div className="bg-scrim" aria-hidden="true" />
-      <div className="bg-grain" aria-hidden="true" />
-    </>
+    <div className="backdrop" style={vars} aria-hidden="true">
+      <div className="bg-static" />
+      {/* animated fallback glow (also alive when WebGL is unavailable) */}
+      <div className="bg-aurora" />
+      {/* CSS storm — drifting clouds (+ lightning) keep the sky alive on
+          every device, and show through if the WebGL canvas can't paint. */}
+      {!day ? (
+        <div className="bg-weather" style={{ opacity: 0.3 + 0.7 * (1 - Math.max(0, Math.min(1, stage))) }}>
+          <div className="bg-cloud c1" />
+          <div className="bg-cloud c2" />
+          <div className="bg-cloud c3" />
+          {p.lightning ? <div className="bg-flash" /> : null}
+        </div>
+      ) : null}
+      <div className="bg-scrim" />
+      <div className="bg-grain" />
+    </div>
   );
 }

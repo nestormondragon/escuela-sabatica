@@ -8,6 +8,7 @@ import Topbar from "./components/Topbar.jsx";
 import Sheet from "./components/Sheet.jsx";
 import Reward from "./components/Reward.jsx";
 
+import Welcome from "./views/Welcome.jsx";
 import Intro from "./views/Intro.jsx";
 import Kit from "./views/Kit.jsx";
 import Station from "./views/Station.jsx";
@@ -94,7 +95,7 @@ function LessonApp({ lesson, maestro, topbarProps }) {
   const kit = useKit(lesson.id, slotIds);
   const { state, filledCount, firstUnfilled, done } = kit;
 
-  const [route, setRoute] = useState(() => (state.started ? "kit" : "intro"));
+  const [route, setRoute] = useState(() => (state.started ? "kit" : state.userName ? "intro" : "welcome"));
   const [stationId, setStationId] = useState(null);
   const [reward, setReward] = useState(null); // {slotLabel, seedSub, verse}
 
@@ -147,12 +148,18 @@ function LessonApp({ lesson, maestro, topbarProps }) {
       />
       <div className="app">
         <AnimatePresence mode="wait">
-          {route === "intro" ? (
+          {route === "welcome" ? (
+            <Welcome
+              key="welcome"
+              lesson={lesson}
+              initialName={state.userName}
+              onContinue={(name) => { kit.setUserName(name); go("intro"); }}
+            />
+          ) : route === "intro" ? (
             <Intro
               key="intro"
               lesson={lesson}
-              kitName={state.kitName}
-              onSetKitName={kit.setKitName}
+              userName={state.userName}
               onStart={() => { kit.start(); const first = firstUnfilled || slotIds[0]; const sObj = lesson.slots.find((s) => s.id === first); setStationId(sObj?.station || lesson.stations[0].id); go("station"); }}
             />
           ) : route === "kit" ? (
@@ -204,7 +211,7 @@ function LessonApp({ lesson, maestro, topbarProps }) {
 
       <Reward
         open={!!reward}
-        name={state.kitName}
+        userName={state.userName}
         slotLabel={reward?.slotLabel}
         seedSub={reward?.seedSub}
         verse={reward?.verse}

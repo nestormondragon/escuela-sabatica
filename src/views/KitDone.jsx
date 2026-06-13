@@ -13,7 +13,7 @@ import { firstName } from "../lib/name.js";
 export default function KitDone({ lesson, state, total, maestro, onBack, onReset }) {
   const toast = useToast();
   const reduced = useReducedMotion();
-  const fn = firstName(state.kitName);
+  const fn = firstName(state.userName);
   const [ceremony, setCeremony] = useState(true);
   const cardRef = useRef(null);
   const out = lesson.outputs(state);
@@ -87,7 +87,7 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
 
   const downloadJSON = () => {
     try {
-      const data = { lesson: `Lección ${lesson.number} · ${lesson.title}`, date: lesson.forDate, kitName: state.kitName, slots: state.slots, extra: state.extra, outputs: drafts };
+      const data = { lesson: `Lección ${lesson.number} · ${lesson.title}`, date: lesson.forDate, name: state.userName, slots: state.slots, extra: state.extra, outputs: drafts };
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");

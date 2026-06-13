@@ -115,23 +115,60 @@ body {
 @property --sun-y { syntax: "<percentage>"; inherits: true; initial-value: 90%; }
 @property --angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 
-.bg-static {
-  position: fixed; inset: 0; z-index: -4; pointer-events: none;
-  background:
-    radial-gradient(62% 52% at var(--sun-x) var(--sun-y), var(--sun-col), transparent 62%),
-    linear-gradient(180deg, var(--bg-top), var(--bg-bot));
+.backdrop {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
   transition: --bg-top 1.2s var(--ease-out), --bg-bot 1.2s var(--ease-out),
     --sun-col 1.2s var(--ease-out), --sun-y 1.2s var(--ease-out), --sun-x 1.2s var(--ease-out);
 }
+.bg-static {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(62% 52% at var(--sun-x) var(--sun-y), var(--sun-col), transparent 62%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-bot));
+}
+/* animated ambient glow — keeps the sky alive even without WebGL */
+.bg-aurora {
+  position: absolute; inset: -25%;
+  background: radial-gradient(38% 32% at var(--sun-x) var(--sun-y), var(--sun-col), transparent 70%);
+  opacity: 0.9;
+  animation: aurora-drift 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes aurora-drift {
+  0%   { transform: translate(-3%, 3%) scale(1); }
+  100% { transform: translate(5%, -4%) scale(1.16); }
+}
+/* CSS storm — drifting cloud blobs + lightning (the always-on weather) */
+.bg-weather { position: absolute; inset: 0; transition: opacity 1.2s var(--ease-out); }
+.bg-cloud {
+  position: absolute; border-radius: 50%; filter: blur(34px); will-change: transform;
+  background: radial-gradient(circle, rgba(8,13,24,0.92), rgba(8,13,24,0) 70%);
+  mix-blend-mode: multiply;
+}
+.bg-cloud.c1 { width: 90%; height: 34%; top: 4%;  left: -15%; opacity: 0.7;  animation: cloud-r 34s linear infinite; }
+.bg-cloud.c2 { width: 75%; height: 28%; top: 20%; left: -10%; opacity: 0.5;  animation: cloud-r 52s linear infinite; animation-delay: -12s; }
+.bg-cloud.c3 { width: 100%;height: 40%; top: -6%; left: -20%; opacity: 0.4;  animation: cloud-r 72s linear infinite; animation-delay: -30s; }
+@keyframes cloud-r { from { transform: translateX(-10%); } to { transform: translateX(120%); } }
+.bg-flash {
+  position: absolute; inset: 0; opacity: 0;
+  background: radial-gradient(70% 45% at 50% 8%, rgba(180,205,255,0.85), rgba(150,180,255,0) 60%);
+  animation: lightning 11s steps(1, end) infinite;
+}
+@keyframes lightning {
+  0%, 100% { opacity: 0; }
+  1.5% { opacity: 0.9; } 2.6% { opacity: 0.12; } 3.6% { opacity: 0.7; } 5% { opacity: 0; }
+  47% { opacity: 0; } 48% { opacity: 0.8; } 49.5% { opacity: 0.1; } 50.5% { opacity: 0.5; } 52% { opacity: 0; }
+}
+
 .bg-scrim {
-  position: fixed; inset: 0; z-index: -2; pointer-events: none;
-  background: linear-gradient(180deg, rgba(6,9,17,0.22) 0%, rgba(6,9,17,0.42) 46%, rgba(6,9,17,0.74) 100%);
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(6,9,17,0.04) 0%, rgba(6,9,17,0.18) 40%, rgba(6,9,17,0.55) 82%, rgba(6,9,17,0.72) 100%);
 }
 :root[data-mode="day"] .bg-scrim {
   background: linear-gradient(180deg, rgba(251,246,236,0.10) 0%, rgba(251,246,236,0.34) 50%, rgba(244,233,212,0.66) 100%);
 }
 .bg-grain {
-  position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.05; mix-blend-mode: soft-light;
+  position: absolute; inset: 0; opacity: 0.05; mix-blend-mode: soft-light;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   background-size: 160px 160px;
 }
@@ -178,7 +215,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .brand { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .brand .ttl { font-family: var(--ui); font-weight: 700; font-size: 0.78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.brand .sub2 { font-size: 0.64rem; color: var(--muted); letter-spacing: 0.04em; }
+.brand .sub2 { font-size: 0.64rem; color: var(--muted); letter-spacing: 0.04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.switch-label { white-space: nowrap; }
+@media (max-width: 480px) { .switch-label { display: none; } }
 .icon-btn {
   width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
   border-radius: 12px; color: var(--text-soft); transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out); flex: none;
@@ -200,7 +239,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .switch[aria-pressed="true"] .knob { left: 19px; background: #fff; }
 
 /* ================= APP / VIEWS ================= */
-.app { padding-top: var(--topbar-h); min-height: 100vh; min-height: 100dvh; }
+.app { position: relative; z-index: 1; padding-top: calc(var(--topbar-h) + var(--safe-top)); min-height: 100vh; min-height: 100dvh; }
 .view { max-width: var(--maxw); margin: 0 auto; padding: 22px 18px calc(56px + var(--safe-bottom)); position: relative; }
 .stack > * + * { margin-top: 14px; }
 
