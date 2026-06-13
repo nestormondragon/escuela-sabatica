@@ -1,203 +1,181 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { EASE_OUT } from "../lib/motion.js";
 
 /* =================================================================
    Motif — the foreground subject that floats over the CSS sky (Backdrop).
-   No sky here (the shader owns light/colour); just the silhouette +
-   glowing accents that react to stageIndex (0..4).
+   ALL continuous motion is pure CSS (see .mtf-* keyframes in index.css):
+   browser-managed across tab visibility, always starts on mount, restarts
+   on remount (scene change), and is disabled by prefers-reduced-motion.
+   Stage-driven values (0..4) are inline styles that ease via CSS transition.
+   No framer-motion, no rAF, no JS visibility gating → no freeze bug.
    ================================================================= */
 
-const TR = { duration: 1.0, ease: EASE_OUT };
+const EASE = "1s cubic-bezier(0.23,1,0.32,1)";
 
-export default function Motif({ kind = "boat", stageIndex = 0, animate = true, size = 300 }) {
-  const i = stageIndex;
+export default function Motif({ kind = "boat", stageIndex = 0, size = 300 }) {
   const Comp = kind === "flame" ? Flame : kind === "road" ? Road : Boat;
   return (
-    <svg viewBox="0 0 320 300" width={size} height={(size * 300) / 320} aria-hidden="true"
-      style={{ maxWidth: "100%", display: "block", margin: "0 auto", overflow: "visible" }}>
+    <svg
+      className="mtf"
+      viewBox="0 0 320 300"
+      width={size}
+      height={(size * 300) / 320}
+      aria-hidden="true"
+      style={{ maxWidth: "100%", display: "block", margin: "0 auto", overflow: "visible" }}
+    >
       <defs>
-        <filter id="soft-glow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="6" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-        </filter>
-        <radialGradient id="warm" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#fff3d4" /><stop offset="45%" stopColor="#ffd98a" />
+        <radialGradient id="mtf-warm" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#fff3d4" />
+          <stop offset="45%" stopColor="#ffd98a" />
           <stop offset="100%" stopColor="#e6a94b" stopOpacity="0" />
         </radialGradient>
+        <filter id="mtf-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
       </defs>
-      <Comp i={i} animate={animate} />
+      <Comp i={stageIndex} />
     </svg>
   );
 }
 
 /* ---------- L11 · boat on the sea ---------- */
-function Boat({ i, animate }) {
+function Boat({ i }) {
   const head = [20, -8, -11, -13, -15][i];
   const anchor = i >= 2 ? 1 : 0;
   const dove = i >= 4 ? 1 : 0;
-  const rain = [0.85, 0.45, 0.12, 0, 0][i];
-  const rockDur = 2.4 + i * 0.7, rock = 5 - i;
+  const rain = [0.85, 0.5, 0.16, 0, 0][i];
+  const rockDur = `${3.4 - i * 0.45}s`;
   return (
     <g>
-      {/* rain — heavy, wind-slanted, staggered */}
-      <motion.g initial={false} animate={{ opacity: rain }} transition={TR}>
-        {Array.from({ length: 22 }).map((_, k) => {
+      {/* rain (CSS fall, staggered) — fades out toward dawn */}
+      <g style={{ opacity: rain, transition: `opacity ${EASE}` }}>
+        {Array.from({ length: 24 }).map((_, k) => {
           const x = (k * 137) % 320;
-          const y0 = ((k * 53) % 90) + 26;
+          const y0 = ((k * 53) % 96) + 22;
           return (
-            <motion.line key={k} x1={x} y1={y0} x2={x - 7} y2={y0 + 22}
-              stroke="#a8c0e6" strokeWidth="1.5" strokeLinecap="round" opacity={0.4 + (k % 3) * 0.2}
-              initial={false} animate={animate ? { y: [0, 34], opacity: [0.7, 0.2] } : { y: 0 }}
-              transition={animate ? { duration: 0.34 + (k % 4) * 0.05, repeat: Infinity, ease: "linear", delay: (k % 5) * 0.07 } : { duration: 0 }} />
+            <line key={k} className="rain" x1={x} y1={y0} x2={x - 7} y2={y0 + 20}
+              stroke="#a8c0e6" strokeWidth="1.5" strokeLinecap="round"
+              style={{ animationDelay: `${(k % 7) * 0.11}s`, animationDuration: `${0.7 + (k % 4) * 0.08}s` }} />
           );
         })}
-      </motion.g>
+      </g>
 
       {/* waves */}
       {[0, 1, 2].map((row) => {
         const yB = 222 + row * 20, h = (8 - i * 1.4) * (1 - row * 0.15);
         const d = `M0 ${yB} C 40 ${yB - h}, 80 ${yB + h}, 120 ${yB} S 200 ${yB - h}, 240 ${yB} S 320 ${yB + h}, 320 ${yB}`;
-        return <motion.path key={row} d={d} fill="none" stroke="rgba(220,232,250,0.32)" strokeWidth="1.6"
-          initial={false} animate={animate ? { x: [0, row % 2 ? 10 : -10, 0] } : { x: 0 }}
-          transition={animate ? { duration: 5 + row, ease: "easeInOut", repeat: Infinity } : { duration: 0 }} />;
+        return <path key={row} className="wave" d={d} fill="none" stroke="rgba(220,232,250,0.32)" strokeWidth="1.6"
+          style={{ animationDelay: `${row * -1.6}s`, animationDuration: `${5 + row}s` }} />;
       })}
 
-      {/* dove */}
-      <motion.path d="M58 64 q12 -9 24 0 q-9 -2 -14 5 q-2 -7 -10 -5 Z" fill="#f6efdd" filter="url(#soft-glow)"
-        initial={false} animate={animate && dove ? { opacity: dove, x: [0, 12, 0], y: [0, -6, 0] } : { opacity: dove }}
-        transition={animate ? { duration: 6, ease: "easeInOut", repeat: Infinity } : TR} />
+      {/* dove of hope (dawn) */}
+      <path className="dove" d="M58 64 q12 -9 24 0 q-9 -2 -14 5 q-2 -7 -10 -5 Z" fill="#f6efdd" filter="url(#mtf-glow)"
+        style={{ opacity: dove, transition: `opacity ${EASE}` }} />
 
-      {/* boat (rocks with the sea) */}
-      <motion.g initial={false}
-        animate={animate ? { rotate: [-rock, rock, -rock], y: [0, i < 2 ? 4 : 1.5, 0] } : { rotate: 0, y: 0 }}
-        transition={animate ? { duration: rockDur, ease: "easeInOut", repeat: Infinity } : TR}
-        style={{ transformOrigin: "160px 222px" }}>
+      {/* boat — CSS rock */}
+      <g className="rock" style={{ animationDuration: rockDur }}>
         <line x1="160" y1="150" x2="160" y2="210" stroke="#3a2a18" strokeWidth="3" strokeLinecap="round" />
         <path d="M160 154 L188 192 L160 200 Z" fill="#efe2c6" opacity="0.92" />
         <path d="M120 210 L200 210 L186 230 L134 230 Z" fill="#2c1e10" stroke="#1a1108" strokeWidth="1.5" />
         <g transform="translate(160 202)">
-          <motion.g initial={false} animate={{ rotate: head }} transition={TR} style={{ transformOrigin: "0px 0px" }}>
+          <g style={{ transform: `rotate(${head}deg)`, transformOrigin: "0px 0px", transition: `transform ${EASE}` }}>
             <circle cx="0" cy="-15" r="6.5" fill="#e8d4b6" />
-          </motion.g>
+          </g>
           <path d="M-7 -9 Q0 -13 7 -9 L6 3 L-6 3 Z" fill="#243a55" />
         </g>
         {/* anchor */}
-        <motion.g initial={false} animate={{ opacity: anchor }} transition={TR}>
-          <motion.line x1="160" y1="230" x2="160" y2="262" stroke="#9fb0c6" strokeWidth="2" strokeDasharray="3 3"
-            initial={false} animate={{ pathLength: anchor }} transition={TR} />
+        <g style={{ opacity: anchor, transition: `opacity ${EASE}` }}>
+          <line x1="160" y1="230" x2="160" y2="262" stroke="#9fb0c6" strokeWidth="2" strokeDasharray="3 3" />
           <g stroke="#cdd8e8" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="160" cy="264" r="3" /><line x1="160" y1="267" x2="160" y2="285" />
             <line x1="153" y1="272" x2="167" y2="272" /><path d="M149 280 Q160 292 171 280" />
           </g>
-        </motion.g>
-      </motion.g>
+        </g>
+      </g>
     </g>
   );
 }
 
 /* ---------- L12 · a flame that kindles others ---------- */
-function Flame({ i, animate }) {
-  const grow = [0.6, 0.78, 0.92, 1.05, 1.18][i];
-  const lit = i; // how many side-lights are kindled (0..4)
-  const sides = [
-    { x: 96, y: 196 }, { x: 224, y: 196 }, { x: 70, y: 150 }, { x: 250, y: 150 },
-  ];
+function Flame({ i }) {
+  const grow = [0.62, 0.8, 0.94, 1.06, 1.2][i];
+  const lit = i; // side lights kindled
+  const sides = [{ x: 96, y: 196 }, { x: 224, y: 196 }, { x: 70, y: 150 }, { x: 250, y: 150 }];
+  const emberCount = Math.min(10, i * 2 + 2);
   return (
     <g>
-      {/* halo */}
-      <motion.circle cx="160" cy="170" r="120" fill="url(#warm)" initial={false}
-        animate={animate ? { opacity: [0.18 + i * 0.16, 0.28 + i * 0.16, 0.18 + i * 0.16], scale: [0.94, 1, 0.94] } : { opacity: 0.2 + i * 0.16 }}
-        transition={animate ? { duration: 7, ease: "easeInOut", repeat: Infinity } : TR}
-        style={{ transformOrigin: "160px 170px" }} />
+      <circle className="halo" cx="160" cy="170" r="120" fill="url(#mtf-warm)"
+        style={{ opacity: 0.2 + i * 0.16, transition: `opacity ${EASE}` }} />
 
-      {/* side lights kindle one by one */}
       {sides.map((s, k) => (
-        <motion.g key={k} initial={false} animate={{ opacity: k < lit ? 1 : 0.12 }} transition={TR}>
-          <circle cx={s.x} cy={s.y} r="22" fill="url(#warm)" opacity={k < lit ? 0.55 : 0} />
+        <g key={k} style={{ opacity: k < lit ? 1 : 0.12, transition: `opacity ${EASE}` }}>
+          <circle cx={s.x} cy={s.y} r="22" fill="url(#mtf-warm)" opacity={k < lit ? 0.5 : 0} />
           <line x1={s.x} y1={s.y + 6} x2={s.x} y2={s.y + 26} stroke="#5a4326" strokeWidth="3" strokeLinecap="round" />
-          <motion.path d={`M${s.x} ${s.y - 10} q6 8 0 16 q-6 -8 0 -16`} fill="#ffd98a" filter="url(#soft-glow)"
-            initial={false} animate={animate && k < lit ? { scaleY: [1, 1.18, 1] } : {}}
-            transition={animate ? { duration: 1.6 + k * 0.2, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
-            style={{ transformOrigin: `${s.x}px ${s.y}px` }} />
-        </motion.g>
+          <path className={k < lit ? "flame" : ""} d={`M${s.x} ${s.y - 10} q6 8 0 16 q-6 -8 0 -16`} fill="#ffd98a" filter="url(#mtf-glow)"
+            style={{ animationDelay: `${k * 0.3}s` }} />
+        </g>
       ))}
 
-      {/* rising embers (more as the light grows) */}
-      {Array.from({ length: 10 }).map((_, k) => {
-        if (k > i * 2 + 2) return null;
+      {/* rising embers */}
+      {Array.from({ length: emberCount }).map((_, k) => {
         const x = 160 + ((k * 47) % 60) - 30;
-        return (
-          <motion.circle key={k} cx={x} cy={196} r={1.2 + (k % 2) * 0.6} fill="#ffd98a"
-            initial={false}
-            animate={animate ? { y: [-((k * 31) % 30), -120], opacity: [0, 0.9, 0], x: [0, ((k % 3) - 1) * 14] } : { opacity: 0 }}
-            transition={animate ? { duration: 3.2 + (k % 4) * 0.6, repeat: Infinity, ease: "easeOut", delay: (k % 5) * 0.5 } : { duration: 0 }} />
-        );
+        return <circle key={k} className="ember" cx={x} cy="196" r={1.2 + (k % 2) * 0.6} fill="#ffd98a"
+          style={{ animationDelay: `${(k % 5) * 0.6}s`, animationDuration: `${3.2 + (k % 4) * 0.6}s` }} />;
       })}
 
-      {/* central candle */}
+      {/* candle */}
       <line x1="160" y1="206" x2="160" y2="252" stroke="#6e5230" strokeWidth="8" strokeLinecap="round" />
       <rect x="150" y="248" width="20" height="8" rx="3" fill="#4a371f" />
-      <motion.g initial={false} animate={{ scale: grow }} transition={TR} style={{ transformOrigin: "160px 200px" }}>
-        <motion.path d="M160 150 C 150 168, 146 184, 160 204 C 174 184, 170 168, 160 150 Z" fill="#ffe6ac" filter="url(#soft-glow)"
-          initial={false} animate={animate ? { scaleY: [1, 1.1, 0.98, 1], scaleX: [1, 0.96, 1.02, 1] } : {}}
-          transition={animate ? { duration: 2.4, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
-          style={{ transformOrigin: "160px 200px" }} />
+      <g style={{ transform: `scale(${grow})`, transformOrigin: "160px 204px", transition: `transform ${EASE}` }}>
+        <path className="flame" d="M160 150 C 150 168, 146 184, 160 204 C 174 184, 170 168, 160 150 Z" fill="#ffe6ac" filter="url(#mtf-glow)" />
         <path d="M160 168 C 154 180, 152 190, 160 202 C 168 190, 166 180, 160 168 Z" fill="#fff7e0" />
-      </motion.g>
+      </g>
     </g>
   );
 }
 
 /* ---------- L13 · a road toward the city of light ---------- */
-function Road({ i, animate }) {
+function Road({ i }) {
   const cityScale = [0.0, 0.35, 0.6, 0.85, 1.15][i];
   const cityGlow = [0.05, 0.2, 0.4, 0.7, 1][i];
   const walk = [0, 0.18, 0.4, 0.62, 0.82][i];
-  const fx = 160 + (160 - 160) * 0; // figure stays centered on path
   const fy = 252 - walk * 70;
   const fscale = 1 - walk * 0.45;
-  const stars = [0.6, 0.45, 0.25, 0.08, 0][i];
+  const stars = [0.7, 0.5, 0.3, 0.1, 0][i];
   return (
     <g>
-      {/* twinkling stars fade as it brightens */}
-      <motion.g initial={false} animate={{ opacity: stars }} transition={TR}>
+      {/* twinkling stars */}
+      <g style={{ opacity: stars, transition: `opacity ${EASE}` }}>
         {[[40, 50], [70, 30], [110, 60], [150, 28], [196, 52], [232, 34], [268, 64], [292, 40], [90, 84], [250, 88]].map(([x, y], k) => (
-          <motion.circle key={k} cx={x} cy={y} r={0.9 + (k % 3) * 0.5} fill="#eef2fb"
-            initial={false}
-            animate={animate ? { opacity: [0.3, 1, 0.3] } : { opacity: 0.7 }}
-            transition={animate ? { duration: 2 + (k % 4), repeat: Infinity, ease: "easeInOut", delay: (k % 5) * 0.4 } : { duration: 0 }} />
+          <circle key={k} className="star" cx={x} cy={y} r={0.9 + (k % 3) * 0.5} fill="#eef2fb"
+            style={{ animationDelay: `${(k % 5) * 0.4}s`, animationDuration: `${2 + (k % 4)}s` }} />
         ))}
-        {/* a slow shooting star */}
-        <motion.line x1="40" y1="40" x2="58" y2="48" stroke="#eef2fb" strokeWidth="1.4" strokeLinecap="round"
-          initial={false}
-          animate={animate ? { x: [0, 220], y: [0, 36], opacity: [0, 0, 0.9, 0] } : { opacity: 0 }}
-          transition={animate ? { duration: 2.2, repeat: Infinity, repeatDelay: 6, ease: "easeIn" } : { duration: 0 }} />
-      </motion.g>
+        <line className="shoot" x1="40" y1="40" x2="58" y2="48" stroke="#eef2fb" strokeWidth="1.4" strokeLinecap="round" />
+      </g>
 
-      {/* city glow on the horizon */}
-      <motion.circle cx="160" cy="150" r="80" fill="url(#warm)" initial={false}
-        animate={{ opacity: cityGlow }} transition={TR} />
+      {/* city glow */}
+      <circle cx="160" cy="150" r="80" fill="url(#mtf-warm)" style={{ opacity: cityGlow, transition: `opacity ${EASE}` }} />
 
-      {/* the road (perspective) */}
+      {/* road */}
       <path d="M120 290 L150 150 L170 150 L200 290 Z" fill="rgba(120,140,180,0.12)" stroke="rgba(200,216,240,0.25)" strokeWidth="1.2" />
       {[0, 1, 2, 3].map((k) => {
         const t = k / 4, y = 290 - t * 138, w = 10 - t * 7;
         return <line key={k} x1={160 - w} y1={y} x2={160 + w} y2={y} stroke="rgba(220,232,250,0.28)" strokeWidth="2" strokeLinecap="round" />;
       })}
 
-      {/* the city of light */}
-      <motion.g initial={false} animate={{ opacity: Math.min(1, cityScale), scale: cityScale }} transition={TR} style={{ transformOrigin: "160px 150px" }} filter="url(#soft-glow)">
+      {/* city of light */}
+      <g filter="url(#mtf-glow)" style={{ opacity: Math.min(1, cityScale), transform: `scale(${cityScale})`, transformOrigin: "160px 150px", transition: `opacity ${EASE}, transform ${EASE}` }}>
         {[[140, 140, 14], [150, 128, 14], [162, 134, 14], [172, 122, 16], [184, 138, 12]].map(([x, y, h], k) => (
           <rect key={k} x={x} y={y} width="9" height={h + 8} rx="1.5" fill="#ffe6ac" opacity="0.92" />
         ))}
         <rect x="150" y="148" width="22" height="10" rx="2" fill="#fff3d4" />
-      </motion.g>
+      </g>
 
       {/* figure walking toward it */}
-      <motion.g initial={false} animate={{ x: 0, y: fy - 252, scale: fscale, opacity: 1 }} transition={TR} style={{ transformOrigin: "160px 252px" }}>
+      <g style={{ transform: `translateY(${fy - 252}px) scale(${fscale})`, transformOrigin: "160px 252px", transition: `transform ${EASE}` }}>
         <circle cx="160" cy="238" r="6.5" fill="#e8d4b6" />
         <path d="M153 245 Q160 241 167 245 L165 262 L155 262 Z" fill="#243a55" />
-      </motion.g>
+      </g>
     </g>
   );
 }

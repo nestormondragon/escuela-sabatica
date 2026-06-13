@@ -374,6 +374,27 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
    colour fades, reveals) so the interface still feels alive rather than
    completely frozen. The infinite framer-motion ambient loops (rocking boat,
    rain, sky) are separately gated off in JS via useReducedMotion(). */
+/* ================= MOTIF ANIMATIONS (pure CSS, reliable everywhere) ================= */
+.mtf .rain { transform-box: fill-box; animation: mtf-rain 0.8s linear infinite; will-change: transform, opacity; }
+.mtf .wave { transform-box: fill-box; transform-origin: 50% 50%; animation: mtf-wave 6s ease-in-out infinite; }
+.mtf .rock { transform-box: fill-box; transform-origin: 50% 96%; animation: mtf-rock 3s ease-in-out infinite; will-change: transform; }
+.mtf .dove { transform-box: fill-box; transform-origin: 50% 50%; animation: mtf-dove 6s ease-in-out infinite; }
+.mtf .ember { transform-box: fill-box; animation: mtf-ember 3.4s ease-out infinite; will-change: transform, opacity; }
+.mtf .flame { transform-box: fill-box; transform-origin: 50% 100%; animation: mtf-flame 2.2s ease-in-out infinite; }
+.mtf .halo { transform-box: fill-box; transform-origin: 50% 50%; animation: mtf-halo 7s ease-in-out infinite; }
+.mtf .star { animation: mtf-twinkle 3s ease-in-out infinite; }
+.mtf .shoot { transform-box: fill-box; animation: mtf-shoot 9s ease-in infinite; }
+
+@keyframes mtf-rain { 0% { transform: translateY(-14px); opacity: 0; } 15% { opacity: 0.75; } 100% { transform: translateY(40px); opacity: 0; } }
+@keyframes mtf-wave { 0%, 100% { transform: translateX(-7px); } 50% { transform: translateX(7px); } }
+@keyframes mtf-rock { 0%, 100% { transform: rotate(-3.5deg) translateY(0); } 50% { transform: rotate(3.5deg) translateY(3px); } }
+@keyframes mtf-dove { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(12px, -7px); } }
+@keyframes mtf-ember { 0% { transform: translateY(6px) scale(0.7); opacity: 0; } 25% { opacity: 0.9; } 100% { transform: translateY(-120px) scale(1.1); opacity: 0; } }
+@keyframes mtf-flame { 0%, 100% { transform: scale(1, 1); } 25% { transform: scale(0.96, 1.12); } 50% { transform: scale(1.03, 0.97); } 75% { transform: scale(0.98, 1.06); } }
+@keyframes mtf-halo { 0%, 100% { opacity: 0.55; transform: scale(0.96); } 50% { opacity: 0.95; transform: scale(1.05); } }
+@keyframes mtf-twinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+@keyframes mtf-shoot { 0% { transform: translate(0, 0); opacity: 0; } 6% { opacity: 0; } 9% { opacity: 1; } 22% { transform: translate(210px, 38px); opacity: 0; } 100% { transform: translate(210px, 38px); opacity: 0; } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
 }
