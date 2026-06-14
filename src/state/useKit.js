@@ -34,11 +34,16 @@ function hydrate(lessonId, slotIds) {
   const base = freshState(slotIds);
   const saved = readJSON(keyFor(lessonId), null);
   if (!saved || saved.v !== VERSION) return base;
+  // keep only tags for slots that still exist (stale keys from an older lesson
+  // shape must not skew the branching profile)
+  const savedTags = saved.slotTags || {};
+  const slotTags = { ...base.slotTags };
+  slotIds.forEach((id) => { if (savedTags[id]) slotTags[id] = savedTags[id]; });
   return {
     ...base,
     ...saved,
     slots: { ...base.slots, ...(saved.slots || {}) },
-    slotTags: { ...base.slotTags, ...(saved.slotTags || {}) },
+    slotTags,
     extra: { ...base.extra, ...(saved.extra || {}) },
   };
 }

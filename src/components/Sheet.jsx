@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { EASE_DRAWER } from "../lib/motion.js";
 import { useLockBodyScroll } from "../lib/useLockBodyScroll.js";
+import { useFocusTrap } from "../lib/useFocusTrap.js";
 import Icon from "./Icon.jsx";
 
 /* Bottom sheet drawer (maestro guide, lesson picker, verse detail). */
 export default function Sheet({ open, onClose, title, children }) {
   useLockBodyScroll(open);
+  const dialogRef = useRef(null);
+  useFocusTrap(open, dialogRef);
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => e.key === "Escape" && onClose();
@@ -25,6 +28,8 @@ export default function Sheet({ open, onClose, title, children }) {
             style={{ position: "fixed", inset: 0, zIndex: 80, background: "color-mix(in srgb, var(--bg-0) 60%, transparent)", backdropFilter: "blur(3px)", WebkitBackdropFilter: "blur(3px)" }}
           />
           <motion.div
+            ref={dialogRef}
+            tabIndex={-1}
             role="dialog" aria-modal="true" aria-label={title}
             initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
             transition={{ duration: 0.32, ease: EASE_DRAWER }}

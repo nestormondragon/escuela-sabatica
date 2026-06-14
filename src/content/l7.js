@@ -675,7 +675,7 @@ export default makeLesson(
   "patternTemplate": "{name}, hoy reconociste que tu vida de oración es {slot:vida_oracion|lower}. Cuando todo se derrumba, sueles {slot:crisis|lower}, pero estás aprendiendo a esperar sosteniendo {slot:espera} y a orar con la sencillez que Jesús enseñó. La oración no baja a Dios hasta ti: te eleva a ti hacia él.",
   "outOracion": "Padre nuestro que estás en los cielos, vengo a ti tal como estoy. Confieso que mi vida de oración es {slot:vida_oracion|lower}, y que cuando todo se derrumba suelo {slot:crisis|lower}. Pero hoy elijo esperar en ti sosteniendo {slot:espera}. Recibe mi alabanza y mi gratitud, perdona mi pecado y enséñame a orar con sencillez. Sé tú mi refugio: {slot:refugio|lower}. Derramo ante ti mi corazón, porque «{verse}» ({verseRef}). En el nombre de Jesús, amén.",
   "outAliento": "{name}, recuerda hoy: la oración no hace descender a Dios hasta ti, sino que te eleva a ti hacia él. Aunque tu fe parezca pequeña, derrama tu corazón sin filtros, porque Dios es tu refugio. «{verse}» ({verseRef}).",
-  "outAccion24": "En las próximas 24 horas voy a {slot:paso|lower}, y voy a orar de manera concreta por {slot:orarPor}.",
+  "outAccion24": "En las próximas 24 horas voy a {slot:paso|lower}, y voy a orar de manera concreta por {slot:orarPor|or:alguien que lo necesita}.",
   "outPregunta": "Esta semana descubrí que mi vida de oración es {slot:vida_oracion|lower}, y que estoy aprendiendo a esperar en Dios aun cuando parece no haber respuesta. ¿Cómo es hoy tu vida de oración, y dónde has encontrado en Dios tu refugio?",
   "outTarjeta": "Mi cielo abierto de esta semana: aunque mi oración era {slot:vida_oracion|lower}, mi refugio es {slot:refugio|lower}.\nVersículo: «{verse}» ({verseRef})."
 }

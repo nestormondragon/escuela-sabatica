@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { EASE_OUT, t } from "../lib/motion.js";
 import { useLockBodyScroll } from "../lib/useLockBodyScroll.js";
+import { useFocusTrap } from "../lib/useFocusTrap.js";
 import { firstName } from "../lib/name.js";
 import Icon from "./Icon.jsx";
 
@@ -17,6 +18,8 @@ import Icon from "./Icon.jsx";
 
 export default function Reward({ open, slotLabel, seedSub, verse, userName, onClose }) {
   useLockBodyScroll(open);
+  const dialogRef = useRef(null);
+  useFocusTrap(open, dialogRef);
   const closeRef = useRef(onClose);
   closeRef.current = onClose;
   useEffect(() => {
@@ -50,6 +53,8 @@ export default function Reward({ open, slotLabel, seedSub, verse, userName, onCl
           }}
         >
           <motion.div
+            ref={dialogRef}
+            tabIndex={-1}
             onClick={(e) => e.stopPropagation()}
             initial={{ scale: 0.9, y: 8 }}
             animate={{ scale: 1, y: 0 }}
@@ -58,7 +63,7 @@ export default function Reward({ open, slotLabel, seedSub, verse, userName, onCl
             style={{
               position: "relative",
               background: "var(--surface-2)", border: "1px solid var(--line-2)",
-              borderRadius: "var(--radius-lg)", padding: "30px 26px 24px", textAlign: "center",
+              borderRadius: "var(--radius-lg)", padding: "30px 26px calc(24px + var(--safe-bottom))", textAlign: "center",
               maxWidth: 340, width: "100%", boxShadow: "var(--shadow-lg)",
             }}
           >
@@ -107,6 +112,7 @@ export default function Reward({ open, slotLabel, seedSub, verse, userName, onCl
 
             <motion.button
               className="btn btn-primary btn-block"
+              data-autofocus
               style={{ marginTop: 18 }}
               whileTap={{ scale: 0.98 }}
               transition={t.tap}

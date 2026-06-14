@@ -38,6 +38,7 @@ export default function Welcome({ lesson, initialName = "", onContinue }) {
             id="who"
             type="text"
             autoComplete="given-name"
+            aria-label="Tu nombre"
             placeholder="Tu nombre"
             value={name}
             onChange={(e) => setName(e.target.value)}

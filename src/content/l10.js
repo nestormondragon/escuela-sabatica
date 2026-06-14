@@ -628,6 +628,6 @@ export default makeLesson(
   "outAliento": "{name}, no te quedes mirando a Dios desde lejos. Aunque hoy te pese {slot:distraccion|lower}, su bondad ya corrió a buscarte y sostiene un manto blanco con manos heridas. «{verse}» ({verseRef}). Corre a la Cruz: el camino a casa empieza con una sola palabra, perdóname.",
   "outAccion24": "En las próximas 24 horas voy a {slot:paso|lower}, y dejaré a sus pies {slot:confesion|lower}, confiando en que él es fiel y justo para perdonar.",
   "outPregunta": "Esta semana descubrí que cuando algo me aparta de Dios suele ser {slot:distraccion|lower}, y que ante su voz tiendo a {slot:voz|lower}. ¿Cómo distingues tú el arrepentimiento genuino del simple remordimiento, y dónde recibiste por última vez su perdón?",
-  "outTarjeta": "Mi camino de esta semana: dejo a sus pies {slot:confesion|lower}, recibo su gracia —{slot:gracia|lower}— y me visto de su manto de justicia.\\nVersículo: «{verse}» ({verseRef})."
+  "outTarjeta": "Mi camino de esta semana: dejo a sus pies {slot:confesion|lower}, recibo su gracia —{slot:gracia|lower}— y me visto de su manto de justicia.\nVersículo: «{verse}» ({verseRef})."
 }
 );

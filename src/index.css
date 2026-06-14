@@ -24,7 +24,7 @@
   --text: #ece3d2;
   --text-soft: #c6ccc9;
   --muted: #8a99a8;
-  --faint: #5c6b7e;
+  --faint: #7a8a9e; /* AA: 5.3:1 on bg-0 — readable placeholders/dots/icons */
 
   /* dawn accents */
   --gold: #e6b25a;
@@ -76,9 +76,9 @@
   --line-2: rgba(110, 75, 42, 0.28);
   --text: #2b2118;
   --text-soft: #4a3a2a;
-  --muted: #8a7355;
-  --faint: #b09a7a;
-  --gold: #c08a3e;
+  --muted: #655036;  /* AA: 6.4:1 on parchment */
+  --faint: #705c40;  /* AA: 5.3:1 — placeholders/dots/icons readable in day */
+  --gold: #8a5d1c;   /* AA: 4.8:1 — deep amber for small gold text on parchment */
   --gold-deep: #9a6a22;
   --gold-glow: #e8c77a;
   --rose: #c96f4f;
@@ -132,7 +132,6 @@ body {
   background: radial-gradient(38% 32% at var(--sun-x) var(--sun-y), var(--sun-col), transparent 70%);
   opacity: 0.9;
   animation: aurora-drift 26s ease-in-out infinite alternate;
-  will-change: transform;
 }
 @keyframes aurora-drift {
   0%   { transform: translate(-3%, 3%) scale(1); }
@@ -141,7 +140,7 @@ body {
 /* CSS storm — drifting cloud blobs + lightning (the always-on weather) */
 .bg-weather { position: absolute; inset: 0; transition: opacity 1.2s var(--ease-out); }
 .bg-cloud {
-  position: absolute; border-radius: 50%; filter: blur(18px); will-change: transform;
+  position: absolute; border-radius: 50%; filter: blur(18px);
   background: radial-gradient(circle, rgba(8,13,24,0.92), rgba(8,13,24,0) 70%);
   mix-blend-mode: multiply;
 }
@@ -375,11 +374,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
    that frozen frame reads as the lit/at-rest state. Short one-shot UI
    transitions (taps, colour fades, reveals) are kept so the UI feels alive. */
 /* ================= MOTIF ANIMATIONS (pure CSS, reliable everywhere) ================= */
-.mtf .rain { transform-box: fill-box; animation: mtf-rain 0.8s linear infinite; will-change: transform, opacity; }
+.mtf .rain { transform-box: fill-box; animation: mtf-rain 0.8s linear infinite; }
 .mtf .wave { transform-box: fill-box; transform-origin: 50% 50%; animation: mtf-wave 6s ease-in-out infinite; }
-.mtf .rock { transform-box: fill-box; transform-origin: 50% 96%; animation: mtf-rock 3s ease-in-out infinite; will-change: transform; }
+.mtf .rock { transform-box: fill-box; transform-origin: 50% 96%; animation: mtf-rock 3s ease-in-out infinite; }
 .mtf .dove { transform-box: fill-box; transform-origin: 50% 50%; animation: mtf-dove 6s ease-in-out infinite; }
-.mtf .ember { transform-box: fill-box; animation: mtf-ember 3.4s ease-out infinite; will-change: transform, opacity; }
+.mtf .ember { transform-box: fill-box; animation: mtf-ember 3.4s ease-out infinite; }
 .mtf .flame { transform-box: fill-box; transform-origin: 50% 100%; animation: mtf-flame 2.2s ease-in-out infinite; }
 .mtf .halo { transform-box: fill-box; transform-origin: 50% 50%; animation: mtf-halo 7s ease-in-out infinite; }
 .mtf .star { animation: mtf-twinkle 3s ease-in-out infinite; }
@@ -410,7 +409,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   filter: blur(10px);
   transform: translate(-50%, -50%) scale(1);
   animation: cp-breathe 6.5s ease-in-out infinite;
-  will-change: transform;
   transition: opacity 1.1s var(--ease-out);
 }
 @keyframes cp-breathe {
@@ -425,7 +423,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @keyframes pulse-fade { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.8; } }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+  /* Neutralize BOTH animations and transitions. The animation-* rules cover
+     CSS keyframes; the transition-* rules cover inline-style transitions too
+     (Motif stage easings, Reveal fade/rise, .cp-bloom opacity) — those are
+     NOT touched by animation-* alone. Everything snaps to its at-rest frame. */
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
 }
 @media (max-width: 560px) { .btn { width: 100%; } .station-nav { flex-direction: column-reverse; } }
 @media (max-width: 380px) { .grid.two { grid-template-columns: 1fr; } }

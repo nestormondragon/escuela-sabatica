@@ -25,7 +25,12 @@ export function useStreak() {
       return { streak: prev, returned: false, firstEver: false };
     }
 
-    const gap = daysBetween(prev.lastVisit, today); // >= 1
+    const gap = daysBetween(prev.lastVisit, today);
+    // Clock moved backward / timezone shift (gap <= 0): never reward or punish —
+    // keep the record as-is so a bad clock can't inflate the streak.
+    if (gap <= 0) {
+      return { streak: prev, returned: false, firstEver: false };
+    }
     let current;
     if (gap <= 2) current = (prev.current || 1) + 1; // consecutive, or 1 forgiven day
     else current = Math.max(1, Math.round((prev.current || 1) * 0.5)); // gentle decay

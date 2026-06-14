@@ -13,25 +13,62 @@ import { paletteFor } from "./palettes.js";
      {verse} {verseRef}→ the memory verse text / reference
    ================================================================= */
 
+/* Resolve one id from slots, falling back to extra (free-text fields like
+   commitDuo's personExtraKey live in `extra`, not `slots`). Modifiers after
+   the id, pipe-separated: `lower` (lowercase first letter for mid-sentence)
+   and `or:DEFAULT` (use DEFAULT when the value is empty — so a sentence that
+   names a person still reads well when that optional field was left blank). */
+function resolveToken(id, mods, slots, extra) {
+  let v = slots[id];
+  if (v === undefined || v === null || v === "") v = extra[id];
+  v = v == null ? "" : String(v);
+  let lower = false;
+  let fallback = null;
+  for (const mod of mods) {
+    if (mod === "lower") lower = true;
+    else if (mod.startsWith("or:")) fallback = mod.slice(3);
+  }
+  if (!v && fallback != null) v = fallback;
+  if (lower) v = lcFirst(v);
+  return v;
+}
+
 function renderTemplate(tpl, data, state) {
   const slots = (state && state.slots) || {};
+  const extra = (state && state.extra) || {};
   const name = firstName(state && state.userName);
   let s = String(tpl || "");
 
-  s = s.replace(/\{slot:([a-zA-Z0-9_]+)(\|lower)?\}/g, (_m, id, lo) => {
-    const v = slots[id] || "";
-    return lo ? lcFirst(v) : v;
-  });
   s = s.replace(/\{verseRef\}/g, data.verse.ref).replace(/\{verse\}/g, data.verse.text);
+
+  // {slot:id}, {slot:id|lower}, {slot:id|or:default}, combos
+  s = s.replace(/\{slot:([a-zA-Z0-9_]+)((?:\|[^}|]+)*)\}/g, (_m, id, modstr) =>
+    resolveToken(id, modstr ? modstr.split("|").filter(Boolean) : [], slots, extra)
+  );
 
   if (name) {
     s = s.replace(/\{name\}/g, name);
   } else {
     // no name → remove the vocative cleanly, no stray commas
     s = s.replace(/\{name\}\s*,\s*/g, "").replace(/\s*,\s*\{name\}/g, "").replace(/\{name\}/g, "");
-    s = s.charAt(0).toUpperCase() + s.slice(1);
   }
-  return s.replace(/\s{2,}/g, " ").trim();
+
+  // bare {id} tokens (resolve from slots/extra); unknown ids fall through
+  s = s.replace(/\{([a-zA-Z0-9_]+)((?:\|[^}|]+)*)\}/g, (m, id, modstr) =>
+    id in slots || id in extra
+      ? resolveToken(id, modstr ? modstr.split("|").filter(Boolean) : [], slots, extra)
+      : m
+  );
+
+  // safety net: never leak an unresolved token; tidy whitespace/orphans
+  s = s
+    .replace(/\{[^{}]*\}/g, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([.,;:!?»])/g, "$1")
+    .replace(/«\s+/g, "«")
+    .trim();
+  if (!name) s = s.charAt(0).toUpperCase() + s.slice(1);
+  return s;
 }
 
 export function makeLesson(d) {

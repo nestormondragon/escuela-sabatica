@@ -36,6 +36,10 @@ export function writeJSON(key, value) {
     if (canUse) window.localStorage.setItem(key, raw);
     else mem.set(key, raw);
   } catch {
+    // A write that fails after the probe passed (quota exceeded, webview that
+    // blocks writes) → fall back to in-memory for the rest of the session so
+    // reads and writes stay consistent instead of silently diverging.
+    canUse = false;
     try {
       mem.set(key, JSON.stringify(value));
     } catch {

@@ -111,7 +111,7 @@ export default function Stairs({ config, onFill, onSkip }) {
             <ChipRow options={config.leaveOptions} value={custom ? "" : leave} onPick={(o) => { setLeave(o); setCustom(""); }} />
             {config.allowCustom ? (
               <div className="field">
-                <input type="text" placeholder={config.allowCustom.placeholder} value={custom} onChange={(e) => { setCustom(e.target.value); if (e.target.value) setLeave(""); }} maxLength={60} />
+                <input type="text" aria-label={config.leavePrompt || config.allowCustom.placeholder} placeholder={config.allowCustom.placeholder} value={custom} onChange={(e) => { setCustom(e.target.value); if (e.target.value) setLeave(""); }} maxLength={60} />
               </div>
             ) : null}
             <SaveBar label="Dejarlo en la puerta" disabled={!leaveValue} onSave={() => setPhase("promise")} onSkip={onSkip} variant="ghost" />

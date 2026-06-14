@@ -6,6 +6,7 @@ import Reveal from "../components/Reveal.jsx";
 import Icon from "../components/Icon.jsx";
 import { useToast } from "../components/Toast.jsx";
 import { useLockBodyScroll } from "../lib/useLockBodyScroll.js";
+import { useFocusTrap } from "../lib/useFocusTrap.js";
 import { reveal, t, viewVariants, EASE_OUT } from "../lib/motion.js";
 import { formatLong } from "../lib/date.js";
 import { firstName } from "../lib/name.js";
@@ -208,12 +209,13 @@ function Output({ title, kicker, id, rows, drafts, setDrafts, onCopy }) {
       <h4 className="serif" style={{ fontSize: "1.14rem", margin: "2px 0 6px" }}>{title}</h4>
       <textarea
         rows={rows}
+        aria-label={title}
         value={drafts[id]}
         onChange={(e) => setDrafts((d) => ({ ...d, [id]: e.target.value }))}
         style={{ width: "100%", border: "1.5px solid var(--line)", borderRadius: 12, background: "color-mix(in srgb, var(--bg-0) 55%, transparent)", padding: "11px 13px", fontFamily: "var(--scripture)", fontSize: "1rem", color: "var(--text)", lineHeight: 1.55 }}
       />
       <div style={{ marginTop: 8 }}>
-        <button className="btn btn-ghost" style={{ minHeight: 42, padding: "9px 16px" }} onClick={() => onCopy(drafts[id])}><Icon name="copy" size={15} /> Copiar</button>
+        <button className="btn btn-ghost" style={{ minHeight: 44, padding: "10px 16px" }} onClick={() => onCopy(drafts[id])}><Icon name="copy" size={15} /> Copiar</button>
       </div>
     </div>
   );
@@ -221,6 +223,8 @@ function Output({ title, kicker, id, rows, drafts, setDrafts, onCopy }) {
 
 function Ceremony({ lesson, ceremonyLine, reduced, onDone }) {
   useLockBodyScroll(true);
+  const dialogRef = useRef(null);
+  useFocusTrap(true, dialogRef);
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onDone();
     document.addEventListener("keydown", onKey);
@@ -243,6 +247,8 @@ function Ceremony({ lesson, ceremonyLine, reduced, onDone }) {
 
   return (
     <motion.div
+      ref={dialogRef}
+      tabIndex={-1}
       onClick={onDone}
       role="dialog" aria-modal="true" aria-live="polite" aria-label={`${lesson.kitName} · completo`}
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -260,7 +266,7 @@ function Ceremony({ lesson, ceremonyLine, reduced, onDone }) {
         <p className="scripture" style={{ marginTop: 8 }}>{lesson.verse.text}</p>
         <div className="tag" style={{ marginTop: 8, color: "var(--gold)" }}>{lesson.verse.ref}</div>
       </motion.div>
-      <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }} className="btn btn-primary" onClick={onDone}>
+      <motion.button data-autofocus initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }} className="btn btn-primary" onClick={onDone}>
         Ver mi ancla <Icon name="arrow" size={18} />
       </motion.button>
     </motion.div>

@@ -38,7 +38,7 @@ export default function Topbar({
         <button
           className="brand"
           onClick={onOpenLessons}
-          style={{ textAlign: "left", cursor: "pointer", flexDirection: "row", alignItems: "center", gap: 8 }}
+          style={{ textAlign: "left", cursor: "pointer", flexDirection: "row", alignItems: "center", gap: 8, minHeight: 44 }}
           aria-label="Elegir lección"
           title="Elegir lección"
         >

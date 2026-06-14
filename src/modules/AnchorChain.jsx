@@ -81,7 +81,7 @@ export default function AnchorChain({ config, onFill, onSkip }) {
             {config.hint ? <p className="prompt-hint">{config.hint}</p> : null}
             <ChipRow options={config.options} value={custom ? "" : hope} onPick={(o) => { setHope(o); setCustom(""); }} />
             <div className="field">
-              <input type="text" placeholder={config.allowCustom.placeholder} value={custom} onChange={(e) => { setCustom(e.target.value); if (e.target.value) setHope(""); }} maxLength={90} />
+              <input type="text" aria-label={config.prompt || config.allowCustom.placeholder} placeholder={config.allowCustom.placeholder} value={custom} onChange={(e) => { setCustom(e.target.value); if (e.target.value) setHope(""); }} maxLength={90} />
             </div>
             <HoldToSeal
               disabled={!value}

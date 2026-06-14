@@ -59,6 +59,7 @@ export default function PickReveal({ config, onFill, onSkip }) {
           <motion.div key="custom" className="field" variants={reveal} initial="initial" animate="animate">
             <textarea
               rows={2}
+              aria-label={config.allowCustom.label || config.prompt || config.allowCustom.placeholder}
               placeholder={config.allowCustom.placeholder}
               value={custom}
               onChange={(e) => setCustom(e.target.value)}
