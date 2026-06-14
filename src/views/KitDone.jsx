@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Centerpiece from "../components/Centerpiece.jsx";
 import MaestroPanel from "../components/MaestroPanel.jsx";
+import Reveal from "../components/Reveal.jsx";
 import Icon from "../components/Icon.jsx";
 import { useToast } from "../components/Toast.jsx";
 import { useLockBodyScroll } from "../lib/useLockBodyScroll.js";
@@ -167,10 +168,10 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
         <h2 className="serif center" style={{ fontSize: "1.5rem" }}>Para usar esta semana</h2>
         <p className="lead center" style={{ marginBottom: 10 }}>Edítalos y cópialos. Son tuyos.</p>
 
-        <Output title="Mi oración en la tormenta" kicker="Para orar" id="oracion" rows={5} drafts={drafts} setDrafts={setDrafts} onCopy={copy} />
-        <Output title="Mi mensaje de aliento" kicker="Para compartir (2 Cor. 1:4)" id="aliento" rows={3} drafts={drafts} setDrafts={setDrafts} onCopy={copy} />
-        <Output title="Mi paso de 24 horas" kicker="Para hacer hoy" id="accion24" rows={2} drafts={drafts} setDrafts={setDrafts} onCopy={copy} />
-        <Output title="Mi pregunta para la clase" kicker="Para dialogar sin sobreexponerme" id="pregunta" rows={3} drafts={drafts} setDrafts={setDrafts} onCopy={copy} />
+        <Reveal delay={0}><Output title="Mi oración en la tormenta" kicker="Para orar" id="oracion" rows={5} drafts={drafts} setDrafts={setDrafts} onCopy={copy} /></Reveal>
+        <Reveal delay={0.05}><Output title="Mi mensaje de aliento" kicker="Para compartir (2 Cor. 1:4)" id="aliento" rows={3} drafts={drafts} setDrafts={setDrafts} onCopy={copy} /></Reveal>
+        <Reveal delay={0.1}><Output title="Mi paso de 24 horas" kicker="Para hacer hoy" id="accion24" rows={2} drafts={drafts} setDrafts={setDrafts} onCopy={copy} /></Reveal>
+        <Reveal delay={0.15}><Output title="Mi pregunta para la clase" kicker="Para dialogar sin sobreexponerme" id="pregunta" rows={3} drafts={drafts} setDrafts={setDrafts} onCopy={copy} /></Reveal>
 
         <div className="share-row" style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 8 }}>
           <button className="btn btn-ghost" style={{ flex: "1 1 110px" }} onClick={() => { try { window.print(); } catch { toast("Usa el menú del navegador"); } }}><Icon name="printer" size={16} /> Imprimir</button>

@@ -397,6 +397,27 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @keyframes mtf-twinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
 @keyframes mtf-shoot { 0% { transform: translate(0, 0); opacity: 0; } 6% { opacity: 0; } 9% { opacity: 1; } 22% { transform: translate(210px, 38px); opacity: 0; } 100% { transform: translate(210px, 38px); opacity: 0; } }
 
+/* centerpiece bloom — a scene-tinted glow behind the motif that breathes
+   (CSS only). Sits behind the SVG; intensity (--cp-bloom) rises with
+   progress so the subject feels lit from within. */
+.cp { position: relative; display: grid; place-items: center; margin: 0 auto; }
+.cp > svg { position: relative; z-index: 1; }
+.cp-bloom {
+  position: absolute; left: 50%; top: 52%; z-index: 0; pointer-events: none;
+  width: 86%; aspect-ratio: 1 / 1; border-radius: 50%;
+  background: radial-gradient(circle, var(--cp-glow, rgba(255,217,138,0.5)), transparent 66%);
+  opacity: var(--cp-bloom, 0.45);
+  filter: blur(10px);
+  transform: translate(-50%, -50%) scale(1);
+  animation: cp-breathe 6.5s ease-in-out infinite;
+  will-change: transform;
+  transition: opacity 1.1s var(--ease-out);
+}
+@keyframes cp-breathe {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.93); }
+  50%      { transform: translate(-50%, -50%) scale(1.07); }
+}
+
 /* slot / chain pulses — CSS only (box-shadow + opacity, no JS gating) */
 [data-pulse="glow"] { animation: pulse-glow 2.2s ease-in-out infinite; }
 [data-pulse="fade"] { animation: pulse-fade 2.4s ease-in-out infinite; }
