@@ -8,6 +8,7 @@ import { useLockBodyScroll } from "../lib/useLockBodyScroll.js";
 import { reveal, t, viewVariants, EASE_OUT } from "../lib/motion.js";
 import { formatLong } from "../lib/date.js";
 import { firstName } from "../lib/name.js";
+import { deriveProfile, personalClosing } from "../engine/profile.js";
 
 /* The finished anchor: ceremony → keepable card → useful outputs. */
 export default function KitDone({ lesson, state, total, maestro, onBack, onReset }) {
@@ -17,6 +18,9 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
   const [ceremony, setCeremony] = useState(true);
   const cardRef = useRef(null);
   const out = lesson.outputs(state);
+  // branching personalization: the path the reader actually walked shapes
+  // the closing blessing (degrades to a warm universal line if untagged).
+  const closing = personalClosing(deriveProfile(state.slotTags), state.userName);
   const [drafts, setDrafts] = useState({
     oracion: out.oracion, aliento: out.aliento, accion24: out.accion24, pregunta: out.pregunta, tarjeta: out.tarjeta,
   });
@@ -46,6 +50,8 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
     const header = `${fn ? fn.toUpperCase() + " · " : ""}${(lesson.kitName || "Mi recorrido").toUpperCase()} — Lección ${lesson.number} · ${lesson.title} · ${formatLong(lesson.forDate)}`;
     const L = [header, ""];
     L.push("Mi patrón: " + lesson.pattern(state), "");
+    if (closing.pathLine) L.push(closing.pathLine);
+    L.push("Bendición de cierre: " + closing.blessing, "");
     lesson.slots.forEach((s) => { if (state.slots[s.id]) L.push(`${s.label}: ${state.slots[s.id]}`); });
     L.push("", "Oración: " + drafts.oracion, "Mensaje de aliento: " + drafts.aliento, "Paso de 24h: " + drafts.accion24, "Pregunta para la clase: " + drafts.pregunta);
     L.push("", `Versículo: «${lesson.verse.text}» (${lesson.verse.ref})`);
@@ -87,7 +93,7 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
 
   const downloadJSON = () => {
     try {
-      const data = { lesson: `Lección ${lesson.number} · ${lesson.title}`, date: lesson.forDate, name: state.userName, slots: state.slots, extra: state.extra, outputs: drafts };
+      const data = { lesson: `Lección ${lesson.number} · ${lesson.title}`, date: lesson.forDate, name: state.userName, slots: state.slots, blessing: closing.blessing, outputs: drafts };
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -101,7 +107,7 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
   return (
     <>
       <AnimatePresence>
-        {ceremony ? <Ceremony lesson={lesson} name={fn} reduced={reduced} onDone={() => setCeremony(false)} /> : null}
+        {ceremony ? <Ceremony lesson={lesson} ceremonyLine={closing.ceremony} reduced={reduced} onDone={() => setCeremony(false)} /> : null}
       </AnimatePresence>
 
       <motion.section className="view" variants={viewVariants} initial="initial" animate="animate" exit="exit">
@@ -122,6 +128,17 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
           <p className="serif center" style={{ fontSize: "1.18rem", lineHeight: 1.5, margin: "12px auto 0", maxWidth: "34ch", fontFamily: "var(--scripture)" }}>
             {lesson.pattern(state)}
           </p>
+
+          {/* ===== personalized closing blessing — shaped by the path walked ===== */}
+          <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--line)" }}>
+            {closing.pathLine ? (
+              <div className="tag center" style={{ color: "var(--gold)", marginBottom: 8 }}>{closing.pathLine}</div>
+            ) : null}
+            <p className="serif center" style={{ fontSize: "1.06rem", lineHeight: 1.62, margin: "0 auto", maxWidth: "36ch", fontFamily: "var(--scripture)", color: "var(--text-soft)" }}>
+              {closing.blessing}
+            </p>
+          </div>
+
           <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
             {lesson.slots.map((s) =>
               state.slots[s.id] ? (
@@ -201,7 +218,7 @@ function Output({ title, kicker, id, rows, drafts, setDrafts, onCopy }) {
   );
 }
 
-function Ceremony({ lesson, name, reduced, onDone }) {
+function Ceremony({ lesson, ceremonyLine, reduced, onDone }) {
   useLockBodyScroll(true);
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onDone();
@@ -236,8 +253,8 @@ function Ceremony({ lesson, name, reduced, onDone }) {
       </motion.div>
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.6, ease: EASE_OUT }} className="center">
         <div className="tag">Completo · {lesson.slots.length} de {lesson.slots.length}</div>
-        {name ? (
-          <p className="serif" style={{ marginTop: 8, fontSize: "1.15rem", color: "var(--gold)" }}>{name}, lo lograste.</p>
+        {ceremonyLine ? (
+          <p className="serif" style={{ marginTop: 8, fontSize: "1.15rem", color: "var(--gold)" }}>{ceremonyLine}</p>
         ) : null}
         <p className="scripture" style={{ marginTop: 8 }}>{lesson.verse.text}</p>
         <div className="tag" style={{ marginTop: 8, color: "var(--gold)" }}>{lesson.verse.ref}</div>

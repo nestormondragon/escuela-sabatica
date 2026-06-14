@@ -22,6 +22,7 @@ function freshState(slotIds) {
     userName: "",
     kitName: "",
     slots,
+    slotTags: {}, // per-slot personalization tags → drives the branching closing
     extra: {},
     surpriseIdx: 0,
     patternSeen: false,
@@ -37,6 +38,7 @@ function hydrate(lessonId, slotIds) {
     ...base,
     ...saved,
     slots: { ...base.slots, ...(saved.slots || {}) },
+    slotTags: { ...base.slotTags, ...(saved.slotTags || {}) },
     extra: { ...base.extra, ...(saved.extra || {}) },
   };
 }
@@ -65,13 +67,16 @@ export function useKit(lessonId, slotIds) {
   }, []);
 
   const fillSlot = useCallback(
-    (slotId, value, extraPatch) => {
+    (slotId, value, extraPatch, tags) => {
       let wasFresh = false;
       commit((prev) => {
         wasFresh = !prev.slots[slotId];
         return {
           ...prev,
           slots: { ...prev.slots, [slotId]: value },
+          // re-answering a station overwrites that slot's tags (no double-count);
+          // untagged modules pass nothing and leave existing tags untouched.
+          slotTags: tags !== undefined ? { ...prev.slotTags, [slotId]: tags || [] } : prev.slotTags,
           extra: extraPatch ? { ...prev.extra, ...extraPatch } : prev.extra,
         };
       });

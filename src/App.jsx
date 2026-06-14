@@ -129,9 +129,9 @@ function LessonApp({ lesson, maestro, topbarProps }) {
 
   const station = lesson.stations.find((s) => s.id === stationId) || null;
 
-  const handleFill = (value, extraPatch, seedSub) => {
+  const handleFill = (value, extraPatch, seedSub, tags) => {
     if (!station) return;
-    const fresh = kit.fillSlot(station.slot, value, extraPatch);
+    const fresh = kit.fillSlot(station.slot, value, extraPatch, tags);
     if (fresh) {
       buzz.success();
       const idx = kit.bumpSurprise();

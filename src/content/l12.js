@@ -95,11 +95,11 @@ export const l12 = {
         closing:
           "Nunca sabes cómo tus acciones —sobre todo si eres creyente— afectan a otros. Tu testimonio empieza antes de que abras la boca.",
         options: [
-          { id: "trafico", label: "Al volante, con prisa", insight: "La prisa desnuda el corazón. Lo que sale bajo presión revela lo que vive dentro, no lo que aparentamos el sábado." },
-          { id: "servicio", label: "Cuando me atienden mal", insight: "El mostrador, la fila, la llamada: ahí el evangelio se predica con el tono de tu voz más que con tus palabras." },
-          { id: "casa",    label: "En casa, con los míos", insight: "Los que más nos ven son los más difíciles de impresionar — y los que más necesitan ver a Cristo en ti." },
-          { id: "online",  label: "En redes, escribiendo", insight: "Detrás de una pantalla bajamos la guardia. Pero también ahí alguien cansado puede leer una palabra de aliento… o una de desprecio." },
-          { id: "iglesia", label: "Con los de la iglesia", insight: "A veces somos más ásperos con los de adentro. El amor que practicamos entre hermanos es el primer sermón que el visitante escucha." },
+          { id: "trafico", label: "Al volante, con prisa", insight: "La prisa desnuda el corazón. Lo que sale bajo presión revela lo que vive dentro, no lo que aparentamos el sábado.", tags: ["react:control", "theme:self", "posture:proud", "tone:raw"] },
+          { id: "servicio", label: "Cuando me atienden mal", insight: "El mostrador, la fila, la llamada: ahí el evangelio se predica con el tono de tu voz más que con tus palabras.", tags: ["react:pride", "theme:relationship", "posture:proud", "tone:raw"] },
+          { id: "casa",    label: "En casa, con los míos", insight: "Los que más nos ven son los más difíciles de impresionar — y los que más necesitan ver a Cristo en ti.", tags: ["react:apathy", "theme:relationship", "posture:avoidant", "tone:tender"] },
+          { id: "online",  label: "En redes, escribiendo", insight: "Detrás de una pantalla bajamos la guardia. Pero también ahí alguien cansado puede leer una palabra de aliento… o una de desprecio.", tags: ["react:pride", "theme:self", "posture:proud", "tone:raw"] },
+          { id: "iglesia", label: "Con los de la iglesia", insight: "A veces somos más ásperos con los de adentro. El amor que practicamos entre hermanos es el primer sermón que el visitante escucha.", tags: ["react:pride", "theme:relationship", "posture:humble", "tone:tender"] },
         ],
       },
     },
@@ -122,11 +122,11 @@ export const l12 = {
         closing:
           "Él te redimió, te llamó por tu nombre, y eres suyo. ¿Puede haber mejor noticia que esa? El Espíritu da audacia a las palabras sencillas.",
         options: [
-          { id: "paz",      label: "Me dio paz en la tormenta", insight: "Una paz que el mundo no puede dar ni quitar es un argumento que nadie puede refutar." },
-          { id: "perdon",   label: "Me perdonó y me cambió",    insight: "El antes y el después de tu propia vida es el estudio bíblico más convincente que existe." },
-          { id: "compania", label: "Nunca me dejó solo",        insight: "«Nunca te dejaré» deja de ser teoría cuando puedes decir: a mí me sostuvo." },
-          { id: "proposito",label: "Le dio sentido a mi vida",  insight: "En un mundo que busca propósito, tú encontraste uno. Eso es luz para el que anda a tientas." },
-          { id: "sanidad",  label: "Sanó algo en mí",           insight: "No tienes que entenderlo todo para contarlo. Basta decir: «yo era así, y mírame ahora»." },
+          { id: "paz",      label: "Me dio paz en la tormenta", insight: "Una paz que el mundo no puede dar ni quitar es un argumento que nadie puede refutar.", tags: ["theme:hope", "posture:surrendering", "tone:tender"] },
+          { id: "perdon",   label: "Me perdonó y me cambió",    insight: "El antes y el después de tu propia vida es el estudio bíblico más convincente que existe.", tags: ["theme:grace", "posture:humble", "tone:tender"] },
+          { id: "compania", label: "Nunca me dejó solo",        insight: "«Nunca te dejaré» deja de ser teoría cuando puedes decir: a mí me sostuvo.", tags: ["theme:relationship", "posture:clinging", "tone:tender"] },
+          { id: "proposito",label: "Le dio sentido a mi vida",  insight: "En un mundo que busca propósito, tú encontraste uno. Eso es luz para el que anda a tientas.", tags: ["theme:service", "posture:seeking", "tone:resolute"] },
+          { id: "sanidad",  label: "Sanó algo en mí",           insight: "No tienes que entenderlo todo para contarlo. Basta decir: «yo era así, y mírame ahora».", tags: ["theme:grace", "posture:surrendering", "tone:raw"] },
         ],
       },
     },
