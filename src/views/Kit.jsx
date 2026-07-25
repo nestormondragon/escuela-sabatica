@@ -1,14 +1,46 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Centerpiece, { stageIndexFor } from "../components/Centerpiece.jsx";
-import SlotList from "../components/SlotList.jsx";
-import Odometer from "../components/Odometer.jsx";
 import Icon from "../components/Icon.jsx";
 import { reveal, t, viewVariants } from "../lib/motion.js";
 import { firstName, lcFirst } from "../lib/name.js";
 
-/* The home / spine: the anchor as it stands, the slots, and a
-   mid-journey "your pattern" reveal once enough is filled. */
+/* =====================================================================
+   Kit — the spine of the week.
+
+   Q2 listed the pieces as a vertical checklist. Here the eight pieces are
+   a mosaic: a grid of tesserae above, one focused row below for whatever
+   comes next. The grid answers "how far along am I" at a glance, and the
+   row answers "what do I do now" without making the reader scan a list.
+
+   Only the next piece and the set ones are actionable; the rest stay quiet
+   so the screen never reads as a backlog.
+   ===================================================================== */
+
+function Tessera({ slot, index, state, isNext, onOpen }) {
+  const value = state.slots[slot.id];
+  const st = value ? "set" : isNext ? "next" : "locked";
+  const label = value
+    ? `${slot.label}: ${value}`
+    : isNext
+    ? `${slot.label}, siguiente pieza`
+    : `${slot.label}, aún sin colocar`;
+
+  return (
+    <button
+      className="tess"
+      data-state={st}
+      onClick={() => (value || isNext) && onOpen(slot)}
+      disabled={st === "locked"}
+      aria-label={label}
+      style={{ animationDelay: `${index * 60}ms` }}
+    >
+      <span className="n">{index + 1}</span>
+      <Icon name={slot.icon} size={19} weight={value ? "fill" : "regular"} />
+    </button>
+  );
+}
+
 export default function Kit({ lesson, state, filledCount, firstUnfilledId, done, onOpenSlot, onOpenDone }) {
   const total = lesson.slots.length;
   const remaining = total - filledCount;
@@ -16,66 +48,95 @@ export default function Kit({ lesson, state, filledCount, firstUnfilledId, done,
   const showPattern = filledCount >= 4 && !done;
   const ui = lesson.ui || {};
   const fn = firstName(state.userName);
+
   const doneTitle = ui.doneTitle || "Tu recorrido está completo";
   const title = done
-    ? (fn ? `${fn}, ${lcFirst(doneTitle)}` : doneTitle)
+    ? fn ? `${fn}, ${lcFirst(doneTitle)}` : doneTitle
     : remaining === 1
-      ? (ui.lastPiece || "Falta una pieza")
-      : (ui.building || "Cada elección suma una pieza");
+    ? ui.lastPiece || "Falta una pieza"
+    : ui.building || "Cada elección coloca una pieza";
+
+  const nextSlot = lesson.slots.find((s) => s.id === firstUnfilledId) || null;
 
   return (
     <motion.section className="view" variants={viewVariants} initial="initial" animate="animate" exit="exit">
-      <div className="center" style={{ marginBottom: 6 }}>
-        <span className="tag">
-          {fn && !done ? fn + " · " : ""}{lesson.kitName} · <Odometer value={filledCount} total={total} />
-        </span>
+      <Centerpiece lesson={lesson} filled={filledCount} size={252} />
+
+      <div className="center" style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        <span className="tag">{stageLabel}</span>
+        <h1 className="h1" style={{ fontSize: "clamp(1.5rem, 5.6vw, 2rem)" }}>{title}</h1>
+        <p className="lead" style={{ fontSize: "1.02rem" }}>
+          {done
+            ? ui.doneSub || "Lo armaste tú, con Dios. Ábrelo, guárdalo, compártelo."
+            : ui.buildingHint || "Toca la pieza encendida."}
+        </p>
       </div>
 
-      <Centerpiece lesson={lesson} filled={filledCount} size={300} />
-      <p className="center muted" style={{ fontFamily: "var(--ui)", fontSize: "0.7rem", letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 6 }}>
-        {stageLabel}
-      </p>
+      {/* the mosaic itself: progress you can read in one glance */}
+      <div>
+        <div className="mosaic" role="group" aria-label={`${lesson.kitName}: ${filledCount} de ${total} piezas`}>
+          {lesson.slots.map((s, i) => (
+            <Tessera
+              key={s.id}
+              slot={s}
+              index={i}
+              state={state}
+              isNext={s.id === firstUnfilledId}
+              onOpen={onOpenSlot}
+            />
+          ))}
+        </div>
+        <p className="tag center" style={{ marginTop: 8 }}>
+          {fn ? `${fn} · ` : ""}{lesson.kitName} · {filledCount} de {total}
+        </p>
+      </div>
 
-      <h1 className="serif center" style={{ fontSize: "clamp(1.5rem,5.5vw,2rem)", marginTop: 8 }}>
-        {title}
-      </h1>
-      <p className="lead center" style={{ marginTop: 4 }}>
-        {done ? (ui.doneSub || "Lo construiste tú, con Dios. Ábrelo, guárdalo, compártelo.") : (ui.buildingHint || "Toca la pieza que brilla.")}
-      </p>
-
-      {showPattern ? (
-        <motion.div
-          variants={reveal} initial="initial" animate="animate"
-          style={{
-            margin: "16px 0", padding: 18, borderRadius: "var(--radius)",
-            border: "1px solid var(--line-2)", background: "linear-gradient(160deg, var(--surface-2), var(--bg-2))",
-            boxShadow: "var(--shadow)",
-          }}
-        >
-          <div className="tag" style={{ marginBottom: 6 }}>{ui.patternLabel || "Tu patrón"}</div>
-          <p className="serif" style={{ fontSize: "1.12rem", lineHeight: 1.5, fontFamily: "var(--scripture)" }}>{lesson.pattern(state)}</p>
-        </motion.div>
+      {/* the one thing to do next */}
+      {!done && nextSlot ? (
+        <button className="piece-row" data-current="true" onClick={() => onOpenSlot(nextSlot)}>
+          <span className="piece-ico"><Icon name={nextSlot.icon} size={18} /></span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <span className="piece-lbl">{nextSlot.label}</span>
+            <span className="piece-val ghost">{nextSlot.teaser}</span>
+          </span>
+          <Icon name="chevron" size={16} style={{ color: "var(--clay)", flex: "none" }} />
+        </button>
       ) : null}
 
-      <div style={{ marginTop: 16 }}>
-        <SlotList
-          slots={lesson.slots}
-          values={state.slots}
-          firstUnfilledId={firstUnfilledId}
-          remaining={remaining}
-          onOpen={onOpenSlot}
-        />
-      </div>
+      {/* what is already set, in the reader's own words */}
+      {filledCount > 0 ? (
+        <div className="stack" style={{ gap: 7 }}>
+          {lesson.slots
+            .filter((s) => state.slots[s.id])
+            .map((s) => (
+              <button key={s.id} className="piece-row" data-state="set" onClick={() => onOpenSlot(s)}>
+                <span className="piece-ico"><Icon name={s.icon} size={18} weight="fill" /></span>
+                <span style={{ flex: 1, minWidth: 0 }}>
+                  <span className="piece-lbl">{s.label}</span>
+                  <span className="piece-val">{state.slots[s.id]}</span>
+                </span>
+              </button>
+            ))}
+        </div>
+      ) : null}
+
+      {showPattern ? (
+        <motion.div variants={reveal} initial="initial" animate="animate" className="detail">
+          <div className="meta g">{ui.patternLabel || "Tu patrón"}</div>
+          <p className="letter" style={{ fontSize: "1.06rem", lineHeight: 1.6, color: "var(--text-soft)" }}>
+            {lesson.pattern(state)}
+          </p>
+        </motion.div>
+      ) : null}
 
       {done ? (
         <motion.button
           className="btn btn-primary btn-block"
-          style={{ marginTop: 22 }}
-          whileTap={{ scale: 0.98 }}
+          whileTap={{ scale: 0.97 }}
           transition={t.tap}
           onClick={onOpenDone}
         >
-          {ui.open || "Abrir mi recorrido"} <Icon name="arrow" size={18} />
+          {ui.open || "Abrir mi mosaico"} <Icon name="arrow" size={18} />
         </motion.button>
       ) : null}
     </motion.section>

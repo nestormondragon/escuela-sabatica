@@ -91,6 +91,14 @@ const THEME = {
   hope: "Hay un mañana que Dios sostiene por ti, aunque hoy todavía pese.",
   sin: "Nombraste lo que duele, y nombrarlo delante de Dios ya es el principio de la libertad.",
   service: "Lo que recibiste no se queda contigo; está hecho para desbordarse hacia otros.",
+  // added for 1 y 2 Corintios
+  unity: "Elegiste ser quien tiende el puente, y eso siempre cuesta más que tener razón.",
+  cross: "La cruz dejó de ser un adorno y volvió a ser el lugar donde se pagó tu deuda.",
+  love: "El amor que mediste esta semana no es un sentimiento: son verbos, y ya empezaste a conjugarlos.",
+  resurrection: "Si él resucitó, entonces lo que perdiste no está dicho para siempre.",
+  mission: "Donde te toca vivir no es un accidente: allí tiene Dios mucho pueblo.",
+  generosity: "Abriste la mano, y descubriste que dar se parece más a él que a un sacrificio.",
+  truth: "Aprendiste a distinguir lo que impresiona de lo que es verdad, y esa es una defensa que te va a durar.",
 };
 
 // the closing breath — shaped by the voice they leaned into. Takes an

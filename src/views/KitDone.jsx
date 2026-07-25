@@ -119,7 +119,7 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
           ref={cardRef}
           style={{
             background: "radial-gradient(125% 90% at 50% 0%, var(--bg-2), var(--bg-0))",
-            border: "1px solid var(--line-2)", borderRadius: "var(--radius-lg)",
+            border: "1px solid var(--line-2)", borderRadius: "var(--r-lg)",
             padding: "22px 20px 26px", boxShadow: "var(--shadow-lg)",
           }}
         >
@@ -127,16 +127,16 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
             <span className="tag">{fn ? `${fn} · ${lesson.kitName}` : (lesson.kitName || "Mi recorrido")} · {lesson.title}</span>
           </div>
           <Centerpiece lesson={lesson} filled={total} size={280} />
-          <p className="serif center" style={{ fontSize: "1.18rem", lineHeight: 1.5, margin: "12px auto 0", maxWidth: "34ch", fontFamily: "var(--scripture)" }}>
+          <p className="letter center" style={{ fontSize: "1.18rem", lineHeight: 1.5, margin: "12px auto 0", maxWidth: "34ch", fontFamily: "var(--letter)" }}>
             {lesson.pattern(state)}
           </p>
 
           {/* ===== personalized closing blessing — shaped by the path walked ===== */}
           <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--line)" }}>
             {closing.pathLine ? (
-              <div className="tag center" style={{ color: "var(--gold)", marginBottom: 8 }}>{closing.pathLine}</div>
+              <div className="tag center" style={{ color: "var(--clay)", marginBottom: 8 }}>{closing.pathLine}</div>
             ) : null}
-            <p className="serif center" style={{ fontSize: "1.06rem", lineHeight: 1.62, margin: "0 auto", maxWidth: "36ch", fontFamily: "var(--scripture)", color: "var(--text-soft)" }}>
+            <p className="letter center" style={{ fontSize: "1.06rem", lineHeight: 1.62, margin: "0 auto", maxWidth: "36ch", fontFamily: "var(--letter)", color: "var(--text-soft)" }}>
               {closing.blessing}
             </p>
           </div>
@@ -145,10 +145,10 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
             {lesson.slots.map((s) =>
               state.slots[s.id] ? (
                 <div key={s.id} style={{ display: "flex", gap: 11, alignItems: "flex-start" }}>
-                  <span style={{ color: "var(--gold)", flex: "none", marginTop: 2 }}><Icon name={s.icon} size={16} /></span>
+                  <span style={{ color: "var(--clay)", flex: "none", marginTop: 2 }}><Icon name={s.icon} size={16} /></span>
                   <span>
                     <span style={{ display: "block", fontFamily: "var(--ui)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)" }}>{s.label}</span>
-                    <span className="serif" style={{ fontFamily: "var(--scripture)", fontSize: "1.02rem" }}>{state.slots[s.id]}</span>
+                    <span className="letter" style={{ fontFamily: "var(--letter)", fontSize: "1.02rem" }}>{state.slots[s.id]}</span>
                   </span>
                 </div>
               ) : null
@@ -165,8 +165,8 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
         </div>
 
         {/* ===== useful outputs ===== */}
-        <div className="pause" style={{ margin: "24px 0 6px" }}><Icon name="anchor" size={16} /></div>
-        <h2 className="serif center" style={{ fontSize: "1.5rem" }}>Para usar esta semana</h2>
+        <div className="pause" style={{ margin: "24px 0 6px" }}><Icon name="mosaic" size={16} /></div>
+        <h2 className="letter center" style={{ fontSize: "1.5rem" }}>Para usar esta semana</h2>
         <p className="lead center" style={{ marginBottom: 10 }}>Edítalos y cópialos. Son tuyos.</p>
 
         <Reveal delay={0}><Output title="Mi oración en la tormenta" kicker="Para orar" id="oracion" rows={5} drafts={drafts} setDrafts={setDrafts} onCopy={copy} /></Reveal>
@@ -186,7 +186,7 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
               <div className="meta g">Preguntas para dialogar</div>
               <ol style={{ paddingLeft: 18, marginTop: 6, display: "flex", flexDirection: "column", gap: 8 }}>
                 {lesson.discussion.map((q, i) => (
-                  <li key={i} className="serif" style={{ fontFamily: "var(--scripture)", color: "var(--text-soft)" }}>{q}</li>
+                  <li key={i} className="letter" style={{ fontFamily: "var(--letter)", color: "var(--text-soft)" }}>{q}</li>
                 ))}
               </ol>
             </div>
@@ -195,7 +195,7 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
 
         <div className="station-nav">
           <button className="btn btn-ghost" onClick={onReset}><Icon name="refresh" size={16} /> Reiniciar</button>
-          <button className="btn btn-ghost" onClick={onBack}><Icon name="anchor" size={16} /> {lesson.ui?.back || "Volver"}</button>
+          <button className="btn btn-ghost" onClick={onBack}><Icon name="mosaic" size={16} /> {lesson.ui?.back || "Volver"}</button>
         </div>
       </motion.section>
     </>
@@ -204,15 +204,15 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
 
 function Output({ title, kicker, id, rows, drafts, setDrafts, onCopy }) {
   return (
-    <div style={{ background: "var(--surface-2)", border: "1px solid var(--line)", borderRadius: "var(--radius)", padding: 16, marginBottom: 12, boxShadow: "var(--shadow)" }}>
+    <div style={{ background: "var(--surface-2)", border: "1px solid var(--line)", borderRadius: "var(--r)", padding: 16, marginBottom: 12, boxShadow: "var(--shadow)" }}>
       <div className="tag" style={{ color: "var(--muted)" }}>{kicker}</div>
-      <h4 className="serif" style={{ fontSize: "1.14rem", margin: "2px 0 6px" }}>{title}</h4>
+      <h4 className="letter" style={{ fontSize: "1.14rem", margin: "2px 0 6px" }}>{title}</h4>
       <textarea
         rows={rows}
         aria-label={title}
         value={drafts[id]}
         onChange={(e) => setDrafts((d) => ({ ...d, [id]: e.target.value }))}
-        style={{ width: "100%", border: "1.5px solid var(--line)", borderRadius: 12, background: "color-mix(in srgb, var(--bg-0) 55%, transparent)", padding: "11px 13px", fontFamily: "var(--scripture)", fontSize: "1rem", color: "var(--text)", lineHeight: 1.55 }}
+        style={{ width: "100%", border: "1px solid var(--line)", borderRadius: "var(--r)", background: "color-mix(in srgb, var(--bg-0) 55%, transparent)", padding: "11px 13px", fontFamily: "var(--letter)", fontSize: "1rem", color: "var(--text)", lineHeight: 1.55 }}
       />
       <div style={{ marginTop: 8 }}>
         <button className="btn btn-ghost" style={{ minHeight: 44, padding: "10px 16px" }} onClick={() => onCopy(drafts[id])}><Icon name="copy" size={15} /> Copiar</button>
@@ -261,10 +261,10 @@ function Ceremony({ lesson, ceremonyLine, reduced, onDone }) {
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.6, ease: EASE_OUT }} className="center">
         <div className="tag">Completo · {lesson.slots.length} de {lesson.slots.length}</div>
         {ceremonyLine ? (
-          <p className="serif" style={{ marginTop: 8, fontSize: "1.15rem", color: "var(--gold)" }}>{ceremonyLine}</p>
+          <p className="letter" style={{ marginTop: 8, fontSize: "1.15rem", color: "var(--clay)" }}>{ceremonyLine}</p>
         ) : null}
         <p className="scripture" style={{ marginTop: 8 }}>{lesson.verse.text}</p>
-        <div className="tag" style={{ marginTop: 8, color: "var(--gold)" }}>{lesson.verse.ref}</div>
+        <div className="tag" style={{ marginTop: 8, color: "var(--clay)" }}>{lesson.verse.ref}</div>
       </motion.div>
       <motion.button data-autofocus initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }} className="btn btn-primary" onClick={onDone}>
         Ver mi ancla <Icon name="arrow" size={18} />

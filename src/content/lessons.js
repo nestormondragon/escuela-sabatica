@@ -13,26 +13,24 @@ import l11 from "./l11.js";
 import l12 from "./l12.js";
 import l13 from "./l13.js";
 
-/* =================================================================
-   lessons.js — the quarter registry + "which lesson today?"
+/* =====================================================================
+   lessons.js — the quarter registry and "which lesson is it today?"
 
-   Q2 2026 runs as weekly units closing on consecutive Saturdays.
-   All 13 lessons are fully authored and run on the same engine.
-   Date routing picks the lesson whose week contains today (preferring
-   the one that *closes* on a Saturday). An override lets the reader
-   open any lesson from the picker.
-   ================================================================= */
+   Q3 2026 walks 1 and 2 Corintios: Paul writing into a fractured church.
+   Thirteen weekly units, each closing on a Sabbath. Date routing picks
+   the lesson whose week contains today; the picker can override it.
+   ===================================================================== */
 
-// Closing Saturdays for Q2 2026 (Lección 1 … 13).
+// Closing Sabbaths for Q3 2026 (Lección 1 through 13).
 const FOR_DATES = [
-  "2026-04-04", "2026-04-11", "2026-04-18", "2026-04-25",
-  "2026-05-02", "2026-05-09", "2026-05-16", "2026-05-23",
-  "2026-05-30", "2026-06-06", "2026-06-13", "2026-06-20",
-  "2026-06-27",
+  "2026-07-04", "2026-07-11", "2026-07-18", "2026-07-25",
+  "2026-08-01", "2026-08-08", "2026-08-15", "2026-08-22",
+  "2026-08-29", "2026-09-05", "2026-09-12", "2026-09-19",
+  "2026-09-26",
 ];
 
-// Every lesson, keyed by number — all complete.
-const FULL = { 1: l1, 2: l2, 3: l3, 4: l4, 5: l5, 6: l6, 7: l7, 8: l8, 9: l9, 10: l10, 11: l11, 12: l12, 13: l13 };
+const FULL = { 1: l1, 2: l2, 3: l3, 4: l4, 5: l5, 6: l6, 7: l7,
+               8: l8, 9: l9, 10: l10, 11: l11, 12: l12, 13: l13 };
 
 function minusDays(iso, n) {
   const [y, m, d] = iso.split("-").map(Number);
@@ -41,31 +39,14 @@ function minusDays(iso, n) {
   return `${dt.getFullYear()}-${p(dt.getMonth() + 1)}-${p(dt.getDate())}`;
 }
 
-function stub(number, forDate) {
-  return {
-    id: `l${number}`,
-    number,
-    quarter: "2026-Q2",
-    weekStart: minusDays(forDate, 7),
-    forDate,
-    title: `Lección ${number}`,
-    subtitle: "Esta experiencia se está preparando.",
-    complete: false,
-  };
-}
-
 export const LESSONS = FOR_DATES.map((forDate, i) => {
-  const number = i + 1;
-  const full = FULL[number];
-  if (full) {
-    return {
-      ...full,
-      forDate: full.forDate || forDate,
-      weekStart: full.weekStart || minusDays(full.forDate || forDate, 7),
-      complete: true,
-    };
-  }
-  return stub(number, forDate);
+  const full = FULL[i + 1];
+  return {
+    ...full,
+    forDate: full.forDate || forDate,
+    weekStart: full.weekStart || minusDays(full.forDate || forDate, 7),
+    complete: true,
+  };
 });
 
 export function lessonById(id) {

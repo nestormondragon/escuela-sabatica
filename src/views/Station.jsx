@@ -34,13 +34,13 @@ export default function Station({ lesson, station, state, filledCount, maestro, 
 
       <div className="kicker" style={{ marginBottom: 10 }}>
         <span className="tag">{station.tag}</span>
-        <h1 className="h1 serif" style={{ fontSize: "clamp(1.7rem,6.5vw,2.4rem)" }}>{station.title}</h1>
+        <h1 className="h1" style={{ fontSize: "clamp(1.7rem,6.5vw,2.4rem)" }}>{station.title}</h1>
         <span className="eyebrow">{station.day}</span>
         <div className="hairline" />
       </div>
 
       {cue ? (
-        <p className="serif center" style={{ fontFamily: "var(--scripture)", fontStyle: "italic", color: "var(--gold)", margin: "0 auto 10px", maxWidth: "32ch" }}>
+        <p className="letter center" style={{ fontFamily: "var(--letter)", fontStyle: "italic", color: "var(--clay)", margin: "0 auto 10px", maxWidth: "32ch" }}>
           {cue}
         </p>
       ) : null}

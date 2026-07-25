@@ -63,7 +63,7 @@ export default function Reward({ open, slotLabel, seedSub, verse, userName, onCl
             style={{
               position: "relative",
               background: "var(--surface-2)", border: "1px solid var(--line-2)",
-              borderRadius: "var(--radius-lg)", padding: "30px 26px calc(24px + var(--safe-bottom))", textAlign: "center",
+              borderRadius: "var(--r-lg)", padding: "30px 26px calc(24px + var(--safe-bottom))", textAlign: "center",
               maxWidth: 340, width: "100%", boxShadow: "var(--shadow-lg)",
             }}
           >
@@ -83,19 +83,19 @@ export default function Reward({ open, slotLabel, seedSub, verse, userName, onCl
               transition={{ ...t.springSnap, delay: 0.05 }}
               style={{
                 width: 56, height: 56, margin: "0 auto 12px", borderRadius: "50%",
-                display: "grid", placeItems: "center", color: "var(--gold)",
-                background: "color-mix(in srgb, var(--gold) 16%, transparent)",
-                boxShadow: "var(--glow-gold)",
+                display: "grid", placeItems: "center", color: "var(--clay)",
+                background: "color-mix(in srgb, var(--clay) 16%, transparent)",
+                boxShadow: "var(--glow-clay)",
               }}
             >
               <Icon name="anchor" size={28} />
             </motion.div>
-            <div style={{ fontFamily: "var(--ui)", fontSize: "0.64rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--gold)" }}>
+            <div style={{ fontFamily: "var(--ui)", fontSize: "0.64rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--clay)" }}>
               Pieza forjada
             </div>
-            <h3 className="serif" style={{ fontSize: "1.3rem", margin: "4px 0 2px" }}>{slotLabel}</h3>
+            <h3 className="letter" style={{ fontSize: "1.3rem", margin: "4px 0 2px" }}>{slotLabel}</h3>
             {seedSub ? <p className="muted" style={{ fontSize: "0.88rem" }}>{seedSub}</p> : null}
-            <p className="muted" style={{ fontSize: "0.9rem", marginTop: 6, fontFamily: "var(--scripture)", fontStyle: "italic" }}>
+            <p className="muted" style={{ fontSize: "0.9rem", marginTop: 6, fontFamily: "var(--letter)", fontStyle: "italic" }}>
               {fn ? `Bien hecho, ${fn}.` : "Bien hecho."}
             </p>
             {verse ? (

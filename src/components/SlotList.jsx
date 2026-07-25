@@ -38,25 +38,25 @@ export default function SlotList({ slots, values, firstUnfilledId, remaining, on
             data-pulse={isCurrent ? "glow" : goalGradient && state === "locked" ? "fade" : undefined}
             style={{
               display: "flex", alignItems: "center", gap: 13, width: "100%", textAlign: "left",
-              padding: "14px 16px", borderRadius: 16,
+              padding: "14px 16px", borderRadius: "var(--r)",
               border: filled
-                ? "1.5px solid color-mix(in srgb, var(--gold) 55%, transparent)"
+                ? "1.5px solid color-mix(in srgb, var(--clay) 55%, transparent)"
                 : isCurrent
-                ? "1.5px solid var(--gold)"
-                : "1.5px solid var(--line)",
+                ? "1px solid var(--clay)"
+                : "1px solid var(--line)",
               background: filled
-                ? "color-mix(in srgb, var(--gold) 9%, transparent)"
+                ? "color-mix(in srgb, var(--clay) 9%, transparent)"
                 : "var(--surface)",
               opacity: state === "locked" ? 0.5 : 1,
               cursor: open ? "pointer" : "default",
-              boxShadow: isCurrent ? "var(--glow-gold)" : "none",
+              boxShadow: isCurrent ? "var(--glow-clay)" : "none",
             }}
           >
             <span
               style={{
                 width: 38, height: 38, borderRadius: "50%", flex: "none",
                 display: "grid", placeItems: "center",
-                background: filled ? "var(--gold-deep)" : "var(--surface-3)",
+                background: filled ? "var(--clay-deep)" : "var(--surface-3)",
                 color: filled ? "#20140a" : "var(--muted)",
                 border: state === "locked" ? "1px dashed var(--faint)" : "none",
               }}
@@ -68,12 +68,12 @@ export default function SlotList({ slots, values, firstUnfilledId, remaining, on
                 {s.label}
               </span>
               <span
-                className="serif"
+                className="letter"
                 style={{
                   display: "block", marginTop: 2, fontSize: "1.05rem", lineHeight: 1.25,
                   color: filled ? "var(--text)" : "var(--muted)",
                   fontStyle: filled ? "normal" : "italic",
-                  fontFamily: filled ? "var(--scripture)" : "var(--scripture)",
+                  fontFamily: filled ? "var(--letter)" : "var(--letter)",
                   whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
                 }}
               >
@@ -81,7 +81,7 @@ export default function SlotList({ slots, values, firstUnfilledId, remaining, on
               </span>
             </span>
             {open && !filled ? (
-              <span style={{ flex: "none", color: isCurrent ? "var(--gold)" : "var(--muted)" }}>
+              <span style={{ flex: "none", color: isCurrent ? "var(--clay)" : "var(--muted)" }}>
                 <Icon name="arrow" size={18} />
               </span>
             ) : null}

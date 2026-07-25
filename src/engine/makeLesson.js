@@ -66,6 +66,12 @@ function renderTemplate(tpl, data, state) {
     .replace(/\s{2,}/g, " ")
     .replace(/\s+([.,;:!?»])/g, "$1")
     .replace(/«\s+/g, "«")
+    // A template may supply a connector ("sostener que ...") while the saved
+    // answer already begins with the same word ("que Cristo no está dividido").
+    // Collapse the duplicate: these function words are never validly doubled
+    // in Spanish, and the alternative is authoring every option around the
+    // template that happens to quote it.
+    .replace(/\b(que|de|en|con|por|para|a|y|o)\s+\1\b/gi, "$1")
     .trim();
   if (!name) s = s.charAt(0).toUpperCase() + s.slice(1);
   return s;

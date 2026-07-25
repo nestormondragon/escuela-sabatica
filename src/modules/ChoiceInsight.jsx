@@ -22,7 +22,7 @@ export default function ChoiceInsight({ config, onFill, onSkip }) {
             {config.closing ? (
               <>
                 <Pause />
-                <p className="story" style={{ borderLeftColor: "var(--gold)" }}>{config.closing}</p>
+                <p className="story" style={{ borderLeftColor: "var(--clay)" }}>{config.closing}</p>
               </>
             ) : null}
             <SaveBar

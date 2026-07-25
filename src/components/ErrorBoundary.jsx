@@ -17,7 +17,7 @@ export default class ErrorBoundary extends React.Component {
     if (this.state.error) {
       return (
         <div className="view" style={{ textAlign: "center", paddingTop: 80 }}>
-          <h2 className="serif" style={{ fontSize: "1.4rem", marginBottom: 10 }}>Algo se interrumpió</h2>
+          <h2 className="letter" style={{ fontSize: "1.4rem", marginBottom: 10 }}>Algo se interrumpió</h2>
           <p className="lead" style={{ marginBottom: 18 }}>Tu progreso está guardado. Vuelve a cargar para continuar.</p>
           <button className="btn btn-primary" onClick={() => window.location.reload()}>Recargar</button>
         </div>

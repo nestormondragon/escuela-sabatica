@@ -23,11 +23,11 @@ export default function Welcome({ lesson, initialName = "", onContinue }) {
       <motion.div className="center" style={{ marginTop: 8 }}
         initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.6, ease: EASE_OUT }}>
         <span className="tag">Lección {lesson.number} · {formatLong(lesson.forDate)}</span>
-        <h1 className="serif" style={{ fontSize: "clamp(1.9rem, 7.5vw, 2.7rem)", lineHeight: 1.05, marginTop: 8 }}>
-          Esta semana es tuya.
+        <h1 className="h1" style={{ marginTop: 8 }}>
+          Una pieza a la vez.
         </h1>
         <p className="lead" style={{ marginTop: 8 }}>
-          Vas a construir algo personal, paso a paso. Antes de empezar…
+          Vas a armar algo que solo tú puedes armar. Antes de empezar…
         </p>
       </motion.div>
 
@@ -45,12 +45,9 @@ export default function Welcome({ lesson, initialName = "", onContinue }) {
             onKeyDown={(e) => { if (e.key === "Enter") go(); }}
             maxLength={32}
             style={{
-              width: "100%", textAlign: "center", fontFamily: "var(--scripture)", fontSize: "1.3rem",
-              padding: "16px 18px", borderRadius: 16, color: "var(--text)",
-              background: "color-mix(in srgb, var(--bg-0) 45%, transparent)",
-              border: "1.5px solid var(--line-2)",
-              backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)",
-              boxShadow: "var(--shadow), inset 0 1px 0 rgba(255,255,255,0.06)",
+              width: "100%", textAlign: "center", fontFamily: "var(--letter)", fontSize: "1.3rem",
+              padding: "15px 18px", borderRadius: "var(--r)", color: "var(--text)",
+              background: "var(--surface)", border: "1px solid var(--line-2)",
             }}
           />
         </div>

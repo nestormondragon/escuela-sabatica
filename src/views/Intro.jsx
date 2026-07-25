@@ -23,14 +23,14 @@ export default function Intro({ lesson, userName, onStart }) {
     <motion.section className="view" variants={viewVariants} initial="initial" animate="animate" exit="exit">
       <div className="kicker">
         <span className="tag">Lección {lesson.number} · {formatLong(lesson.forDate)}</span>
-        <h1 className="h1 serif">{lesson.title}</h1>
+        <h1 className="h1">{lesson.title}</h1>
         <span className="sub">{lesson.subtitle}</span>
         <div className="hairline" />
       </div>
 
       <Centerpiece lesson={lesson} filled={0} size={300} />
 
-      <p className="lead center serif" style={{ fontSize: "1.16rem", color: "var(--text)", marginTop: 16, fontFamily: "var(--scripture)" }}>
+      <p className="lead center" style={{ fontSize: "1.16rem", color: "var(--text)", marginTop: 16, fontFamily: "var(--letter)" }}>
         {promiseText}
       </p>
 
@@ -47,7 +47,7 @@ export default function Intro({ lesson, userName, onStart }) {
             variants={listItem}
             style={{
               display: "flex", alignItems: "center", gap: 12, padding: "12px 15px",
-              borderRadius: 14, border: "1.5px dashed var(--line)", background: "var(--surface)", opacity: 0.62,
+              borderRadius: "var(--r)", border: "1px dashed var(--line)", background: "var(--surface)", opacity: 0.62,
             }}
           >
             <span style={{ width: 34, height: 34, borderRadius: "50%", flex: "none", display: "grid", placeItems: "center", color: "var(--muted)", border: "1px dashed var(--faint)" }}>
@@ -55,7 +55,7 @@ export default function Intro({ lesson, userName, onStart }) {
             </span>
             <span style={{ flex: 1, minWidth: 0 }}>
               <span style={{ display: "block", fontFamily: "var(--ui)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)" }}>{s.label}</span>
-              <span className="serif" style={{ display: "block", fontStyle: "italic", color: "var(--muted)", fontFamily: "var(--scripture)" }}>{s.teaser}</span>
+              <span className="letter" style={{ display: "block", fontStyle: "italic", color: "var(--muted)", fontFamily: "var(--letter)" }}>{s.teaser}</span>
             </span>
             <Icon name="lock" size={14} style={{ color: "var(--faint)" }} />
           </motion.div>

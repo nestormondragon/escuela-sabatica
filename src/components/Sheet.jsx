@@ -43,7 +43,7 @@ export default function Sheet({ open, onClose, title, children }) {
           >
             <div style={{ width: 42, height: 4, borderRadius: 999, background: "var(--line-2)", margin: "2px auto 14px" }} />
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-              <h3 className="serif" style={{ fontSize: "1.25rem" }}>{title}</h3>
+              <h3 className="letter" style={{ fontSize: "1.25rem" }}>{title}</h3>
               <button className="icon-btn" onClick={onClose} aria-label="Cerrar"><Icon name="close" size={20} /></button>
             </div>
             {children}

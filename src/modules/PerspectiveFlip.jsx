@@ -47,27 +47,27 @@ export default function PerspectiveFlip({ config, onFill, onSkip }) {
                 <div
                   style={{
                     backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden",
-                    border: "1.5px solid var(--line)", borderRadius: 15, padding: "16px 18px",
+                    border: "1px solid var(--line)", borderRadius: "var(--r)", padding: "16px 18px",
                     background: "var(--surface)", display: "flex", alignItems: "center", gap: 12,
                   }}
                 >
                   <span style={{ color: "var(--muted)" }}><Icon name="eye" size={20} /></span>
-                  <span className="serif" style={{ fontSize: "1.05rem", color: "var(--text-soft)", fontFamily: "var(--scripture)" }}>{p.see}</span>
+                  <span className="letter" style={{ fontSize: "1.05rem", color: "var(--text-soft)", fontFamily: "var(--letter)" }}>{p.see}</span>
                 </div>
                 {/* back: what Jesus sees */}
                 <div
                   style={{
                     position: "absolute", inset: 0, transform: "rotateY(180deg)",
                     backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden",
-                    border: isSel ? "1.5px solid var(--gold)" : "1.5px solid color-mix(in srgb, var(--gold) 40%, transparent)",
-                    borderRadius: 15, padding: "16px 18px",
-                    background: "color-mix(in srgb, var(--gold) 10%, transparent)",
-                    boxShadow: isSel ? "var(--glow-gold)" : "none",
+                    border: isSel ? "1px solid var(--clay)" : "1.5px solid color-mix(in srgb, var(--clay) 40%, transparent)",
+                    borderRadius: "var(--r)", padding: "16px 18px",
+                    background: "color-mix(in srgb, var(--clay) 10%, transparent)",
+                    boxShadow: isSel ? "var(--glow-clay)" : "none",
                     display: "flex", alignItems: "center", gap: 12,
                   }}
                 >
-                  <span style={{ color: "var(--gold)" }}><Icon name={isSel ? "check" : "sparkles"} size={20} /></span>
-                  <span className="serif" style={{ fontSize: "1.05rem", fontFamily: "var(--scripture)" }}>{p.sees}</span>
+                  <span style={{ color: "var(--clay)" }}><Icon name={isSel ? "check" : "sparkles"} size={20} /></span>
+                  <span className="letter" style={{ fontSize: "1.05rem", fontFamily: "var(--letter)" }}>{p.sees}</span>
                 </div>
               </motion.div>
             </motion.button>
@@ -81,7 +81,7 @@ export default function PerspectiveFlip({ config, onFill, onSkip }) {
           <motion.div className="stack" variants={reveal} initial="initial" animate="animate" key="commit">
             <Insight label="La verdad que sostienes" body={config.pairs[sel].sees} />
             <Pause />
-            <p className="story" style={{ borderLeftColor: "var(--gold)" }}>{config.teach}</p>
+            <p className="story" style={{ borderLeftColor: "var(--clay)" }}>{config.teach}</p>
             <p className="prompt-q" style={{ fontSize: "1.2rem" }}>{config.commit.prompt}</p>
             {config.commit.hint ? <p className="prompt-hint">{config.commit.hint}</p> : null}
             <div className="field">

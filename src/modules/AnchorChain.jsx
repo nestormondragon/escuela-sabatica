@@ -36,7 +36,7 @@ export default function AnchorChain({ config, onFill, onSkip }) {
                     initial={false}
                     animate={{ scaleY: isForged ? 1 : 0.18, opacity: isForged ? 1 : 0.3 }}
                     transition={{ duration: 0.4, ease: EASE_OUT }}
-                    style={{ width: 2, height: "100%", background: "var(--gold)", transformOrigin: "top" }}
+                    style={{ width: 2, height: "100%", background: "var(--clay)", transformOrigin: "top" }}
                   />
                 </div>
               ) : null}
@@ -47,22 +47,22 @@ export default function AnchorChain({ config, onFill, onSkip }) {
                 transition={t.tap}
                 data-pulse={isNext ? "glow" : undefined}
                 style={{
-                  width: "100%", textAlign: "left", padding: "13px 16px", borderRadius: 14,
-                  border: isForged ? "1.5px solid var(--gold)" : isNext ? "1.5px solid var(--gold)" : "1.5px dashed var(--line)",
-                  background: isForged ? "color-mix(in srgb, var(--gold) 10%, transparent)" : "var(--surface)",
+                  width: "100%", textAlign: "left", padding: "13px 16px", borderRadius: "var(--r)",
+                  border: isForged ? "1px solid var(--clay)" : isNext ? "1px solid var(--clay)" : "1px dashed var(--line)",
+                  background: isForged ? "color-mix(in srgb, var(--clay) 10%, transparent)" : "var(--surface)",
                   opacity: isForged || isNext ? 1 : 0.45,
                   cursor: isNext ? "pointer" : "default",
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ color: isForged ? "var(--gold)" : "var(--muted)" }}>
+                  <span style={{ color: isForged ? "var(--clay)" : "var(--muted)" }}>
                     <Icon name={isForged ? "check" : "spark"} size={16} />
                   </span>
-                  <span className="serif" style={{ fontSize: "1.1rem" }}>{link.word}</span>
+                  <span className="letter" style={{ fontSize: "1.1rem" }}>{link.word}</span>
                 </div>
                 <AnimatePresence>
                   {isForged ? (
-                    <motion.p variants={reveal} initial="initial" animate="animate" className="is" style={{ marginTop: 6, color: "var(--text-soft)", fontFamily: "var(--scripture)" }}>
+                    <motion.p variants={reveal} initial="initial" animate="animate" className="is" style={{ marginTop: 6, color: "var(--text-soft)", fontFamily: "var(--letter)" }}>
                       {link.line}
                     </motion.p>
                   ) : null}

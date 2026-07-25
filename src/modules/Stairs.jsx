@@ -96,7 +96,7 @@ export default function Stairs({ config, onFill, onSkip }) {
               onKeyDown={climbByKey}
               aria-label="Mantén presionado para subir, o pulsa Enter"
               className="btn btn-ghost btn-block"
-              style={{ userSelect: "none", touchAction: "none", minHeight: 60, borderColor: "var(--gold)" }}
+              style={{ userSelect: "none", touchAction: "none", minHeight: 60, borderColor: "var(--clay)" }}
             >
               <Icon name="chevron" size={18} style={{ transform: "rotate(-90deg)" }} />
               {progress >= 1 ? "Has llegado a la puerta" : "Mantén presionado · vista arriba"}
@@ -120,7 +120,7 @@ export default function Stairs({ config, onFill, onSkip }) {
 
         {phase === "promise" ? (
           <motion.div key="promise" className="stack" variants={reveal} initial="initial" animate="animate" exit={{ opacity: 0 }}>
-            <p className="story" style={{ borderLeftColor: "var(--gold)" }}>Dejaste <b>{leaveValue.toLowerCase()}</b> en la puerta. El guía abre, y estás delante de él.</p>
+            <p className="story" style={{ borderLeftColor: "var(--clay)" }}>Dejaste <b>{leaveValue.toLowerCase()}</b> en la puerta. El guía abre, y estás delante de él.</p>
             <p className="prompt-q">{config.promisePrompt}</p>
             <div className="opt-list">
               {config.promiseOptions.map((p, k) => (
@@ -182,7 +182,7 @@ function StairsArt({ progress }) {
       </defs>
       {/* doorway light at top */}
       <motion.rect x="232" y="6" width="40" height="60" rx="6" fill="url(#beam)" animate={{ opacity: 0.4 + progress * 0.6 }} />
-      <rect x="244" y="10" width="22" height="52" rx="4" fill="none" stroke="var(--gold)" strokeWidth="2" opacity={0.5 + progress * 0.5} />
+      <rect x="244" y="10" width="22" height="52" rx="4" fill="none" stroke="var(--clay)" strokeWidth="2" opacity={0.5 + progress * 0.5} />
       {/* steps */}
       {Array.from({ length: steps }).map((_, k) => {
         const x = 30 + k * 36;

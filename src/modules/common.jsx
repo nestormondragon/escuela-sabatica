@@ -17,7 +17,7 @@ export function Privacy({ children }) {
 export function Pause() {
   return (
     <div className="pause">
-      <Icon name="anchor" size={16} />
+      <Icon name="mosaic" size={16} />
     </div>
   );
 }

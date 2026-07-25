@@ -10,11 +10,11 @@ export default function Stub({ lesson, todayLesson, onGoToday, onOpenLessons }) 
     <motion.section className="view" variants={viewVariants} initial="initial" animate="animate" exit="exit" style={{ textAlign: "center" }}>
       <div className="kicker">
         <span className="tag">Lección {lesson.number} · {formatLong(lesson.forDate)}</span>
-        <h1 className="h1 serif">{lesson.title}</h1>
+        <h1 className="h1">{lesson.title}</h1>
         <div className="hairline" />
       </div>
-      <div style={{ margin: "20px auto", width: 64, height: 64, borderRadius: "50%", display: "grid", placeItems: "center", color: "var(--gold)", background: "color-mix(in srgb, var(--gold) 12%, transparent)" }}>
-        <Icon name="anchor" size={30} />
+      <div style={{ margin: "20px auto", width: 64, height: 64, borderRadius: "50%", display: "grid", placeItems: "center", color: "var(--clay)", background: "color-mix(in srgb, var(--clay) 12%, transparent)" }}>
+        <Icon name="mosaic" size={30} />
       </div>
       <p className="lead">Esta experiencia se está preparando. Cada semana se añade la lección correspondiente como un recorrido para forjar tu propio artefacto.</p>
 

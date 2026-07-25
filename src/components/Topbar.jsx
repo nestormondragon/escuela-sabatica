@@ -33,7 +33,7 @@ export default function Topbar({
     <header className="topbar">
       <div className="topbar-inner">
         <button className="icon-btn" onClick={onHome} aria-label="Mi ancla" title="Mi ancla">
-          <Icon name="anchor" size={21} />
+          <Icon name="mosaic" size={20} />
         </button>
         <button
           className="brand"
@@ -45,7 +45,7 @@ export default function Topbar({
           <span style={{ minWidth: 0 }}>
             <span className="ttl" style={{ display: "flex", alignItems: "center", gap: 5 }}>
               {title}
-              <Icon name="chevron" size={14} style={{ transform: "rotate(90deg)", color: "var(--gold)", flex: "none" }} />
+              <Icon name="chevron" size={14} style={{ transform: "rotate(90deg)", color: "var(--clay)", flex: "none" }} />
             </span>
             {subtitle ? <span className="sub2">{subtitle}</span> : null}
           </span>

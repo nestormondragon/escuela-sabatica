@@ -21,7 +21,7 @@ export default function MaestroPanel({ guide }) {
     <div
       style={{
         margin: "18px 0 4px", border: "1px dashed color-mix(in srgb, var(--sky) 45%, transparent)",
-        borderRadius: "var(--radius)", overflow: "hidden",
+        borderRadius: "var(--r)", overflow: "hidden",
         background: "color-mix(in srgb, var(--sky) 6%, transparent)",
       }}
     >
@@ -41,7 +41,7 @@ export default function MaestroPanel({ guide }) {
               <div style={{ fontFamily: "var(--ui)", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)" }}>
                 {label}
               </div>
-              <p style={{ marginTop: 3, color: "var(--text-soft)", fontFamily: "var(--scripture)" }}>{guide[key]}</p>
+              <p style={{ marginTop: 3, color: "var(--text-soft)", fontFamily: "var(--letter)" }}>{guide[key]}</p>
             </div>
           ) : null
         )}

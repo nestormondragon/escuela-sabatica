@@ -52,7 +52,7 @@ export default function PickReveal({ config, onFill, onSkip }) {
         {item ? (
           <motion.div key={"i" + sel} className="detail" variants={reveal} initial="initial" animate="animate" exit={{ opacity: 0 }}>
             <div className="meta">{item.ref}</div>
-            <p style={{ color: "var(--text-soft)", fontFamily: "var(--scripture)" }}>{item.meaning}</p>
+            <p style={{ color: "var(--text-soft)", fontFamily: "var(--letter)" }}>{item.meaning}</p>
           </motion.div>
         ) : null}
         {isCustom ? (
@@ -71,7 +71,7 @@ export default function PickReveal({ config, onFill, onSkip }) {
 
       {sel != null ? (
         <>
-          {config.closing ? (<><Pause /><p className="story" style={{ borderLeftColor: "var(--gold)" }}>{config.closing}</p></>) : null}
+          {config.closing ? (<><Pause /><p className="story" style={{ borderLeftColor: "var(--clay)" }}>{config.closing}</p></>) : null}
           <SaveBar
             label={config.chooseLabel || "Guardar en mi ancla"}
             disabled={!value}
