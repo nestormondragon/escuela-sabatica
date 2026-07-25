@@ -181,15 +181,27 @@ Implemented as `fs` (the fracture clock, which runs backwards for `restore`),
 `arc` flows draft -> `makeLesson` -> `scene.arc` -> `Centerpiece` -> `Motif`
 -> `CrackedVessel`.
 
-## Known gap (not yet addressed)
+## Craft level
 
-`mosaico`, `cruz`, `carta` and `alba` are **directionally correct but sit at a
-lower craft level** than the vessel: flat fills, no material, no surface
-texture. `cruz` in particular is close to a plain plus sign and `mosaico` is
-rounded squares rather than cut stone (a `tessera()` primitive with
-deterministic jitter already exists in `Motif.jsx`, unused). Bringing them up
-to the vessel's standard is the obvious next piece of work, and the user has
-NOT yet asked for it.
+All eight motifs are now built to the vessel's standard: real material,
+occlusion, bevels or grain, and a light source the whole scene agrees on.
+
+| motif | material |
+|---|---|
+| barro | thrown clay, throwing rings, mask-cut fractures, fire behind |
+| mosaico | cut stone in a grout bed, per-tile bevel and tone from seeded jitter |
+| cruz | hewn timber, grain, end grain, side faces, a lashing at the lap joint |
+| carta | papyrus with cross-laid fibre, curling lower edge, pressed wax seal |
+| alba | fluted columns with stepped bases and capitals, night lifting to dawn |
+| retrato | canvas weave, charcoal underdrawing, shadow planes, no drawn features |
+| siembra | hand opening, grain in flight, furrows, shoots |
+| muro | ashlar courses taken down to the bedrock they stood on |
+
+The Kit's tessera grid was also brought into the same language: a recessed
+grout bed, an inset bevel on every tile, and a deterministic per-tile tilt on
+set pieces (via `--tilt`, read by both the resting transform and the
+`tess-set` keyframe, so the settle animation lands on the resting angle
+instead of fighting it).
 
 ## QA gates
 

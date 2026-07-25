@@ -292,6 +292,21 @@ body {
   gap: 6px;
   margin: 4px 0 8px;
 }
+/* The grid is a mosaic panel, so the pieces are set into a grout bed rather
+   than floating on the page: the container is dark and recessed, and each
+   tile carries the same bevel the motif tesserae have (light on the top-left
+   cut, shadow on the bottom-right). Without it they read as UI chips. */
+.mosaic {
+  padding: 7px;
+  border-radius: var(--r);
+  background: color-mix(in srgb, #000 26%, var(--bg-0));
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+:root[data-mode="day"] .mosaic {
+  background: color-mix(in srgb, #191b1f 9%, var(--bg-2));
+  box-shadow: inset 0 1px 3px rgba(25, 27, 31, 0.16);
+}
+
 .tess {
   position: relative; aspect-ratio: 1 / 1;
   border: 1px solid var(--line); border-radius: var(--r-sm);
@@ -299,16 +314,35 @@ body {
   display: grid; place-items: center;
   color: var(--faint);
   cursor: pointer; padding: 0;
+  /* the cut edge: catches light above, drops shadow below */
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.07),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.30);
   transition: background 0.3s var(--ease-out), border-color 0.3s var(--ease-out),
-              color 0.3s var(--ease-out), transform 0.16s var(--ease-out);
+              color 0.3s var(--ease-out), transform 0.16s var(--ease-out),
+              box-shadow 0.3s var(--ease-out);
 }
 .tess:active { transform: scale(0.96); }
 .tess[data-state="set"] {
-  background: color-mix(in srgb, var(--clay) 20%, transparent);
+  background: color-mix(in srgb, var(--clay) 22%, transparent);
   border-color: color-mix(in srgb, var(--clay) 52%, transparent);
   color: var(--clay);
-  animation: tess-set 0.5s var(--ease-out) both;
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.13),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.34);
+  /* The resting tilt lives on the element and the keyframe reads the same
+     custom property, so the settle animation lands exactly on the resting
+     transform instead of fighting it. No `both` fill, so :active still works. */
+  transform: rotate(var(--tilt, 0deg));
+  animation: tess-set 0.5s var(--ease-out);
 }
+/* Set pieces are hand-laid, so no two sit perfectly true. nth-child keeps the
+   variation deterministic: a tile that re-randomised on every paint would
+   shimmer on the wall. */
+.tess[data-state="set"]:nth-child(3n)   { --tilt: 0.7deg; }
+.tess[data-state="set"]:nth-child(3n+1) { --tilt: -0.5deg; }
+.tess[data-state="set"]:nth-child(4n+2) { --tilt: 0.4deg; }
+.tess[data-state="set"]:active { transform: rotate(var(--tilt, 0deg)) scale(0.96); }
 .tess[data-state="next"] {
   border-color: var(--clay); color: var(--clay);
   animation: tess-wait 2.6s var(--ease-in-out) infinite;
@@ -321,8 +355,8 @@ body {
 /* a tessera settling into the wall */
 @keyframes tess-set {
   0%   { transform: scale(0.82) rotate(-4deg); opacity: 0; }
-  60%  { transform: scale(1.04) rotate(1deg); opacity: 1; }
-  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  60%  { transform: scale(1.04) rotate(var(--tilt, 0deg)); opacity: 1; }
+  100% { transform: scale(1) rotate(var(--tilt, 0deg)); opacity: 1; }
 }
 @keyframes tess-wait {
   0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--clay) 34%, transparent); }

@@ -82,56 +82,94 @@ function tessera(x, y, w, h, seed) {
 }
 
 /* ---------------------------------------------------------------- mosaico */
-/* Tesserae start scattered and dim. As stages advance they slide onto the
-   grid, warm to clay, and resolve into a cross standing in the centre. */
+/* Real tesserae: hand-cut stone set in grout, each tile slightly off-true,
+   each with its own tone. The figure that resolves out of the field is a
+   cross (1 Cor. 1:10, one image out of many fragments).
+
+   v1 was rounded rectangles of one colour, which read as a loading grid.
+   The difference here is grout showing between the pieces, a bevel on every
+   tile so it has thickness, and per-tile colour variation from the seeded
+   jitter, which is what a mosaic actually looks like up close. */
 function Mosaico({ s }) {
-  const TILES = [
-    [1, 0, -14, -9], [2, 0, 12, -11], [0, 1, -16, 4], [1, 1, -5, -4],
-    [2, 1, 6, -6], [3, 1, 15, 7], [1, 2, -8, 9], [2, 2, 9, 10],
-    [0, 3, -15, -8], [1, 3, -4, 12], [2, 3, 5, 11], [3, 3, 16, -5],
-    [1, 4, -11, 8], [2, 4, 10, 9],
-  ];
-  const CROSS = new Set([0, 1, 3, 4, 6, 7, 9, 10, 12, 13]);
   const t = s / 4;
-  const cell = 21;
-  const ox = 29;
-  const oy = 15;
+  const COLS = 7;
+  const ROWS = 8;
+  const CELL = 15.5;
+  const GAP = 1.9;
+  const OX = 80 - (COLS * CELL) / 2;
+  const OY = 78 - (ROWS * CELL) / 2;
+
+  // the Latin cross carried by the figure tiles
+  const inFigure = (c, r) => (c === 3 && r >= 1 && r <= 6) || (r === 3 && c >= 1 && c <= 5);
+
+  const tiles = [];
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const i = r * COLS + c;
+      const fig = inFigure(c, r);
+      // field tiles settle early, the figure resolves last
+      const arrive = fig
+        ? Math.max(0, Math.min(1, (s - 1.2) / 2.2))
+        : Math.max(0, Math.min(1, s / 1.8));
+      const dx = jitter(i * 3 + 1) * 22 * (1 - arrive);
+      const dy = jitter(i * 3 + 2) * 22 * (1 - arrive);
+      const x = OX + c * CELL + dx;
+      const y = OY + r * CELL + dy;
+      // stone tone: the field is cool and quiet, the figure warms to clay
+      const warm = fig ? 26 + arrive * 68 : 10 + arrive * 16;
+      const shade = 0.82 + jitter(i * 3 + 3) * 0.18;
+      tiles.push({ i, x, y, fig, arrive, warm, shade });
+    }
+  }
 
   return (
     <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
       <defs>
-        <radialGradient id="mo-lume" cx="50%" cy="46%" r="52%">
-          <stop offset="0%" stopColor="var(--clay)" stopOpacity="0.34" />
+        <radialGradient id="mo-lume" cx="50%" cy="46%" r="54%">
+          <stop offset="0%" stopColor="var(--clay)" stopOpacity="0.32" />
           <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
         </radialGradient>
+        {/* grout: the dark bed the tesserae are pressed into */}
+        <linearGradient id="mo-grout" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#16181d" />
+          <stop offset="100%" stopColor="#0e1014" />
+        </linearGradient>
       </defs>
 
-      <circle cx="80" cy="76" r="66" fill="url(#mo-lume)"
-              style={{ opacity: 0.25 + t * 0.75, transition: `opacity ${EASE}` }} />
+      {/* the mortar bed, sized to the finished panel */}
+      <rect x={OX - 3} y={OY - 3} width={COLS * CELL + 6} height={ROWS * CELL + 6}
+            rx="2" fill="url(#mo-grout)"
+            style={{ opacity: 0.42 + t * 0.5, transition: `opacity ${EASE}` }} />
 
-      {TILES.map(([cx, cy, dx, dy], i) => {
-        const inFigure = CROSS.has(i);
-        const arrive = inFigure ? Math.max(0, (s - 1) / 3) : Math.min(1, s / 2);
-        const x = ox + cx * cell + dx * (1 - arrive);
-        const y = oy + cy * cell + dy * (1 - arrive);
-        const lit = inFigure ? arrive : arrive * 0.42;
+      <circle cx="80" cy="78" r="68" fill="url(#mo-lume)"
+              style={{ opacity: 0.2 + t * 0.8, transition: `opacity ${EASE}` }} />
+
+      {tiles.map(({ i, x, y, fig, arrive, warm, shade }) => {
+        const w = CELL - GAP;
         return (
-          <rect
-            key={i}
-            x={x} y={y} width={cell - 4} height={cell - 4} rx="1.5"
-            className={s >= 4 && inFigure ? "tessera glowing" : "tessera"}
-            style={{
-              fill: `color-mix(in srgb, var(--clay) ${18 + lit * 74}%, var(--bg-2))`,
-              stroke: "var(--line-2)",
-              strokeWidth: 0.6,
-              opacity: 0.4 + arrive * 0.6,
-              transform: `rotate(${(1 - arrive) * (i % 2 ? 7 : -7)}deg)`,
-              transformBox: "fill-box",
-              transformOrigin: "50% 50%",
-              transition: `transform ${EASE}, opacity ${EASE}, fill ${EASE}`,
-              animationDelay: `${(i % 5) * 0.32}s`,
-            }}
-          />
+          <g key={i}
+             className={s >= 4 && fig ? "tessera glowing" : "tessera"}
+             style={{
+               opacity: 0.3 + arrive * 0.7,
+               transform: `rotate(${jitter(i * 5) * (1 - arrive) * 14 + jitter(i * 7) * 2.5}deg)`,
+               transformBox: "fill-box", transformOrigin: "50% 50%",
+               transition: `opacity ${EASE}, transform ${EASE}`,
+               animationDelay: `${(i % 6) * 0.3}s`,
+             }}>
+            {/* the cut face */}
+            <path d={tessera(x, y, w, w, i)}
+                  style={{
+                    fill: `color-mix(in srgb, var(--clay) ${warm}%, #313640)`,
+                    filter: `brightness(${shade.toFixed(2)})`,
+                    transition: `fill ${EASE}`,
+                  }} />
+            {/* bevel: light catches the top-left cut, shadow sits bottom-right,
+                which is what gives each piece its thickness */}
+            <path d={`M ${x + 0.6} ${y + w - 0.6} L ${x + 0.6} ${y + 0.6} L ${x + w - 0.6} ${y + 0.6}`}
+                  fill="none" stroke="#ffffff" strokeWidth="0.9" opacity={0.16 * arrive} />
+            <path d={`M ${x + w - 0.6} ${y + 0.6} L ${x + w - 0.6} ${y + w - 0.6} L ${x + 0.6} ${y + w - 0.6}`}
+                  fill="none" stroke="#000000" strokeWidth="0.9" opacity={0.28 * arrive} />
+          </g>
         );
       })}
     </svg>
@@ -139,41 +177,99 @@ function Mosaico({ s }) {
 }
 
 /* ------------------------------------------------------------------- cruz */
+/* Rough-hewn timber, not a symbol. Two squared beams with visible grain, end
+   grain on the cut faces, a lap joint at the crossing and a lashing over it.
+
+   v1 was a flat plus sign in the accent colour, which read as a pharmacy
+   icon. The fix is material (grain, tone, end grain), depth (a side face on
+   each beam) and asymmetry (the timber is not machined). */
 function Cruz({ s }) {
   const t = s / 4;
+  const rise = Math.max(0, Math.min(1, s / 2.2));        // upright goes up first
+  const cross = Math.max(0, Math.min(1, (s - 1.4) / 2)); // then the crossbeam
+  const lit = Math.max(0, Math.min(1, (s - 2.6) / 1.4)); // then the light on it
+
+  const GRAIN = [0.18, 0.34, 0.52, 0.68, 0.84];
+
   return (
     <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
       <defs>
-        <radialGradient id="cr-halo" cx="50%" cy="44%" r="50%">
-          <stop offset="0%" stopColor="var(--clay)" stopOpacity="0.42" />
+        <linearGradient id="cz-wood" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#8a5a3a" />
+          <stop offset="42%" stopColor="#6b422a" />
+          <stop offset="100%" stopColor="#3a2116" />
+        </linearGradient>
+        <linearGradient id="cz-wood-h" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#8a5a3a" />
+          <stop offset="45%" stopColor="#6b422a" />
+          <stop offset="100%" stopColor="#3a2116" />
+        </linearGradient>
+        <radialGradient id="cz-halo" cx="50%" cy="40%" r="52%">
+          <stop offset="0%" stopColor="var(--clay-hi)" stopOpacity="0.5" />
           <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
         </radialGradient>
       </defs>
 
-      <circle cx="80" cy="72" r="60" fill="url(#cr-halo)"
+      <circle cx="80" cy="66" r="62" fill="url(#cz-halo)"
               className={s >= 3 ? "halo" : undefined}
-              style={{ opacity: t * 0.95, transition: `opacity ${EASE}` }} />
+              style={{ opacity: lit * 0.95, transition: `opacity ${EASE}` }} />
 
-      <rect x="73" y="24" width="14" height="104" rx="1"
-            style={{
-              fill: `color-mix(in srgb, var(--clay) ${26 + t * 70}%, var(--bg-2))`,
-              transform: `scaleY(${0.16 + t * 0.84})`,
-              transformBox: "fill-box", transformOrigin: "50% 34%",
-              transition: `transform ${EASE}, fill ${EASE}`,
-            }} />
-      <rect x="38" y="56" width="84" height="13" rx="1"
-            style={{
-              fill: `color-mix(in srgb, var(--clay) ${26 + t * 70}%, var(--bg-2))`,
-              transform: `scaleX(${0.12 + Math.max(0, (s - 0.5) / 3.5) * 0.88})`,
-              transformBox: "fill-box", transformOrigin: "50% 50%",
-              transition: `transform ${EASE}, fill ${EASE}`,
-            }} />
+      {/* The beam starts felled, lying on the ground ("madero desnudo"), and
+          is raised on its foot. Rotating rather than scaling means stage 0
+          shows a real timber instead of a stub of one. */}
+      <g style={{
+        transform: `rotate(${(1 - rise) * -82}deg)`,
+        transformBox: "view-box", transformOrigin: "80px 140px",
+        transition: `transform ${EASE}`,
+      }}>
+        {/* side face, giving the beam depth */}
+        <path d="M 88 30 L 93 33 L 93 141 L 88 140 Z" fill="#2e1a11" />
+        {/* front face */}
+        <rect x="71" y="30" width="17" height="110" fill="url(#cz-wood)" />
+        {/* end grain on the top cut */}
+        <path d="M 71 30 L 88 30 L 93 33 L 76 33 Z" fill="#8a5a3a" opacity="0.85" />
+        {/* grain */}
+        {GRAIN.map((g, i) => (
+          <path key={i}
+                d={`M ${72 + g * 15} 32 C ${71 + g * 15} 60, ${73 + g * 15} 96, ${72 + g * 15} 138`}
+                fill="none" stroke="#2a170f" strokeWidth={i % 2 ? 0.5 : 0.8} opacity="0.32" />
+        ))}
+      </g>
 
-      {s >= 2 &&
+      {/* crossbeam: carried up and laid across, so it grows from the centre */}
+      <g style={{
+        transform: `scaleX(${0.08 + cross * 0.92})`,
+        transformBox: "view-box", transformOrigin: "80px 62px",
+        transition: `transform ${EASE}`,
+      }}>
+        <path d="M 34 70 L 37 74 L 126 74 L 123 70 Z" fill="#2e1a11" />
+        <rect x="34" y="54" width="92" height="16" fill="url(#cz-wood-h)" />
+        <path d="M 34 54 L 34 70 L 37 74 L 37 58 Z" fill="#7d5233" opacity="0.8" />
+        {GRAIN.map((g, i) => (
+          <path key={i}
+                d={`M 36 ${55.5 + g * 13} C 62 ${54.5 + g * 13}, 98 ${56.5 + g * 13}, 124 ${55.5 + g * 13}`}
+                fill="none" stroke="#2a170f" strokeWidth={i % 2 ? 0.5 : 0.8} opacity="0.3" />
+        ))}
+      </g>
+
+      {/* lashing over the lap joint, once both beams are there */}
+      <g style={{ opacity: cross, transition: `opacity ${EASE}` }}>
+        {[57.5, 62, 66.5].map((y, i) => (
+          <g key={y}>
+            <path d={`M ${69 - i * 0.5} ${y} C 74 ${y - 1.3}, 86 ${y - 1.3}, ${91 + i * 0.5} ${y}`}
+                  fill="none" stroke="#4a3320" strokeWidth="2.6" strokeLinecap="round" opacity="0.9" />
+            <path d={`M ${69 - i * 0.5} ${y - 0.5} C 74 ${y - 1.8}, 86 ${y - 1.8}, ${91 + i * 0.5} ${y - 0.5}`}
+                  fill="none" stroke="#8a6a44" strokeWidth="1" strokeLinecap="round" opacity="0.55" />
+          </g>
+        ))}
+      </g>
+
+      {/* motes lifting off the timber once the light is on it */}
+      {s >= 3 &&
         [0, 1, 2].map((i) => (
-          <circle key={i} className="ember" r="1.9"
-                  cx={62 + i * 18} cy={116}
-                  style={{ fill: "var(--clay-hi)", animationDelay: `${i * 1.15}s` }} />
+          <circle key={i} className="ember" r="1.1" cx={62 + i * 17} cy={124}
+                  style={{ fill: "var(--clay-hi)", opacity: 0.7,
+                           animationDelay: `${i * 1.35}s` }} />
         ))}
     </svg>
   );
@@ -188,103 +284,212 @@ function Barro({ s, size, arc }) {
 }
 
 /* ------------------------------------------------------------------ carta */
+/* A papyrus sheet: horizontal fibre, a curling lower edge, ink that behaves
+   like writing rather than tidy bars, and a wax seal with a pressed
+   impression and real thickness (2 Cor. 3:2, "ustedes son nuestra carta").
+
+   v1 was a grey rectangle with even grey bars and a flat disc. */
 function Carta({ s }) {
   const t = s / 4;
-  const LINES = [
-    [56, 62, 46], [56, 71, 52], [56, 80, 38],
-    [56, 89, 50], [56, 98, 44], [56, 107, 30],
-  ];
+  const unroll = Math.max(0, Math.min(1, s / 1.6));
+  const sealed = Math.max(0, Math.min(1, (s - 3) / 1));
+
+  /* Ink laid down line by line, broken into words of uneven length so it
+     reads as writing. Deterministic, so the letter never reshuffles. */
+  const LINES = [];
+  for (let i = 0; i < 7; i++) {
+    const y = 56 + i * 9.5;
+    const words = [];
+    let x = 52;
+    let k = 0;
+    while (x < 104 && k < 6) {
+      const w = 5 + Math.abs(jitter(i * 11 + k)) * 12;
+      if (x + w > 106) break;
+      words.push([x, w]);
+      x += w + 2.6;
+      k++;
+    }
+    LINES.push({ y, words, at: i * 0.42 });
+  }
+
   return (
     <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
       <defs>
-        <radialGradient id="ca-lume" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="var(--clay)" stopOpacity="0.28" />
+        <linearGradient id="ca-pap" x1="10%" y1="0%" x2="90%" y2="100%">
+          <stop offset="0%" stopColor="#d8c39a" />
+          <stop offset="55%" stopColor="#c2a878" />
+          <stop offset="100%" stopColor="#9c8154" />
+        </linearGradient>
+        <linearGradient id="ca-curl" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#8a7047" />
+          <stop offset="100%" stopColor="#c2a878" />
+        </linearGradient>
+        <radialGradient id="ca-wax" cx="38%" cy="32%" r="62%">
+          <stop offset="0%" stopColor="#e0785c" />
+          <stop offset="70%" stopColor="#a8331f" />
+          <stop offset="100%" stopColor="#6b1f12" />
+        </radialGradient>
+        <radialGradient id="ca-lume" cx="50%" cy="46%" r="52%">
+          <stop offset="0%" stopColor="var(--clay)" stopOpacity="0.26" />
           <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
         </radialGradient>
+        <clipPath id="ca-sheet">
+          <path d="M 44 30 L 116 30 L 116 118 C 100 124, 60 124, 44 118 Z" />
+        </clipPath>
       </defs>
 
-      <circle cx="80" cy="82" r="60" fill="url(#ca-lume)"
-              style={{ opacity: 0.3 + t * 0.7, transition: `opacity ${EASE}` }} />
+      <circle cx="80" cy="76" r="64" fill="url(#ca-lume)"
+              style={{ opacity: 0.28 + t * 0.72, transition: `opacity ${EASE}` }} />
 
-      <rect x="48" y="44" width="64" height="80" rx="1.5"
-            style={{
-              fill: "var(--surface-3)", stroke: "var(--line-2)", strokeWidth: 1.3,
-              transform: `scaleY(${0.2 + t * 0.8})`,
-              transformBox: "fill-box", transformOrigin: "50% 0%",
-              transition: `transform ${EASE}`,
-            }} />
+      {/* the sheet, unrolling downward from the top edge */}
+      <g style={{
+        transform: `scaleY(${0.22 + unroll * 0.78})`,
+        transformBox: "view-box", transformOrigin: "80px 30px",
+        transition: `transform ${EASE}`,
+      }}>
+        <path d="M 44 30 L 116 30 L 116 118 C 100 124, 60 124, 44 118 Z"
+              fill="url(#ca-pap)" />
+        <g clipPath="url(#ca-sheet)">
+          {/* papyrus is laid in strips, so the fibre runs both ways */}
+          {[36, 44, 52, 60, 68, 76, 84, 92, 100, 108, 116].map((y) => (
+            <line key={y} x1="44" y1={y} x2="116" y2={y}
+                  stroke="#8a7047" strokeWidth="0.55" opacity="0.28" />
+          ))}
+          {[52, 62, 72, 82, 92, 102, 112].map((x) => (
+            <line key={x} x1={x} y1="30" x2={x} y2="124"
+                  stroke="#8a7047" strokeWidth="0.4" opacity="0.14" />
+          ))}
+          {/* the sheet curls, so the lower edge falls into shadow */}
+          <path d="M 44 108 C 60 116, 100 116, 116 108 L 116 124 L 44 124 Z"
+                fill="url(#ca-curl)" opacity="0.5" />
+        </g>
 
-      {LINES.map(([x, y, w], i) => {
-        const shown = Math.max(0, Math.min(1, s - i * 0.62));
-        return (
-          <rect key={i} x={x} y={y} height="2.4" rx="1.2" width={w}
-                style={{
-                  fill: "var(--muted)",
-                  opacity: shown * 0.85,
-                  transform: `scaleX(${shown})`,
-                  transformBox: "fill-box", transformOrigin: "0% 50%",
-                  transition: `transform ${EASE}, opacity ${EASE}`,
-                }} />
-        );
-      })}
+        {/* the writing */}
+        {LINES.map((ln, i) => {
+          const shown = Math.max(0, Math.min(1, s - ln.at * 0.9));
+          return (
+            <g key={i} style={{ opacity: shown, transition: `opacity ${EASE}` }}>
+              {ln.words.map(([x, w], k) => (
+                <rect key={k} x={x} y={ln.y} width={w * shown} height="1.9" rx="0.9"
+                      fill="#3d2f1c" opacity="0.72"
+                      style={{ transition: `width ${EASE}` }} />
+              ))}
+            </g>
+          );
+        })}
+      </g>
 
-      <circle cx="80" cy="124" r="11"
-              className={s >= 4 ? "halo" : undefined}
-              style={{
-                fill: `color-mix(in srgb, var(--clay) ${34 + t * 66}%, var(--bg-2))`,
-                stroke: "var(--clay-deep)", strokeWidth: 1.2,
-                transition: `fill ${EASE}`,
-              }} />
-      <path d="M75 124 L79 128 L86 120" fill="none" strokeLinecap="round" strokeLinejoin="round"
-            style={{
-              stroke: "var(--clay-ink)", strokeWidth: 1.8,
-              opacity: s >= 4 ? 1 : 0, transition: `opacity ${EASE}`,
-            }} />
+      {/* wax seal: pressed, so it has a raised rim, an impression and a
+          shadow where it sits proud of the sheet */}
+      <g style={{ opacity: Math.max(0, Math.min(1, (s - 2.2) / 1.2)),
+                  transition: `opacity ${EASE}` }}>
+        <ellipse cx="80" cy="127" rx="15" ry="4" fill="#000" opacity="0.32" />
+        <path d="M 66 120 C 64 112, 70 106, 80 106 C 90 106, 96 112, 94 120
+                 C 92 127, 86 130, 80 130 C 74 130, 68 127, 66 120 Z"
+              fill="url(#ca-wax)" />
+        {/* the impression: a chi-rho suggestion, struck into the wax */}
+        <path d="M 80 111 L 80 125 M 75 115 C 78 112, 84 113, 83 117 C 82 120, 78 120, 76 119"
+              fill="none" stroke="#5e1a0f" strokeWidth="1.6"
+              strokeLinecap="round" opacity="0.75" />
+        <path d="M 69 114 C 71 109, 76 107, 80 107" fill="none"
+              stroke="#f0a184" strokeWidth="1.5" strokeLinecap="round"
+              opacity={0.5 + sealed * 0.4} />
+      </g>
     </svg>
   );
 }
 
 /* ------------------------------------------------------------------- alba */
+/* Dawn between fluted Corinthian columns (1 Cor. 15). The columns get real
+   architecture: a stepped base, a fluted shaft that tapers, and a capital
+   with acanthus suggestion. v1 was four plain rectangles with cap slabs. */
 function Alba({ s }) {
   const t = s / 4;
-  const COLS = [30, 52, 108, 130];
+  const COLS = [30, 56, 104, 130];
+  const FLUTE = [-3.5, 0, 3.5];
+
   return (
     <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
       <defs>
+        <linearGradient id="al-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#131a2a" />
+          <stop offset="55%" stopColor="#3a2a3a" />
+          <stop offset="100%" stopColor="#8a4a35" />
+        </linearGradient>
         <radialGradient id="al-sun" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="var(--clay-hi)" stopOpacity="1" />
-          <stop offset="60%" stopColor="var(--clay)" stopOpacity="0.55" />
-          <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
+          <stop offset="0%" stopColor="#fff3d6" />
+          <stop offset="34%" stopColor="#ffc98a" />
+          <stop offset="70%" stopColor="#e8763f" stopOpacity="0.6" />
+          <stop offset="100%" stopColor="#e8763f" stopOpacity="0" />
         </radialGradient>
+        <linearGradient id="al-stone" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#9aa0a8" />
+          <stop offset="38%" stopColor="#6e747d" />
+          <stop offset="100%" stopColor="#3a3e46" />
+        </linearGradient>
+        <clipPath id="al-frame"><rect x="0" y="0" width="160" height="132" /></clipPath>
       </defs>
 
-      {[[40, 34], [66, 24], [96, 30], [122, 40], [54, 48], [110, 52]].map(([x, y], i) => (
-        <circle key={i} className="star" cx={x} cy={y} r="1.3"
-                style={{
-                  fill: "var(--text-soft)",
-                  opacity: Math.max(0, 1 - t * 1.5) * 0.8,
-                  transition: `opacity ${EASE}`,
-                  animationDelay: `${i * 0.7}s`,
-                }} />
-      ))}
+      <g clipPath="url(#al-frame)">
+        {/* the sky warms as the night ends */}
+        <rect x="0" y="0" width="160" height="132" fill="url(#al-sky)" />
+        {/* "noche cerrada": the warmth in the sky gradient is veiled until
+            the light actually arrives, so stage 0 is night rather than dusk */}
+        <rect x="0" y="0" width="160" height="132" fill="#0b0d13"
+              style={{ opacity: Math.max(0, 0.82 - t * 0.92), transition: `opacity ${EASE}` }} />
 
-      <circle cx="80" cy={128 - t * 46} r="30" fill="url(#al-sun)"
-              className={s >= 3 ? "halo" : undefined}
-              style={{ opacity: 0.2 + t * 0.8, transition: `opacity ${EASE}` }} />
+        {/* stars, put out by the light */}
+        {[[40, 30], [66, 20], [96, 26], [122, 36], [52, 44], [110, 48], [80, 16]].map(([x, y], i) => (
+          <circle key={i} className="star" cx={x} cy={y} r="1.1"
+                  style={{
+                    fill: "#e9e7e2",
+                    opacity: Math.max(0, 1 - t * 1.6) * 0.85,
+                    transition: `opacity ${EASE}`,
+                    animationDelay: `${i * 0.6}s`,
+                  }} />
+        ))}
 
-      {COLS.map((x, i) => (
-        <g key={i}>
-          <rect x={x} y="56" width="13" height="62"
-                style={{
-                  fill: `color-mix(in srgb, var(--surface-3) ${100 - t * 26}%, var(--clay))`,
-                  transition: `fill ${EASE}`,
-                }} />
-          <rect x={x - 3} y="52" width="19" height="5" rx="1" style={{ fill: "var(--surface-3)" }} />
-          <rect x={x - 3} y="117" width="19" height="4" rx="1" style={{ fill: "var(--surface-3)" }} />
-        </g>
-      ))}
+        {/* the sun clearing the horizon between the middle columns */}
+        <circle cx="80" cy={144 - t * 56} r="30" fill="url(#al-sun)"
+                className={s >= 3 ? "halo" : undefined}
+                style={{ opacity: 0.05 + t * 0.95, transition: `cy ${EASE}, opacity ${EASE}` }} />
 
-      <rect x="10" y="120" width="140" height="2" rx="1" style={{ fill: "var(--line-2)" }} />
+        {COLS.map((x, i) => {
+          const w = 15;
+          return (
+            <g key={x}>
+              {/* stepped base */}
+              <rect x={x - 4} y="120" width={w + 8} height="5" fill="#2f333a" />
+              <rect x={x - 2} y="115" width={w + 4} height="5" fill="#41464e" />
+              {/* fluted shaft, tapering slightly toward the capital */}
+              <path d={`M ${x} 118 L ${x + 1.2} 44 L ${x + w - 1.2} 44 L ${x + w} 118 Z`}
+                    fill="url(#al-stone)" />
+              {FLUTE.map((f, k) => (
+                <line key={k} x1={x + w / 2 + f} y1="46" x2={x + w / 2 + f * 1.15} y2="117"
+                      stroke="#2b2f35" strokeWidth="1" opacity="0.42" />
+              ))}
+              {/* capital: abacus over an acanthus bell */}
+              <path d={`M ${x - 1} 44 C ${x + 2} 36, ${x + w - 2} 36, ${x + w + 1} 44 Z`}
+                    fill="#5c626b" />
+              <path d={`M ${x + 1} 42 C ${x + 4} 37, ${x + 6} 39, ${x + 5} 43
+                        M ${x + w - 1} 42 C ${x + w - 4} 37, ${x + w - 6} 39, ${x + w - 5} 43`}
+                    fill="none" stroke="#8f959e" strokeWidth="0.9" opacity="0.6" />
+              <rect x={x - 3} y="31" width={w + 6} height="5" rx="0.8" fill="#767c85" />
+              {/* the lit edge, stronger on the columns nearest the sun */}
+              <rect x={x + 0.6} y="44" width="1.6" height="74"
+                    fill="#f0c79a"
+                    style={{
+                      opacity: t * (i === 1 || i === 2 ? 0.55 : 0.28),
+                      transition: `opacity ${EASE}`,
+                    }} />
+            </g>
+          );
+        })}
+      </g>
+
+      {/* the stylobate the colonnade stands on */}
+      <rect x="8" y="125" width="144" height="4" rx="1" fill="#2f333a" />
+      <rect x="4" y="129" width="152" height="4" rx="1" fill="#252930" />
     </svg>
   );
 }
