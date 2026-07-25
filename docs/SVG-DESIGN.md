@@ -30,13 +30,22 @@ The vessel is composed in this order, each group with a stable id:
 | 1 | `g-shadow` | cast shadow ellipse; grounds the object |
 | 2 | `g-handles` | drawn **before** the body so the body occludes their inner edge |
 | 3 | `g-fire` | the light inside, clipped to the silhouette |
-| 4 | `g-body` | ceramic, painted **through the crack mask** |
-| 5 | `g-bloom` | tight spill past the ceramic edge |
-| 6 | `g-fracture-shadows` | dark lip where each sherd lifts away |
-| 7 | `g-rim` | neck, flared lip, dark interior, catch-light |
+| 4 | `g-body` | ceramic, painted **through the crack mask**. Contains, nested inside it: throwing rings, occlusion, sheen, coral bounce, grain, `g-hairlines`, `g-fracture-shadows` |
+| 5 | `g-bloom` | tight spill past the ceramic edge; source clipped **before** blur |
+| 6 | `g-rim` | neck, flared lip, dark interior, catch-light |
+| 7 | `g-debug` | opt-in overlay: silhouette, centrelines, unblurred bloom source |
 
 Occlusion is what creates depth: handles behind the body, fire behind the
 ceramic, bloom in front of both.
+
+Anything that must never appear *inside* an opening lives inside `g-body`,
+because the crack mask removes it along with the clay. That is why the
+contact shadows and hairlines are nested there rather than drawn on top.
+
+**No ring foot.** The base is a flattened curve grounded by the cast shadow.
+A thrown storage jar of this type often has a foot ring; this one does not,
+and that remains a known simplification rather than a decision the geometry
+expresses.
 
 ---
 
@@ -52,7 +61,7 @@ must read as a physical material in both themes rather than as a UI accent.
 | clay mid | `#9d5836` |
 | clay shadow | `#6b3a24` |
 | clay deep | `#3b2116` |
-| handles / foot | `#8a4d31` → `#331c12` |
+| handles | `#8a4d31` → `#331c12` |
 | fire core | `#fff6e4` → `#ffd398` → `#f98f4c` → `#b8431f` |
 | coral bounce | `#ff9a5e` at ≤0.5 alpha |
 
@@ -105,7 +114,40 @@ Fracture spec, all satisfied by `FRACTURES`:
 - each fracture carries an offset dark sliver beneath it, which is what gives
   the opening ceramic thickness
 
-Hairlines never open wide enough to show fire; they read as damage only.
+### Hairlines are surface damage, not openings
+
+Three hairlines exist. They are **not** in the subtraction mask: they are
+drawn as narrow dark fills on the ceramic inside `g-hairlines`, so they never
+expose the fire. This is an explicit model choice (option B of the review):
+a hairline that leaked light would contradict the reading that the *wide*
+fracture is what lets the treasure out.
+
+Verified in the DOM: 4 mask holes (primary + 3 branches) and 3 hairlines
+painted on clay. In compact mode: 2 holes, 0 hairlines.
+
+### The reveal
+
+The fracture propagates from origin to tip by **truncating the geometry**:
+`truncate()` cuts the centreline and its width profile at the current reveal
+front, and the sliver is rebuilt from the shortened polyline. Every consumer
+(mask hole, contact shadow, bloom source, debug overlay) derives from that
+one call, so they cannot disagree.
+
+The intended implementation was the more elegant one: stroke the centreline
+with `pathLength="1"`, animate `stroke-dashoffset`, and use it as a mask on
+the filled sliver. **It does not work in this position.** A `<g mask="…">`
+nested inside a `<mask>` is ignored by Chromium; setting the reveal stroke to
+`none` left the fracture rendering in full, which proves the nested mask was
+never applied. Geometric truncation is engine-proof and was verified
+identical in Chromium and WebKit.
+
+Progress is driven by a self-cancelling `requestAnimationFrame` tween. This
+is a one-shot transition, not an ambient loop, so it does not fall under the
+project's rule that looping motion must be CSS. Under reduced motion it snaps
+to the final value.
+
+`revealOverride` pins the front for capture and testing; the app never sets
+it. The lab uses it to photograph true intermediate frames of this component.
 
 ---
 
@@ -113,10 +155,11 @@ Hairlines never open wide enough to show fire; they read as damage only.
 
 | Moment | Duration | Notes |
 |---|---|---|
-| entrance | 560 ms | `vessel-settle`, opacity + 0.955→1 scale, no bounce |
-| fracture open | 700 ms | mask sliver widths scale with stage |
-| fire / light | 900 ms | opacity transition per stage |
-| fire drift | 3.4 s loop | `vessel-breathe`, ±14% opacity, 3.5% scale |
+| entrance | 560 ms | `vessel-settle` CSS keyframe, opacity + 0.955→1 scale, no bounce |
+| fracture propagation | 700 ms | rAF tween of the truncation front, ease-out cubic |
+| branch start | junction × 700 ms + 90 ms | a branch waits until the primary reaches its junction, then lags |
+| fire / light | 900 ms | CSS opacity transition per stage |
+| fire drift | 3.4 s loop | `vessel-breathe` CSS keyframe, ±14% opacity, 3.5% scale |
 
 The fire *drifts*; it does not flicker. A flickering vessel reads as an error
 state, and this artwork sits on screen for minutes.
@@ -130,7 +173,17 @@ and `transition-duration`, so the completed illustration simply appears.
 
 ## Responsive detail
 
-`variant="auto"` switches to compact below **96 px**:
+`variant="auto"` measures the **rendered** width with a `ResizeObserver` on
+the `<svg>` element, not the `size` prop, because CSS routinely renders an
+element far smaller than the size it was asked for. First paint uses the
+prop, then the observer corrects it. Verified by a lab case where
+`size={260}` is constrained by CSS to 64 px: compact activates, the grain
+filter is absent, and only 2 fractures render.
+
+Pass `variant="compact"` explicitly at placements known to be small to avoid
+the one-frame correction.
+
+Compact switches below **96 px** of rendered width:
 
 - clay grain filter dropped (turbulence is invisible and expensive when small)
 - hairlines and outer branches dropped
@@ -197,5 +250,54 @@ from production builds via `import.meta.env.DEV`.
    `docs/svg-quality-rubric.md`. No category below 4.
 5. Namespace every id with `useId()` before shipping.
 6. Verify no unused defs, no empty groups, no duplicate ids in the rendered
-   DOM. (SVGO cannot run on inline JSX with dynamic values; check the rendered
-   output instead.)
+   DOM. See the SVGO note below.
+
+---
+
+## SVGO status (precise)
+
+**SVGO has not been executed against this artwork.**
+
+SVGO optimises a static `.svg` source file. This vessel is not one: it is a
+JSX component whose `d` attributes, gradient stops, opacities and ids are
+computed per render from `stage`, `variant`, the reveal tween and `useId()`.
+There is no static source asset for SVGO to consume, and running it over the
+`.jsx` file is not something SVGO does.
+
+What *was* done instead: the rendered DOM output of a completed vessel was
+inspected directly for the classes of waste SVGO removes.
+
+| Check | Result |
+|---|---|
+| definitions declared | 11 |
+| definitions referenced | 11 |
+| unused definitions | 0 |
+| empty groups | 0 |
+| duplicate ids across 3 instances | 0 |
+| editor metadata | none (hand-authored) |
+| coordinate precision | bounded at 2 decimals by `toFixed(2)` in `sliver()` |
+
+These are manual structural checks, not an SVGO run. If a static export is
+ever needed (for an email, an OG image, a print asset), extract the rendered
+markup for one fixed stage and run SVGO on that file, then re-screenshot to
+confirm the optimisation changed nothing visually.
+
+---
+
+## Cross-engine verification
+
+`scripts/vessel-verify.mjs` renders the component in Chromium and WebKit via
+Playwright and diffs a structural probe rather than relying on eyeballing two
+screenshots. Run it after any change to masks, filters or geometry.
+
+Result at the time of writing: every structural metric identical (mask hole
+count, hairlines, contact shadows, nesting, grain filter presence, body /
+bloom / rim bounding boxes, fire animation name and duration, the `--fire`
+custom property reaching the keyframe, a11y attributes, zero console errors
+in both). Pixel diff of the completed vessel: mean channel delta 0.29/255,
+max 34/255, 0.01% of pixels differing by more than 24, confined to
+anti-aliasing and `feTurbulence` dithering.
+
+Reduced motion collapses both animation and transition duration in both
+engines (they serialise the same value differently: `1e-06s` vs
+`0.000001s`).
