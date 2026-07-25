@@ -659,6 +659,7 @@ export default makeLesson(
   "outAliento": "{name}, no eres demasiado poco para Dios. Eres exactamente el envase que él eligió. La grieta que te avergüenza, esa misma, es por donde la gente va a ver el tesoro. Decidiste sellar esta esperanza: {slot:peso|lower}. Sal así, agrietado y lleno, porque la luz no sale a pesar de tu fractura: sale por ella.",
   "outAccion24": "En las próximas 24 horas voy a {slot:paso|lower}, y voy a apartar {slot:santidad|lower} para dejarle espacio a Dios.",
   "outPregunta": "Esta semana entendí que Dios pone su tesoro en vasos de barro, y dejé de esconder mi grieta. Sellé esta esperanza: {slot:peso|lower}. ¿Cuál es la fragilidad que tú crees que te descalifica, y qué pasaría si Dios la usara?",
-  "outTarjeta": "Mi vaso de esta semana: llegué {slot:barro|lower}, nombré mi grieta y sellé esta esperanza: {slot:peso|lower}. El poder es de Dios y no mío.\nVersículo: «{verse}» ({verseRef})."
+  "outTarjeta": "Mi vaso de esta semana: llegué {slot:barro|lower}, nombré mi grieta y sellé esta esperanza: {slot:peso|lower}. El poder es de Dios y no mío.\nVersículo: «{verse}» ({verseRef}).",
+  "arc": "reveal"
 }
 );

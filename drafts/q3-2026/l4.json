@@ -652,5 +652,6 @@
   "outAliento": "{name}, nada de lo que nombraste hoy te descalifica. Pablo escribió aquellas páginas duras para restaurar, no para avergonzar, y esa sigue siendo la intención de Dios contigo. Vas a huir de {slot:huida|lower|or:lo que sabes que te daña} y a sostenerte en {slot:precio|lower|or:lo que él pagó por ti}, y no lo haces con tus fuerzas: lo haces porque ya fuiste comprado por precio y el Espíritu vive dentro de ti.",
   "outAccion24": "En las próximas 24 horas voy a {slot:paso|lower|or:dar un paso concreto hacia la restauración}, y voy a huir de {slot:huida|lower|or:lo que sé que me daña}.",
   "outPregunta": "Esta semana entendí que mi cuerpo es templo del Espíritu y que fui comprado por precio. Elegí sostenerme en {slot:precio|lower|or:que fui comprado por precio}. ¿Qué has aprendido a tolerar sin darte cuenta, y qué crees que cambiaría si de verdad te supieras rescatado?",
-  "outTarjeta": "Mi templo de esta semana: reconocí que solía {slot:tolerancia|lower|or:mirar para otro lado}, decidí huir de {slot:huida|lower|or:lo que sé que me daña} y me sostengo en {slot:precio|lower|or:que fui comprado por precio}.\nVersículo: «{verse}» ({verseRef})."
+  "outTarjeta": "Mi templo de esta semana: reconocí que solía {slot:tolerancia|lower|or:mirar para otro lado}, decidí huir de {slot:huida|lower|or:lo que sé que me daña} y me sostengo en {slot:precio|lower|or:que fui comprado por precio}.\nVersículo: «{verse}» ({verseRef}).",
+  "arc": "restore"
 }

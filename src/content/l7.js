@@ -11,7 +11,7 @@ export default makeLesson(
   "subtitle": "¿Y si este capítulo no fuera un poema de bodas, sino un espejo?",
   "kitName": "Mi Retrato del Amor",
   "artifactNoun": "retrato",
-  "motif": "cruz",
+  "motif": "retrato",
   "stages": [
     "lienzo",
     "carbon",

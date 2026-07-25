@@ -238,10 +238,19 @@ function useFractureReveal(targets, reduced) {
 
 /* --- component ------------------------------------------------------ */
 
+/* Arc determines what the five stages MEAN, because two lessons use this
+   vessel to say opposite things and the artwork must follow the lesson, not
+   the other way round.
+
+   "reveal"  (L10, 2 Cor 4:7)  formless clay to a jar whose crack lets the
+             treasure out. Damage INCREASES; that is the point.
+   "restore" (L4, 1 Cor 6:19)  cracked clay reformed into a standing temple.
+             Damage DECREASES; the vessel ends whole and lit from within. */
 export default function CrackedVessel({
   stage = 0,
   size = 260,
   variant = "auto",
+  arc = "reveal",
   debug = false,
   revealOverride = null,
   title = "Vasija de barro agrietada",
@@ -280,7 +289,23 @@ export default function CrackedVessel({
   });
   const holes = shown.filter((f) => !f.hair); // hairlines never pierce the wall
 
-  const openOf = (f) => Math.max(0, Math.min(1, s - f.at));
+  const restore = arc === "restore";
+
+  /* How formed the vessel is, 0 = a mound of clay on the wheel, 1 = thrown.
+     Only the reveal arc begins formless ("barro sin forma"); the restore arc
+     opens on a vessel that already exists and is cracked. */
+  const form = restore ? 1 : Math.max(0, Math.min(1, s / 2));
+
+  /* The fracture clock, which runs in opposite directions per arc.
+       reveal   nothing until the vessel is thrown, then damage accumulates
+       restore  fully cracked at the start, closing to nothing by the end */
+  const fs = restore ? 4 - s : Math.max(0, (s - 1.5) * 1.6);
+
+  /* Inner light. In both arcs it grows, but it means different things: light
+     escaping through a widening break, versus a temple being inhabited. */
+  const lume = restore ? t : t * form;
+
+  const openOf = (f) => Math.max(0, Math.min(1, fs - f.at));
   const widthK = (f) => {
     const base = 0.32 + openOf(f) * 0.68;
     return compact && f.id === "primary" ? base * 1.25 : base;
@@ -410,8 +435,36 @@ export default function CrackedVessel({
         <ellipse cx="162" cy="330" rx="86" ry="15" fill={`url(#${uid("shadow")})`} />
       </g>
 
-      {/* 2. handles, behind the body so it occludes their inner edge */}
-      <g id={uid("g-handles")} fill={`url(#${uid("clayDark")})`}>
+      {/* 1b. the wheel, only while the clay is still being thrown. A real pot
+             starts as a squat mound and is pulled upward, which is exactly
+             what the scaleY below does, so the wheel makes that legible. */}
+      {form < 1 ? (
+        <g id={uid("g-wheel")}
+           style={{ opacity: 1 - form, transition: "opacity 700ms var(--ease-out)" }}>
+          <ellipse cx="160" cy="326" rx="104" ry="17" fill="#2a1710" opacity="0.55" />
+          <ellipse cx="160" cy="322" rx="104" ry="17"
+                   fill="none" stroke="#8a5238" strokeWidth="2" opacity="0.6" />
+        </g>
+      ) : null}
+
+      {/* Everything from here up is pulled upward as the vessel is thrown.
+          Origin at the base so it rises off the wheel rather than growing
+          from its middle. */}
+      <g id={uid("g-thrown")}
+         style={{
+           transform: `scaleY(${0.44 + 0.56 * form})`,
+           transformBox: "view-box",
+           transformOrigin: "160px 323px",
+           transition: "transform 800ms var(--ease-out)",
+         }}>
+
+      {/* 2. handles, behind the body so it occludes their inner edge. They are
+             the last thing a potter attaches, so they arrive with the form. */}
+      <g id={uid("g-handles")} fill={`url(#${uid("clayDark")})`}
+         style={{
+           opacity: Math.max(0, (form - 0.45) / 0.55),
+           transition: "opacity 700ms var(--ease-out)",
+         }}>
         <path d={HANDLE_L} />
         <path d={HANDLE_R} />
       </g>
@@ -423,7 +476,7 @@ export default function CrackedVessel({
           cx="146" cy="228" rx="112" ry="126"
           fill={`url(#${uid("fire")})`}
           className="vessel-fire"
-          style={{ "--fire": 0.72 + t * 0.28, transition: "opacity 900ms var(--ease-out)" }}
+          style={{ "--fire": 0.25 + lume * 0.75, transition: "opacity 900ms var(--ease-out)" }}
         />
       </g>
 
@@ -452,7 +505,7 @@ export default function CrackedVessel({
           {/* coral bounce from the fire onto nearby clay */}
           <ellipse cx="140" cy="228" rx="104" ry="112"
                    fill={`url(#${uid("bounce")})`}
-                   style={{ opacity: t * 0.9, transition: "opacity 900ms var(--ease-out)" }} />
+                   style={{ opacity: lume * 0.9, transition: "opacity 900ms var(--ease-out)" }} />
           {!compact ? (
             <path d={BODY} fill="#f0d2b8" opacity="0.10" filter={`url(#${uid("grain")})`} />
           ) : null}
@@ -495,7 +548,7 @@ export default function CrackedVessel({
              than from geometry escaping the vessel. */}
       <g id={uid("g-bloom")}
          filter={`url(#${uid("bloom")})`}
-         style={{ opacity: t, transition: "opacity 900ms var(--ease-out)" }}>
+         style={{ opacity: lume, transition: "opacity 900ms var(--ease-out)" }}>
         <g clipPath={`url(#${uid("bodyClip")})`}>
           {holes.map((f) => {
             const g = geomOf(f, 1.35);
@@ -504,18 +557,32 @@ export default function CrackedVessel({
         </g>
       </g>
 
-      {/* 6. neck, rim, dark interior */}
-      <g id={uid("g-rim")}>
+      {/* 6. neck, rim, dark interior. The rim is thrown last, so it fades in
+             with the form. In the restore arc the mouth is where the light
+             shows once the breaks have closed: a temple is lit from inside,
+             not through its cracks. */}
+      <g id={uid("g-rim")}
+         style={{
+           opacity: Math.max(0, (form - 0.5) / 0.5),
+           transition: "opacity 700ms var(--ease-out)",
+         }}>
         <path d="M 118 76 C 118 61, 202 61, 202 76 C 202 87, 118 87, 118 76 Z"
               fill={`url(#${uid("rim")})`} />
         <ellipse cx="160" cy="73.5" rx="30" ry="8.5" fill="#22120c" />
         <ellipse cx="160" cy="73.5" rx="30" ry="8.5" fill="none"
                  stroke="#c9825a" strokeWidth="1.2" opacity="0.45" />
         <ellipse cx="160" cy="74" rx="24" ry="6" fill="#ffbe83"
-                 style={{ opacity: Math.max(0, t - 0.45) * 1.2, transition: "opacity 900ms var(--ease-out)" }} />
+                 style={{
+                   opacity: restore
+                     ? Math.max(0, (lume - 0.25) * 1.35)
+                     : Math.max(0, lume - 0.45) * 1.2,
+                   transition: "opacity 900ms var(--ease-out)",
+                 }} />
         <path d="M 122 72 C 128 66, 192 66, 198 72" fill="none"
               stroke="#e8b184" strokeWidth="1.6" strokeLinecap="round" opacity="0.6" />
       </g>
+
+      </g>{/* /g-thrown */}
 
       {/* debug overlay: silhouette, centrelines, unblurred bloom source */}
       {debug ? (

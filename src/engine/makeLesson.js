@@ -103,7 +103,8 @@ export function makeLesson(d) {
     artifact: { noun: d.artifactNoun },
     ui: d.ui,
     centerpiece: d.motif,
-    scene: { motif: d.motif, shader: paletteFor(d.motif) },
+    // `arc` lets two lessons share one motif while telling opposite stories
+    scene: { motif: d.motif, arc: d.arc || "reveal", shader: paletteFor(d.motif) },
     stages: d.stages,
     stageLabel,
     verse,

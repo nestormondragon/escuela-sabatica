@@ -16,8 +16,33 @@ import CrackedVessel from "../components/CrackedVessel.jsx";
    because nothing in the app imports it except the dev branch in main.jsx.
    ===================================================================== */
 
-const ALL = ["mosaico", "cruz", "barro", "carta", "alba"];
+const ALL = ["mosaico", "cruz", "barro", "carta", "alba", "retrato", "siembra", "muro"];
 const STAGES = [0, 1, 2, 3, 4];
+
+/* Both vessel arcs across all five stages. The two lessons that share this
+   artwork tell opposite stories, so they are reviewed side by side. */
+function ArcStrip({ arc, caption }) {
+  return (
+    <section style={{ marginBottom: 34 }}>
+      <h2 style={{ fontFamily: "var(--ui)", fontSize: 12, letterSpacing: "0.12em",
+                   textTransform: "uppercase", color: "var(--clay)", marginBottom: 10 }}>
+        {caption}
+      </h2>
+      <div style={{ display: "flex", gap: 8, background: "var(--bg-0)", padding: 12,
+                    borderRadius: 8, flexWrap: "wrap", alignItems: "flex-end" }}>
+        {[0, 1, 2, 3, 4].map((s) => (
+          <figure key={s} style={{ margin: 0, textAlign: "center" }}>
+            <div style={{ width: 190 }}>
+              <CrackedVessel stage={s} size={190} variant="full" arc={arc} />
+            </div>
+            <figcaption style={{ fontFamily: "var(--ui)", fontSize: 10,
+                                 color: "var(--muted)", marginTop: 4 }}>{s}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 /* Reveal rig: renders the real production component at fixed reveal
    fractions so intermediate frames can be captured as evidence. `stage` is
@@ -138,8 +163,9 @@ export default function MotifLab({ only }) {
 
       {only === "barro" ? (
         <>
+          <ArcStrip arc="reveal" caption="arc=reveal (L10) · polvo → torno → grieta → luz → gloria" />
+          <ArcStrip arc="restore" caption="arc=restore (L4) · grieta → arcilla → torno → horno → templo" />
           <RevealStrip debug={false} />
-          <RevealStrip debug />
           <ConstrainedTest />
         </>
       ) : null}

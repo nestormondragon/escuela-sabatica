@@ -12,7 +12,7 @@ export default makeLesson(
   "subtitle": "¿Y si la fortaleza que hay que derribar está dentro de ti?",
   "kitName": "Mi Fortaleza",
   "artifactNoun": "fortaleza",
-  "motif": "barro",
+  "motif": "muro",
   "stages": [
     "muro",
     "grieta",

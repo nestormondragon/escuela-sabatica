@@ -11,7 +11,7 @@ export default makeLesson(
   "subtitle": "¿Y si dar no fuera una factura, sino un privilegio?",
   "kitName": "Mi Siembra",
   "artifactNoun": "siembra",
-  "motif": "mosaico",
+  "motif": "siembra",
   "stages": [
     "puno",
     "mano",
@@ -33,7 +33,7 @@ export default makeLesson(
     "start": "Empezar mi siembra",
     "emptyKit": "Tu siembra",
     "building": "Cada pieza abre un poco más la mano",
-    "buildingHint": "Toca la pieza que brilla. Verás el mosaico pasar del puño cerrado a la siembra completa.",
+    "buildingHint": "Toca la pieza que brilla. Verás la mano abrirse hasta que la siembra desborde.",
     "lastPiece": "Falta una pieza",
     "patternLabel": "Tu patrón en el mosaico",
     "doneTitle": "Tu siembra está completa",

@@ -183,8 +183,8 @@ function Cruz({ s }) {
 /* The clay jar is the quarter's one piece of narrative artwork, so it lives
    in its own component with its own construction notes (docs/SVG-DESIGN.md).
    Everything else here is a supporting scene. */
-function Barro({ s, size }) {
-  return <CrackedVessel stage={s} size={size} variant="auto" />;
+function Barro({ s, size, arc }) {
+  return <CrackedVessel stage={s} size={size} variant="auto" arc={arc} />;
 }
 
 /* ------------------------------------------------------------------ carta */
@@ -289,14 +289,282 @@ function Alba({ s }) {
   );
 }
 
-const KINDS = { mosaico: Mosaico, cruz: Cruz, barro: Barro, carta: Carta, alba: Alba };
+/* ---------------------------------------------------------------- retrato */
+/* 1 Corintios 13 read as a portrait rather than a poem: a blank canvas, a
+   charcoal contour, shadows, colour, and finally a face in full light.
+   The face is deliberately icon-like rather than a likeness. An abstracted
+   contour is both achievable and historically apt for this setting; a
+   half-attempted realistic portrait would read as a mistake. */
+function Retrato({ s }) {
+  const t = s / 4;
+  const charcoal = Math.max(0, Math.min(1, s));           // 0 -> 1 across stage 1
+  const shadow = Math.max(0, Math.min(1, s - 1));
+  const colour = Math.max(0, Math.min(1, s - 2));
+  const light = Math.max(0, Math.min(1, s - 3));
 
-export default function Motif({ kind, stageIndex = 0, size = 220 }) {
+  /* Three-quarter view, asymmetric on purpose. A symmetrical head-and-
+     shoulders with arc eyes and a curved mouth is the generic user-avatar
+     placeholder, which is what the first attempt looked like. There are no
+     drawn features here at all: the face is built from planes of light and
+     shadow, the way a painter blocks one in. */
+  const HEAD = "M 84 46 C 100 47, 108 60, 107 77 C 106 92, 99 106, 87 111 " +
+               "C 74 116, 62 108, 58 94 C 54 78, 60 58, 72 50 C 76 47, 80 46, 84 46 Z";
+  // Closed for the fill. Its start/end tuck up behind the head so the closing
+  // segment is hidden; NECK_LINE is the open version used for the charcoal,
+  // because stroking a closed path drew a box across the throat.
+  const NECK_SH = "M 78 100 C 78 116, 76 121, 72 124 C 58 130, 44 138, 40 152 " +
+                  "L 122 152 C 118 136, 104 128, 94 123 C 89 120, 88 114, 88 100 Z";
+  const NECK_LINE = "M 76 112 C 75 118, 73 122, 70 125 C 57 131, 44 138, 40 152 " +
+                    "M 122 152 C 118 136, 104 128, 94 123 C 90 120, 89 116, 89 111";
+  // planes: the shadowed side of the face and the hollow under the cheek
+  const PLANE_SHADOW = "M 87 111 C 99 106, 106 92, 107 77 C 108 60, 100 47, 84 46 " +
+                       "C 92 58, 95 76, 92 92 C 90 101, 89 107, 87 111 Z";
+  const PLANE_CHEEK = "M 66 84 C 72 92, 80 96, 88 94 C 84 102, 74 104, 66 98 Z";
+
+  return (
+    <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
+      <defs>
+        <linearGradient id="rt-skin" x1="20%" y1="10%" x2="80%" y2="90%">
+          <stop offset="0%" stopColor="#d9a077" />
+          <stop offset="55%" stopColor="#b3714b" />
+          <stop offset="100%" stopColor="#6d4029" />
+        </linearGradient>
+        <radialGradient id="rt-halo" cx="50%" cy="42%" r="50%">
+          <stop offset="0%" stopColor="var(--clay-hi)" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
+        </radialGradient>
+        {/* paint stays on the canvas; without this the shoulders run off it */}
+        <clipPath id="rt-canvas">
+          <rect x="26" y="20" width="108" height="132" rx="1" />
+        </clipPath>
+      </defs>
+
+      {/* the canvas: present from the first stage, because the lesson opens
+          on an empty one */}
+      <rect x="26" y="20" width="108" height="132" rx="1"
+            fill="var(--surface-3)" stroke="var(--line-2)" strokeWidth="1.4" />
+      {/* weave, so it reads as canvas rather than paper */}
+      <g opacity="0.16">
+        {[36, 48, 60, 72, 84, 96, 108, 120, 132, 144].map((y) => (
+          <line key={y} x1="27" y1={y} x2="133" y2={y} stroke="#2d1810" strokeWidth="0.5" />
+        ))}
+      </g>
+
+      <circle cx="80" cy="70" r="52" fill="url(#rt-halo)"
+              className={s >= 4 ? "halo" : undefined}
+              style={{ opacity: light, transition: `opacity ${EASE}` }} />
+
+      {/* colour laid in, clipped to the canvas so nothing spills past it */}
+      <g clipPath="url(#rt-canvas)"
+         style={{ opacity: colour, transition: `opacity ${EASE}` }}>
+        <path d={NECK_SH} fill="url(#rt-skin)" opacity="0.92" />
+        <path d={HEAD} fill="url(#rt-skin)" />
+      </g>
+
+      {/* the shadow planes: this is what makes it a modelled head rather than
+          a flat symbol, and they arrive before the colour does */}
+      <g clipPath="url(#rt-canvas)"
+         style={{ opacity: shadow, transition: `opacity ${EASE}` }}>
+        <path d={PLANE_SHADOW} fill="#371d12" opacity="0.5" />
+        <path d={PLANE_CHEEK} fill="#371d12" opacity="0.34" />
+        <path d="M 94 123 C 104 128, 118 136, 122 152 L 96 152 Z"
+              fill="#371d12" opacity="0.35" />
+      </g>
+
+      {/* the charcoal underdrawing: contour and the two axes a painter lays
+          down first. No eyes, no mouth: those would make it a cartoon. */}
+      <g fill="none" stroke="#241309" strokeLinecap="round" clipPath="url(#rt-canvas)"
+         style={{ opacity: 0.3 + charcoal * 0.5, transition: `opacity ${EASE}` }}>
+        <path d={HEAD} strokeWidth="1.5" />
+        <path d={NECK_LINE} strokeWidth="1.3" opacity="0.8" />
+        {/* brow line and centre line, the painter's construction marks */}
+        <path d="M 62 76 C 74 71, 92 70, 104 74" strokeWidth="0.9" opacity="0.5" />
+        <path d="M 78 52 C 84 68, 85 86, 82 104" strokeWidth="0.9" opacity="0.45" />
+      </g>
+
+      {/* the light finally falling on the lit plane */}
+      <g clipPath="url(#rt-canvas)"
+         style={{ opacity: light, transition: `opacity ${EASE}` }}>
+        <path d="M 72 50 C 62 58, 57 74, 59 90 C 63 78, 68 62, 78 53 Z"
+              fill="#f0c49c" opacity="0.55" />
+      </g>
+    </svg>
+  );
+}
+
+/* ---------------------------------------------------------------- siembra */
+/* 2 Corintios 8 and 9: a closed fist opens, the grain falls, the furrow joins
+   others, and the sowing is complete. The hand is a simplified silhouette
+   read from the side, which is legible at small sizes where an anatomical
+   hand would turn to mud. */
+function Siembra({ s }) {
+  const open = Math.max(0, Math.min(1, s));        // fist -> open palm
+  const falling = Math.max(0, Math.min(1, s - 1)); // grain leaves the hand
+  const furrow = Math.max(0, Math.min(1, s - 2));  // ground receives it
+  const sprout = Math.max(0, Math.min(1, s - 3));  // it comes up
+
+  const SEEDS = [[74, 74], [86, 78], [80, 86], [92, 88], [68, 84]];
+
+  return (
+    <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
+      <defs>
+        <linearGradient id="sb-hand" x1="15%" y1="0%" x2="85%" y2="100%">
+          <stop offset="0%" stopColor="#c98a63" />
+          <stop offset="60%" stopColor="#9a5c3c" />
+          <stop offset="100%" stopColor="#5c3323" />
+        </linearGradient>
+        <radialGradient id="sb-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="var(--clay)" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
+      <circle cx="80" cy="86" r="62" fill="url(#sb-glow)"
+              style={{ opacity: 0.3 + sprout * 0.7, transition: `opacity ${EASE}` }} />
+
+      {/* the hand. Closed, the fingers curl over the palm; open, they fall
+          away and the grain is free to go. */}
+      <g style={{ transform: `rotate(${-8 + open * 8}deg)`, transformBox: "fill-box",
+                  transformOrigin: "50% 50%", transition: `transform ${EASE}` }}>
+        <path d="M 52 58 C 46 62, 44 72, 48 80 C 52 88, 62 92, 74 92
+                 C 86 92, 96 88, 100 80 C 104 72, 102 62, 96 58 Z"
+              fill="url(#sb-hand)" />
+        {/* fingers: curled in at first, opening outward */}
+        {[0, 1, 2, 3].map((i) => (
+          <path key={i}
+                d={`M ${58 + i * 11} 60 C ${56 + i * 11} ${70 - open * 8}, ${58 + i * 11} ${80 - open * 14}, ${64 + i * 11} ${82 - open * 16}`}
+                fill="none" stroke="#5c3323" strokeWidth="3.4" strokeLinecap="round"
+                style={{ opacity: 0.85, transition: `d ${EASE}` }} />
+        ))}
+      </g>
+
+      {/* grain: held tight, then falling */}
+      {SEEDS.map(([x, y], i) => (
+        <ellipse key={i}
+                 cx={x + (i - 2) * falling * 5}
+                 cy={y + falling * (34 + i * 6)}
+                 rx="2.6" ry="3.6"
+                 style={{
+                   fill: "var(--clay-hi)",
+                   opacity: 0.35 + open * 0.65,
+                   transform: `rotate(${i * 24}deg)`,
+                   transformBox: "fill-box", transformOrigin: "50% 50%",
+                   transition: `cx ${EASE}, cy ${EASE}, opacity ${EASE}`,
+                 }} />
+      ))}
+
+      {/* the furrow, and the neighbouring furrows it joins */}
+      <g style={{ opacity: furrow, transition: `opacity ${EASE}` }}>
+        <path d="M 24 132 C 52 124, 108 124, 136 132" fill="none"
+              stroke="#4a2a1c" strokeWidth="5" strokeLinecap="round" />
+        <path d="M 30 142 C 56 135, 104 135, 130 142" fill="none"
+              stroke="#3a2015" strokeWidth="3.5" strokeLinecap="round" opacity="0.7" />
+      </g>
+
+      {/* what comes up is not the sower's doing, so it arrives last */}
+      <g style={{ opacity: sprout, transition: `opacity ${EASE}` }}>
+        {[52, 80, 108].map((x, i) => (
+          <g key={x} className="sway" style={{ animationDelay: `${i * 0.6}s` }}>
+            <path d={`M ${x} 130 L ${x} ${112 - i % 2 * 4}`} fill="none"
+                  stroke="var(--clay)" strokeWidth="2" strokeLinecap="round" />
+            <ellipse cx={x - 5} cy={116 - (i % 2) * 4} rx="5" ry="3"
+                     fill="var(--clay)" opacity="0.85" />
+            <ellipse cx={x + 5} cy={112 - (i % 2) * 4} rx="5" ry="3"
+                     fill="var(--clay-hi)" opacity="0.75" />
+          </g>
+        ))}
+      </g>
+    </svg>
+  );
+}
+
+/* ------------------------------------------------------------------- muro */
+/* 2 Corintios 10:4. The stronghold is the reader's own defence, so it is
+   dismantled course by course until only bedrock is left, and the bedrock
+   turns out to be the refuge. Blocks leave from the top down, which is how
+   a wall actually comes apart. */
+function Muro({ s }) {
+  const t = s / 4;
+  // eight blocks in four courses; higher courses fall first
+  const BLOCKS = [
+    [44, 44, 34, 18, 3], [80, 44, 34, 18, 3],
+    [36, 64, 30, 18, 2], [68, 64, 30, 18, 2], [100, 64, 26, 18, 2],
+    [44, 84, 34, 18, 1], [80, 84, 34, 18, 1],
+  ];
+
+  return (
+    <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
+      <defs>
+        <linearGradient id="mu-stone" x1="12%" y1="0%" x2="88%" y2="100%">
+          <stop offset="0%" stopColor="#7c8087" />
+          <stop offset="60%" stopColor="#4e535b" />
+          <stop offset="100%" stopColor="#2c3036" />
+        </linearGradient>
+        <linearGradient id="mu-rock" x1="18%" y1="0%" x2="82%" y2="100%">
+          <stop offset="0%" stopColor="#c07b52" />
+          <stop offset="55%" stopColor="#8a4d31" />
+          <stop offset="100%" stopColor="#43241a" />
+        </linearGradient>
+        <radialGradient id="mu-refuge" cx="50%" cy="46%" r="52%">
+          <stop offset="0%" stopColor="var(--clay-hi)" stopOpacity="0.55" />
+          <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
+      {/* the refuge behind: only visible once the wall stops hiding it */}
+      <circle cx="80" cy="104" r="56" fill="url(#mu-refuge)"
+              className={s >= 4 ? "halo" : undefined}
+              style={{ opacity: Math.max(0, (s - 2) / 2), transition: `opacity ${EASE}` }} />
+
+      {/* the courses of the wall, taken down from the top */}
+      {BLOCKS.map(([x, y, w, h, course], i) => {
+        // course 3 goes at stage 1, course 2 at stage 2, course 1 at stage 3
+        const gone = Math.max(0, Math.min(1, s - (4 - course)));
+        return (
+          <g key={i} style={{
+            opacity: 1 - gone,
+            transform: `translateY(${gone * -14}px) rotate(${gone * (i % 2 ? 9 : -9)}deg)`,
+            transformBox: "fill-box", transformOrigin: "50% 50%",
+            transition: `opacity ${EASE}, transform ${EASE}`,
+          }}>
+            <rect x={x} y={y} width={w} height={h} rx="1.5"
+                  fill="url(#mu-stone)" stroke="#20242a" strokeWidth="1" />
+            <line x1={x + 3} y1={y + 4} x2={x + w - 4} y2={y + 4}
+                  stroke="#9aa0a8" strokeWidth="0.8" opacity="0.28" />
+          </g>
+        );
+      })}
+
+      {/* the first crack in the defence, before any block moves */}
+      <path d="M 78 44 L 74 62 L 82 78 L 76 102"
+            fill="none" stroke="#1a1d22" strokeWidth="1.8" strokeLinecap="round"
+            style={{ opacity: s >= 1 && s < 3 ? 1 : 0, transition: `opacity ${EASE}` }} />
+
+      {/* bedrock: always there, revealed as the wall comes off it */}
+      <path d="M 30 128 C 40 108, 58 100, 80 100 C 102 100, 120 108, 130 128 Z"
+            fill="url(#mu-rock)"
+            style={{ opacity: 0.35 + t * 0.65, transition: `opacity ${EASE}` }} />
+      <path d="M 30 128 C 40 108, 58 100, 80 100" fill="none"
+            stroke="#d09a72" strokeWidth="1.6" strokeLinecap="round"
+            style={{ opacity: Math.max(0, (s - 2) / 2) * 0.7, transition: `opacity ${EASE}` }} />
+
+      {/* ground line */}
+      <rect x="18" y="128" width="124" height="2.5" rx="1.2" fill="var(--line-2)" />
+    </svg>
+  );
+}
+
+const KINDS = {
+  mosaico: Mosaico, cruz: Cruz, barro: Barro, carta: Carta, alba: Alba,
+  retrato: Retrato, siembra: Siembra, muro: Muro,
+};
+
+export default function Motif({ kind, stageIndex = 0, size = 220, arc = "reveal" }) {
   const Cmp = KINDS[kind] || Mosaico;
   return (
     <div style={{ width: size, maxWidth: "100%", margin: "0 auto", lineHeight: 0 }}>
       {/* size is passed through so artwork can drop detail at small sizes */}
-      <Cmp s={clamp(stageIndex)} size={size} />
+      <Cmp s={clamp(stageIndex)} size={size} arc={arc} />
     </div>
   );
 }

@@ -24,7 +24,8 @@ export default function Centerpiece({ lesson, filled = 0, size = 260 }) {
   return (
     <div className="cp" style={{ "--cp-bloom": bloom, width: size, maxWidth: "100%" }}>
       <div className="cp-bloom" aria-hidden="true" />
-      <Motif kind={kind} stageIndex={stage} size={size} />
+      <Motif kind={kind} stageIndex={stage} size={size}
+             arc={lesson?.scene?.arc || "reveal"} />
     </div>
   );
 }
