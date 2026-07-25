@@ -1,7 +1,7 @@
 {
   "results": {
     "chromium": {
-      "vessels": 17,
+      "vessels": 22,
       "duplicateIds": 0,
       "maskPaths": 6,
       "hairlines": 3,
@@ -45,7 +45,7 @@
       }
     },
     "webkit": {
-      "vessels": 17,
+      "vessels": 22,
       "duplicateIds": 0,
       "maskPaths": 6,
       "hairlines": 3,

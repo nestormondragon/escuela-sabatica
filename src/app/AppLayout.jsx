@@ -26,7 +26,7 @@ function titleForRoute(nextLocation) {
   if (path.startsWith("/presentar/")) return "Vista para presentar";
   if (path.includes("/episodio/")) return "Episodio de estudio";
   if (path.startsWith("/leccion/")) return "Recorrido de la lección";
-  return "Escuela Sabática";
+  return "Página no encontrada";
 }
 
 function useSystemDark() {

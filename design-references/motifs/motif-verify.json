@@ -186,7 +186,7 @@
               "root": [
                 15.6,
                 1.6,
-                128.7,
+                128.8,
                 139.4
               ],
               "defs": 3,
@@ -210,7 +210,7 @@
               "root": [
                 15.6,
                 1.6,
-                128.7,
+                128.8,
                 139.4
               ],
               "defs": 3,
@@ -286,7 +286,7 @@
                 30.2,
                 64.8,
                 269.8,
-                293.6
+                293.5
               ],
               "defs": 11,
               "gradients": 6,
@@ -309,7 +309,7 @@
                 30.2,
                 64.8,
                 269.8,
-                293.6
+                293.5
               ],
               "defs": 11,
               "gradients": 6,
@@ -332,7 +332,7 @@
                 30.2,
                 64.8,
                 269.8,
-                293.6
+                293.5
               ],
               "defs": 11,
               "gradients": 6,
@@ -368,8 +368,9 @@
               "masks": 0,
               "filters": 0,
               "cssFiltered": 0,
-              "transformedCount": 1,
+              "transformedCount": 27,
               "transformBoxes": [
+                "fill-box",
                 "view-box"
               ],
               "anims": []
@@ -389,8 +390,9 @@
               "masks": 0,
               "filters": 0,
               "cssFiltered": 0,
-              "transformedCount": 1,
+              "transformedCount": 27,
               "transformBoxes": [
+                "fill-box",
                 "view-box"
               ],
               "anims": []
@@ -410,8 +412,9 @@
               "masks": 0,
               "filters": 0,
               "cssFiltered": 0,
-              "transformedCount": 1,
+              "transformedCount": 27,
               "transformBoxes": [
+                "fill-box",
                 "view-box"
               ],
               "anims": []
@@ -431,8 +434,9 @@
               "masks": 0,
               "filters": 0,
               "cssFiltered": 0,
-              "transformedCount": 1,
+              "transformedCount": 27,
               "transformBoxes": [
+                "fill-box",
                 "view-box"
               ],
               "anims": []
@@ -452,8 +456,9 @@
               "masks": 0,
               "filters": 0,
               "cssFiltered": 0,
-              "transformedCount": 1,
+              "transformedCount": 27,
               "transformBoxes": [
+                "fill-box",
                 "view-box"
               ],
               "anims": []
@@ -480,9 +485,7 @@
               "cssFiltered": 0,
               "transformedCount": 0,
               "transformBoxes": [],
-              "anims": [
-                "mtf-star"
-              ]
+              "anims": []
             },
             {
               "stage": 1,
@@ -501,9 +504,7 @@
               "cssFiltered": 0,
               "transformedCount": 0,
               "transformBoxes": [],
-              "anims": [
-                "mtf-star"
-              ]
+              "anims": []
             },
             {
               "stage": 2,
@@ -522,9 +523,7 @@
               "cssFiltered": 0,
               "transformedCount": 0,
               "transformBoxes": [],
-              "anims": [
-                "mtf-star"
-              ]
+              "anims": []
             },
             {
               "stage": 3,
@@ -533,7 +532,7 @@
                 0,
                 0,
                 160,
-                133.1
+                133.2
               ],
               "defs": 4,
               "gradients": 3,
@@ -544,8 +543,7 @@
               "transformedCount": 0,
               "transformBoxes": [],
               "anims": [
-                "mtf-halo",
-                "mtf-star"
+                "mtf-halo"
               ]
             },
             {
@@ -566,8 +564,7 @@
               "transformedCount": 0,
               "transformBoxes": [],
               "anims": [
-                "mtf-halo",
-                "mtf-star"
+                "mtf-halo"
               ]
             }
           ],
@@ -657,7 +654,7 @@
               "root": [
                 26,
                 16,
-                108,
+                108.1,
                 136
               ],
               "defs": 3,
@@ -878,7 +875,7 @@
                 18,
                 27.5,
                 124,
-                134.7
+                134.8
               ],
               "defs": 3,
               "gradients": 3,
@@ -1136,9 +1133,9 @@
               "stage": 0,
               "nodes": 42,
               "root": [
-                30.1,
+                30.2,
                 209.4,
-                269.9,
+                269.8,
                 135.6
               ],
               "defs": 11,
@@ -1159,9 +1156,9 @@
               "stage": 1,
               "nodes": 42,
               "root": [
-                30.1,
+                30.2,
                 137.1,
-                269.9,
+                269.8,
                 211.4
               ],
               "defs": 11,
@@ -1182,10 +1179,10 @@
               "stage": 2,
               "nodes": 42,
               "root": [
-                30.1,
+                30.2,
                 64.8,
-                269.9,
-                293.6
+                269.8,
+                293.5
               ],
               "defs": 11,
               "gradients": 6,
@@ -1205,10 +1202,10 @@
               "stage": 3,
               "nodes": 50,
               "root": [
-                30.1,
+                30.2,
                 64.8,
-                269.9,
-                293.6
+                269.8,
+                293.5
               ],
               "defs": 11,
               "gradients": 6,
@@ -1228,10 +1225,10 @@
               "stage": 4,
               "nodes": 54,
               "root": [
-                30.1,
+                30.2,
                 64.8,
-                269.9,
-                293.6
+                269.8,
+                293.5
               ],
               "defs": 11,
               "gradients": 6,
@@ -1267,8 +1264,9 @@
               "masks": 0,
               "filters": 0,
               "cssFiltered": 0,
-              "transformedCount": 1,
+              "transformedCount": 27,
               "transformBoxes": [
+                "fill-box",
                 "view-box"
               ],
               "anims": []
@@ -1288,8 +1286,9 @@
               "masks": 0,
               "filters": 0,
               "cssFiltered": 0,
-              "transformedCount": 1,
+              "transformedCount": 27,
               "transformBoxes": [
+                "fill-box",
                 "view-box"
               ],
               "anims": []
@@ -1309,8 +1308,9 @@
               "masks": 0,
               "filters": 0,
               "cssFiltered": 0,
-              "transformedCount": 1,
+              "transformedCount": 27,
               "transformBoxes": [
+                "fill-box",
                 "view-box"
               ],
               "anims": []
@@ -1330,8 +1330,9 @@
               "masks": 0,
               "filters": 0,
               "cssFiltered": 0,
-              "transformedCount": 1,
+              "transformedCount": 27,
               "transformBoxes": [
+                "fill-box",
                 "view-box"
               ],
               "anims": []
@@ -1351,8 +1352,9 @@
               "masks": 0,
               "filters": 0,
               "cssFiltered": 0,
-              "transformedCount": 1,
+              "transformedCount": 27,
               "transformBoxes": [
+                "fill-box",
                 "view-box"
               ],
               "anims": []
@@ -1379,9 +1381,7 @@
               "cssFiltered": 0,
               "transformedCount": 0,
               "transformBoxes": [],
-              "anims": [
-                "mtf-star"
-              ]
+              "anims": []
             },
             {
               "stage": 1,
@@ -1400,9 +1400,7 @@
               "cssFiltered": 0,
               "transformedCount": 0,
               "transformBoxes": [],
-              "anims": [
-                "mtf-star"
-              ]
+              "anims": []
             },
             {
               "stage": 2,
@@ -1421,9 +1419,7 @@
               "cssFiltered": 0,
               "transformedCount": 0,
               "transformBoxes": [],
-              "anims": [
-                "mtf-star"
-              ]
+              "anims": []
             },
             {
               "stage": 3,
@@ -1432,7 +1428,7 @@
                 0,
                 0,
                 160,
-                133.1
+                133.2
               ],
               "defs": 4,
               "gradients": 3,
@@ -1443,8 +1439,7 @@
               "transformedCount": 0,
               "transformBoxes": [],
               "anims": [
-                "mtf-halo",
-                "mtf-star"
+                "mtf-halo"
               ]
             },
             {
@@ -1465,8 +1460,7 @@
               "transformedCount": 0,
               "transformBoxes": [],
               "anims": [
-                "mtf-halo",
-                "mtf-star"
+                "mtf-halo"
               ]
             }
           ],
@@ -1801,139 +1795,20 @@
   },
   "diffs": [
     {
-      "motif": "cruz",
-      "stage": 3,
-      "key": "root",
-      "chromium": [
-        15.6,
-        1.6,
-        128.7,
-        139.4
-      ],
-      "webkit": [
-        15.6,
-        1.6,
-        128.8,
-        139.4
-      ]
-    },
-    {
-      "motif": "cruz",
+      "motif": "muro",
       "stage": 4,
       "key": "root",
       "chromium": [
-        15.6,
-        1.6,
-        128.7,
-        139.4
+        18,
+        27.5,
+        124,
+        134.8
       ],
       "webkit": [
-        15.6,
-        1.6,
-        128.8,
-        139.4
-      ]
-    },
-    {
-      "motif": "barro",
-      "stage": 0,
-      "key": "root",
-      "chromium": [
-        30.2,
-        209.4,
-        269.8,
-        135.6
-      ],
-      "webkit": [
-        30.1,
-        209.4,
-        269.9,
-        135.6
-      ]
-    },
-    {
-      "motif": "barro",
-      "stage": 1,
-      "key": "root",
-      "chromium": [
-        30.2,
-        137.1,
-        269.8,
-        211.4
-      ],
-      "webkit": [
-        30.1,
-        137.1,
-        269.9,
-        211.4
-      ]
-    },
-    {
-      "motif": "barro",
-      "stage": 2,
-      "key": "root",
-      "chromium": [
-        30.2,
-        64.8,
-        269.8,
-        293.6
-      ],
-      "webkit": [
-        30.1,
-        64.8,
-        269.9,
-        293.6
-      ]
-    },
-    {
-      "motif": "barro",
-      "stage": 3,
-      "key": "root",
-      "chromium": [
-        30.2,
-        64.8,
-        269.8,
-        293.6
-      ],
-      "webkit": [
-        30.1,
-        64.8,
-        269.9,
-        293.6
-      ]
-    },
-    {
-      "motif": "barro",
-      "stage": 4,
-      "key": "root",
-      "chromium": [
-        30.2,
-        64.8,
-        269.8,
-        293.6
-      ],
-      "webkit": [
-        30.1,
-        64.8,
-        269.9,
-        293.6
-      ]
-    },
-    {
-      "motif": "retrato",
-      "stage": 4,
-      "key": "root",
-      "chromium": [
-        26,
-        16,
-        108,
-        136
-      ],
-      "webkit": [
-        26,
-        16,
-        108.1,
-        136
+        18,
+        27.5,
+        124,
+        134.7
       ]
     }
   ],
