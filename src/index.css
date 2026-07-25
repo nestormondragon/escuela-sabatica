@@ -580,6 +580,29 @@ body {
 }
 .cp > div:not(.cp-bloom) { position: relative; z-index: 1; }
 
+/* =================== NARRATIVE VESSEL =================== */
+/* The fire inside the clay jar. A slow, low-amplitude intensity drift, not a
+   flicker: a flickering vessel reads as an error state, and this artwork is
+   on screen for minutes at a time. Kept as a CSS keyframe so it starts on
+   mount regardless of tab state and needs no JS. */
+.vessel { overflow: visible; }
+.vessel-fire {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: vessel-breathe 3.4s var(--ease-in-out) infinite;
+}
+@keyframes vessel-breathe {
+  0%, 100% { opacity: var(--fire, 1); transform: scale(1); }
+  50%      { opacity: calc(var(--fire, 1) * 0.86); transform: scale(1.035); }
+}
+
+/* Entrance: the vessel settles rather than bounces. */
+.vessel-enter { animation: vessel-settle 560ms var(--ease-out) both; }
+@keyframes vessel-settle {
+  0%   { opacity: 0; transform: scale(0.955) translateY(6px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
 /* =================== MOTIF MOTION =================== */
 /* Every loop below is CSS so it starts on mount regardless of tab state.
    Motion vocabulary for this quarter is placement and breath, not weather:

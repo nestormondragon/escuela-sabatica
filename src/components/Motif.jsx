@@ -1,4 +1,5 @@
 import React from "react";
+import CrackedVessel from "./CrackedVessel.jsx";
 
 /* =====================================================================
    Motif — the centrepiece that grows as the reader sets each piece.
@@ -22,6 +23,63 @@ import React from "react";
 
 const EASE = "1100ms cubic-bezier(0.23, 1, 0.32, 1)";
 const clamp = (n) => Math.max(0, Math.min(4, n));
+
+/* ---------------------------------------------------------------------
+   Shape primitives
+   ---------------------------------------------------------------------
+   A stroke cannot taper: stroke-width is constant along a path. A real
+   fracture is widest where it opened first and narrows to nothing at the
+   tip, so cracks here are FILLED slivers generated from a centreline plus
+   a per-point width. Same reason the edges are polygonal rather than
+   smoothed: ceramic breaks in straight runs with sudden direction changes.
+
+   sliver() walks the centreline, computes the normal at each point from
+   the neighbouring segment direction, offsets both sides by half the
+   local width, and closes the loop back along the other side. */
+function sliver(points, widths) {
+  const n = points.length;
+  const a = [];
+  const b = [];
+  for (let i = 0; i < n; i++) {
+    const [x, y] = points[i];
+    const [px, py] = points[Math.max(0, i - 1)];
+    const [nx2, ny2] = points[Math.min(n - 1, i + 1)];
+    let dx = nx2 - px;
+    let dy = ny2 - py;
+    const len = Math.hypot(dx, dy) || 1;
+    dx /= len;
+    dy /= len;
+    const w = (widths[i] ?? 1) / 2;
+    a.push([x - dy * w, y + dx * w]);
+    b.push([x + dy * w, y - dx * w]);
+  }
+  const fmt = (p) => `${p[0].toFixed(2)} ${p[1].toFixed(2)}`;
+  return `M ${a.map(fmt).join(" L ")} L ${b.reverse().map(fmt).join(" L ")} Z`;
+}
+
+/* Scale a width profile so a crack can open progressively. */
+const widen = (ws, k) => ws.map((w) => w * k);
+
+/* Deterministic pseudo-random in [-1, 1] from an integer seed. Mosaic
+   tesserae are hand-cut, so every tile needs its own irregularity, but it
+   must be stable across renders or the wall would shimmer on every paint. */
+function jitter(seed) {
+  const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
+  return (x - Math.floor(x)) * 2 - 1;
+}
+
+/* A single cut tessera: a quadrilateral whose corners are nudged off true so
+   no two tiles are identical, the way a real mosaic reads up close. */
+function tessera(x, y, w, h, seed) {
+  const j = (n, amt) => jitter(seed * 7 + n) * amt;
+  const p = [
+    [x + j(1, 0.9), y + j(2, 0.9)],
+    [x + w + j(3, 0.9), y + j(4, 0.9)],
+    [x + w + j(5, 0.9), y + h + j(6, 0.9)],
+    [x + j(7, 0.9), y + h + j(8, 0.9)],
+  ];
+  return `M ${p.map((q) => `${q[0].toFixed(2)} ${q[1].toFixed(2)}`).join(" L ")} Z`;
+}
 
 /* ---------------------------------------------------------------- mosaico */
 /* Tesserae start scattered and dim. As stages advance they slide onto the
@@ -122,65 +180,11 @@ function Cruz({ s }) {
 }
 
 /* ------------------------------------------------------------------ barro */
-function Barro({ s }) {
-  const t = s / 4;
-  const CRACKS = [
-    "M80 60 L73 82 L79 100",
-    "M80 60 L89 78 L84 98 L90 114",
-    "M73 82 L61 93",
-    "M89 78 L101 89",
-  ];
-  return (
-    <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
-      <defs>
-        <radialGradient id="ba-inner" cx="50%" cy="52%" r="46%">
-          <stop offset="0%" stopColor="var(--clay-hi)" stopOpacity="0.95" />
-          <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
-        </radialGradient>
-        <clipPath id="ba-body">
-          <path d="M60 50 Q50 72 54 94 Q58 118 80 126 Q102 118 106 94 Q110 72 100 50 Z" />
-        </clipPath>
-      </defs>
-
-      <ellipse cx="80" cy="88" rx="52" ry="44" fill="url(#ba-inner)"
-               className={s >= 3 ? "halo" : undefined}
-               style={{ opacity: t * 0.72, transition: `opacity ${EASE}` }} />
-
-      {/* handles: what makes it read as an amphora rather than a capsule */}
-      <path d="M60 56 Q44 60 46 74 Q47 84 54 88" fill="none"
-            style={{ stroke: "var(--line-2)", strokeWidth: 3, strokeLinecap: "round" }} />
-      <path d="M100 56 Q116 60 114 74 Q113 84 106 88" fill="none"
-            style={{ stroke: "var(--line-2)", strokeWidth: 3, strokeLinecap: "round" }} />
-
-      {/* the vessel */}
-      <path d="M60 50 Q50 72 54 94 Q58 118 80 126 Q102 118 106 94 Q110 72 100 50 Z"
-            style={{ fill: "var(--bg-2)", stroke: "var(--line-2)", strokeWidth: 1.6 }} />
-      {/* neck and lip */}
-      <path d="M70 38 L68 50 L92 50 L90 38 Z"
-            style={{ fill: "var(--bg-2)", stroke: "var(--line-2)", strokeWidth: 1.4 }} />
-      <rect x="64" y="32" width="32" height="7" rx="1.5"
-            style={{ fill: "var(--surface-3)", stroke: "var(--line-2)", strokeWidth: 1.2 }} />
-      {/* foot */}
-      <rect x="70" y="126" width="20" height="4" rx="1"
-            style={{ fill: "var(--surface-3)" }} />
-
-      <g clipPath="url(#ba-body)">
-        {CRACKS.map((d, i) => {
-          const open = Math.max(0, Math.min(1, s - i));
-          return (
-            <path key={i} d={d} fill="none" strokeLinecap="round"
-                  style={{
-                    stroke: "var(--clay-hi)",
-                    strokeWidth: 1.2 + open * 1.5,
-                    opacity: open,
-                    filter: open > 0 ? "drop-shadow(0 0 4px var(--clay))" : "none",
-                    transition: `opacity ${EASE}, stroke-width ${EASE}`,
-                  }} />
-          );
-        })}
-      </g>
-    </svg>
-  );
+/* The clay jar is the quarter's one piece of narrative artwork, so it lives
+   in its own component with its own construction notes (docs/SVG-DESIGN.md).
+   Everything else here is a supporting scene. */
+function Barro({ s, size }) {
+  return <CrackedVessel stage={s} size={size} variant="auto" />;
 }
 
 /* ------------------------------------------------------------------ carta */
@@ -291,7 +295,8 @@ export default function Motif({ kind, stageIndex = 0, size = 220 }) {
   const Cmp = KINDS[kind] || Mosaico;
   return (
     <div style={{ width: size, maxWidth: "100%", margin: "0 auto", lineHeight: 0 }}>
-      <Cmp s={clamp(stageIndex)} />
+      {/* size is passed through so artwork can drop detail at small sizes */}
+      <Cmp s={clamp(stageIndex)} size={size} />
     </div>
   );
 }
