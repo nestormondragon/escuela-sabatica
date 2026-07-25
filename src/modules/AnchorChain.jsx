@@ -21,7 +21,7 @@ export default function AnchorChain({ config, onFill, onSkip }) {
 
   return (
     <div className="stack">
-      <p className="prompt-q">{allForged ? config.climax : "Forja la cadena, eslabón por eslabón"}</p>
+      <p className="prompt-q">{allForged ? config.climax : "Arma la cadena, eslabón por eslabón"}</p>
       {!allForged ? <p className="prompt-hint">Toca el siguiente eslabón</p> : null}
 
       <div className="stack" style={{ gap: 0 }}>
@@ -85,7 +85,7 @@ export default function AnchorChain({ config, onFill, onSkip }) {
             </div>
             <HoldToSeal
               disabled={!value}
-              label="Mantén presionado · echa el ancla"
+              label="Mantén presionado · sella tu decisión"
               onComplete={() => onFill(value, custom ? { [config.allowCustom.extraKey]: value } : null, config.seedSub)}
             />
             <div className="skip-wrap"><button className="skip" onClick={onSkip}>Saltar por ahora</button></div>
@@ -145,7 +145,7 @@ function HoldToSeal({ onComplete, label, disabled }) {
     >
       <span style={{ position: "absolute", inset: 0, background: "rgba(255,255,255,0.25)", transform: `scaleX(${fill})`, transformOrigin: "left", transition: holding.current ? "none" : "transform 0.2s ease" }} />
       <span style={{ position: "relative", display: "inline-flex", alignItems: "center", gap: 9 }}>
-        <Icon name="anchor" size={18} /> {label}
+        <Icon name="check" size={18} weight="bold" /> {label}
       </span>
     </button>
   );

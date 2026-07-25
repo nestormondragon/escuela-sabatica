@@ -16,7 +16,7 @@ export default function Stub({ lesson, todayLesson, onGoToday, onOpenLessons }) 
       <div style={{ margin: "20px auto", width: 64, height: 64, borderRadius: "50%", display: "grid", placeItems: "center", color: "var(--clay)", background: "color-mix(in srgb, var(--clay) 12%, transparent)" }}>
         <Icon name="mosaic" size={30} />
       </div>
-      <p className="lead">Esta experiencia se está preparando. Cada semana se añade la lección correspondiente como un recorrido para forjar tu propio artefacto.</p>
+      <p className="lead">Esta experiencia se está preparando. Cada semana se añade la lección correspondiente como un recorrido para armar tu propio mosaico.</p>
 
       {todayLesson && todayLesson.id !== lesson.id ? (
         <motion.button className="btn btn-primary btn-block" style={{ marginTop: 20 }} whileTap={{ scale: 0.98 }} transition={t.tap} onClick={onGoToday}>

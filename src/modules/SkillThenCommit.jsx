@@ -115,7 +115,7 @@ function Committer({ skill, commit, score, onFill, onSkip, seedSub, saveLabel })
         />
       </div>
       <SaveBar
-        label={saveLabel || "Guardar en mi ancla"}
+        label={saveLabel || "Guardar esta pieza"}
         disabled={!value}
         onSave={() => onFill(value, { [commit.extraKey]: value }, seedSub)}
         onSkip={onSkip}

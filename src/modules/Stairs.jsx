@@ -144,7 +144,7 @@ export default function Stairs({ config, onFill, onSkip }) {
                   <Pause />
                   <Verse text={config.verse.text} cite={config.verse.ref} />
                   <SaveBar
-                    label={config.saveLabel || "Guardar en mi ancla"}
+                    label={config.saveLabel || "Guardar esta pieza"}
                     onSave={() =>
                       onFill(
                         leaveValue,

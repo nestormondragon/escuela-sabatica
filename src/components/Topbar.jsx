@@ -32,7 +32,7 @@ export default function Topbar({
   return (
     <header className="topbar">
       <div className="topbar-inner">
-        <button className="icon-btn" onClick={onHome} aria-label="Mi ancla" title="Mi ancla">
+        <button className="icon-btn" onClick={onHome} aria-label="Mi mosaico" title="Mi mosaico">
           <Icon name="mosaic" size={20} />
         </button>
         <button

@@ -267,7 +267,7 @@ function Ceremony({ lesson, ceremonyLine, reduced, onDone }) {
         <div className="tag" style={{ marginTop: 8, color: "var(--clay)" }}>{lesson.verse.ref}</div>
       </motion.div>
       <motion.button data-autofocus initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }} className="btn btn-primary" onClick={onDone}>
-        Ver mi ancla <Icon name="arrow" size={18} />
+        Ver mi mosaico <Icon name="arrow" size={18} />
       </motion.button>
     </motion.div>
   );

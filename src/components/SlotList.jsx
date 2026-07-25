@@ -77,7 +77,7 @@ export default function SlotList({ slots, values, firstUnfilledId, remaining, on
                   whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
                 }}
               >
-                {filled ? values[s.id] : isCurrent ? "Toca para forjar esta pieza" : s.teaser}
+                {filled ? values[s.id] : isCurrent ? "Toca para colocar esta pieza" : s.teaser}
               </span>
             </span>
             {open && !filled ? (

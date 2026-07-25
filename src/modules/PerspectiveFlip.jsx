@@ -94,7 +94,7 @@ export default function PerspectiveFlip({ config, onFill, onSkip }) {
               />
             </div>
             <SaveBar
-              label={config.saveLabel || "Guardar en mi ancla"}
+              label={config.saveLabel || "Guardar esta pieza"}
               disabled={!value}
               onSave={() => onFill(value, { [config.commit.extraKey]: aliento.trim() }, config.seedSub)}
               onSkip={onSkip}

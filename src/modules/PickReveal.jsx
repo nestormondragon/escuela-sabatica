@@ -73,7 +73,7 @@ export default function PickReveal({ config, onFill, onSkip }) {
         <>
           {config.closing ? (<><Pause /><p className="story" style={{ borderLeftColor: "var(--clay)" }}>{config.closing}</p></>) : null}
           <SaveBar
-            label={config.chooseLabel || "Guardar en mi ancla"}
+            label={config.chooseLabel || "Guardar esta pieza"}
             disabled={!value}
             onSave={() =>
               onFill(value, isCustom ? { [config.allowCustom.extraKey]: value } : null, config.seedSub)

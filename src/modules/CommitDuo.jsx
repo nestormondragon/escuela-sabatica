@@ -27,7 +27,7 @@ export default function CommitDuo({ config, onFill, onSkip }) {
       </div>
 
       <SaveBar
-        label={config.saveLabel || "Cerrar mi ancla"}
+        label={config.saveLabel || "Guardar y cerrar"}
         disabled={!stepValue}
         onSave={() =>
           onFill(stepValue, { [config.stepExtraKey]: stepValue, [config.personExtraKey]: person.trim() }, config.seedSub)

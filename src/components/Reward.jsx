@@ -40,7 +40,7 @@ export default function Reward({ open, slotLabel, seedSub, verse, userName, onCl
           role="dialog"
           aria-modal="true"
           aria-live="polite"
-          aria-label={`Pieza forjada: ${slotLabel || ""}`}
+          aria-label={`Pieza colocada: ${slotLabel || ""}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -88,10 +88,10 @@ export default function Reward({ open, slotLabel, seedSub, verse, userName, onCl
                 boxShadow: "var(--glow-clay)",
               }}
             >
-              <Icon name="anchor" size={28} />
+              <Icon name="check" size={26} weight="bold" />
             </motion.div>
             <div style={{ fontFamily: "var(--ui)", fontSize: "0.64rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--clay)" }}>
-              Pieza forjada
+              Pieza colocada
             </div>
             <h3 className="letter" style={{ fontSize: "1.3rem", margin: "4px 0 2px" }}>{slotLabel}</h3>
             {seedSub ? <p className="muted" style={{ fontSize: "0.88rem" }}>{seedSub}</p> : null}

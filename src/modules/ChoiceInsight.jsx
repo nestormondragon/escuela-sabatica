@@ -26,7 +26,7 @@ export default function ChoiceInsight({ config, onFill, onSkip }) {
               </>
             ) : null}
             <SaveBar
-              label={config.saveLabel || "Guardar en mi ancla"}
+              label={config.saveLabel || "Guardar esta pieza"}
               onSave={() => onFill(picked.label, null, config.seedSub, picked.tags)}
               onSkip={onSkip}
             />
