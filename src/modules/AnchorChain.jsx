@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { reveal, t, EASE_OUT } from "../lib/motion.js";
 import { SaveBar, ChipRow, Pause } from "./common.jsx";
 import { buzz } from "../lib/haptics.js";
 import Icon from "../components/Icon.jsx";
+import { useAppReducedMotion } from "../lib/useAppReducedMotion.js";
 
 /* Romans 5:3-5 forged link by link, then drop the anchor (press &
    hold) on the hope you choose. Used for "Mi esperanza". */
@@ -14,10 +15,22 @@ export default function AnchorChain({ config, onFill, onSkip }) {
   const [hope, setHope] = useState("");
   const [custom, setCustom] = useState("");
   const value = (custom.trim() || hope).trim();
+  const hopePromptRef = useRef(null);
+  const focusHopePrompt = useRef(false);
 
   const forge = () => {
-    if (forged < total) { buzz.light(); setForged((f) => f + 1); }
+    if (forged < total) {
+      if (forged + 1 >= total) focusHopePrompt.current = true;
+      buzz.light();
+      setForged((f) => f + 1);
+    }
   };
+
+  useEffect(() => {
+    if (!allForged || !focusHopePrompt.current) return;
+    hopePromptRef.current?.focus({ preventScroll: true });
+    focusHopePrompt.current = false;
+  }, [allForged]);
 
   return (
     <div className="stack">
@@ -77,7 +90,7 @@ export default function AnchorChain({ config, onFill, onSkip }) {
         {allForged ? (
           <motion.div className="stack" variants={reveal} initial="initial" animate="animate">
             <Pause />
-            <p className="prompt-q" style={{ fontSize: "1.2rem" }}>{config.prompt}</p>
+            <p ref={hopePromptRef} className="prompt-q" tabIndex={-1} style={{ fontSize: "1.2rem" }}>{config.prompt}</p>
             {config.hint ? <p className="prompt-hint">{config.hint}</p> : null}
             <ChipRow options={config.options} value={custom ? "" : hope} onPick={(o) => { setHope(o); setCustom(""); }} />
             <div className="field">
@@ -98,7 +111,7 @@ export default function AnchorChain({ config, onFill, onSkip }) {
 
 /* press-and-hold to seal a commitment (asymmetric: slow fill, snap back) */
 function HoldToSeal({ onComplete, label, disabled }) {
-  const reduced = useReducedMotion();
+  const reduced = useAppReducedMotion();
   const [fill, setFill] = useState(0);
   const holding = useRef(false);
   const raf = useRef(null);

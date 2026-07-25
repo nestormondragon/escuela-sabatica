@@ -1,7 +1,7 @@
-import { LESSONS, currentLesson } from "/Users/Administrator/Downloads/escuela-sabatica/src/content/lessons.js";
-import { deriveProfile, personalClosing } from "/Users/Administrator/Downloads/escuela-sabatica/src/engine/profile.js";
+import { LESSONS, currentLesson } from "../src/content/lessons.js";
+import { deriveProfile, personalClosing } from "../src/engine/profile.js";
 import fs from "node:fs";
-const _icoSrc = fs.readFileSync("/Users/Administrator/Downloads/escuela-sabatica/src/components/Icon.jsx","utf8");
+const _icoSrc = fs.readFileSync(new URL("../src/components/Icon.jsx", import.meta.url), "utf8");
 const _mapBody = _icoSrc.slice(_icoSrc.indexOf("const MAP = {"), _icoSrc.indexOf("};", _icoSrc.indexOf("const MAP = {")));
 const ICON_NAMES = [..._mapBody.matchAll(/([a-zA-Z]+)\s*:\s*[A-Z][A-Za-z]*/g)].map(m=>m[1]);
 

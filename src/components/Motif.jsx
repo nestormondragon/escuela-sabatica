@@ -284,7 +284,7 @@ function Cruz({ s }) {
         [0, 1, 2].map((i) => (
           <circle key={i} className="ember" r="1.1" cx={62 + i * 17} cy={124}
                   style={{ fill: "var(--clay-hi)", opacity: 0.7,
-                           animationDelay: `${i * 1.35}s` }} />
+                           animationDelay: `${i * 0.12}s` }} />
         ))}
     </svg>
   );
@@ -390,9 +390,14 @@ function Carta({ s }) {
           return (
             <g key={i} style={{ opacity: shown, transition: `opacity ${EASE}` }}>
               {ln.words.map(([x, w], k) => (
-                <rect key={k} x={x} y={ln.y} width={w * shown} height="1.9" rx="0.9"
+                <rect key={k} x={x} y={ln.y} width={w} height="1.9" rx="0.9"
                       fill="#3d2f1c" opacity="0.72"
-                      style={{ transition: `width ${EASE}` }} />
+                      style={{
+                        transform: `scaleX(${shown})`,
+                        transformBox: "fill-box",
+                        transformOrigin: "left center",
+                        transition: `transform ${EASE}`,
+                      }} />
               ))}
             </g>
           );

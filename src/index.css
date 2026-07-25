@@ -22,8 +22,6 @@
              mount and never depends on a JS visibility flag.
    ===================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
-
 :root {
   /* ---- NIGHT (default): slate ink ---- */
   --bg-0: #14161b;
@@ -62,9 +60,9 @@
 
   --maxw: 620px;
 
-  --display: 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --ui: 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --letter: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+  --display: 'Outfit Variable', 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ui: 'Outfit Variable', 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --letter: 'EB Garamond Variable', 'EB Garamond', 'Iowan Old Style', Georgia, serif;
 
   /* motion curves (Emil Kowalski) */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -108,6 +106,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-text-size-adjust: 100%; }
 html, body, #root { min-height: 100%; }
+html { background: var(--bg-0); }
 
 body {
   font-family: var(--ui);
@@ -133,18 +132,14 @@ body {
     var(--bg-0);
 }
 
-/* the light that grows as the mosaic completes (progress-driven, --lume) */
+/* the light grows with progress but stays still. The active motif owns the
+   viewport's ambient motion budget. */
 .bg-lume {
   position: absolute; inset: -20%;
   background: radial-gradient(42% 34% at 50% 34%,
               color-mix(in srgb, var(--clay) 34%, transparent), transparent 68%);
   opacity: var(--lume, 0.18);
   transition: opacity 1.2s var(--ease-out);
-  animation: lume-breathe 11s var(--ease-in-out) infinite;
-}
-@keyframes lume-breathe {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.09); }
 }
 
 /* plaster grain: fixed + pointer-events-none so it never repaints on scroll */
@@ -153,15 +148,15 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
 }
 
-/* a faint tessellated floor, the mosaic the reader is standing on */
+/* One architectural seam field. The actual grid belongs to the quarter
+   artifact rather than becoming a generated-looking page wallpaper. */
 .bg-tess {
-  position: absolute; inset: 0; opacity: 0.28;
+  position: absolute; inset: 0; opacity: 0.26;
   background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 58px 58px;
-  mask-image: radial-gradient(70% 52% at 50% 62%, #000 4%, transparent 72%);
-  -webkit-mask-image: radial-gradient(70% 52% at 50% 62%, #000 4%, transparent 72%);
+    linear-gradient(118deg, transparent 0 46%, var(--line) 46.2% 46.35%, transparent 46.6%),
+    linear-gradient(72deg, transparent 0 78%, color-mix(in srgb, var(--clay) 18%, transparent) 78.1% 78.2%, transparent 78.4%);
+  mask-image: radial-gradient(78% 72% at 50% 42%, #000 5%, transparent 78%);
+  -webkit-mask-image: radial-gradient(78% 72% at 50% 42%, #000 5%, transparent 78%);
 }
 
 .bg-scrim {
@@ -216,8 +211,9 @@ body {
 /* progress: a seam of clay filling along the top edge */
 .progress { height: 2px; background: var(--line); overflow: hidden; }
 .progress-fill {
-  height: 100%; width: 0; background: var(--clay);
-  transition: width 0.6s var(--ease-out);
+  height: 100%; width: 100%; background: var(--clay);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform 0.6s var(--ease-out);
 }
 
 /* =================== TYPE =================== */
@@ -493,7 +489,7 @@ body {
 
 .chip-row { display: flex; flex-wrap: wrap; gap: 7px; }
 .chip {
-  padding: 9px 13px; min-height: 40px;
+  padding: 9px 13px; min-height: 44px;
   background: var(--surface); border: 1px solid var(--line);
   border-radius: var(--r-sm); color: var(--text-soft); cursor: pointer;
   font-family: var(--ui); font-size: 0.87rem;
@@ -534,10 +530,10 @@ body {
 }
 .switch .knob {
   position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%;
-  background: var(--muted); transition: left 0.22s var(--ease-out), background 0.22s var(--ease-out);
+  background: var(--muted); transition: transform 0.22s var(--ease-out), background 0.22s var(--ease-out);
 }
 .switch[aria-pressed="true"] .track { background: var(--clay-deep); border-color: var(--clay); }
-.switch[aria-pressed="true"] .knob { left: 18px; background: var(--clay-ink); }
+.switch[aria-pressed="true"] .knob { transform: translateX(16px); background: var(--clay-ink); }
 @media (max-width: 430px) { .switch-label { display: none; } }
 
 .privacy {
@@ -605,12 +601,7 @@ body {
   opacity: var(--cp-bloom, 0.34);
   filter: blur(14px);
   transform: translate(-50%, -50%);
-  animation: cp-breathe 8s var(--ease-in-out) infinite;
   transition: opacity 1.2s var(--ease-out);
-}
-@keyframes cp-breathe {
-  0%, 100% { transform: translate(-50%, -50%) scale(0.94); }
-  50%      { transform: translate(-50%, -50%) scale(1.07); }
 }
 .cp > div:not(.cp-bloom) { position: relative; z-index: 1; }
 
@@ -659,19 +650,14 @@ body {
 }
 
 .mtf .ember { transform-box: fill-box; transform-origin: 50% 50%;
-              animation: mtf-ember 4.2s ease-out infinite; }
+              animation: mtf-ember 0.9s ease-out 1 both; }
 @keyframes mtf-ember {
   0%   { transform: translateY(0) scale(0.6); opacity: 0; }
   22%  { opacity: 0.85; }
   100% { transform: translateY(-42px) scale(1); opacity: 0; }
 }
 
-.mtf .star { transform-box: fill-box; transform-origin: 50% 50%;
-             animation: mtf-star 4.6s var(--ease-in-out) infinite; }
-@keyframes mtf-star {
-  0%, 100% { opacity: 0.35; }
-  50%      { opacity: 1; }
-}
+.mtf .star { transform-box: fill-box; transform-origin: 50% 50%; }
 
 /* =================== FOCUS =================== */
 :focus-visible {
@@ -689,6 +675,16 @@ body {
     transition-delay: 0s !important;
     scroll-behavior: auto !important;
   }
+}
+
+:root[data-motion="reduce"] *,
+:root[data-motion="reduce"] *::before,
+:root[data-motion="reduce"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  transition-delay: 0s !important;
+  scroll-behavior: auto !important;
 }
 
 /* =================== PRINT =================== */

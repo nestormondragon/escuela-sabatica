@@ -49,7 +49,7 @@ export default function KitDone({ lesson, state, total, maestro, onBack, onReset
   };
 
   const copyAll = () => {
-    const header = `${fn ? fn.toUpperCase() + " · " : ""}${(lesson.kitName || "Mi recorrido").toUpperCase()} — Lección ${lesson.number} · ${lesson.title} · ${formatLong(lesson.forDate)}`;
+    const header = `${fn ? fn.toUpperCase() + " · " : ""}${(lesson.kitName || "Mi recorrido").toUpperCase()} · Lección ${lesson.number} · ${lesson.title} · ${formatLong(lesson.forDate)}`;
     const L = [header, ""];
     L.push("Mi patrón: " + lesson.pattern(state), "");
     if (closing.pathLine) L.push(closing.pathLine);

@@ -1,4 +1,4 @@
-import { LESSONS } from "/Users/Administrator/Downloads/escuela-sabatica/src/content/lessons.js";
+import { LESSONS } from "../src/content/lessons.js";
 
 /* Render every lesson's outputs using the reader's REAL possible answers,
    not placeholders, so template grammar is actually exercised. */

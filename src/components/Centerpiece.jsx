@@ -12,10 +12,10 @@ export function stageIndexFor(filled) {
 
 /* The centrepiece: the image the reader is assembling.
 
-   A single clay bloom sits behind it and strengthens as pieces are set, so
+   A single static clay bloom sits behind it and strengthens as pieces are set, so
    the subject reads as lit from within rather than pasted onto a flat page.
-   All motion is CSS (see .cp-bloom and the .mtf rules), so nothing here
-   depends on a JS visibility flag and the scene is never stuck dark. */
+   The motif alone owns any ambient loop, so the world never has two competing
+   breathing motions. Nothing here depends on a JS visibility flag. */
 export default function Centerpiece({ lesson, filled = 0, size = 260 }) {
   const kind = lesson?.scene?.motif || lesson?.centerpiece || "mosaico";
   const stage = stageIndexFor(filled);
