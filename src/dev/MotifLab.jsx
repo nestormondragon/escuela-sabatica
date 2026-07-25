@@ -1,5 +1,6 @@
 import React from "react";
 import Motif from "../components/Motif.jsx";
+import CrackedVessel from "../components/CrackedVessel.jsx";
 
 /* =====================================================================
    MotifLab — a development-only harness for looking at the artwork.
@@ -17,6 +18,71 @@ import Motif from "../components/Motif.jsx";
 
 const ALL = ["mosaico", "cruz", "barro", "carta", "alba"];
 const STAGES = [0, 1, 2, 3, 4];
+
+/* Reveal rig: renders the real production component at fixed reveal
+   fractions so intermediate frames can be captured as evidence. `stage` is
+   held at 4 and the reveal is stepped by re-mounting with a key, which is
+   the only way to observe a mid-transition frame deterministically. */
+function RevealStrip({ debug }) {
+  const FRAMES = [0, 0.25, 0.5, 0.75, 1];
+  return (
+    <section style={{ marginBottom: 34 }}>
+      <h2 style={{ fontFamily: "var(--ui)", fontSize: 12, letterSpacing: "0.16em",
+                   textTransform: "uppercase", color: "var(--clay)", marginBottom: 10 }}>
+        reveal 0 / 25 / 50 / 75 / 100 {debug ? "· debug" : ""}
+      </h2>
+      <div style={{ display: "flex", gap: 8, background: "var(--bg-0)", padding: 12,
+                    borderRadius: 8, flexWrap: "wrap" }}>
+        {FRAMES.map((p) => (
+          <figure key={p} style={{ margin: 0, textAlign: "center" }}>
+            <div style={{ width: 200 }} data-reveal={p}>
+              <CrackedVessel stage={4} size={200} variant="full"
+                             debug={debug} revealOverride={p} />
+            </div>
+            <figcaption style={{ fontFamily: "var(--ui)", fontSize: 10,
+                                 color: "var(--muted)", marginTop: 4 }}>
+              {Math.round(p * 100)}%
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* CSS-constrained instance: asked for 260px, rendered at 64px. Proves the
+   compact variant keys off measured width rather than the size prop. */
+function ConstrainedTest() {
+  return (
+    <section style={{ marginBottom: 34 }}>
+      <h2 style={{ fontFamily: "var(--ui)", fontSize: 12, letterSpacing: "0.16em",
+                   textTransform: "uppercase", color: "var(--clay)", marginBottom: 10 }}>
+        size=260 constrained by CSS to 64px
+      </h2>
+      <div style={{ display: "flex", gap: 24, alignItems: "flex-end",
+                    background: "var(--bg-0)", padding: 12, borderRadius: 8 }}>
+        <figure style={{ margin: 0, textAlign: "center" }}>
+          <div id="constrained" style={{ width: 64, overflow: "hidden" }}>
+            <CrackedVessel stage={4} size={260} variant="auto" />
+          </div>
+          <figcaption style={{ fontFamily: "var(--ui)", fontSize: 10,
+                               color: "var(--muted)", marginTop: 4 }}>
+            constrained
+          </figcaption>
+        </figure>
+        <figure style={{ margin: 0, textAlign: "center" }}>
+          <div style={{ width: 64 }}>
+            <CrackedVessel stage={4} size={64} variant="auto" />
+          </div>
+          <figcaption style={{ fontFamily: "var(--ui)", fontSize: 10,
+                               color: "var(--muted)", marginTop: 4 }}>
+            size=64 (reference)
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  );
+}
 
 export default function MotifLab({ only }) {
   const kinds = only && ALL.includes(only) ? [only] : ALL;
@@ -69,6 +135,14 @@ export default function MotifLab({ only }) {
           {small ? "tamaño normal" : "tamaños 160/96/64"}
         </button>
       </div>
+
+      {only === "barro" ? (
+        <>
+          <RevealStrip debug={false} />
+          <RevealStrip debug />
+          <ConstrainedTest />
+        </>
+      ) : null}
 
       {kinds.map((kind) => (
         <section key={kind} style={{ marginBottom: 40 }}>
