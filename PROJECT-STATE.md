@@ -203,6 +203,32 @@ set pieces (via `--tilt`, read by both the resting transform and the
 `tess-set` keyframe, so the settle animation lands on the resting angle
 instead of fighting it).
 
+## Cross-engine verification
+
+```
+node scripts/motif-verify.mjs    all 8 motifs, Chromium vs WebKit
+node scripts/vessel-verify.mjs   the vessel specifically (masks, feTurbulence)
+node scripts/vessel-compare.mjs  original/v1/v2 from git worktrees
+```
+
+`motif-verify` probes every motif at every stage in both engines and diffs
+node counts, defs, gradients, clips, masks, filters, transform-box values,
+resolving animation names, bounding boxes and duplicate ids. Current result:
+0 console errors, 0 duplicate ids, 0 non-geometry differences, largest bbox
+delta 0.10 user units, pixel divergence under 0.13% on every motif.
+
+Two real bugs came out of running it:
+
+1. **Duplicate ids across the whole motif family (88 of them).** Only the
+   vessel had been namespaced. `KitDone` mounts `Centerpiece` twice (the
+   keepsake card and the ceremony overlay), so this collided in production,
+   not just in the lab. All motifs now namespace via `useId()`.
+2. **`filter: brightness()` on an SVG node rasterises differently in WebKit.**
+   Both engines computed the *same* filter value, but mosaico's tile faces
+   diverged on 4.7% of pixels versus 0.02% everywhere else. Baking the shade
+   into the fill with a nested `color-mix()` brought it to 0.019%. Avoid CSS
+   filters on SVG children; composite colour instead.
+
 ## QA gates
 
 ```

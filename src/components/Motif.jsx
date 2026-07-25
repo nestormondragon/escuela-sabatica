@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import CrackedVessel from "./CrackedVessel.jsx";
 
 /* =====================================================================
@@ -91,6 +91,11 @@ function tessera(x, y, w, h, seed) {
    tile so it has thickness, and per-tile colour variation from the seeded
    jitter, which is what a mosaic actually looks like up close. */
 function Mosaico({ s }) {
+  const useIdRaw = useId().replace(/:/g, "");
+  // Namespaced per instance: several motifs render at once (the keepsake
+  // card and the ceremony overlay both mount a Centerpiece), and duplicate
+  // ids silently resolve to whichever definition came first.
+  const uid = (n) => `${useIdRaw}-${n}`;
   const t = s / 4;
   const COLS = 7;
   const ROWS = 8;
@@ -125,12 +130,12 @@ function Mosaico({ s }) {
   return (
     <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
       <defs>
-        <radialGradient id="mo-lume" cx="50%" cy="46%" r="54%">
+        <radialGradient id={uid("mo-lume")} cx="50%" cy="46%" r="54%">
           <stop offset="0%" stopColor="var(--clay)" stopOpacity="0.32" />
           <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
         </radialGradient>
         {/* grout: the dark bed the tesserae are pressed into */}
-        <linearGradient id="mo-grout" x1="0%" y1="0%" x2="0%" y2="100%">
+        <linearGradient id={uid("mo-grout")} x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor="#16181d" />
           <stop offset="100%" stopColor="#0e1014" />
         </linearGradient>
@@ -138,10 +143,10 @@ function Mosaico({ s }) {
 
       {/* the mortar bed, sized to the finished panel */}
       <rect x={OX - 3} y={OY - 3} width={COLS * CELL + 6} height={ROWS * CELL + 6}
-            rx="2" fill="url(#mo-grout)"
+            rx="2" fill={`url(#${uid("mo-grout")})`}
             style={{ opacity: 0.42 + t * 0.5, transition: `opacity ${EASE}` }} />
 
-      <circle cx="80" cy="78" r="68" fill="url(#mo-lume)"
+      <circle cx="80" cy="78" r="68" fill={`url(#${uid("mo-lume")})`}
               style={{ opacity: 0.2 + t * 0.8, transition: `opacity ${EASE}` }} />
 
       {tiles.map(({ i, x, y, fig, arrive, warm, shade }) => {
@@ -157,10 +162,15 @@ function Mosaico({ s }) {
                animationDelay: `${(i % 6) * 0.3}s`,
              }}>
             {/* the cut face */}
+            {/* Per-tile shade is mixed INTO the fill rather than applied as
+                filter: brightness(). Both engines compute the same value for
+                the filter, but they rasterise it differently: the CSS filter
+                made every tile face diverge between Chromium and WebKit
+                (4.7% of pixels over threshold, versus 0.02% elsewhere).
+                Nested color-mix composites identically and keeps theming. */}
             <path d={tessera(x, y, w, w, i)}
                   style={{
-                    fill: `color-mix(in srgb, var(--clay) ${warm}%, #313640)`,
-                    filter: `brightness(${shade.toFixed(2)})`,
+                    fill: `color-mix(in srgb, color-mix(in srgb, var(--clay) ${warm}%, #313640) ${(shade * 100).toFixed(1)}%, #000)`,
                     transition: `fill ${EASE}`,
                   }} />
             {/* bevel: light catches the top-left cut, shadow sits bottom-right,
@@ -184,6 +194,11 @@ function Mosaico({ s }) {
    icon. The fix is material (grain, tone, end grain), depth (a side face on
    each beam) and asymmetry (the timber is not machined). */
 function Cruz({ s }) {
+  const useIdRaw = useId().replace(/:/g, "");
+  // Namespaced per instance: several motifs render at once (the keepsake
+  // card and the ceremony overlay both mount a Centerpiece), and duplicate
+  // ids silently resolve to whichever definition came first.
+  const uid = (n) => `${useIdRaw}-${n}`;
   const t = s / 4;
   const rise = Math.max(0, Math.min(1, s / 2.2));        // upright goes up first
   const cross = Math.max(0, Math.min(1, (s - 1.4) / 2)); // then the crossbeam
@@ -194,23 +209,23 @@ function Cruz({ s }) {
   return (
     <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
       <defs>
-        <linearGradient id="cz-wood" x1="0%" y1="0%" x2="100%" y2="0%">
+        <linearGradient id={uid("cz-wood")} x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#8a5a3a" />
           <stop offset="42%" stopColor="#6b422a" />
           <stop offset="100%" stopColor="#3a2116" />
         </linearGradient>
-        <linearGradient id="cz-wood-h" x1="0%" y1="0%" x2="0%" y2="100%">
+        <linearGradient id={uid("cz-wood-h")} x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor="#8a5a3a" />
           <stop offset="45%" stopColor="#6b422a" />
           <stop offset="100%" stopColor="#3a2116" />
         </linearGradient>
-        <radialGradient id="cz-halo" cx="50%" cy="40%" r="52%">
+        <radialGradient id={uid("cz-halo")} cx="50%" cy="40%" r="52%">
           <stop offset="0%" stopColor="var(--clay-hi)" stopOpacity="0.5" />
           <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
         </radialGradient>
       </defs>
 
-      <circle cx="80" cy="66" r="62" fill="url(#cz-halo)"
+      <circle cx="80" cy="66" r="62" fill={`url(#${uid("cz-halo")})`}
               className={s >= 3 ? "halo" : undefined}
               style={{ opacity: lit * 0.95, transition: `opacity ${EASE}` }} />
 
@@ -225,7 +240,7 @@ function Cruz({ s }) {
         {/* side face, giving the beam depth */}
         <path d="M 88 30 L 93 33 L 93 141 L 88 140 Z" fill="#2e1a11" />
         {/* front face */}
-        <rect x="71" y="30" width="17" height="110" fill="url(#cz-wood)" />
+        <rect x="71" y="30" width="17" height="110" fill={`url(#${uid("cz-wood")})`} />
         {/* end grain on the top cut */}
         <path d="M 71 30 L 88 30 L 93 33 L 76 33 Z" fill="#8a5a3a" opacity="0.85" />
         {/* grain */}
@@ -243,7 +258,7 @@ function Cruz({ s }) {
         transition: `transform ${EASE}`,
       }}>
         <path d="M 34 70 L 37 74 L 126 74 L 123 70 Z" fill="#2e1a11" />
-        <rect x="34" y="54" width="92" height="16" fill="url(#cz-wood-h)" />
+        <rect x="34" y="54" width="92" height="16" fill={`url(#${uid("cz-wood-h")})`} />
         <path d="M 34 54 L 34 70 L 37 74 L 37 58 Z" fill="#7d5233" opacity="0.8" />
         {GRAIN.map((g, i) => (
           <path key={i}
@@ -290,6 +305,11 @@ function Barro({ s, size, arc }) {
 
    v1 was a grey rectangle with even grey bars and a flat disc. */
 function Carta({ s }) {
+  const useIdRaw = useId().replace(/:/g, "");
+  // Namespaced per instance: several motifs render at once (the keepsake
+  // card and the ceremony overlay both mount a Centerpiece), and duplicate
+  // ids silently resolve to whichever definition came first.
+  const uid = (n) => `${useIdRaw}-${n}`;
   const t = s / 4;
   const unroll = Math.max(0, Math.min(1, s / 1.6));
   const sealed = Math.max(0, Math.min(1, (s - 3) / 1));
@@ -315,30 +335,30 @@ function Carta({ s }) {
   return (
     <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
       <defs>
-        <linearGradient id="ca-pap" x1="10%" y1="0%" x2="90%" y2="100%">
+        <linearGradient id={uid("ca-pap")} x1="10%" y1="0%" x2="90%" y2="100%">
           <stop offset="0%" stopColor="#d8c39a" />
           <stop offset="55%" stopColor="#c2a878" />
           <stop offset="100%" stopColor="#9c8154" />
         </linearGradient>
-        <linearGradient id="ca-curl" x1="0%" y1="0%" x2="0%" y2="100%">
+        <linearGradient id={uid("ca-curl")} x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor="#8a7047" />
           <stop offset="100%" stopColor="#c2a878" />
         </linearGradient>
-        <radialGradient id="ca-wax" cx="38%" cy="32%" r="62%">
+        <radialGradient id={uid("ca-wax")} cx="38%" cy="32%" r="62%">
           <stop offset="0%" stopColor="#e0785c" />
           <stop offset="70%" stopColor="#a8331f" />
           <stop offset="100%" stopColor="#6b1f12" />
         </radialGradient>
-        <radialGradient id="ca-lume" cx="50%" cy="46%" r="52%">
+        <radialGradient id={uid("ca-lume")} cx="50%" cy="46%" r="52%">
           <stop offset="0%" stopColor="var(--clay)" stopOpacity="0.26" />
           <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
         </radialGradient>
-        <clipPath id="ca-sheet">
+        <clipPath id={uid("ca-sheet")}>
           <path d="M 44 30 L 116 30 L 116 118 C 100 124, 60 124, 44 118 Z" />
         </clipPath>
       </defs>
 
-      <circle cx="80" cy="76" r="64" fill="url(#ca-lume)"
+      <circle cx="80" cy="76" r="64" fill={`url(#${uid("ca-lume")})`}
               style={{ opacity: 0.28 + t * 0.72, transition: `opacity ${EASE}` }} />
 
       {/* the sheet, unrolling downward from the top edge */}
@@ -348,8 +368,8 @@ function Carta({ s }) {
         transition: `transform ${EASE}`,
       }}>
         <path d="M 44 30 L 116 30 L 116 118 C 100 124, 60 124, 44 118 Z"
-              fill="url(#ca-pap)" />
-        <g clipPath="url(#ca-sheet)">
+              fill={`url(#${uid("ca-pap")})`} />
+        <g clipPath={`url(#${uid("ca-sheet")})`}>
           {/* papyrus is laid in strips, so the fibre runs both ways */}
           {[36, 44, 52, 60, 68, 76, 84, 92, 100, 108, 116].map((y) => (
             <line key={y} x1="44" y1={y} x2="116" y2={y}
@@ -361,7 +381,7 @@ function Carta({ s }) {
           ))}
           {/* the sheet curls, so the lower edge falls into shadow */}
           <path d="M 44 108 C 60 116, 100 116, 116 108 L 116 124 L 44 124 Z"
-                fill="url(#ca-curl)" opacity="0.5" />
+                fill={`url(#${uid("ca-curl")})`} opacity="0.5" />
         </g>
 
         {/* the writing */}
@@ -386,7 +406,7 @@ function Carta({ s }) {
         <ellipse cx="80" cy="127" rx="15" ry="4" fill="#000" opacity="0.32" />
         <path d="M 66 120 C 64 112, 70 106, 80 106 C 90 106, 96 112, 94 120
                  C 92 127, 86 130, 80 130 C 74 130, 68 127, 66 120 Z"
-              fill="url(#ca-wax)" />
+              fill={`url(#${uid("ca-wax")})`} />
         {/* the impression: a chi-rho suggestion, struck into the wax */}
         <path d="M 80 111 L 80 125 M 75 115 C 78 112, 84 113, 83 117 C 82 120, 78 120, 76 119"
               fill="none" stroke="#5e1a0f" strokeWidth="1.6"
@@ -404,6 +424,11 @@ function Carta({ s }) {
    architecture: a stepped base, a fluted shaft that tapers, and a capital
    with acanthus suggestion. v1 was four plain rectangles with cap slabs. */
 function Alba({ s }) {
+  const useIdRaw = useId().replace(/:/g, "");
+  // Namespaced per instance: several motifs render at once (the keepsake
+  // card and the ceremony overlay both mount a Centerpiece), and duplicate
+  // ids silently resolve to whichever definition came first.
+  const uid = (n) => `${useIdRaw}-${n}`;
   const t = s / 4;
   const COLS = [30, 56, 104, 130];
   const FLUTE = [-3.5, 0, 3.5];
@@ -411,28 +436,28 @@ function Alba({ s }) {
   return (
     <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
       <defs>
-        <linearGradient id="al-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+        <linearGradient id={uid("al-sky")} x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor="#131a2a" />
           <stop offset="55%" stopColor="#3a2a3a" />
           <stop offset="100%" stopColor="#8a4a35" />
         </linearGradient>
-        <radialGradient id="al-sun" cx="50%" cy="50%" r="50%">
+        <radialGradient id={uid("al-sun")} cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="#fff3d6" />
           <stop offset="34%" stopColor="#ffc98a" />
           <stop offset="70%" stopColor="#e8763f" stopOpacity="0.6" />
           <stop offset="100%" stopColor="#e8763f" stopOpacity="0" />
         </radialGradient>
-        <linearGradient id="al-stone" x1="0%" y1="0%" x2="100%" y2="0%">
+        <linearGradient id={uid("al-stone")} x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#9aa0a8" />
           <stop offset="38%" stopColor="#6e747d" />
           <stop offset="100%" stopColor="#3a3e46" />
         </linearGradient>
-        <clipPath id="al-frame"><rect x="0" y="0" width="160" height="132" /></clipPath>
+        <clipPath id={uid("al-frame")}><rect x="0" y="0" width="160" height="132" /></clipPath>
       </defs>
 
-      <g clipPath="url(#al-frame)">
+      <g clipPath={`url(#${uid("al-frame")})`}>
         {/* the sky warms as the night ends */}
-        <rect x="0" y="0" width="160" height="132" fill="url(#al-sky)" />
+        <rect x="0" y="0" width="160" height="132" fill={`url(#${uid("al-sky")})`} />
         {/* "noche cerrada": the warmth in the sky gradient is veiled until
             the light actually arrives, so stage 0 is night rather than dusk */}
         <rect x="0" y="0" width="160" height="132" fill="#0b0d13"
@@ -450,7 +475,7 @@ function Alba({ s }) {
         ))}
 
         {/* the sun clearing the horizon between the middle columns */}
-        <circle cx="80" cy={144 - t * 56} r="30" fill="url(#al-sun)"
+        <circle cx="80" cy={144 - t * 56} r="30" fill={`url(#${uid("al-sun")})`}
                 className={s >= 3 ? "halo" : undefined}
                 style={{ opacity: 0.05 + t * 0.95, transition: `cy ${EASE}, opacity ${EASE}` }} />
 
@@ -463,7 +488,7 @@ function Alba({ s }) {
               <rect x={x - 2} y="115" width={w + 4} height="5" fill="#41464e" />
               {/* fluted shaft, tapering slightly toward the capital */}
               <path d={`M ${x} 118 L ${x + 1.2} 44 L ${x + w - 1.2} 44 L ${x + w} 118 Z`}
-                    fill="url(#al-stone)" />
+                    fill={`url(#${uid("al-stone")})`} />
               {FLUTE.map((f, k) => (
                 <line key={k} x1={x + w / 2 + f} y1="46" x2={x + w / 2 + f * 1.15} y2="117"
                       stroke="#2b2f35" strokeWidth="1" opacity="0.42" />
@@ -501,6 +526,11 @@ function Alba({ s }) {
    contour is both achievable and historically apt for this setting; a
    half-attempted realistic portrait would read as a mistake. */
 function Retrato({ s }) {
+  const useIdRaw = useId().replace(/:/g, "");
+  // Namespaced per instance: several motifs render at once (the keepsake
+  // card and the ceremony overlay both mount a Centerpiece), and duplicate
+  // ids silently resolve to whichever definition came first.
+  const uid = (n) => `${useIdRaw}-${n}`;
   const t = s / 4;
   const charcoal = Math.max(0, Math.min(1, s));           // 0 -> 1 across stage 1
   const shadow = Math.max(0, Math.min(1, s - 1));
@@ -529,17 +559,17 @@ function Retrato({ s }) {
   return (
     <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
       <defs>
-        <linearGradient id="rt-skin" x1="20%" y1="10%" x2="80%" y2="90%">
+        <linearGradient id={uid("rt-skin")} x1="20%" y1="10%" x2="80%" y2="90%">
           <stop offset="0%" stopColor="#d9a077" />
           <stop offset="55%" stopColor="#b3714b" />
           <stop offset="100%" stopColor="#6d4029" />
         </linearGradient>
-        <radialGradient id="rt-halo" cx="50%" cy="42%" r="50%">
+        <radialGradient id={uid("rt-halo")} cx="50%" cy="42%" r="50%">
           <stop offset="0%" stopColor="var(--clay-hi)" stopOpacity="0.5" />
           <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
         </radialGradient>
         {/* paint stays on the canvas; without this the shoulders run off it */}
-        <clipPath id="rt-canvas">
+        <clipPath id={uid("rt-canvas")}>
           <rect x="26" y="20" width="108" height="132" rx="1" />
         </clipPath>
       </defs>
@@ -555,20 +585,20 @@ function Retrato({ s }) {
         ))}
       </g>
 
-      <circle cx="80" cy="70" r="52" fill="url(#rt-halo)"
+      <circle cx="80" cy="70" r="52" fill={`url(#${uid("rt-halo")})`}
               className={s >= 4 ? "halo" : undefined}
               style={{ opacity: light, transition: `opacity ${EASE}` }} />
 
       {/* colour laid in, clipped to the canvas so nothing spills past it */}
-      <g clipPath="url(#rt-canvas)"
+      <g clipPath={`url(#${uid("rt-canvas")})`}
          style={{ opacity: colour, transition: `opacity ${EASE}` }}>
-        <path d={NECK_SH} fill="url(#rt-skin)" opacity="0.92" />
-        <path d={HEAD} fill="url(#rt-skin)" />
+        <path d={NECK_SH} fill={`url(#${uid("rt-skin")})`} opacity="0.92" />
+        <path d={HEAD} fill={`url(#${uid("rt-skin")})`} />
       </g>
 
       {/* the shadow planes: this is what makes it a modelled head rather than
           a flat symbol, and they arrive before the colour does */}
-      <g clipPath="url(#rt-canvas)"
+      <g clipPath={`url(#${uid("rt-canvas")})`}
          style={{ opacity: shadow, transition: `opacity ${EASE}` }}>
         <path d={PLANE_SHADOW} fill="#371d12" opacity="0.5" />
         <path d={PLANE_CHEEK} fill="#371d12" opacity="0.34" />
@@ -578,7 +608,7 @@ function Retrato({ s }) {
 
       {/* the charcoal underdrawing: contour and the two axes a painter lays
           down first. No eyes, no mouth: those would make it a cartoon. */}
-      <g fill="none" stroke="#241309" strokeLinecap="round" clipPath="url(#rt-canvas)"
+      <g fill="none" stroke="#241309" strokeLinecap="round" clipPath={`url(#${uid("rt-canvas")})`}
          style={{ opacity: 0.3 + charcoal * 0.5, transition: `opacity ${EASE}` }}>
         <path d={HEAD} strokeWidth="1.5" />
         <path d={NECK_LINE} strokeWidth="1.3" opacity="0.8" />
@@ -588,7 +618,7 @@ function Retrato({ s }) {
       </g>
 
       {/* the light finally falling on the lit plane */}
-      <g clipPath="url(#rt-canvas)"
+      <g clipPath={`url(#${uid("rt-canvas")})`}
          style={{ opacity: light, transition: `opacity ${EASE}` }}>
         <path d="M 72 50 C 62 58, 57 74, 59 90 C 63 78, 68 62, 78 53 Z"
               fill="#f0c49c" opacity="0.55" />
@@ -603,6 +633,11 @@ function Retrato({ s }) {
    read from the side, which is legible at small sizes where an anatomical
    hand would turn to mud. */
 function Siembra({ s }) {
+  const useIdRaw = useId().replace(/:/g, "");
+  // Namespaced per instance: several motifs render at once (the keepsake
+  // card and the ceremony overlay both mount a Centerpiece), and duplicate
+  // ids silently resolve to whichever definition came first.
+  const uid = (n) => `${useIdRaw}-${n}`;
   const open = Math.max(0, Math.min(1, s));        // fist -> open palm
   const falling = Math.max(0, Math.min(1, s - 1)); // grain leaves the hand
   const furrow = Math.max(0, Math.min(1, s - 2));  // ground receives it
@@ -613,18 +648,18 @@ function Siembra({ s }) {
   return (
     <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
       <defs>
-        <linearGradient id="sb-hand" x1="15%" y1="0%" x2="85%" y2="100%">
+        <linearGradient id={uid("sb-hand")} x1="15%" y1="0%" x2="85%" y2="100%">
           <stop offset="0%" stopColor="#c98a63" />
           <stop offset="60%" stopColor="#9a5c3c" />
           <stop offset="100%" stopColor="#5c3323" />
         </linearGradient>
-        <radialGradient id="sb-glow" cx="50%" cy="50%" r="50%">
+        <radialGradient id={uid("sb-glow")} cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="var(--clay)" stopOpacity="0.3" />
           <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
         </radialGradient>
       </defs>
 
-      <circle cx="80" cy="86" r="62" fill="url(#sb-glow)"
+      <circle cx="80" cy="86" r="62" fill={`url(#${uid("sb-glow")})`}
               style={{ opacity: 0.3 + sprout * 0.7, transition: `opacity ${EASE}` }} />
 
       {/* the hand. Closed, the fingers curl over the palm; open, they fall
@@ -633,7 +668,7 @@ function Siembra({ s }) {
                   transformOrigin: "50% 50%", transition: `transform ${EASE}` }}>
         <path d="M 52 58 C 46 62, 44 72, 48 80 C 52 88, 62 92, 74 92
                  C 86 92, 96 88, 100 80 C 104 72, 102 62, 96 58 Z"
-              fill="url(#sb-hand)" />
+              fill={`url(#${uid("sb-hand")})`} />
         {/* fingers: curled in at first, opening outward */}
         {[0, 1, 2, 3].map((i) => (
           <path key={i}
@@ -689,6 +724,11 @@ function Siembra({ s }) {
    turns out to be the refuge. Blocks leave from the top down, which is how
    a wall actually comes apart. */
 function Muro({ s }) {
+  const useIdRaw = useId().replace(/:/g, "");
+  // Namespaced per instance: several motifs render at once (the keepsake
+  // card and the ceremony overlay both mount a Centerpiece), and duplicate
+  // ids silently resolve to whichever definition came first.
+  const uid = (n) => `${useIdRaw}-${n}`;
   const t = s / 4;
   // eight blocks in four courses; higher courses fall first
   const BLOCKS = [
@@ -700,24 +740,24 @@ function Muro({ s }) {
   return (
     <svg viewBox="0 0 160 160" className="mtf" aria-hidden="true">
       <defs>
-        <linearGradient id="mu-stone" x1="12%" y1="0%" x2="88%" y2="100%">
+        <linearGradient id={uid("mu-stone")} x1="12%" y1="0%" x2="88%" y2="100%">
           <stop offset="0%" stopColor="#7c8087" />
           <stop offset="60%" stopColor="#4e535b" />
           <stop offset="100%" stopColor="#2c3036" />
         </linearGradient>
-        <linearGradient id="mu-rock" x1="18%" y1="0%" x2="82%" y2="100%">
+        <linearGradient id={uid("mu-rock")} x1="18%" y1="0%" x2="82%" y2="100%">
           <stop offset="0%" stopColor="#c07b52" />
           <stop offset="55%" stopColor="#8a4d31" />
           <stop offset="100%" stopColor="#43241a" />
         </linearGradient>
-        <radialGradient id="mu-refuge" cx="50%" cy="46%" r="52%">
+        <radialGradient id={uid("mu-refuge")} cx="50%" cy="46%" r="52%">
           <stop offset="0%" stopColor="var(--clay-hi)" stopOpacity="0.55" />
           <stop offset="100%" stopColor="var(--clay)" stopOpacity="0" />
         </radialGradient>
       </defs>
 
       {/* the refuge behind: only visible once the wall stops hiding it */}
-      <circle cx="80" cy="104" r="56" fill="url(#mu-refuge)"
+      <circle cx="80" cy="104" r="56" fill={`url(#${uid("mu-refuge")})`}
               className={s >= 4 ? "halo" : undefined}
               style={{ opacity: Math.max(0, (s - 2) / 2), transition: `opacity ${EASE}` }} />
 
@@ -733,7 +773,7 @@ function Muro({ s }) {
             transition: `opacity ${EASE}, transform ${EASE}`,
           }}>
             <rect x={x} y={y} width={w} height={h} rx="1.5"
-                  fill="url(#mu-stone)" stroke="#20242a" strokeWidth="1" />
+                  fill={`url(#${uid("mu-stone")})`} stroke="#20242a" strokeWidth="1" />
             <line x1={x + 3} y1={y + 4} x2={x + w - 4} y2={y + 4}
                   stroke="#9aa0a8" strokeWidth="0.8" opacity="0.28" />
           </g>
@@ -747,7 +787,7 @@ function Muro({ s }) {
 
       {/* bedrock: always there, revealed as the wall comes off it */}
       <path d="M 30 128 C 40 108, 58 100, 80 100 C 102 100, 120 108, 130 128 Z"
-            fill="url(#mu-rock)"
+            fill={`url(#${uid("mu-rock")})`}
             style={{ opacity: 0.35 + t * 0.65, transition: `opacity ${EASE}` }} />
       <path d="M 30 128 C 40 108, 58 100, 80 100" fill="none"
             stroke="#d09a72" strokeWidth="1.6" strokeLinecap="round"
