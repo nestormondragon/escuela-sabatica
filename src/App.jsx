@@ -38,6 +38,13 @@ export default function App() {
     document.documentElement.dataset.mode = settings.mode;
   }, [settings.mode]);
 
+  /* The tab, a bookmark and the share sheet should say which week the reader
+     is actually on, not a fixed quarter title. index.html carries a static
+     fallback for the moment before React mounts and for crawlers. */
+  useEffect(() => {
+    document.title = `${lesson.title} · Lección ${lesson.number} · Escuela Sabática`;
+  }, [lesson.title, lesson.number]);
+
   const topbarProps = {
     mode: settings.mode,
     onToggleMode: toggleMode,
@@ -146,7 +153,7 @@ function LessonApp({ lesson, maestro, topbarProps }) {
   const onRewardClose = useCallback(() => { setReward(null); setRoute("kit"); window.scrollTo({ top: 0, behavior: "auto" }); }, []);
 
   const reset = () => {
-    if (window.confirm("¿Reiniciar todo el recorrido? Se borrará tu ancla de este dispositivo.")) {
+    if (window.confirm("¿Reiniciar todo el recorrido? Se borrará lo que has armado en este dispositivo.")) {
       kit.reset();
       setStationId(null);
       go("intro");
