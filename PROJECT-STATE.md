@@ -1,253 +1,509 @@
 # PROJECT-STATE.md
 
-Handoff document. Read this first if you are picking this project up cold.
-Last updated at commit `9028f5e`.
+Handoff document. Read this before changing the app.
 
----
+This file describes the full product-experience overhaul on branch
+`codex-overhaul`. The pre-overhaul state is permanently named and bundled under
+[Rollback](#rollback).
 
-## What this is
+## Product
 
-A Spanish-language Sabbath School devotional web app for one reader (Néstor).
-Each week is a guided, personalised experience: the reader answers eight
-prompts and assembles a keepsake artifact, and the central illustration grows
-with their progress.
+This is a Spanish-language Seventh-day Adventist Sabbath School app for the Q3
+2026 study of 1 and 2 Corinthians. It is local-first, single-reader software
+that also supports a teacher and a deliberate presentation view.
 
-- **Stack:** React 18 + Vite, framer-motion, Phosphor icons. No SSR.
-- **Deploy:** Vercel (Framework Vite, build `npm run build`, output `dist`).
-- **Repo:** `https://github.com/nestormondragon/escuela-sabatica`, branch `main`.
-- **Toolchain note:** node is NOT installed system-wide. It lives at
-  `/tmp/node-v20.18.1-darwin-arm64/bin` and `/tmp` gets cleaned periodically.
-  If `node: command not found`, re-download:
-  `curl -sL -o /tmp/node20.tar.gz https://nodejs.org/dist/v20.18.1/node-v20.18.1-darwin-arm64.tar.gz && tar -xzf /tmp/node20.tar.gz -C /tmp`
-  Python is at `/opt/anaconda3/bin/python` (has `pypdf`, `pillow`).
+The product is no longer organized as "tap and read" devotional cards. Its
+central model is **Mosaico Vivo de Corinto**:
 
-## Current state
+- all 13 lessons are panels in one evolving Corinthian courtyard mosaic,
+- each meaningful answer places a piece or changes a material detail,
+- the app remembers capabilities, commitments, phrases, and cross-week joins,
+- previous work returns later with context,
+- the week culminates in an editable Sábado folio,
+- the reader chooses a depth without punishment or status pressure.
 
-- **HEAD:** `9028f5e`. Working tree clean.
-- **13 commits unpushed.** NOTHING has been pushed. The user authorises each
-  push via GitHub device flow (no `gh` CLI): POST to
-  `https://github.com/login/device/code` with client_id `178c6fc778ccc68e1d6a`
-  scope `repo`, show the user the code, poll, then
-  `git push https://x-access-token:<TOKEN>@github.com/nestormondragon/escuela-sabatica.git HEAD:main`.
-- **Tags:** `vessel-v1` (79c5eab, first vessel rebuild), `vessel-v2` (9504c9b,
-  after review corrections). Branch `vessel-v1-snapshot` also preserved.
+The engagement model is autonomy, competence, relatedness, useful surprise, and
+investment. It explicitly rejects points, ranks, spiritual-performance scores,
+loss-aversion streaks, variable loot, and fabricated urgency.
 
-## Quarter content
+Read:
 
-Q3 2026, **1 and 2 Corintios**. All 13 lessons authored and live, date-routed
-(today 2026-07-25 routes to L4).
+- `PRODUCT.md` for product truth and motivation ethics.
+- `DESIGN.md` for the portable visual system.
+- `.impeccable/design.json` for renderable design-system extensions.
 
-Lessons are generated, not hand-edited:
+## Stack and deployment
 
+- React 18.3.1
+- React Router DOM 7.18.1
+- Vite 8.1.5 with `@vitejs/plugin-react` 6.0.1
+- Framer Motion 11.18.2
+- Phosphor React icons 2.1.10
+- local Outfit Variable and EB Garamond Variable font packages
+- Playwright 1.62.0 for Chromium and WebKit verification
+- no SSR, no React Server Components, no server actions
+- no runtime API, analytics, remote font, or CDN dependency
+
+Vercel configuration:
+
+- framework: Vite
+- build: `npm run build`
+- output: `dist`
+- `vercel.json` rewrites all application routes to `index.html`
+
+### Toolchain
+
+Node is now persistent. The old `/tmp` Node installation and its re-download
+trap are retired.
+
+```text
+node: /Users/Administrator/.nvm/versions/node/v24.18.0/bin/node
+node version: 24.18.0
+npm version: 11.16.0
 ```
-drafts/q3-2026/*.json        authored drafts (source of truth)
-scripts/build-lessons.mjs    normalises + validates -> src/content/lN.js
-node scripts/build-lessons.mjs drafts/q3-2026
+
+The repository pins:
+
+```text
+.nvmrc: 24.18.0
+package.json engines.node: 24.x
+package.json packageManager: npm@11.16.0
 ```
 
-The build script reconciles draft shape with what each module component
-actually reads, and hard-validates slot/station pairing, icon names, tag
-vocabulary, template references and a dash purge. **Edit the draft, not
-`src/content/lN.js`.**
+On a new machine:
 
-### Hard content rules
+```bash
+nvm install
+nvm use
+npm ci
+```
 
-- **Zero em-dashes and en-dashes** in visible copy. Enforced by the build.
-- `{name}` resolves to the reader's first name; must appear once in `promise`,
-  once in every station `cue`, once in `outAliento` and `patternTemplate`.
-- `{slot:id}`, `{slot:id|lower}`, `{slot:id|or:fallback}` resolve saved
-  answers. `makeLesson.js` collapses duplicated connectors (fixes
-  "sostener que que Cristo…").
-- Every `choiceInsight` option carries 2 to 3 tags from a fixed vocabulary
-  (`react: theme: posture: tone:`). These drive the branching closing
-  blessing in `src/engine/profile.js`.
+Do not recreate the old `/tmp/node-v20...` workflow.
+
+## Application architecture
+
+`src/App.jsx` now owns only the durable providers and router. The responsive
+shell is under `src/app/`.
+
+Routes:
+
+```text
+/                                      redirects to /hoy
+/hoy                                  current useful return surface
+/mosaico                              13-panel quarter artifact
+/sabado                               calendar lesson folio
+/sabado/:lessonId                     explicit lesson folio
+/lecciones                            lesson selector
+/leccion/:lessonId                    lesson path
+/leccion/:lessonId/episodio/:episodeId focused interaction
+/maestro/:lessonId                    teacher guide
+/presentar/:lessonId                  privacy-filtered presentation
+/ajustes                              privacy, theme, motion, backup, reset
+```
+
+Key directories:
+
+```text
+src/app/                  AppShell, ContextRail, navigation, routing, focus
+src/routes/               route composition and data loading
+src/features/today/       Chispa, depth choice, returned commitments
+src/features/world/       active lesson panel and motif
+src/features/mosaic/      quarter artifact and semantic list
+src/features/episode/     mutation reward and intentional exit
+src/features/sabbath/     folio, share preview, presentation
+src/state/journey/        JourneyState v2, migration, persistence, privacy
+src/modules/              the seven interaction grammars
+src/content/              generated lesson modules and lazy manifest
+```
+
+### Product loop
+
+The durable loop is:
+
+```text
+return thread or Chispa
+  -> choose 1 minuto, Estudiar, or A fondo
+  -> attempt before explanation where appropriate
+  -> invest a phrase, decision, or action
+  -> see the same artifact change
+  -> accumulate capability evidence and cross-week joins
+  -> edit/select material for the Sábado folio
+  -> return later to a remembered commitment or phrase
+```
+
+This loop is the reason for the architecture. Do not replace the artifact
+mutation with a generic modal, generic confetti, or a score.
+
+### Route behavior that is covered by regression tests
+
+- A completed `/hoy` does not reopen the final episode. It offers
+  `/sabado/:lessonId`.
+- `/sabado/:lessonId` keeps that lesson even when it is not the calendar week.
+- Presentation close returns to the originating lesson folio.
+- Route navigation moves focus to the new surface heading after the transition.
+- Document titles include the active route and explicit lesson.
+- Direct episode URLs survive a reload.
+
+## Content pipeline
+
+Q3 2026 contains 13 authored lesson drafts.
+
+```text
+drafts/q3-2026/*.json              source of truth
+scripts/build-lessons.mjs          normalize and validate
+src/content/l1.js ... l13.js       generated output
+src/content/lessonManifest.generated.js
+src/content/loadLesson.js          dynamic lesson imports
+```
+
+Run:
+
+```bash
+npm run build:lessons
+```
+
+Hard rules:
+
+- Never hand-edit `src/content/lN.js`.
+- Edit the matching JSON draft, then regenerate.
+- Visible application copy contains no em dash or en dash.
+- Slot and station IDs must pair exactly.
+- Every referenced icon must exist in `src/components/Icon.jsx`.
+- Template tokens must render cleanly with real answers.
+- `{name}` and `{slot:...}` semantics are validated by the build.
+- Every lesson retains eight stations and eight durable slots.
+
+The current calendar logic maps 2026-07-25 to L4, "Tu Cuerpo, Su Templo".
+
+## JourneyState v2 and privacy
+
+Durable key:
+
+```text
+escuela:journey:2026-Q3
+```
+
+Verified backup key:
+
+```text
+escuela:journey:2026-Q3:backup
+```
+
+The v2 state includes:
+
+- profile and depth preference,
+- navigation context,
+- 13 lesson records,
+- 13 mosaic panel records,
+- private investments,
+- capability evidence,
+- commitments,
+- revealed cross-week connection IDs,
+- saved Sábado packs,
+- theme, reduced motion, and haptic settings.
+
+Migration is additive:
+
+- all existing `escuela:*` v1 values are read but never rewritten,
+- the first migration captures their exact raw strings in the backup envelope,
+- subsequent boots load v2 and do not import v1 again,
+- corrupt v2 can recover from the last known good record,
+- reset writes a valid empty v2 record while leaving v1 untouched, so reload
+  does not resurrect old answers,
+- selective sharing excludes private fields,
+- another person's material requires explicit consent,
+- backup export and import remain local to the browser.
+
+The reset and migration contract is verified in both Chromium and WebKit.
 
 ## Design system
 
-Rebuilt from scratch for Q3. See `docs/svg-quality-rubric.md` and
-`docs/SVG-DESIGN.md`.
+The Creative North Star is **El patio mosaico vivo de Corinto**.
 
-- **Metaphor:** Corinth's mosaics and its clay. Answers set tesserae.
-- **Palette:** slate ink at night, quarried stone by day, ONE accent (clay
-  `#e0785c` night / `#a8452a` day). All pairs verified WCAG AA both modes.
-  The previous parchment + brass scheme is retired and must not return.
-- **Type:** `Outfit` (UI) + `EB Garamond` (scripture). `Fraunces` and
-  `Source Serif 4` are retired and banned.
-- **Shape:** one radius scale, 3 / 6 / 10 px. Sharp, not pillowy.
-- **Icons:** Phosphor only, one family. Content refers to glyphs by semantic
-  name via `src/components/Icon.jsx`; the QA gate checks every name resolves.
+- Night material: slate ink.
+- Day material: cool quarried stone, never parchment.
+- One brand accent: Corinthian clay.
+- Interface voice: Outfit Variable.
+- Scripture and preserved contemplative voice: EB Garamond Variable.
+- Shape scale: 3, 6, and 10 pixels.
+- Interface icons: Phosphor regular weight, fill only for selected/completed.
+- Primary desktop composition: 5 columns world, 6 columns study, 1 column air.
+- Mobile: compact context rail, focused canvas, safe-area destination dock.
+- Touch targets: at least 44 by 44 CSS pixels.
 
-### Animation architecture (load-bearing, do not regress)
+The quarter mosaic is one authored spatial composition, not a card gallery.
+Completed, current, connected, upcoming, and revisited panels have semantic
+labels and structural differences, not only color differences.
 
-The original bug that started this work: ambient loops were gated on a JS
-visibility flag, so they never started in a tab that loaded hidden.
+Do not reintroduce:
 
-- **All looping/ambient motion is CSS keyframes.** Never gate a loop on a JS
-  visibility flag.
-- One-shot transitions may use rAF (e.g. the vessel's fracture reveal).
-- `prefers-reduced-motion` zeroes **both** `animation-duration` and
-  `transition-duration` globally in `index.css`. Inline-style transitions are
-  not covered by `animation-*` alone; that was a real bug.
-- Known test artifact: in a headless tab (`visibilityState: "hidden"`)
-  framer-motion freezes one-shot view transitions mid-flight, so the app looks
-  dimmed at ~0.49 opacity in screenshots. Not a regression. Neutralise for
-  captures with a stylesheet override, never DOM surgery.
+- centered card stacks,
+- bento grids,
+- broad frosted panels,
+- unrelated purple/blue gradients,
+- 20 to 28 pixel universal radii,
+- decorative icon tiles,
+- a radial halo behind every illustration,
+- a second brand accent.
 
-## The motif system
+## Motion architecture
 
-`src/components/Motif.jsx` dispatches on `lesson.scene.motif` and renders a
-stage 0..4 scene. `Centerpiece.jsx` maps filled slots to the stage index.
+The motion verbs are **Set**, **Reveal**, and **Return**.
 
-**Review harness (use it, do not skip it):**
+- Press: about 120ms.
+- Selection: about 180ms.
+- Navigation: about 280ms.
+- Discovery: about 520ms.
+- Material placement: about 720ms.
+- Weekly completion: no more than 1100ms.
 
-```
-npm run dev
-http://localhost:5173/?lab=barro    one motif, all stages, large
-http://localhost:5173/?lab=all      whole family
-```
+Load-bearing rules:
 
-Lab controls: silhouette-only (Pass 1), 160/96/64 sizes, day/night. It renders
-the **real production component**, and is excluded from prod builds via
-`import.meta.env.DEV`.
+- Only transform and opacity are used for continuously changing UI motion.
+- The active motif is the only ambient-motion owner in a viewport.
+- The backdrop and Centerpiece bloom are static.
+- Ambient loops are CSS keyframes with a meaningful still frame.
+- One-shot geometry may use `requestAnimationFrame`.
+- Press-and-hold interactions expose immediate keyboard completion.
+- In-app reduced motion and operating-system reduced motion both remove loops,
+  paths, particles, parallax, and spatial choreography.
+- Reduced motion renders the complete state and never leaves low-opacity or
+  partially revealed content.
+- Hidden content is not essential to completion.
+- SVG filter parameters are not animated continuously.
 
-Cross-engine + comparison scripts:
+`src/lib/useAppReducedMotion.js` joins the in-app setting with the system
+preference for custom interactions. `MotionConfig` handles Framer Motion.
+CSS contains both `prefers-reduced-motion` and `data-motion="reduce"` paths.
 
-```
-node scripts/vessel-verify.mjs    Chromium vs WebKit structural probe + shots
-node scripts/vessel-compare.mjs   renders original/v1/v2 from git worktrees
-```
+## Motifs and SVG
 
-**The rule that matters: an SVG is not done when it compiles. It is done when
-it has been rendered, screenshotted and judged.** The first vessel was valid
-SVG that read as a perfume bottle with ear-shaped handles and a neon rune.
+`src/components/Motif.jsx` dispatches the narrative art. `Centerpiece.jsx`
+maps filled slots onto stage 0 through 4.
 
-## The vessel (`CrackedVessel.jsx`)
+Eight motif grammars:
 
-Reference implementation for narrative artwork. Fully documented in
-`docs/SVG-DESIGN.md`. Key points:
+| Motif | Material and transformation |
+| --- | --- |
+| barro | thrown clay, mask-cut fracture, internal light, reveal/restore arcs |
+| mosaico | tesserae in grout with deterministic cut and tone |
+| cruz | hewn timber, grain, side faces, and lashing |
+| carta | papyrus fiber, curl, writing, and pressed wax |
+| alba | Corinthian architecture moving from night to dawn |
+| retrato | canvas weave and charcoal planes |
+| siembra | hand, grain in flight, furrows, and shoots |
+| muro | ashlar courses descending to bedrock refuge |
 
-- The fracture is a **mask**: ceramic is painted through a mask that subtracts
-  tapered slivers; fire is behind, clipped to the silhouette. It is a real
-  opening, not a drawn line.
-- **Strokes cannot taper**, so fractures are filled slivers from a centreline
-  plus per-point widths (`sliver()`).
-- The reveal is **geometric truncation** driven by a rAF tween.
-  `pathLength` + `stroke-dashoffset` as a reveal mask **does not work**: a
-  `<g mask>` nested inside a `<mask>` is ignored by Chromium (verified).
-- Every gradient/mask/clip/filter id namespaced with `useId()`. Duplicate ids
-  across instances was a real bug (7 ids × 5 instances).
-- `variant="auto"` measures **rendered** width via ResizeObserver.
-- Known limitations: no foot ring; one-frame compact correction before the
-  observer fires; `feTurbulence` dithers slightly differently per engine.
+SVG rules:
 
----
+- use filled geometry for physical material and anything that tapers,
+- use strokes for ink, routes, joins, and reveal mechanisms,
+- namespace every gradient, mask, clip, filter, title, and description ID,
+- keep all local URL references inside their component instance,
+- use explicit compact variants below 96px,
+- check silhouette before material and material before effects,
+- verify Chromium and WebKit,
+- never call a syntactically valid SVG finished without looking at it.
 
-# Motif / arc alignment — DONE
+The repository includes `.agents/skills/svg-animations/SKILL.md`.
+`@svgdotjs/svg.js`, Paper.js, and SVGO are development dependencies for
+geometry and asset work. They are not runtime dependencies. VTracer and
+svg-animation-studio were reference tools, not application dependencies.
 
-Audit found 5 of 13 lessons whose artwork contradicted their own authored
-`stageLabels`. All five are fixed; the other 8 were already correct and were
-left alone.
+The cracked vessel remains documented in:
 
-| L | motif | direction | status |
-|---|---|---|---|
-| 1 | carta | blank sheet to sealed letter | already correct |
-| 2 | cruz | beam raised to glory | already correct |
-| 3 | mosaico | fragments to one image | already correct |
-| 4 | **barro `arc="restore"`** | **cracked clay to standing temple** | **FIXED: direction inverted** |
-| 5 | cruz | beams raised, rights surrendered | already correct |
-| 6 | mosaico | loose tesserae to one body | already correct |
-| 7 | **retrato** (new) | blank canvas to lit portrait | **FIXED: was `cruz`** |
-| 8 | alba | night to full day | already correct |
-| 9 | carta | blank sheet to letter delivered | already correct |
-| 10 | **barro `arc="reveal"`** | **formless clay, thrown, cracked, glory** | **FIXED: formation prelude added** |
-| 11 | **siembra** (new) | closed fist to full sowing | **FIXED: was `mosaico`** |
-| 12 | **muro** (new) | stronghold down to bedrock refuge | **FIXED: was `barro`** |
-| 13 | mosaico | fragments to gold-joined whole | already correct |
+- `docs/SVG-DESIGN.md`
+- `docs/svg-quality-rubric.md`
 
-### How the two vessel arcs work
+L4 uses the restore arc. L10 uses the reveal arc.
 
-One component, two opposite readings, selected by `arc` in the lesson draft:
+## Accessibility
 
-- **`reveal` (L10, 2 Cor 4:7).** Damage increases and that is the point.
-  Stage 0 is a mound of clay on the wheel; the form is pulled up by stage 2;
-  the fracture opens from 2 onward and the treasure gets out.
-- **`restore` (L4, 1 Cor 6:19).** Damage decreases. Stage 0 is heavily
-  fractured; the breaks close course by course; by stage 4 the vessel is
-  whole and lit through its mouth, a temple inhabited rather than a jar
-  broken open.
+- Spanish document language and route-specific titles.
+- One main landmark and visible skip link.
+- New route headings receive focus after transition completion.
+- One visible H1 per primary route.
+- Semantic buttons, links, labels, pressed states, expanded states, and
+  progress values.
+- The mosaic has keyboard roving focus plus a screen-reader list.
+- Saved artifact changes use polite live feedback.
+- Sábado sharing is explicit and consent-aware.
+- Reduced motion is available in the app and follows the system by default.
+- Day and night primary text/action pairs meet WCAG AA.
 
-Implemented as `fs` (the fracture clock, which runs backwards for `restore`),
-`form` (how thrown the vessel is, only below 1 for `reveal`), and `lume`.
-`arc` flows draft -> `makeLesson` -> `scene.arc` -> `Centerpiece` -> `Motif`
--> `CrackedVessel`.
+## QA
 
-## Craft level
+Canonical local checks:
 
-All eight motifs are now built to the vessel's standard: real material,
-occlusion, bevels or grain, and a light source the whole scene agrees on.
-
-| motif | material |
-|---|---|
-| barro | thrown clay, throwing rings, mask-cut fractures, fire behind |
-| mosaico | cut stone in a grout bed, per-tile bevel and tone from seeded jitter |
-| cruz | hewn timber, grain, end grain, side faces, a lashing at the lap joint |
-| carta | papyrus with cross-laid fibre, curling lower edge, pressed wax seal |
-| alba | fluted columns with stepped bases and capitals, night lifting to dawn |
-| retrato | canvas weave, charcoal underdrawing, shadow planes, no drawn features |
-| siembra | hand opening, grain in flight, furrows, shoots |
-| muro | ashlar courses taken down to the bedrock they stood on |
-
-The Kit's tessera grid was also brought into the same language: a recessed
-grout bed, an inset bevel on every tile, and a deterministic per-tile tilt on
-set pieces (via `--tilt`, read by both the resting transform and the
-`tess-set` keyframe, so the settle animation lands on the resting angle
-instead of fighting it).
-
-## Cross-engine verification
-
-```
-node scripts/motif-verify.mjs    all 8 motifs, Chromium vs WebKit
-node scripts/vessel-verify.mjs   the vessel specifically (masks, feTurbulence)
-node scripts/vessel-compare.mjs  original/v1/v2 from git worktrees
+```bash
+npm run qa
 ```
 
-`motif-verify` probes every motif at every stage in both engines and diffs
-node counts, defs, gradients, clips, masks, filters, transform-box values,
-resolving animation names, bounding boxes and duplicate ids. Current result:
-0 console errors, 0 duplicate ids, 0 non-geometry differences, largest bbox
-delta 0.10 user units, pixel divergence under 0.13% on every motif.
+This runs:
 
-Two real bugs came out of running it:
-
-1. **Duplicate ids across the whole motif family (88 of them).** Only the
-   vessel had been namespaced. `KitDone` mounts `Centerpiece` twice (the
-   keepsake card and the ceremony overlay), so this collided in production,
-   not just in the lab. All motifs now namespace via `useId()`.
-2. **`filter: brightness()` on an SVG node rasterises differently in WebKit.**
-   Both engines computed the *same* filter value, but mosaico's tile faces
-   diverged on 4.7% of pixels versus 0.02% everywhere else. Baking the shade
-   into the fill with a nested `color-mix()` brought it to 0.019%. Avoid CSS
-   filters on SVG children; composite colour instead.
-
-## QA gates
-
-```
-node scripts/build-lessons.mjs drafts/q3-2026   # content validity
-node /tmp/qa3.mjs                               # structure, icons, motifs, leaks
-node /tmp/qa4.mjs                               # templates render with REAL answers
-npm run build
+```text
+build:lessons
+qa:content
+test:journey
+vite production build
 ```
 
-`qa3`/`qa4` live in `/tmp` and will vanish with cleanup; they are worth
-re-creating in `scripts/` if lost. qa4 matters most: it renders every output
-template using actual option labels rather than placeholders, which is how
-the "que que" grammar bug was caught.
+Browser release checks require a running app:
 
-## Working agreements with this user
+```bash
+npm run dev -- --host 127.0.0.1 --port 5175
+BASE_URL=http://127.0.0.1:5175 \
+QA_OUTPUT_DIR=/private/tmp/escuela-overhaul-qa \
+npm run qa:browser
+```
 
-- Plan first, then implement without waiting for approval.
-- **Never** end with a list of "future suggestions" that should have been
-  done before coding.
-- Never push without explicit authorisation.
-- Do not self-grade aesthetics; report objective findings and limitations.
-- Be honest about what was actually run versus skipped. The user checks.
+For the final production-oriented gate, build the app, start an isolated Vite
+preview, run the complete browser matrix against that preview, and stop the
+server with one command:
+
+```bash
+npm run qa:release
+```
+
+`scripts/verify-overhaul.mjs` currently runs Chromium and WebKit at:
+
+- 390 by 844
+- 768 by 1024
+- 1440 by 900
+
+It verifies:
+
+- all primary routes,
+- landmarks and route headings,
+- no horizontal overflow,
+- no duplicate, broken, or cross-instance SVG references,
+- no unresolved `{name}` tokens,
+- no console errors or failed requests,
+- direct-route reload,
+- deterministic calendar behavior at `2026-07-25`,
+- route-title and destination-heading focus,
+- delayed lazy-module heading focus,
+- system and in-app reduced motion,
+- one ambient-motion owner,
+- day and night primary-token contrast,
+- exact preservation of v1 during migration,
+- reset without v1 resurrection,
+- explicit Sábado lesson context,
+- presentation context, modal focus, focus trap, and return focus,
+- completed Hoy to Sábado handoff,
+- same-route intentional-exit focus,
+- a commitment created through `CommitDuo`, reloaded, and returned in Hoy,
+- capability evidence and cross-week connection loop.
+
+Release result on 2026-07-25:
+
+```text
+77 passed
+0 failed
+0 warnings
+```
+
+Journey unit result:
+
+```text
+9 passed
+0 failed
+```
+
+Impeccable source detector:
+
+```text
+0 warnings or failures
+189 advisory design-system matches
+```
+
+The advisories are scale metadata suggestions, mainly legitimate local SVG
+material colors and component type sizes. They do not change the detector exit
+status. The two concrete layout-transition warnings were fixed.
+
+Latest production build:
+
+- CSS: 16.16KB gzip
+- initial JavaScript chunks plus runtime: about 205KB gzip
+- each lazy lesson: about 10 to 11.3KB gzip
+- local fonts: loaded as separate WOFF2 assets
+
+## Dependency security
+
+`npm audit` reports two high entries for the same React Router advisory:
+GHSA-qwww-vcr4-c8h2.
+
+The advisory affects React Server Components mode and server action execution.
+This application is a client-only SPA with no SSR, React Server Components, or
+server actions, so the affected execution surface is absent.
+
+As of 2026-07-25:
+
+- latest `react-router-dom` is 7.18.1,
+- patched `react-router` 8.3.0 requires React and React DOM 19.2.7,
+- `react-router-dom` 7.18.1 pins `react-router` 7.18.1.
+
+Do not force an incompatible transitive override merely to make the audit count
+zero. Re-evaluate when a compatible patched `react-router-dom` is published or
+when the app intentionally upgrades to React 19.
+
+## Rollback
+
+The exact state before this overhaul is:
+
+```text
+commit: fbe35ba9262e3fbaf78c7b0b33e98933bf91094c
+tag: pre-overhaul-2026-07-25
+branch: pre-overhaul-snapshot
+```
+
+The tag is the canonical rollback target.
+
+Safest way to inspect or run the original without changing the current branch:
+
+```bash
+git worktree add ../escuela-sabatica-pre-overhaul pre-overhaul-2026-07-25
+```
+
+Safest way to continue development from the original:
+
+```bash
+git switch -c restore-pre-overhaul pre-overhaul-2026-07-25
+```
+
+After the overhaul is merged with `--no-ff`, preserve history and undo only that
+merge with:
+
+```bash
+git log --merges --oneline --grep="Full product experience overhaul" -1
+git revert -m 1 <merge-commit-from-the-command-above>
+```
+
+An external verified Git bundle also exists:
+
+```text
+/Users/Administrator/Documents/Codex/2026-07-25/ai-web-design-workflow-chatgpt-conversation-2/outputs/escuela-sabatica-pre-overhaul-2026-07-25-fbe35ba.bundle
+SHA-256: 447f28fb7bda2e24a093c64d5e5f4e4b170343839d3ade73a4dfadfad42164cc
+```
+
+Restore that bundle into a new directory:
+
+```bash
+git clone /absolute/path/to/escuela-sabatica-pre-overhaul-2026-07-25-fbe35ba.bundle escuela-sabatica-restored
+cd escuela-sabatica-restored
+git switch -c main pre-overhaul-2026-07-25
+```
+
+No push is part of this overhaul. The user decides when to push.
+
+## Working agreements
+
+- Preserve the content-pipeline rules.
+- Render and inspect narrative art rather than grading source code.
+- Keep privacy local-first and sharing opt-in.
+- Keep the artifact continuous across routes.
+- Do not turn engagement into compulsion or spiritual status.
+- Make reversible checkpoints before broad changes.
+- Run both engine suites before claiming completion.
+- Report what was actually run and any real limitations.
+- Never push without explicit authorization.

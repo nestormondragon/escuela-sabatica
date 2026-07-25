@@ -1,4 +1,5 @@
 import React, { useEffect, useId, useRef, useState } from "react";
+import { useAppReducedMotion } from "../lib/useAppReducedMotion.js";
 
 /* =====================================================================
    CrackedVessel — narrative artwork for 2 Corintios 4:7,
@@ -313,9 +314,7 @@ export default function CrackedVessel({
 
   // A branch does not start until the primary has actually reached its
   // junction, then lags slightly behind the arriving fracture front.
-  const reduced =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const reduced = useAppReducedMotion();
 
   const targets = {};
   shown.forEach((f) => {
@@ -333,6 +332,15 @@ export default function CrackedVessel({
       ? Math.max(0, Math.min(1,
           (revealOverride * (REVEAL_MS + (targets[f.id]?.delay ?? 0)) - (targets[f.id]?.delay ?? 0)) / REVEAL_MS))
       : reveal[f.id]?.value ?? 0;
+  const revealProgress = shown
+    .map((f) => `${f.id}:${progressOf(f).toFixed(3)}`)
+    .join(",");
+  const revealSettled = shown.every(
+    (f) =>
+      Math.abs(
+        (reveal[f.id]?.value ?? 0) - (targets[f.id]?.value ?? 0)
+      ) < 0.001
+  );
 
   /* The revealed geometry for a fracture: centreline truncated at the current
      reveal front, with its width profile interpolated to match. Every
@@ -354,6 +362,9 @@ export default function CrackedVessel({
       role="img"
       aria-labelledby={`${uid("t")} ${uid("d")}`}
       className="vessel vessel-enter"
+      data-motion-mode={reduced ? "reduced" : "full"}
+      data-fracture-progress={revealProgress}
+      data-fracture-settled={revealSettled ? "true" : "false"}
       style={{ display: "block", maxWidth: "100%", height: "auto", overflow: "visible" }}
     >
       <title id={uid("t")}>{title}</title>

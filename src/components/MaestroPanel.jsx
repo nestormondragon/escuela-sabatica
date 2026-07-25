@@ -20,16 +20,16 @@ export default function MaestroPanel({ guide }) {
   return (
     <div
       style={{
-        margin: "18px 0 4px", border: "1px dashed color-mix(in srgb, var(--sky) 45%, transparent)",
+        margin: "18px 0 4px", border: "1px dashed color-mix(in srgb, var(--clay) 45%, transparent)",
         borderRadius: "var(--r)", overflow: "hidden",
-        background: "color-mix(in srgb, var(--sky) 6%, transparent)",
+        background: "color-mix(in srgb, var(--clay) 6%, transparent)",
       }}
     >
       <div
         style={{
           padding: "12px 16px", display: "flex", alignItems: "center", gap: 8,
           fontFamily: "var(--ui)", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase",
-          fontSize: "0.7rem", color: "var(--sky)", background: "color-mix(in srgb, var(--sky) 10%, transparent)",
+          fontSize: "0.7rem", color: "var(--clay)", background: "color-mix(in srgb, var(--clay) 10%, transparent)",
         }}
       >
         <Icon name="book" size={16} /> Modo maestro · guía para dirigir

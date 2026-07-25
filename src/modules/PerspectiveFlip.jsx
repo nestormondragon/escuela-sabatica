@@ -36,7 +36,13 @@ export default function PerspectiveFlip({ config, onFill, onSkip }) {
               whileTap={{ scale: 0.99 }}
               transition={t.tap}
               style={{ perspective: 1000, width: "100%", textAlign: "left", background: "none", border: "none", padding: 0 }}
-              aria-label={isFlipped ? p.sees : p.see}
+              aria-label={
+                isFlipped
+                  ? `${p.sees}. ${isSel ? "Seleccionada" : "Seleccionar esta verdad"}`
+                  : `${p.see}. Revelar otra perspectiva`
+              }
+              aria-expanded={isFlipped}
+              aria-pressed={isSel}
             >
               <motion.div
                 animate={{ rotateY: isFlipped ? 180 : 0 }}
@@ -87,6 +93,7 @@ export default function PerspectiveFlip({ config, onFill, onSkip }) {
             <div className="field">
               <textarea
                 rows={3}
+                aria-label={config.commit.prompt}
                 placeholder={config.commit.placeholder}
                 value={aliento}
                 onChange={(e) => setAliento(e.target.value)}

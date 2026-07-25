@@ -18,7 +18,9 @@ export default function ChoiceInsight({ config, onFill, onSkip }) {
       <AnimatePresence mode="wait">
         {picked ? (
           <div className="stack" key={picked.id}>
-            <Insight label="Para ti" body={picked.insight} />
+            <div role="status" aria-live="polite" aria-atomic="true">
+              <Insight label="Para ti" body={picked.insight} />
+            </div>
             {config.closing ? (
               <>
                 <Pause />

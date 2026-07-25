@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { reveal } from "../lib/motion.js";
 import { Insight, SkillBadge, SaveBar, ChipRow, Pause } from "./common.jsx";
@@ -12,6 +12,8 @@ export default function SkillThenCommit({ config, onFill, onSkip }) {
   const [answered, setAnswered] = useState(null); // {ok}
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
+  const phasePromptRef = useRef(null);
+  const focusAfterTransition = useRef(false);
 
   const round = skill.rounds[i];
 
@@ -22,9 +24,16 @@ export default function SkillThenCommit({ config, onFill, onSkip }) {
     setAnswered({ ok });
   };
   const next = () => {
+    focusAfterTransition.current = true;
     if (i < skill.rounds.length - 1) { setI(i + 1); setAnswered(null); }
     else setDone(true);
   };
+
+  useEffect(() => {
+    if (!focusAfterTransition.current) return;
+    phasePromptRef.current?.focus({ preventScroll: true });
+    focusAfterTransition.current = false;
+  }, [done, i]);
 
   return (
     <div className="stack">
@@ -34,7 +43,7 @@ export default function SkillThenCommit({ config, onFill, onSkip }) {
       {!done ? (
         <motion.div className="seqcard" key={i} variants={reveal} initial="initial" animate="animate">
           <div className="seqcount">Frase {i + 1} de {skill.rounds.length}</div>
-          <p className="statementtxt">{round.t}</p>
+          <p ref={phasePromptRef} className="statementtxt" tabIndex={-1}>{round.t}</p>
           <div className="cat-btns">
             {skill.cats.map((c, k) => {
               const isAns = answered != null;
@@ -47,13 +56,14 @@ export default function SkillThenCommit({ config, onFill, onSkip }) {
                   style={
                     isAns
                       ? {
-                          borderColor: isCorrect ? "var(--teal)" : "var(--line)",
-                          background: isCorrect ? "color-mix(in srgb, var(--teal) 16%, transparent)" : "var(--surface)",
+                          borderColor: isCorrect ? "var(--clay)" : "var(--line)",
+                          background: isCorrect ? "color-mix(in srgb, var(--clay) 16%, transparent)" : "var(--surface)",
                           opacity: isCorrect ? 1 : 0.6,
                           pointerEvents: "none",
                         }
                       : undefined
                   }
+                  disabled={isAns}
                 >
                   {c}
                 </button>
@@ -63,7 +73,12 @@ export default function SkillThenCommit({ config, onFill, onSkip }) {
           <AnimatePresence>
             {answered ? (
               <motion.div variants={reveal} initial="initial" animate="animate">
-                <div className={`fb ${answered.ok ? "ok" : "no"}`}>
+                <div
+                  className={`fb ${answered.ok ? "ok" : "no"}`}
+                  role="status"
+                  aria-live="polite"
+                  aria-atomic="true"
+                >
                   {answered.ok ? "✓ " : "→ "}{round.fb}
                 </div>
                 <div style={{ textAlign: "right", marginTop: 10 }}>
@@ -84,13 +99,14 @@ export default function SkillThenCommit({ config, onFill, onSkip }) {
           onSkip={onSkip}
           seedSub={config.seedSub}
           saveLabel={config.saveLabel}
+          promptRef={phasePromptRef}
         />
       )}
     </div>
   );
 }
 
-function Committer({ skill, commit, score, onFill, onSkip, seedSub, saveLabel }) {
+function Committer({ skill, commit, score, onFill, onSkip, seedSub, saveLabel, promptRef }) {
   const [chosen, setChosen] = useState("");
   const [text, setText] = useState("");
   const value = (text.trim() || chosen).trim();
@@ -100,7 +116,7 @@ function Committer({ skill, commit, score, onFill, onSkip, seedSub, saveLabel })
       <SkillBadge>{skill.badge}</SkillBadge>
       <Insight label={`Discerniste ${score} de ${skill.rounds.length}`} body={skill.summary} />
       <Pause />
-      <p className="prompt-q">{commit.prompt}</p>
+      <p ref={promptRef} className="prompt-q" tabIndex={-1}>{commit.prompt}</p>
       {commit.hint ? <p className="prompt-hint">{commit.hint}</p> : null}
       {commit.options ? (
         <ChipRow options={commit.options} value={chosen} onPick={(o) => { setChosen(o); setText(""); }} />
@@ -108,6 +124,7 @@ function Committer({ skill, commit, score, onFill, onSkip, seedSub, saveLabel })
       <div className="field">
         <input
           type="text"
+          aria-label={commit.prompt}
           placeholder={commit.placeholder}
           value={text}
           onChange={(e) => { setText(e.target.value); if (e.target.value) setChosen(""); }}

@@ -8,8 +8,8 @@ import React from "react";
    is still: quarried stone, a faint tessellated floor, and one field of
    clay light that grows as the reader sets each piece.
 
-   All motion is CSS (.bg-lume breathes), so it starts on mount and never
-   depends on a JS visibility flag. Progress rides a single custom property.
+   The field stays still and changes only when progress changes, leaving the
+   active motif as the viewport's sole ambient-motion owner.
    ===================================================================== */
 
 export default function Backdrop({ stage = 0 }) {

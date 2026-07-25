@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import React, { useCallback, useEffect, useId, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { reveal, t } from "../lib/motion.js";
 import { SaveBar, Pause, ChipRow, Verse } from "./common.jsx";
 import { buzz } from "../lib/haptics.js";
 import Icon from "../components/Icon.jsx";
+import { useAppReducedMotion } from "../lib/useAppReducedMotion.js";
 
 /* EGW's dream: climb keeping your eyes UP, leave what you carry at the
    door, and receive "No temas". Press-and-hold to ascend; release and
    you slip. Used for "Lo que dejo en la puerta". */
 export default function Stairs({ config, onFill, onSkip }) {
-  const reduced = useReducedMotion();
+  const reduced = useAppReducedMotion();
   const [phase, setPhase] = useState("climb"); // climb | leave | promise
   const [progress, setProgress] = useState(reduced ? 1 : 0);
   const [leave, setLeave] = useState("");
@@ -106,7 +107,7 @@ export default function Stairs({ config, onFill, onSkip }) {
 
         {phase === "leave" ? (
           <motion.div key="leave" className="stack" variants={reveal} initial="initial" animate="animate" exit={{ opacity: 0 }}>
-            <p className="prompt-q">{config.leavePrompt}</p>
+            <PhasePrompt>{config.leavePrompt}</PhasePrompt>
             <p className="prompt-hint">{config.leaveHint}</p>
             <ChipRow options={config.leaveOptions} value={custom ? "" : leave} onPick={(o) => { setLeave(o); setCustom(""); }} />
             {config.allowCustom ? (
@@ -121,7 +122,7 @@ export default function Stairs({ config, onFill, onSkip }) {
         {phase === "promise" ? (
           <motion.div key="promise" className="stack" variants={reveal} initial="initial" animate="animate" exit={{ opacity: 0 }}>
             <p className="story" style={{ borderLeftColor: "var(--clay)" }}>Dejaste <b>{leaveValue.toLowerCase()}</b> en la puerta. El guía abre, y estás delante de él.</p>
-            <p className="prompt-q">{config.promisePrompt}</p>
+            <PhasePrompt>{config.promisePrompt}</PhasePrompt>
             <div className="opt-list">
               {config.promiseOptions.map((p, k) => (
                 <motion.button
@@ -134,10 +135,21 @@ export default function Stairs({ config, onFill, onSkip }) {
                   style={{ flexDirection: "column", alignItems: "flex-start", gap: 4 }}
                 >
                   <span className="txt" style={{ fontStyle: "italic" }}>{p.t}</span>
-                  {promise === k ? <span className="is" style={{ color: "var(--text-soft)", fontSize: "0.9rem" }}>{p.w}</span> : null}
+                  {promise === k ? (
+                    <span
+                      className="is"
+                      aria-hidden="true"
+                      style={{ color: "var(--text-soft)", fontSize: "0.9rem" }}
+                    >
+                      {p.w}
+                    </span>
+                  ) : null}
                 </motion.button>
               ))}
             </div>
+            <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+              {promise != null ? config.promiseOptions[promise].w : ""}
+            </span>
             <AnimatePresence>
               {promise != null ? (
                 <motion.div className="stack" variants={reveal} initial="initial" animate="animate">
@@ -167,7 +179,23 @@ export default function Stairs({ config, onFill, onSkip }) {
   );
 }
 
+function PhasePrompt({ children }) {
+  const promptRef = useRef(null);
+
+  useEffect(() => {
+    promptRef.current?.focus({ preventScroll: true });
+  }, []);
+
+  return (
+    <p ref={promptRef} className="prompt-q" tabIndex={-1}>
+      {children}
+    </p>
+  );
+}
+
 function StairsArt({ progress }) {
+  const reactId = useId().replace(/:/g, "");
+  const beamId = `${reactId}-beam`;
   // marker climbs a flight of steps as progress 0→1; eyes-up beam at top
   const steps = 6;
   const climbY = 150 - progress * 120;
@@ -175,13 +203,13 @@ function StairsArt({ progress }) {
   return (
     <svg viewBox="0 0 280 180" width="100%" style={{ maxWidth: 360, margin: "0 auto", display: "block" }} aria-hidden="true">
       <defs>
-        <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={beamId} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#ffe6ac" stopOpacity="0.85" />
           <stop offset="100%" stopColor="#ffe6ac" stopOpacity="0" />
         </linearGradient>
       </defs>
       {/* doorway light at top */}
-      <motion.rect x="232" y="6" width="40" height="60" rx="6" fill="url(#beam)" animate={{ opacity: 0.4 + progress * 0.6 }} />
+      <motion.rect x="232" y="6" width="40" height="60" rx="6" fill={`url(#${beamId})`} animate={{ opacity: 0.4 + progress * 0.6 }} />
       <rect x="244" y="10" width="22" height="52" rx="4" fill="none" stroke="var(--clay)" strokeWidth="2" opacity={0.5 + progress * 0.5} />
       {/* steps */}
       {Array.from({ length: steps }).map((_, k) => {

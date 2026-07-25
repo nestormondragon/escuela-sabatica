@@ -19,7 +19,7 @@ export default function Station({ lesson, station, state, filledCount, maestro, 
   // contextual callback to an earlier answer (no name — the cue carries it)
   const note =
     station.id !== "tormenta" && state.slots.tormenta
-      ? `Lo que nombraste como tu tormenta —«${state.slots.tormenta}»— sigue presente aquí.`
+      ? `Lo que nombraste como tu tormenta, «${state.slots.tormenta}», sigue presente aquí.`
       : null;
 
   return (

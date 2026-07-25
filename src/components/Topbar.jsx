@@ -72,7 +72,10 @@ export default function Topbar({
         </button>
       </div>
       <div className="progress">
-        <div className="progress-fill" style={{ width: `${Math.round(progress * 100)}%` }} />
+        <div
+          className="progress-fill"
+          style={{ transform: `scaleX(${Math.max(0, Math.min(1, progress))})` }}
+        />
       </div>
     </header>
   );
