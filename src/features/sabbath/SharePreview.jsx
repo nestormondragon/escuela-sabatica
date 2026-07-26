@@ -1,6 +1,8 @@
 import React, { useId, useMemo, useRef, useState } from "react";
 import Icon from "../../components/Icon.jsx";
 import LessonRelief from "../../visual-world/LessonRelief.jsx";
+import { useI18n } from "../../i18n/LocaleProvider.jsx";
+import { translateMessage } from "../../i18n/messages.js";
 
 function safeFilePart(value) {
   return String(value || "folio")
@@ -12,9 +14,9 @@ function safeFilePart(value) {
     .slice(0, 54) || "folio";
 }
 
-export function shareTextFor(lesson, fields) {
+export function shareTextFor(lesson, fields, locale = "es") {
   const lines = [
-    `Lección ${lesson.number}: ${lesson.title}`,
+    `${translateMessage(locale, "common.lesson", { number: lesson.number })}: ${lesson.title}`,
     lesson.verse?.ref || "",
     "",
   ];
@@ -73,11 +75,15 @@ export default function SharePreview({
   onStatus,
   className = "",
 }) {
+  const { locale, t } = useI18n();
   const reactId = useId().replace(/:/g, "");
   const titleId = `${reactId}-share-preview-title`;
   const previewRef = useRef(null);
   const [status, setStatus] = useState("");
-  const text = useMemo(() => shareTextFor(lesson, fields), [fields, lesson]);
+  const text = useMemo(
+    () => shareTextFor(lesson, fields, locale),
+    [fields, lesson, locale]
+  );
   const fileName = `folio-${safeFilePart(lesson.slug || lesson.title)}.png`;
 
   const report = (message) => {
@@ -88,9 +94,9 @@ export default function SharePreview({
   const copy = async () => {
     try {
       await copyShareText(text);
-      report("Selección copiada");
+      report(t("share.copied"));
     } catch {
-      report("No se pudo copiar aquí");
+      report(t("share.copyFailed"));
     }
   };
 
@@ -98,9 +104,9 @@ export default function SharePreview({
     try {
       const dataUrl = await renderPreview(previewRef.current);
       downloadDataUrl(dataUrl, fileName);
-      report("Imagen descargada");
+      report(t("share.downloaded"));
     } catch {
-      report("No se pudo crear la imagen aquí");
+      report(t("share.imageFailed"));
     }
   };
 
@@ -117,21 +123,21 @@ export default function SharePreview({
       ) {
         await navigator.share({
           files: [file],
-          title: `Lección ${lesson.number}: ${lesson.title}`,
+          title: `${t("common.lesson", { number: lesson.number })}: ${lesson.title}`,
           text: lesson.verse?.ref || "",
         });
-        report("Imagen compartida");
+        report(t("share.shared"));
         return;
       }
 
       downloadDataUrl(dataUrl, fileName);
-      report("La imagen se descargó para que puedas compartirla");
+      report(t("share.downloadFallback"));
     } catch (error) {
       if (error?.name === "AbortError" || error?.name === "NotAllowedError") {
-        report("Compartir cancelado");
+        report(t("share.cancelled"));
         return;
       }
-      report("No se pudo compartir la imagen aquí");
+      report(t("share.failed"));
     }
   };
 
@@ -139,7 +145,7 @@ export default function SharePreview({
     try {
       window.print();
     } catch {
-      report("Usa la opción de imprimir del navegador");
+      report(t("share.printHint"));
     }
   };
 
@@ -149,23 +155,26 @@ export default function SharePreview({
       aria-labelledby={titleId}
     >
       <div className="sbf-section-heading">
-        <p className="sbf-kicker">Vista elegida</p>
-        <h2 id={titleId}>Así sale de tu dispositivo</h2>
-        <p>
-          Solo aparece lo que marcaste. Tus demás respuestas permanecen en tu
-          folio privado.
-        </p>
+        <p className="sbf-kicker">{t("share.kicker")}</p>
+        <h2 id={titleId}>{t("share.title")}</h2>
+        <p>{t("share.body")}</p>
       </div>
 
       {fields.length ? (
         <>
           <article className="sbf-share-card" ref={previewRef}>
             <div className="sbf-share-card__relief" aria-hidden="true">
-              <LessonRelief lesson={lesson} stage={4} compact priority />
+              <LessonRelief
+                lesson={lesson}
+                stage={4}
+                filled={8}
+                compact
+                priority
+              />
             </div>
             <header className="sbf-share-card__header">
-              <p>Escuela Sabática</p>
-              <span>Lección {lesson.number}</span>
+              <p>{t("app.name")}</p>
+              <span>{t("common.lesson", { number: lesson.number })}</span>
               <h3>{lesson.title}</h3>
               <small>{lesson.verse?.ref}</small>
             </header>
@@ -180,30 +189,30 @@ export default function SharePreview({
             </div>
           </article>
 
-          <div className="sbf-share-actions" aria-label="Opciones para compartir">
+          <div className="sbf-share-actions" aria-label={t("share.options")}>
             <button type="button" className="sbf-button sbf-button--primary" onClick={share}>
               <Icon name="share" size={18} />
-              Compartir imagen
+              {t("share.image")}
             </button>
             <button type="button" className="sbf-button" onClick={copy}>
               <Icon name="copy" size={18} />
-              Copiar texto
+              {t("share.copy")}
             </button>
             <button type="button" className="sbf-button" onClick={download}>
               <Icon name="download" size={18} />
-              Descargar imagen
+              {t("share.download")}
             </button>
             <button type="button" className="sbf-button" onClick={print}>
               <Icon name="printer" size={18} />
-              Imprimir
+              {t("share.print")}
             </button>
           </div>
         </>
       ) : (
         <div className="sbf-share-empty">
           <Icon name="lock" size={22} />
-          <p>Nada está preparado para compartir.</p>
-          <small>Elige al menos un campo en la sección anterior.</small>
+          <p>{t("share.empty")}</p>
+          <small>{t("share.emptyHelp")}</small>
         </div>
       )}
 

@@ -1,6 +1,8 @@
 import React, { forwardRef } from "react";
 import Icon from "../../components/Icon.jsx";
 import LessonRelief from "../../visual-world/LessonRelief.jsx";
+import { useI18n } from "../../i18n/LocaleProvider.jsx";
+import { isRemovalLesson } from "../../visual-world/lessonVisualManifest.js";
 
 /*
  * One physical panel in the quarter artifact.
@@ -20,15 +22,20 @@ const MosaicPanel = forwardRef(function MosaicPanel(
   },
   ref
 ) {
+  const { t } = useI18n();
+  const removal = isRemovalLesson(lesson.id);
   const stateId = `${idPrefix}-${lesson.id}-state`;
   const stageLabel =
     lesson.stageLabel?.[lesson.stages?.[panel.stageIndex]] ||
-    `Etapa ${panel.stageIndex + 1} de 5`;
+    t("mosaic.stage", { stage: panel.stageIndex + 1, total: 5 });
 
   const labelParts = [
-    `Lección ${lesson.number}, ${lesson.title}`,
+    `${t("common.lesson", { number: lesson.number })}, ${lesson.title}`,
     panel.statusLabel,
-    `${panel.filledCount} de ${panel.total} piezas`,
+    t(removal ? "common.regions" : "common.pieces", {
+      filled: panel.filledCount,
+      total: panel.total,
+    }),
     stageLabel,
   ].filter(Boolean);
 
@@ -75,6 +82,8 @@ const MosaicPanel = forwardRef(function MosaicPanel(
         <LessonRelief
           lesson={lesson}
           stage={panel.stageIndex}
+          filled={panel.filledCount}
+          total={panel.total}
           compact
           priority={selected || panel.current}
           className="qm-panel__relief"

@@ -2,14 +2,16 @@ import React from "react";
 import { motion } from "framer-motion";
 import Icon from "../components/Icon.jsx";
 import { reveal, listItem, listParent, t } from "../lib/motion.js";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 /* shared bits for the station modules */
 
 export function Privacy({ children }) {
+  const { t: translate } = useI18n();
   return (
     <div className="privacy">
       <Icon name="lock" size={14} />
-      {children || "Privado en este dispositivo · puedes saltar cualquier pregunta"}
+      {children || translate("module.private")}
     </div>
   );
 }
@@ -61,6 +63,7 @@ export function PersonalNote({ children }) {
 
 /* Save / skip action bar */
 export function SaveBar({ label, onSave, onSkip, variant = "primary", disabled }) {
+  const { t: translate } = useI18n();
   return (
     <div className="stack" style={{ marginTop: 16 }}>
       <motion.button
@@ -75,7 +78,7 @@ export function SaveBar({ label, onSave, onSkip, variant = "primary", disabled }
       </motion.button>
       {onSkip ? (
         <div className="skip-wrap">
-          <button className="skip" onClick={onSkip}>Saltar por ahora</button>
+          <button className="skip" onClick={onSkip}>{translate("module.skip")}</button>
         </div>
       ) : null}
     </div>

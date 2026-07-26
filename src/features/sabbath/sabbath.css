@@ -149,7 +149,7 @@
 
 .sbf-kicker {
   color: var(--clay);
-  font-size: 0.66rem;
+  font-size: var(--type-micro);
   font-weight: 720;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -409,7 +409,7 @@
 
 .sbf-edit-field__heading span {
   color: var(--sbf-paper-soft);
-  font-size: 0.59rem;
+  font-size: var(--type-micro);
   font-weight: 680;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -568,7 +568,7 @@
 .sbf-selector__choice small {
   margin-top: 1px;
   color: #aaa59d;
-  font-size: 0.7rem;
+  font-size: var(--type-micro);
   line-height: 1.35;
 }
 
@@ -705,7 +705,7 @@
 .sbf-save-status {
   margin-top: 9px;
   color: #aaa49b;
-  font-size: 0.7rem;
+  font-size: var(--type-micro);
   line-height: 1.4;
   text-align: center;
 }
@@ -787,7 +787,7 @@
 
 .sbf-share-card__header > p {
   color: #a8452a;
-  font-size: 0.63rem;
+  font-size: var(--type-micro);
   font-weight: 720;
   letter-spacing: 0.17em;
 }
@@ -796,7 +796,7 @@
   display: block;
   margin-top: 17px;
   color: var(--sbf-paper-soft);
-  font-size: 0.62rem;
+  font-size: var(--type-micro);
   font-weight: 680;
   letter-spacing: 0.12em;
 }
@@ -816,7 +816,7 @@
   display: block;
   margin-top: 13px;
   color: var(--sbf-paper-soft);
-  font-size: 0.67rem;
+  font-size: var(--type-micro);
   letter-spacing: 0.08em;
 }
 
@@ -835,7 +835,7 @@
 .sbf-share-card__field h4 {
   color: #a8452a;
   font-family: var(--ui);
-  font-size: 0.61rem;
+  font-size: var(--type-micro);
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -888,7 +888,95 @@
 
 .sbf-share-empty small {
   margin-top: 3px;
-  font-size: 0.73rem;
+  font-size: var(--type-micro);
+}
+
+:root[data-mode="day"] .sbf-share-builder {
+  color: var(--inset-text);
+  background-color: #cfcec8;
+  background-image:
+    linear-gradient(145deg, rgb(255 255 255 / 0.45), transparent 30%),
+    linear-gradient(325deg, rgb(49 51 55 / 0.14), transparent 56%),
+    var(--sbf-limestone);
+  background-size: auto, auto, 420px 420px;
+  box-shadow:
+    inset 2px 2px 1px rgb(255 255 255 / 0.48),
+    inset -3px -4px 5px rgb(49 51 55 / 0.18),
+    0 6px 0 rgb(89 87 81 / 0.22),
+    0 18px 28px rgb(47 49 53 / 0.14);
+}
+
+:root[data-mode="day"] .sbf-share-builder .sbf-kicker {
+  color: var(--clay);
+}
+
+:root[data-mode="day"] .sbf-share-builder .sbf-section-heading h2,
+:root[data-mode="day"] .sbf-share-builder .sbf-selector__choice strong {
+  color: var(--inset-text);
+}
+
+:root[data-mode="day"] .sbf-share-builder .sbf-section-heading > p:last-child,
+:root[data-mode="day"] .sbf-share-builder .sbf-selector__choice small,
+:root[data-mode="day"] .sbf-share-builder .sbf-selection-summary p,
+:root[data-mode="day"] .sbf-share-builder .sbf-present-hint,
+:root[data-mode="day"] .sbf-share-builder .sbf-save-status {
+  color: var(--inset-muted);
+}
+
+:root[data-mode="day"] .sbf-share-builder .sbf-selector__choice {
+  border-color: rgb(40 42 46 / 0.16);
+}
+
+:root[data-mode="day"] .sbf-share-builder .sbf-selector__mark {
+  border-color: rgb(40 42 46 / 0.34);
+  color: #f4f4f0;
+  background: rgb(255 255 255 / 0.24);
+  box-shadow:
+    inset 1px 1px 0 rgb(255 255 255 / 0.5),
+    inset -1px -1px 1px rgb(40 42 46 / 0.18);
+}
+
+:root[data-mode="day"] .sbf-share-builder .sbf-selector__choice[data-checked="true"] .sbf-selector__mark {
+  border-color: var(--clay);
+  color: #f4f4f0;
+  background-color: var(--clay);
+  background-image: var(--sbf-clay);
+}
+
+:root[data-mode="day"] .sbf-share-builder .sbf-consent {
+  color: #45484e;
+  background: rgb(138 98 22 / 0.08);
+}
+
+:root[data-mode="day"] .sbf-share-builder .sbf-button:not(.sbf-button--primary) {
+  border-color: rgb(40 42 46 / 0.22);
+  color: var(--inset-text);
+  background-color: #deded9;
+  background-image:
+    linear-gradient(145deg, rgb(255 255 255 / 0.36), transparent 35%),
+    var(--sbf-limestone);
+  box-shadow:
+    inset 1px 1px 0 rgb(255 255 255 / 0.5),
+    inset -2px -2px 2px rgb(40 42 46 / 0.15);
+}
+
+:root[data-mode="day"] .sbf-share-empty {
+  color: var(--inset-muted);
+  background-color: #d5d5d0;
+  background-image:
+    linear-gradient(145deg, rgb(255 255 255 / 0.4), transparent 34%),
+    var(--sbf-limestone);
+  box-shadow:
+    inset 2px 2px 1px rgb(255 255 255 / 0.48),
+    inset -3px -4px 5px rgb(40 42 46 / 0.16);
+}
+
+:root[data-mode="day"] .sbf-share-empty p {
+  color: var(--inset-text);
+}
+
+:root[data-mode="day"] .sbf-share-empty small {
+  color: var(--inset-muted);
 }
 
 .sbf-presentation {
@@ -932,7 +1020,7 @@
   align-items: center;
   justify-content: space-between;
   color: #aaa59d;
-  font-size: 0.67rem;
+  font-size: var(--type-micro);
   font-weight: 670;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -990,7 +1078,7 @@
 .sbf-presentation__header p {
   grid-column: 2;
   color: #e0785c;
-  font-size: 0.67rem;
+  font-size: var(--type-micro);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1047,7 +1135,7 @@
 
 .sbf-presentation__field h3 {
   color: #a9a39a;
-  font-size: 0.64rem;
+  font-size: var(--type-micro);
   font-weight: 690;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1076,7 +1164,7 @@
   max-width: 62ch;
   color: #a9a39a;
   font-family: var(--ui);
-  font-size: 0.67rem;
+  font-size: var(--type-micro);
   font-weight: 650;
   letter-spacing: 0.11em;
   line-height: 1.4;
@@ -1086,7 +1174,7 @@
 .sbf-presentation__footer cite {
   color: #e0785c;
   font-family: var(--ui);
-  font-size: 0.67rem;
+  font-size: var(--type-micro);
   font-style: normal;
   letter-spacing: 0.11em;
   text-transform: uppercase;

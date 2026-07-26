@@ -111,11 +111,12 @@ investment.
 
 The world is physically credible before it is spectacular. Local raster
 materials provide stone pores, clay grain, papyrus fiber, relief, edge wear,
-and contact occlusion. HTML owns every word, control, and state. CSS clip paths
-own the five-stage reveal, seams, lighting, and load states. SVG supplies the
-full-size loading and error fallback plus retained topology for legacy
-narrative artwork. Motion shows causal placement and continuity. None of those
-layers pretends to replace another.
+and contact occlusion. HTML owns every word, control, and state. Four CSS
+clip-path families own the same eight regions used by the Three.js PBR scene.
+Canvas and one lazy Matter.js ritual provide direct manipulation where the
+lesson calls for it. SVG supplies loading/error fallback plus retained
+topology for legacy narrative artwork. Motion shows causal placement and
+continuity. None of those layers pretends to replace another.
 
 All raster assets are checked in, responsive, offline-capable, and require no
 runtime API, key, CDN, or generation service.
@@ -281,10 +282,15 @@ inputs, switches, and dialogs remain recognizable and preserve their focus
 geometry.
 
 Narrative artwork is lesson-specific. Raster relief provides the final
-material. CSS clip paths supply stage masks, seams, light, and load-state
-treatment. Full-size loading and error states use the legacy SVG Centerpiece;
-compact placements use a simplified CSS fallback mark. Small previews use
-deliberate crops and do not shrink fragile hero detail.
+material, but it is never a single image merely uncovered by progress.
+Full-size artifacts are reconstructed from eight authored regions, one for
+each saved station. Those regions may arrive as sherds, paper strips,
+tesserae, masonry, seeds, or light depending on the lesson. A local,
+route-directed WebGL treatment may add real raking light, height, and camera
+depth on capable devices. Full-size loading, reduced-complexity, and WebGL
+failure states use the semantic DOM/CSS reconstruction and the legacy SVG
+Centerpiece. Small previews use deliberate crops and never shrink fragile hero
+detail.
 
 **The Structural Truth Rule.** Openings show thickness, parts have weight,
 handles join, paper curls, blocks bear on other blocks, and light originates
@@ -315,9 +321,11 @@ status. Text never waits for the inlay animation.
 ### Persistent Artifact
 
 One lesson-specific relief remains mounted through the primary study journey.
-Progress controls material visibility, physical joins, and local light. The
-full-size SVG Centerpiece is the loading and failure fallback; compact
-placements use a simplified CSS mark. Neither fallback is the hero.
+Progress controls eight distinct physical joins and local light. A transient
+preview channel lets the current drag, clean, trace, turn, or placement affect
+the artifact before anything is persisted. The full-size SVG Centerpiece is
+the loading and failure fallback; compact placements use a simplified CSS
+mark. Neither fallback is the hero.
 
 ### Quarter Mosaic
 
@@ -346,7 +354,9 @@ for active or complete state. Narrative relief is not replaced by icon tiles.
 
 ### Motion
 
-The material verbs remain **Set**, **Reveal**, and **Return**.
+The material verbs are **Excavate**, **Test**, **Set**, **Bind**, and
+**Return**. Motion is causal: the user's hand changes the same object that
+later appears in the lesson, quarter wall, and Sabbath folio.
 
 - Press: about 120ms.
 - Selection: about 180ms.
@@ -356,10 +366,33 @@ The material verbs remain **Set**, **Reveal**, and **Return**.
 - Piece placement: about 720ms.
 - Weekly completion: no more than 1000ms.
 
-Repeated controls stay fast. Rare placement may use a bounded tessera transfer
-and 8 to 14 deterministic dust fragments. Only transform and opacity change
-continuously. Reduced motion removes travel, particles, parallax, path drawing,
-and loops while retaining immediate state and short color or opacity feedback.
+Repeated controls stay fast. Rare placement may use a bounded material
+transfer and 8 to 14 deterministic dust fragments. One persistent world
+surface may own a restrained ambient light drift; every other animation is
+one-shot, gesture-driven, or asleep. WebGL renders on demand and is paused
+when hidden or offscreen. Reduced motion removes camera travel, particles,
+parallax, path drawing, physics, and loops while retaining immediate state and
+short color or opacity feedback.
+
+**The Eight Answers, Eight Changes Rule.** Saving answers one through eight
+must alter eight visibly distinct artifact regions. No pair of saves may
+collapse into the same visual stage.
+
+**The Direct Manipulation Rule.** A station ends with one meaningful material
+verb tied to its content: fit a sherd, brush dust, align a strip, calibrate a
+lens, bind two pieces, or set a seal. The same action always has a tap and
+keyboard equivalent, never withholds the reading, and never punishes the
+reader for leaving.
+
+**The One Living Surface Rule.** At most one visible surface owns ambient
+motion. It uses transform, opacity, or GPU-uniform changes within a measured
+budget. Grain, large blur, CSS displacement, and filter parameters remain
+static. Other surfaces settle completely.
+
+**The Kinetic Type Rule.** Display questions may reveal by word or phrase once
+on entry. Scripture and body copy remain stable, selectable, and immediately
+available to assistive technology. Per-character motion is reserved for very
+short labels and never becomes reading friction.
 
 ## Do's and Don'ts
 

@@ -95,7 +95,7 @@ export function makeLesson(d) {
   return {
     id: "l" + d.number,
     number: d.number,
-    quarter: "2026-Q2",
+    quarter: "2026-Q3",
     slug: d.slug,
     title: d.title,
     subtitle: d.subtitle,

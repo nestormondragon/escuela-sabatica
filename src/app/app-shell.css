@@ -181,7 +181,7 @@
 
 .mcv-context-rail__lesson-number {
   color: var(--clay, #e0785c);
-  font-size: 0.63rem;
+  font-size: var(--type-micro, 0.72rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.13em;
@@ -201,7 +201,7 @@
 .mcv-context-rail__lesson-date {
   display: none;
   color: var(--muted, #96948e);
-  font-size: 0.72rem;
+  font-size: var(--type-micro, 0.72rem);
   line-height: 1.35;
 }
 
@@ -307,7 +307,7 @@
   justify-content: center;
   min-height: 56px;
   color: var(--muted, #96948e);
-  font-size: 0.71rem;
+  font-size: var(--type-micro, 0.72rem);
   font-weight: 600;
   line-height: 1;
   text-decoration: none;
@@ -424,7 +424,7 @@
 .mcv-route-error__eyebrow {
   margin: 0 0 8px;
   color: var(--clay, #e0785c);
-  font-size: 0.7rem;
+  font-size: var(--type-micro, 0.72rem);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -714,7 +714,7 @@
     display: block;
     max-width: 100%;
     overflow: hidden;
-    font-size: 0.65rem;
+    font-size: var(--type-micro, 0.72rem);
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -739,6 +739,21 @@
   .mcv-app-shell__canvas {
     max-width: 66ch;
   }
+}
+
+:root[data-text-size="large"] .mcv-context-rail__lesson-title,
+:root[data-text-size="x-large"] .mcv-context-rail__lesson-title {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+:root[data-text-size="large"] .mcv-context-rail__utility-label,
+:root[data-text-size="x-large"] .mcv-context-rail__utility-label {
+  overflow: visible;
+  line-height: 1.15;
+  text-overflow: clip;
+  white-space: normal;
 }
 
 @media (min-width: 1120px) {

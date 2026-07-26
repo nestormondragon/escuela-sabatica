@@ -9,33 +9,36 @@ import {
 import PresentationPreview from "../features/sabbath/PresentationPreview.jsx";
 import { selectors, useJourney } from "../state/journey/index.js";
 import RouteLoading from "./RouteLoading.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
+import { localizeLegacyKit } from "../lib/localizedLegacyKit.js";
 
 export default function PresentationRoute() {
+  const { locale, t } = useI18n();
   const { lessonId } = useParams();
   const navigate = useNavigate();
-  const loaded = useLoadedLesson(lessonId);
+  const loaded = useLoadedLesson(lessonId, locale);
   const journey = useJourney();
 
-  if (loaded.loading) return <RouteLoading label="Preparando la presentación" />;
+  if (loaded.loading) return <RouteLoading label={t("presentation.loading")} />;
   if (loaded.error || !loaded.lesson) throw loaded.error;
 
   const lesson = loaded.lesson;
-  const legacyKit = selectors.selectLegacyKit(journey.state, lessonId);
+  const legacyKit = localizeLegacyKit(
+    lesson,
+    selectors.selectLegacyKit(journey.state, lessonId)
+  );
   const saved = selectors.selectSabbathPack(journey.state, lessonId);
-  const pack = buildSabbathPack(lesson, legacyKit, saved);
-  const fields = selectedSabbathFields(pack);
+  const pack = buildSabbathPack(lesson, legacyKit, saved, locale);
+  const fields = selectedSabbathFields(pack, locale);
 
   if (!fields.length) {
     return (
       <section className="presentation-empty" aria-labelledby="presentation-empty-title">
-        <div className="route-eyebrow">Vista para presentar</div>
-        <h1 id="presentation-empty-title" data-route-heading>Primero elige qué mostrar</h1>
-        <p className="route-deck">
-          La presentación no toma contenido privado por defecto. Selecciona
-          campos en el folio del sábado.
-        </p>
+        <div className="route-eyebrow">{t("presentation.eyebrow")}</div>
+        <h1 id="presentation-empty-title" data-route-heading>{t("presentation.emptyTitle")}</h1>
+        <p className="route-deck">{t("presentation.emptyBody")}</p>
         <Link className="btn btn-primary" to={`/sabado/${lesson.id}`}>
-          Volver al folio
+          {t("presentation.back")}
           <Icon name="arrow" size={17} />
         </Link>
       </section>

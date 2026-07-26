@@ -4,8 +4,10 @@ import {
   JOURNEY_QUARTER_ID,
   JOURNEY_SCHEMA_VERSION,
   LESSON_STATUSES,
+  LOCALES,
   ROLES,
   THEMES,
+  TEXT_SIZES,
 } from "./constants.js";
 import { isStoredField, privateField } from "./privacy.js";
 
@@ -100,6 +102,8 @@ export function createEmptyJourneyState({
     sabbathPacks: {},
     settings: {
       theme: "dark",
+      textSize: "normal",
+      locale: "es",
       reducedMotion: "system",
       haptics: true,
       streakVisible: false,
@@ -282,6 +286,20 @@ export function validateJourneyState(state) {
   else {
     if (!THEMES.includes(state.settings.theme))
       errors.push("settings.theme is invalid");
+    // textSize was added after JourneyState v2 shipped. An absent value keeps
+    // existing v2 records valid; consumers resolve it to the normal default.
+    if (
+      state.settings.textSize !== undefined &&
+      !TEXT_SIZES.includes(state.settings.textSize)
+    )
+      errors.push("settings.textSize is invalid");
+    // locale was added after JourneyState v2 shipped. Keep older v2 records
+    // valid and resolve an absent locale to Spanish in the UI.
+    if (
+      state.settings.locale !== undefined &&
+      !LOCALES.includes(state.settings.locale)
+    )
+      errors.push("settings.locale is invalid");
     if (
       state.settings.reducedMotion !== "system" &&
       typeof state.settings.reducedMotion !== "boolean"

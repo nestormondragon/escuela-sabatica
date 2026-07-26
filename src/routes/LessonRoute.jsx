@@ -7,33 +7,41 @@ import { lessonSummaryById } from "../content/lessonManifest.generated.js";
 import { useJourneyKit } from "../state/useJourneyKit.js";
 import { useJourney, journeyActions, selectors } from "../state/journey/index.js";
 import RouteLoading from "./RouteLoading.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
+import { capabilityLabelForId } from "../lib/journeyMeaning.js";
+import { isRemovalLesson } from "../visual-world/lessonVisualManifest.js";
 
 export default function LessonRoute() {
+  const { locale, t } = useI18n();
   const { lessonId } = useParams();
-  const summary = lessonSummaryById(lessonId);
-  const loaded = useLoadedLesson(lessonId);
+  const summary = lessonSummaryById(lessonId, locale);
+  const loaded = useLoadedLesson(lessonId, locale);
 
-  if (!summary) throw new Error("La lección solicitada no existe");
+  if (!summary) throw new Error(t("lesson.missing"));
   if (loaded.loading) return <RouteLoading />;
   if (loaded.error || !loaded.lesson) throw loaded.error;
   return <LessonReady lesson={loaded.lesson} />;
 }
 
 function LessonReady({ lesson }) {
+  const { locale, t } = useI18n();
   const navigate = useNavigate();
   const journey = useJourney();
   const kit = useJourneyKit(lesson);
+  const removal = isRemovalLesson(lesson.id);
   const episodes = adaptLessonToEpisodes(lesson);
   const [nameDraft, setNameDraft] = useState("");
   const profileName = selectors.selectProfileName(journey.state);
   const canPersonalize = kit.filledCount > 0 && !profileName;
   const capabilityLabels = Array.from(
     new Set(
-      Object.values(journey.state.capabilities || {})
-        .flatMap((capability) => capability.evidence || [])
-        .filter((evidence) => evidence.lessonId === lesson.id)
-        .map((evidence) => evidence.label)
-        .filter(Boolean)
+      Object.entries(journey.state.capabilities || {})
+        .filter(([, capability]) =>
+          (capability.evidence || []).some(
+            (evidence) => evidence.lessonId === lesson.id
+          )
+        )
+        .map(([capabilityId]) => capabilityLabelForId(capabilityId, locale))
     )
   );
 
@@ -45,7 +53,9 @@ function LessonReady({ lesson }) {
         { lessonId: lesson.id, episodeId: episode.id }
       )
     );
-    navigate(`/leccion/${lesson.id}/episodio/${episode.id}`);
+    navigate(`/leccion/${lesson.id}/episodio/${episode.id}`, {
+      viewTransition: true,
+    });
   };
 
   const saveName = () => {
@@ -58,7 +68,7 @@ function LessonReady({ lesson }) {
   return (
     <div className="route-experience">
       <section className="lesson-path" aria-labelledby="lesson-title">
-        <div className="route-eyebrow">Lección {lesson.number}</div>
+        <div className="route-eyebrow">{t("common.lesson", { number: lesson.number })}</div>
         <h1 id="lesson-title" data-route-heading>{lesson.title}</h1>
         <p className="route-deck">{lesson.subtitle}</p>
 
@@ -68,8 +78,8 @@ function LessonReady({ lesson }) {
         </blockquote>
 
         {capabilityLabels.length ? (
-          <aside className="lesson-capabilities" aria-label="Prácticas ejercitadas">
-            <span>Lo que ya estás aprendiendo a hacer</span>
+          <aside className="lesson-capabilities" aria-label={t("lesson.capabilities")}>
+            <span>{t("lesson.capabilitiesHeading")}</span>
             <ul>
               {capabilityLabels.map((label) => (
                 <li key={label}>
@@ -83,8 +93,13 @@ function LessonReady({ lesson }) {
 
         <div className="lesson-thread">
           <div className="lesson-thread__head">
-            <span>Tu recorrido</span>
-            <span>{kit.filledCount} de {kit.total} piezas</span>
+            <span>{t("lesson.yourJourney")}</span>
+            <span>
+              {t(removal ? "common.regions" : "common.pieces", {
+                filled: kit.filledCount,
+                total: kit.total,
+              })}
+            </span>
           </div>
           <ol>
             {episodes.map((episode, index) => {
@@ -116,7 +131,7 @@ function LessonReady({ lesson }) {
 
         {kit.filledCount >= 4 ? (
           <aside className="pattern-inscription">
-            <span>El patrón que está apareciendo</span>
+            <span>{t("lesson.pattern")}</span>
             <p>{lesson.pattern(kit.state)}</p>
           </aside>
         ) : null}
@@ -124,23 +139,23 @@ function LessonReady({ lesson }) {
         {canPersonalize ? (
           <section className="personalize-invitation" aria-labelledby="personalize-title">
             <div>
-              <span>Esto ya es tuyo</span>
-              <h2 id="personalize-title">¿Quieres ponerle tu nombre?</h2>
-              <p>Es opcional y se guarda solo en este navegador.</p>
+              <span>{t("lesson.yours")}</span>
+              <h2 id="personalize-title">{t("lesson.nameTitle")}</h2>
+              <p>{t("settings.storage")}</p>
             </div>
             <div className="personalize-invitation__form">
-              <label htmlFor="journey-name" className="sr-only">Tu nombre</label>
+              <label htmlFor="journey-name" className="sr-only">{t("lesson.yourName")}</label>
               <input
                 id="journey-name"
                 value={nameDraft}
                 maxLength={32}
                 autoComplete="given-name"
-                placeholder="Tu nombre"
+                placeholder={t("lesson.yourName")}
                 onChange={(event) => setNameDraft(event.target.value)}
                 onKeyDown={(event) => event.key === "Enter" && saveName()}
               />
               <button type="button" className="btn btn-primary" onClick={saveName}>
-                Guardar
+                {t("common.save")}
               </button>
             </div>
           </section>
@@ -149,8 +164,8 @@ function LessonReady({ lesson }) {
         {kit.done ? (
           <Link className="world-action" to={`/sabado/${lesson.id}`}>
             <span>
-              <small>Tu semana está preparada</small>
-              Abrir el folio del sábado
+              <small>{t("lesson.weekReady")}</small>
+              {t("lesson.openFolio")}
             </span>
             <Icon name="arrow" size={20} />
           </Link>

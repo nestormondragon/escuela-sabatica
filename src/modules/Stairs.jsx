@@ -5,11 +5,14 @@ import { SaveBar, Pause, ChipRow, Verse } from "./common.jsx";
 import { buzz } from "../lib/haptics.js";
 import Icon from "../components/Icon.jsx";
 import { useAppReducedMotion } from "../lib/useAppReducedMotion.js";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
+import { lcFirst } from "../lib/name.js";
 
 /* EGW's dream: climb keeping your eyes UP, leave what you carry at the
    door, and receive "No temas". Press-and-hold to ascend; release and
    you slip. Used for "Lo que dejo en la puerta". */
 export default function Stairs({ config, onFill, onSkip }) {
+  const { t: translate } = useI18n();
   const reduced = useAppReducedMotion();
   const [phase, setPhase] = useState("climb"); // climb | leave | promise
   const [progress, setProgress] = useState(reduced ? 1 : 0);
@@ -95,12 +98,14 @@ export default function Stairs({ config, onFill, onSkip }) {
               onPointerLeave={stop}
               onPointerCancel={stop}
               onKeyDown={climbByKey}
-              aria-label="Mantén presionado para subir, o pulsa Enter"
+              aria-label={translate("module.climbAria")}
               className="btn btn-ghost btn-block"
               style={{ userSelect: "none", touchAction: "none", minHeight: 60, borderColor: "var(--clay)" }}
             >
               <Icon name="chevron" size={18} style={{ transform: "rotate(-90deg)" }} />
-              {progress >= 1 ? "Has llegado a la puerta" : "Mantén presionado · vista arriba"}
+              {progress >= 1
+                ? translate("module.reachedDoor")
+                : translate("module.holdLookUp")}
             </button>
           </motion.div>
         ) : null}
@@ -115,13 +120,17 @@ export default function Stairs({ config, onFill, onSkip }) {
                 <input type="text" aria-label={config.leavePrompt || config.allowCustom.placeholder} placeholder={config.allowCustom.placeholder} value={custom} onChange={(e) => { setCustom(e.target.value); if (e.target.value) setLeave(""); }} maxLength={60} />
               </div>
             ) : null}
-            <SaveBar label="Dejarlo en la puerta" disabled={!leaveValue} onSave={() => setPhase("promise")} onSkip={onSkip} variant="ghost" />
+            <SaveBar label={translate("module.leaveAtDoor")} disabled={!leaveValue} onSave={() => setPhase("promise")} onSkip={onSkip} variant="ghost" />
           </motion.div>
         ) : null}
 
         {phase === "promise" ? (
           <motion.div key="promise" className="stack" variants={reveal} initial="initial" animate="animate" exit={{ opacity: 0 }}>
-            <p className="story" style={{ borderLeftColor: "var(--clay)" }}>Dejaste <b>{leaveValue.toLowerCase()}</b> en la puerta. El guía abre, y estás delante de él.</p>
+            <p className="story" style={{ borderLeftColor: "var(--clay)" }}>
+              {translate("module.leftAtDoor", {
+                value: lcFirst(leaveValue),
+              })}
+            </p>
             <PhasePrompt>{config.promisePrompt}</PhasePrompt>
             <div className="opt-list">
               {config.promiseOptions.map((p, k) => (
@@ -156,7 +165,7 @@ export default function Stairs({ config, onFill, onSkip }) {
                   <Pause />
                   <Verse text={config.verse.text} cite={config.verse.ref} />
                   <SaveBar
-                    label={config.saveLabel || "Guardar esta pieza"}
+                    label={config.saveLabel || translate("module.savePiece")}
                     onSave={() =>
                       onFill(
                         leaveValue,

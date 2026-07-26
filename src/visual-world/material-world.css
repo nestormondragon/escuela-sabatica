@@ -1,0 +1,241 @@
+.material-world-canvas,
+.relief-assembly {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.material-world-canvas {
+  z-index: 5;
+  display: block;
+  pointer-events: none;
+  touch-action: pan-y;
+  opacity: 0;
+  transition: opacity 420ms var(--ease-out);
+}
+
+.lesson-relief[data-renderer="webgl"] .material-world-canvas {
+  opacity: 1;
+}
+
+.relief-assembly {
+  z-index: 3;
+  display: block;
+  overflow: hidden;
+  contain: paint;
+  visibility: visible;
+  background:
+    radial-gradient(circle at 50% 52%, rgb(214 81 42 / 0.13), transparent 28%),
+    var(--material-grout),
+    #111318;
+  background-size: auto, 360px 360px, auto;
+  transition:
+    opacity 320ms var(--ease-out),
+    visibility 0s;
+}
+
+.lesson-relief[data-renderer="webgl"] .relief-assembly {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 320ms var(--ease-out),
+    visibility 0s linear 320ms;
+}
+
+.relief-assembly__underpainting,
+.relief-assembly__piece,
+.relief-assembly__raking-light {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.relief-assembly__underpainting {
+  background-position: var(--relief-focal, 50% 50%);
+  background-size: cover;
+  filter: grayscale(0.88) brightness(0.31) contrast(1.3);
+  opacity: 0.3;
+  transform: scale(0.985);
+}
+
+.relief-assembly[data-progression="remove"] .relief-assembly__underpainting {
+  filter: saturate(0.92) brightness(0.94) contrast(1.05);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.relief-assembly[data-progression="remove"] .relief-assembly__piece {
+  background-image:
+    linear-gradient(145deg, rgb(255 255 255 / 0.08), transparent 38%),
+    var(--material-grout);
+  background-size: auto, 360px 360px;
+  filter:
+    saturate(0.18)
+    brightness(0.48)
+    contrast(1.2)
+    drop-shadow(1px 1px 0 rgb(229 111 69 / 0.2))
+    drop-shadow(3px 7px 7px rgb(0 0 0 / 0.52));
+}
+
+.relief-assembly__piece {
+  --piece-tx: 0%;
+  --piece-ty: 0%;
+  --piece-rotation: 0rad;
+  --piece-scale: 1;
+  --piece-opacity: 1;
+  --piece-saturation: 1;
+  --piece-brightness: 1;
+  --piece-day-saturation: 1;
+  --piece-day-brightness: 1;
+  z-index: 2;
+  background-image: var(--piece-image);
+  background-position: var(--relief-focal, 50% 50%);
+  background-size: cover;
+  clip-path: var(--piece-clip);
+  filter:
+    saturate(var(--piece-saturation))
+    brightness(var(--piece-brightness))
+    contrast(1.08)
+    drop-shadow(3px 7px 7px rgb(0 0 0 / 0.52));
+  opacity: var(--piece-opacity);
+  transform:
+    translate3d(var(--piece-tx), var(--piece-ty), 0)
+    rotate(var(--piece-rotation))
+    scale(var(--piece-scale));
+  transform-origin: center;
+  transition:
+    transform 720ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 420ms var(--ease-out);
+}
+
+.relief-assembly__piece[data-set="true"] {
+  filter:
+    saturate(1)
+    brightness(1)
+    contrast(1.04)
+    drop-shadow(2px 4px 3px rgb(0 0 0 / 0.46));
+}
+
+.relief-assembly__piece[data-active="true"] {
+  filter:
+    saturate(1.08)
+    brightness(1.08)
+    contrast(1.05)
+    drop-shadow(4px 8px 8px rgb(0 0 0 / 0.5));
+  will-change: transform, opacity;
+}
+
+.lesson-relief.is-compact .relief-assembly__piece {
+  filter:
+    saturate(var(--piece-saturation))
+    brightness(var(--piece-brightness))
+    contrast(1.04);
+}
+
+.lesson-relief.is-compact .relief-assembly__piece[data-set="true"] {
+  filter: saturate(1) brightness(1) contrast(1.03);
+}
+
+.lesson-relief.is-compact .relief-assembly__piece[data-active="true"] {
+  filter: saturate(1.06) brightness(1.06) contrast(1.04);
+}
+
+.lesson-relief.is-compact
+  .relief-assembly[data-progression="remove"]
+  .relief-assembly__piece {
+  filter: saturate(0.18) brightness(0.48) contrast(1.2);
+}
+
+.relief-assembly__raking-light {
+  z-index: 4;
+  pointer-events: none;
+  background:
+    linear-gradient(128deg, rgb(255 248 231 / 0.2), transparent 31%),
+    radial-gradient(circle at 52% 52%, rgb(241 93 48 / 0.2), transparent 30%);
+  mix-blend-mode: screen;
+  opacity: 0.42;
+}
+
+:root[data-mode="day"] .relief-assembly {
+  background:
+    radial-gradient(circle at 50% 52%, rgb(184 75 43 / 0.11), transparent 29%),
+    var(--material-limestone),
+    #d4d3cd;
+  background-size: auto, 420px 420px, auto;
+}
+
+:root[data-mode="day"] .relief-assembly__underpainting {
+  filter: grayscale(0.7) sepia(0.06) brightness(1.42) contrast(0.72);
+  opacity: 0.44;
+}
+
+:root[data-mode="day"] .relief-assembly[data-progression="remove"]
+  .relief-assembly__underpainting {
+  filter: saturate(0.84) brightness(1.05) contrast(0.96);
+  opacity: 1;
+}
+
+:root[data-mode="day"] .relief-assembly[data-progression="remove"]
+  .relief-assembly__piece {
+  background-image:
+    linear-gradient(145deg, rgb(255 255 255 / 0.32), transparent 38%),
+    var(--material-limestone);
+  background-size: auto, 420px 420px;
+  filter:
+    saturate(0.42)
+    brightness(0.92)
+    contrast(0.94)
+    drop-shadow(1px 1px 0 rgb(167 73 45 / 0.2))
+    drop-shadow(2px 5px 5px rgb(55 44 36 / 0.24));
+}
+
+:root[data-mode="day"] .relief-assembly__piece {
+  filter:
+    saturate(var(--piece-day-saturation))
+    brightness(var(--piece-day-brightness))
+    contrast(0.98)
+    drop-shadow(2px 5px 5px rgb(55 44 36 / 0.24));
+}
+
+:root[data-mode="day"]
+  .lesson-relief.is-compact
+  .relief-assembly__piece {
+  filter:
+    saturate(var(--piece-day-saturation))
+    brightness(var(--piece-day-brightness))
+    contrast(0.98);
+}
+
+:root[data-mode="day"]
+  .lesson-relief.is-compact
+  .relief-assembly[data-progression="remove"]
+  .relief-assembly__piece {
+  filter: saturate(0.42) brightness(0.92) contrast(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lesson-relief[data-renderer="webgl"] .material-world-canvas {
+    pointer-events: auto;
+    cursor: crosshair;
+  }
+}
+
+:root[data-motion="reduce"] .material-world-canvas,
+:root[data-motion="reduce"] .relief-assembly__piece {
+  transition-duration: 0ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .material-world-canvas,
+  .relief-assembly__piece {
+    transition-duration: 0ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .material-world-canvas,
+  .relief-assembly {
+    display: none;
+  }
+}

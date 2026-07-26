@@ -1,6 +1,7 @@
 import React from "react";
 import { GearSix } from "@phosphor-icons/react";
 import Icon from "../components/Icon.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 function UtilityButton({
   label,
@@ -34,7 +35,7 @@ function UtilityButton({
  * All mutations stay in the owner through callbacks.
  */
 export default function ContextRail({
-  quarterLabel = "3er trimestre 2026",
+  quarterLabel,
   lessonNumber,
   lessonTitle,
   lessonDate,
@@ -48,16 +49,21 @@ export default function ContextRail({
   onOpenSettings,
   navigation,
 }) {
+  const { t } = useI18n();
   const lessonLabel =
-    lessonNumber == null ? "Elegir lección" : `Lección ${lessonNumber}`;
+    lessonNumber == null
+      ? t("context.chooseLesson")
+      : t("context.lesson", { number: lessonNumber });
   const clampedProgress =
     typeof progress === "number" ? Math.max(0, Math.min(1, progress)) : null;
 
   return (
-    <aside className="mcv-context-rail" aria-label="Contexto del estudio">
+    <aside className="mcv-context-rail" aria-label={t("context.label")}>
       <div className="mcv-context-rail__brand">
-        <span className="mcv-context-rail__eyebrow">Corinto</span>
-        <span className="mcv-context-rail__quarter">{quarterLabel}</span>
+        <span className="mcv-context-rail__eyebrow">{t("context.corinth")}</span>
+        <span className="mcv-context-rail__quarter">
+          {quarterLabel || t("app.quarter")}
+        </span>
       </div>
 
       <button
@@ -65,7 +71,7 @@ export default function ContextRail({
         className="mcv-context-rail__lesson"
         onClick={onOpenLessons}
         disabled={typeof onOpenLessons !== "function"}
-        aria-label={`${lessonLabel}. Abrir selector de lecciones`}
+        aria-label={t("context.openLessonPicker", { lesson: lessonLabel })}
       >
         <span className="mcv-context-rail__lesson-copy">
           <span className="mcv-context-rail__lesson-number">
@@ -96,7 +102,7 @@ export default function ContextRail({
           aria-valuemin="0"
           aria-valuemax="100"
           aria-valuenow={Math.round(clampedProgress * 100)}
-          aria-label={progressLabel || "Progreso de la lección"}
+          aria-label={progressLabel || t("context.lessonProgress")}
         >
           <span
             className="mcv-context-rail__progress-fill"
@@ -110,11 +116,11 @@ export default function ContextRail({
       <div
         className="mcv-context-rail__utilities"
         role="toolbar"
-        aria-label="Herramientas"
+        aria-label={t("context.tools")}
       >
         <UtilityButton
-          label={mode === "day" ? "Usar modo noche" : "Usar modo día"}
-          compactLabel={mode === "day" ? "Noche" : "Día"}
+          label={mode === "day" ? t("context.useNight") : t("context.useDay")}
+          compactLabel={mode === "day" ? t("context.night") : t("context.day")}
           onClick={onToggleMode}
           pressed={mode === "day"}
           icon={<Icon name={mode === "day" ? "moon" : "sun"} size={19} />}
@@ -122,17 +128,17 @@ export default function ContextRail({
         <UtilityButton
           label={
             teacherMode
-              ? "Desactivar modo maestro"
-              : "Activar modo maestro"
+              ? t("context.teacherOff")
+              : t("context.teacherOn")
           }
-          compactLabel="Maestro"
+          compactLabel={t("context.teacher")}
           onClick={onToggleTeacher}
           pressed={teacherMode}
           icon={<Icon name="book" size={19} />}
         />
         <UtilityButton
-          label="Abrir ajustes"
-          compactLabel="Ajustes"
+          label={t("context.openSettings")}
+          compactLabel={t("context.settings")}
           onClick={onOpenSettings}
           icon={
             <GearSix

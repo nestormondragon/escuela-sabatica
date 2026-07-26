@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { listItem, listParent, reveal, t } from "../lib/motion.js";
 import { SaveBar, Pause } from "./common.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 /* Tap each option to reveal its meaning; keep the one you'll hold.
    Optionally write your own. Used for "Mi declaración" (Job). */
 export default function PickReveal({ config, onFill, onSkip }) {
+  const { t: translate } = useI18n();
   const [sel, setSel] = useState(null); // index or "custom"
   const [custom, setCustom] = useState("");
 
@@ -73,7 +75,7 @@ export default function PickReveal({ config, onFill, onSkip }) {
         <>
           {config.closing ? (<><Pause /><p className="story" style={{ borderLeftColor: "var(--clay)" }}>{config.closing}</p></>) : null}
           <SaveBar
-            label={config.chooseLabel || "Guardar esta pieza"}
+            label={config.chooseLabel || translate("module.savePiece")}
             disabled={!value}
             onSave={() =>
               onFill(value, isCustom ? { [config.allowCustom.extraKey]: value } : null, config.seedSub)

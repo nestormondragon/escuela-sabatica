@@ -13,21 +13,24 @@ import {
 import SabbathFolio from "../features/sabbath/SabbathFolio.jsx";
 import LessonRelief from "../visual-world/LessonRelief.jsx";
 import RouteLoading from "./RouteLoading.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 export default function SabbathRoute() {
+  const { locale, t } = useI18n();
   const { lessonId } = useParams();
   const summary = lessonId
-    ? lessonSummaryById(lessonId)
-    : currentLessonSummary();
-  if (!summary) throw new Error("La lección solicitada no existe");
-  const loaded = useLoadedLesson(summary.id);
+    ? lessonSummaryById(lessonId, locale)
+    : currentLessonSummary(undefined, locale);
+  if (!summary) throw new Error(t("lesson.missing"));
+  const loaded = useLoadedLesson(summary.id, locale);
 
-  if (loaded.loading) return <RouteLoading label="Reuniendo tu folio" />;
+  if (loaded.loading) return <RouteLoading label={t("sabbath.loading")} />;
   if (loaded.error || !loaded.lesson) throw loaded.error;
   return <SabbathReady lesson={loaded.lesson} />;
 }
 
 function SabbathReady({ lesson }) {
+  const { t } = useI18n();
   const navigate = useNavigate();
   const journey = useJourney();
   const kit = useJourneyKit(lesson);
@@ -39,14 +42,11 @@ function SabbathReady({ lesson }) {
         <div className="sabbath-empty__relief" aria-hidden="true">
           <LessonRelief lesson={lesson} stage={0} compact priority />
         </div>
-        <div className="route-eyebrow">Sábado</div>
-        <h1 id="sabbath-empty-title" data-route-heading>El folio espera tu primera pieza</h1>
-        <p className="route-deck">
-          Aquí se reunirán tu pregunta, tu oración y tu paso de la semana. No
-          tienes que completar todo para traer algo verdadero a la clase.
-        </p>
+        <div className="route-eyebrow">{t("sabbath.eyebrow")}</div>
+        <h1 id="sabbath-empty-title" data-route-heading>{t("sabbath.emptyTitle")}</h1>
+        <p className="route-deck">{t("sabbath.emptyBody")}</p>
         <Link className="world-action compact" to={`/leccion/${lesson.id}`}>
-          <span>Entrar en la lección {lesson.number}</span>
+          <span>{t("sabbath.enterLesson", { number: lesson.number })}</span>
           <Icon name="arrow" size={19} />
         </Link>
       </section>

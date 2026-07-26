@@ -1,0 +1,685 @@
+{
+  "number": 7,
+  "slug": "retrato-del-amor",
+  "title": "A Portrait of Love",
+  "subtitle": "What if this chapter were not a wedding poem, but a mirror?",
+  "kitName": "My Portrait of Love",
+  "artifactNoun": "portrait",
+  "motif": "retrato",
+  "stages": [
+    "lienzo",
+    "carbon",
+    "sombras",
+    "color",
+    "luz"
+  ],
+  "stageLabels": [
+    "Blank canvas · love has grown cold",
+    "First stroke · I see myself without pretense",
+    "Shadows exposed · what I do not do",
+    "Color enters · the face of Jesus",
+    "Portrait in full light · the greatest is love"
+  ],
+  "verseRef": "1 Cor. 13:13",
+  "verseText": "Now these three gifts remain: faith, hope, and love. But the greatest is love.",
+  "promise": "In a few minutes you will paint your Portrait, {name}: you will stand before the most honest mirror in the New Testament, name the verb of love you practice least, see the face of Jesus in every trait, and choose one real person with whom to begin this week. Stroke by stroke, today's cold canvas will take on color.",
+  "ui": {
+    "start": "Begin my portrait",
+    "emptyKit": "Your portrait",
+    "building": "Each answer adds a stroke",
+    "buildingHint": "Tap the glowing piece. Watch the canvas move from charcoal to color.",
+    "lastPiece": "One stroke remains",
+    "patternLabel": "Your pattern in the portrait",
+    "doneTitle": "Your portrait is complete",
+    "doneSub": "You painted it with him. Open it, save it, and share it.",
+    "open": "Open my portrait",
+    "back": "Back to my portrait",
+    "kitName": "My Portrait of Love"
+  },
+  "slots": [
+    {
+      "id": "espejo",
+      "n": 1,
+      "label": "My honest mirror",
+      "teaser": "What the chapter reflects back to me today...",
+      "icon": "eye"
+    },
+    {
+      "id": "esencia",
+      "n": 2,
+      "label": "What is worthless without love",
+      "teaser": "The good in me that can sound like clanging metal...",
+      "icon": "gift"
+    },
+    {
+      "id": "verbo",
+      "n": 3,
+      "label": "The verb I am missing",
+      "teaser": "What love does and I still do not...",
+      "icon": "hand"
+    },
+    {
+      "id": "sombra",
+      "n": 4,
+      "label": "The shadow I release",
+      "teaser": "What love does not do and I still do...",
+      "icon": "flame"
+    },
+    {
+      "id": "rostro",
+      "n": 5,
+      "label": "The face I imitate",
+      "teaser": "The truth I hold about Jesus...",
+      "icon": "cross"
+    },
+    {
+      "id": "tres",
+      "n": 6,
+      "label": "What remains",
+      "teaser": "The one thing that will not expire...",
+      "icon": "anchor"
+    },
+    {
+      "id": "fuente",
+      "n": 7,
+      "label": "The source",
+      "teaser": "Why \"God is love\" is good news...",
+      "icon": "heart"
+    },
+    {
+      "id": "paso",
+      "n": 8,
+      "label": "My verb and my name",
+      "teaser": "One concrete verb and one real person...",
+      "icon": "people"
+    }
+  ],
+  "stations": [
+    {
+      "id": "espejo",
+      "day": "Saturday · A portrait of love",
+      "tag": "Stroke 1 · My honest mirror",
+      "title": "It's not a wedding poem",
+      "story": "You have heard 1 Corinthians 13 read among flowers and rings. Paul did not write it for a wedding. He wrote it for a church whose members sued one another, split into factions, and humiliated the poor at the Lord's table. When he writes, \"love is patient,\" he is pointing directly at them. Before this chapter comforts you, it holds up a mirror.",
+      "cue": "Before reading it as poetry, {name}, read it as a mirror.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "When you read 1 Corinthians 13 honestly, what do you feel first?",
+        "hint": "Choose the most sincere reaction, not the most pious",
+        "saveLabel": "Save to my portrait",
+        "seedSub": "Your mirror",
+        "closing": "If it unsettles you, that is a good sign: this is why Paul wrote it. But the mirror was not given to crush you. \"God's love has been poured into our hearts through the Holy Spirit\" (Rom. 5:5). Whatever you see is missing, he supplies.",
+        "options": [
+          {
+            "id": "ternura",
+            "label": "Tenderness, because it reminds me that I am loved",
+            "insight": "It is good to begin there. Just do not stop there: the same chapter that embraces you will ask whom you are loving this way.",
+            "tags": [
+              "theme:love",
+              "posture:humble",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "condena",
+            "label": "Condemnation, because I fall short in almost everything",
+            "insight": "No one measures up. Neither did Paul. That is why he wrote that Christ displayed \"his immense patience\" in him (1 Tim. 1:16). The portrait is not a rod for beating you; it is a face offered to you.",
+            "tags": [
+              "react:fear",
+              "theme:grace",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "incomodidad",
+            "label": "Discomfort, because it describes just what I am not",
+            "insight": "That discomfort is honesty, and honesty is the first stroke of the portrait. What you deny can't be painted again.",
+            "tags": [
+              "theme:self",
+              "posture:humble",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "costumbre",
+            "label": "Familiarity, I have heard it so often that it no longer moves me",
+            "insight": "A memorized passage can become an anesthetized one. Read it today while thinking of the person you find hardest to love, and watch the words wake up.",
+            "tags": [
+              "react:apathy",
+              "theme:word",
+              "posture:avoidant"
+            ]
+          },
+          {
+            "id": "defensa",
+            "label": "Defense, I think about who should read it and not me",
+            "insight": "The Corinthians did exactly that. Paul wrote that love \"is not puffed up\" (1 Cor. 13:4) to people convinced that the problem was the other side.",
+            "tags": [
+              "react:pride",
+              "theme:humility",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "frialdad",
+            "label": "Coldness, my love has grown cold and I know it",
+            "insight": "Jesus warned that \"the love of many will grow cold\" (Matt. 24:12). Recognizing it means you still care. A fire that has gone out can be kindled again.",
+            "tags": [
+              "react:withdraw",
+              "theme:love",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "hambre",
+            "label": "Hunger, I want to love this way and do not know where to begin",
+            "insight": "Begin with one person and one verb. You do not master this chapter's love all at once; you practice it concretely with someone who has a name.",
+            "tags": [
+              "theme:love",
+              "posture:seeking",
+              "tone:tender"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "esencia",
+      "day": "Sunday · Love is essential",
+      "tag": "Stroke 2 · What is worthless without love",
+      "title": "Resounding metal",
+      "story": "Paul performs a brutal subtraction. Tongues, prophecy, knowledge, faith that moves mountains, giving away everything you own, even surrendering your body: remove love and the result is zero. He does not say these things are bad; he says that without love they amount to nothing. The love he describes is not a feeling that suddenly arrives, but the Spirit's grace moving you to act for another person's good.",
+      "cue": "Apply the subtraction to yourself, {name}, and see what remains.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "What good thing in your life risks sounding like clanging metal?",
+        "hint": "Something you do well, but sometimes without love",
+        "saveLabel": "Save to my portrait",
+        "seedSub": "Your subtraction",
+        "closing": "\"Knowledge puffs up, but love builds up\" (1 Cor. 8:1). None of these things is bad. They become zero when done without love, and coldness often begins in the very thing you do best.",
+        "options": [
+          {
+            "id": "conocimiento",
+            "label": "What I know about the Bible",
+            "insight": "Corinth was full of people who knew. Knowing more than another without loving him more than another is the exact definition of being puffed up (1 Cor. 8:1).",
+            "tags": [
+              "react:pride",
+              "theme:word",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "servicio",
+            "label": "Everything I do in the Church",
+            "insight": "An entire ministry can run on inertia, duty, or fear of leaving a void. Ask yourself for whom you do it, not how much you do.",
+            "tags": [
+              "react:apathy",
+              "theme:service",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "generosidad",
+            "label": "What I give and the help I offer",
+            "insight": "Paul goes on to say that distributing all goods without love is of no use (1 Cor. 13:3). The hand can give while the heart gains recognition.",
+            "tags": [
+              "theme:generosity",
+              "posture:proud",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "firmeza",
+            "label": "My firmness in pointing out what is right",
+            "insight": "Being right is not a Christian value by itself. In Corinth, the \"strong\" were right and still hurt the weak (1 Cor. 8).",
+            "tags": [
+              "react:control",
+              "theme:truth",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "sacrificio",
+            "label": "How much I endure for the people I love",
+            "insight": "Enduring without loving produces bitter martyrs. If your sacrifice becomes a bill you hand to others, it is no longer love.",
+            "tags": [
+              "theme:relationship",
+              "react:control",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "oracion",
+            "label": "My spiritual discipline",
+            "insight": "An impeccable devotional life that does not change how you treat the difficult person is a well-tuned cymbal. It sounds loud and says nothing.",
+            "tags": [
+              "theme:prayer",
+              "posture:clinging",
+              "tone:resolute"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "verbo",
+      "day": "Monday · What love does",
+      "tag": "Stroke 3 · the verb that I lack",
+      "title": "Love is a verb",
+      "story": "Paul does not define love; he conjugates it. Love is patient. Love is kind. It rejoices with the truth. It bears all things, believes all things, hopes all things, and endures all things. Not one adjective describes what love feels, only verbs describing what love does, usually toward someone difficult. If love were merely an emotion, it would depend on your mood. Because it is a verb, you can begin today.",
+      "cue": "{name}, choose a verb, not a good intention.",
+      "module": {
+        "type": "pickReveal",
+        "saveLabel": "Save to my portrait",
+        "seedSub": "Your verb",
+        "prompt": "Which of these verbs of love is the one you lack the most?",
+        "hint": "Tap each one, then keep the one that challenges you most",
+        "chooseLabel": "This is the verb that I am going to practice",
+        "closing": "You will not manufacture that verb by clenching your teeth. It is \"fruit of the Spirit\" (Gal. 5:22), and fruit appears only on a branch that remains connected.",
+        "allowCustom": {
+          "label": "Write mine",
+          "placeholder": "The verb that I lack the most is...",
+          "extraKey": "verboPropio"
+        },
+        "items": [
+          {
+            "t": "Love is patient: I bear with the person who exhausts me",
+            "ref": "1 Cor. 13:4",
+            "meaning": "Makrothymeō means long patience with people, not with traffic. Paul links it to \"bearing with one another in love\" (Eph. 4:2)."
+          },
+          {
+            "t": "Love is kind: I treat others as God treats me",
+            "ref": "1 Cor. 13:4",
+            "meaning": "The verb echoes God's goodness in the Psalms: \"The Lord is good to all\" (Ps. 145:9). Your kindness is measured not by your temperament, but by his character."
+          },
+          {
+            "t": "Love believes all things: I give the benefit of the doubt",
+            "ref": "1 Cor. 13:7",
+            "meaning": "This is not naïveté; it is refusing to assume the worst about another person. Jesus called Saul a \"chosen instrument\" (Acts 9:15) when everyone else saw a persecutor."
+          },
+          {
+            "t": "Love endures all things: I do not give up on the one who failed me",
+            "ref": "1 Cor. 13:7",
+            "meaning": "Stegō means to cover and withstand; hypomenō means to persevere. Love neither broadcasts another person's fall nor abandons them halfway."
+          }
+        ]
+      }
+    },
+    {
+      "id": "sombra",
+      "day": "Tuesday · What love does not do",
+      "tag": "Stroke 4 The shadow I let go",
+      "title": "The list, read backwards",
+      "story": "One commentator noticed something uncomfortable: if you take away the \"no\" of the eight things that love does not do, you get a fairly accurate portrait of the Corinthians. Envious, boastful, vain, rude, selfish, irascible and very attentive to the mistakes of others. Paul chose those verbs because he had seen them functioning in that church. Read them slowly and you will understand why the list is still valid.",
+      "cue": "Hold your gaze for a moment, {name}. The list also names you.",
+      "module": {
+        "type": "skillThenCommit",
+        "saveLabel": "Save to my portrait",
+        "seedSub": "Your shadow",
+        "skill": {
+          "prompt": "Is this love, or is it Corinth disguised as love?",
+          "hint": "Six ordinary scenes. Classify them without mercy.",
+          "badge": "You are learning to recognize the love that does not keep accounts",
+          "cats": [
+            "This is love",
+            "This is Corinth"
+          ],
+          "rounds": [
+            {
+              "t": "\"I already forgave him, but from time to time I remind him.\"",
+              "a": 1,
+              "fb": "Corinth. Logizomai was an accounting verb: love does not record offenses in any column (1 Cor. 13:5)."
+            },
+            {
+              "t": "\"I was really happy when my partner did better than me.\"",
+              "a": 0,
+              "fb": "Love. Synjairō is rejoicing with another, the exact opposite of the envy that divided Corinth (1 Cor. 13:4)."
+            },
+            {
+              "t": "\"I shared their failure with the group, disguised as a prayer request.\"",
+              "a": 1,
+              "fb": "Corinth. Love does not rejoice in wrongdoing; it covers rather than broadcasts it (1 Cor. 13:6-7)."
+            },
+            {
+              "t": "\"I gave up a right of mine so as not to hurt a brother.\"",
+              "a": 0,
+              "fb": "Love. \"No one should seek their own good, but the good of others\" (1 Cor. 10:24). That one choice brings the entire negative list down."
+            },
+            {
+              "t": "\"I am right and I intend to say so, even if I humiliate them.\"",
+              "a": 1,
+              "fb": "Corinth. \"Knowledge puffs up, but love builds\" (1 Cor. 8:1). Being right without love is still nothing."
+            },
+            {
+              "t": "\"I answered calmly when someone spoke harshly to me.\"",
+              "a": 0,
+              "fb": "Love. Paroxynō means to flare up at once. Love is not touchy and does not demand instant payment for an offense (1 Cor. 13:5)."
+            }
+          ],
+          "summary": "The eight denials fit into a single sentence: love does not seek its own. That's where envy, boasting, rudeness and rancor fall. Corinth was not a church without gifts, it was a church without that phrase."
+        },
+        "commit": {
+          "prompt": "Which of these shadows are you going to drop this week?",
+          "hint": "Naming it aloud is already the beginning of release",
+          "placeholder": "The shadow I'm going to release is...",
+          "extraKey": "sombraTexto",
+          "options": [
+            "Keep a record of an offense",
+            "Envy what someone else received",
+            "Always insist on being right",
+            "Become irritated at once",
+            "Comment on someone else's failure"
+          ]
+        }
+      }
+    },
+    {
+      "id": "rostro",
+      "day": "Wednesday · A portrait of Jesus",
+      "tag": "Stroke 5 · The face I copy",
+      "title": "Put your name in the text",
+      "story": "Try this. Wherever the chapter says \"love,\" read \"Jesus.\" Jesus is patient. Jesus is kind. Jesus does not seek his own. Jesus bears all things. Every line fits without strain because, at its heart, the portrait of love is a portrait of him. Now insert your own name and you will understand why you need grace, not effort alone.",
+      "cue": "{name}, look at the finished portrait before looking at yours.",
+      "module": {
+        "type": "perspectiveFlip",
+        "saveLabel": "Save to my portrait",
+        "seedSub": "Your face",
+        "prompt": "Tap each card: what you see in yourself, and what he sees",
+        "hint": "Two glances on the same canvas",
+        "pairs": [
+          {
+            "see": "You see your list of failures in loving.",
+            "sees": "He \"endured the cross\" for you \"for the joy set before him\" (Heb. 12:2). You were part of that joy."
+          },
+          {
+            "see": "You see someone who gets irritated and keeps accounts.",
+            "sees": "\"Christ Jesus displayed his immense patience\" in me (1 Tim. 1:16). What Paul, the worst of sinners, received was not a list but mercy."
+          },
+          {
+            "see": "You see the difficult person only as they are today.",
+            "sees": "Jesus saw in Saul a \"chosen instrument\" (Acts 9:15) while he was still breathing threats. This is how he sees you, and how you can learn to see others."
+          },
+          {
+            "see": "You see that loving this way is far beyond you.",
+            "sees": "\"Love is from God\" (1 John 4:7). You are not asked to produce it, you are invited to receive it and let it pass through you."
+          }
+        ],
+        "chooseLabel": "This is the truth that I hold",
+        "teach": "You will never love like him through sheer effort. This love is a grace the Spirit gives, not a muscle you train alone. We behold the face of Jesus until we begin to resemble him.",
+        "commit": {
+          "prompt": "Write a phrase of encouragement for someone who needs to see that face in you",
+          "hint": "A single sentence. You can send it today.",
+          "placeholder": "I want to tell you that...",
+          "extraKey": "alientoEscrito",
+          "shareable": true
+        }
+      }
+    },
+    {
+      "id": "tres",
+      "day": "Thursday · Faith, hope, and love",
+      "tag": "Stroke 6 · What remains",
+      "title": "What survives in the end",
+      "story": "One day the prophecies will no longer be needed. The tongues will shut up. Half knowledge will give way to \"face to face\" (1 Cor. 13:12). Almost everything that seems essential to you today, even the gifts that Corinth was fighting for, has an expiration date. Three things remain: faith, hope and love. And the greatest is love, because it is the only thing on the list that describes what God is.",
+      "cue": "{name}, stay this week with what is not going to expire.",
+      "module": {
+        "type": "anchorChain",
+        "saveLabel": "Drop anchor and save",
+        "seedSub": "What remains",
+        "links": [
+          {
+            "t": "The gifts will cease",
+            "fb": "Not because they were bad, but because they will have done what they existed for (1 Cor. 13:10)."
+          },
+          {
+            "t": "Faith remains",
+            "fb": "Today we walk by faith and not by sight (2 Cor. 5:7). Even when you see him, you will continue to trust him forever."
+          },
+          {
+            "t": "Hope remains",
+            "fb": "What you hope for will become reality (Rom. 8:24), and on the new earth you will keep expecting good things from his hand."
+          },
+          {
+            "t": "Love is the greatest",
+            "fb": "\"God is love\" (1 John 4:8). Love is the only one of the three used to describe what he is, not merely what you do."
+          }
+        ],
+        "chain": [
+          {
+            "word": "The gifts will cease",
+            "line": "Not because they were bad, but because they will have done what they existed for (1 Cor. 13:10)."
+          },
+          {
+            "word": "Faith remains",
+            "line": "Today we walk by faith and not by sight (2 Cor. 5:7). Even when you see him, you will continue to trust him forever."
+          },
+          {
+            "word": "Hope remains",
+            "line": "What you hope for will become reality (Rom. 8:24), and on the new earth you will keep expecting good things from his hand."
+          },
+          {
+            "word": "Love is the greatest",
+            "line": "\"God is love\" (1 John 4:8). Love is the only one of the three used to describe what he is, not merely what you do."
+          }
+        ],
+        "climax": "“Now these three gifts remain: faith, hope and love. But the greatest is love” (1 Cor. 13:13). Drop the anchor here.",
+        "prompt": "Which of these truths will you hold onto this week?",
+        "hint": "When loving is expensive, go back to the one you choose",
+        "options": [
+          "That love never ceases to be",
+          "That God is love and does not change his mood",
+          "That one day I will see him face to face",
+          "That what is done with love is not lost",
+          "That my faith and my hope were not in vain"
+        ],
+        "allowCustom": {
+          "placeholder": "The truth that I hold is...",
+          "extraKey": "verdadPropia"
+        }
+      }
+    },
+    {
+      "id": "fuente",
+      "day": "The love that came first",
+      "tag": "Stroke 7 The Source",
+      "title": "Before asking you to love, he loved you",
+      "story": "None of the fifteen verbs of this chapter began in you. \"We love him, because he loved us first\" (1 John 4:19). That is why the portrait is not a rod to measure you and condemn you, but a face that is offered to you. Before asking for patience, he was infinitely patient with you. Before asking you not to keep an account, he deleted yours on the cross.",
+      "cue": "Breathe, {name}. This part does not depend on your effort.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "\"God is love.\" What part of that phrase do you need today?",
+        "hint": "Choose the one you need the most right now",
+        "saveLabel": "Save to my portrait",
+        "seedSub": "Your source",
+        "closing": "\"This is love: not that we have loved God, but that he loved us\" (1 John 4:10). Everything you can give this week, you received it first.",
+        "options": [
+          {
+            "id": "primero",
+            "label": "That he loved me first, without me doing anything",
+            "insight": "His love was not a response to your merits: it was the initiative that made everything else possible. Nothing you do today started this story.",
+            "tags": [
+              "theme:grace",
+              "posture:surrendering",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "paciente",
+            "label": "That he has been infinitely patient with me",
+            "insight": "Paul called himself \"the worst of sinners\" and said that in him Christ showed \"his infinite patience\" (1 Tim. 1:16). If he has been patient with you, he can teach you how to be patient with someone else.",
+            "tags": [
+              "theme:grace",
+              "posture:humble",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "cuentas",
+            "label": "That he does not keep a record of my offenses",
+            "insight": "The same accounting verb Paul uses in 1 Corinthians 13:5 appears in Romans 4:8: \"Blessed is the one whose sin the Lord will never count against them.\" Your column is blank.",
+            "tags": [
+              "theme:cross",
+              "theme:sin",
+              "posture:humble"
+            ]
+          },
+          {
+            "id": "espera",
+            "label": "That he sees what I will become, not only what I am",
+            "insight": "This is what he did with Saul, with Peter, and with every quarrelling Corinthian. He sees the finished portrait while you see only charcoal.",
+            "tags": [
+              "theme:hope",
+              "posture:seeking",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "constante",
+            "label": "That his love doesn't get cold when mine does",
+            "insight": "Jesus warned that the love of many would grow cold (Matt. 24:12). He never said that his would. Your temperature changes; the source does not.",
+            "tags": [
+              "react:doubt",
+              "theme:faith",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "cruz",
+            "label": "That the cross is the measure of how much he loves me",
+            "insight": "You do not have to imagine how much you are worth to him: the measure was nailed to a cross. \"This is how we know what love is: Jesus Christ laid down his life for us\" (1 John 3:16).",
+            "tags": [
+              "theme:cross",
+              "theme:love",
+              "tone:resolute"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "paso",
+      "day": "Friday · To study and meditate",
+      "tag": "Stroke 8 · My verb and my name",
+      "title": "A verb and a name",
+      "story": "Ellen G. White wrote that \"only the love that flows from the heart of Christ can heal\" (Education, p. 102). That love is not poured over humanity in the abstract; it is poured over someone with a name. Paul did not ask the Corinthians merely to love more in general. He asked them to stop suing one another, envying one another, and humiliating the brother beside them. Your portrait remains incomplete until a person appears in it.",
+      "cue": "{name}, write a name. Love without a name is not yet love.",
+      "module": {
+        "type": "commitDuo",
+        "saveLabel": "Close my portrait",
+        "seedSub": "Your step",
+        "stepPrompt": "The verb of love that I am going to practice this week",
+        "stepHint": "Small and concrete. Touch an idea or write yours.",
+        "stepOptions": [
+          "Be patient without sighing or interrupting",
+          "Respond kindly to someone who speaks badly to me",
+          "Do not comment on anyone's failure",
+          "Give the benefit of the doubt before judging",
+          "Give up a right of mine so as not to hurt"
+        ],
+        "stepPlaceholder": "This week I'm going to...",
+        "stepExtraKey": "verboPracticado",
+        "personPrompt": "The person with whom I am going to practice it",
+        "personHint": "The difficult. The one you just thought about.",
+        "personPlaceholder": "A name...",
+        "personExtraKey": "personaAmada"
+      }
+    }
+  ],
+  "encourage": [
+    "“Now these three gifts remain: faith, hope and love. But the greatest is love.\" (1 Cor. 13:13)",
+    "\"Love is patient, love is kind. It does not envy, it does not boast, it is not proud.\" (1 Cor. 13:4)",
+    "\"It does not seek its own way, it is not easily angered, and it keeps no record of wrongs.\" (1 Cor. 13:5)",
+    "\"Love never ceases to be.\" (1 Cor. 13:8)",
+    "\"Because wickedness will increase, the love of many will grow cold.\" (Matt. 24:12)",
+    "\"We love him, because he loved us first.\" (1 John 4:19)"
+  ],
+  "discussion": [
+    "The list of love characteristics in 1 Corinthians 13 is not intended to be exhaustive. If Paul wrote to your congregation today, what trait would he add, and why precisely that?",
+    "Paul commands \"follow love\" (1 Cor. 14:1), as if he pursues something that escapes him. What is the difference between feeling love and chasing it? What does that chase look like on any Tuesday?",
+    "If we take away the \"no\" of the eight things that love does not do, the portrait of Corinth appears. With courage and without pointing to anyone: Which of those eight is most noticeable today in our church?",
+    "Paul presents love as the definitive solution to the Corinthian divisions, not reorganization or doctrine. Why? What concrete conflict of our church would be resolved if no one sought his own for a week?"
+  ],
+  "facilitator": [
+    {
+      "stationId": "espejo",
+      "apertura": "Where have you heard 1 Corinthians 13 read? Does it change anything to know it was written for a church whose members sued one another?",
+      "seguimiento": "When you read it slowly, does it comfort or bother you? Be honest.",
+      "ilustracion": "A mirror does not hate the person looking into it. It simply refuses to lie.",
+      "transicion": "If the chapter is a mirror, let's start with the subtraction that Paul makes: take away love and see what remains.",
+      "actividad": "Read 1 Corinthians 13:1-3 out loud, slowly, and keep ten seconds of silence before commenting.",
+      "cierre": "Lord, give us the courage to look at ourselves in your mirror without looking away."
+    },
+    {
+      "stationId": "esencia",
+      "apertura": "Paul says that without love we are nothing, even if we have faith to move mountains. Why is it so hard?",
+      "seguimiento": "What good thing do we do in this church that could be sounding like metal?",
+      "ilustracion": "A cymbal sounds very strong and communicates nothing. Volume without message.",
+      "transicion": "If love is what gives value to everything else, let's see what exactly love does.",
+      "actividad": "Make the subtraction aloud: name a gift or a service and ask what is left if love is taken away.",
+      "cierre": "Keep us, Lord, from serving you with full hands and a cold heart."
+    },
+    {
+      "stationId": "verbo",
+      "apertura": "Paul describes love with verbs and not with adjectives. What changes that decision for our daily life?",
+      "seguimiento": "Which of the seven positive verbs is more difficult for them, and with what kind of person?",
+      "ilustracion": "Makrothymeō is long patience with people, not with traffic. It's putting up with someone, not something.",
+      "transicion": "Seen the list of what love does, let's look at the uncomfortable list of what love doesn't.",
+      "actividad": "Assign the seven verbs of 1 Corinthians 13:4-7 and have each person give one concrete example from this week.",
+      "cierre": "Teach us, Lord, to conjugate love and not merely define it."
+    },
+    {
+      "stationId": "sombra",
+      "apertura": "If we remove the \"no\" from the eight negative characteristics, we get the portrait of Corinth. And ours?",
+      "seguimiento": "Logizomai was an accounting term. What accounts do we keep holding open?",
+      "ilustracion": "Forgiving without closing the account is like breaking the bill and staying with a photocopy.",
+      "transicion": "No one meets the full list. That is why we must look at the only One who fulfilled it.",
+      "actividad": "Read 1 Corinthians 13:4-6 by removing each \"no\" and comment which of the eight hurts more.",
+      "cierre": "Forgive us, Lord, the accounts we have kept against your children."
+    },
+    {
+      "stationId": "rostro",
+      "apertura": "Read 1 Corinthians 13:4-7 by swapping \"love\" for \"Jesus.\" What do you notice?",
+      "seguimiento": "Now put your own name in the text. What do you feel, and what will you do with it?",
+      "ilustracion": "Ananias saw a pursuer; Jesus saw a chosen instrument (Acts 9:13-15). Same man, two looks.",
+      "transicion": "If he is the portrait, let us now see the only thing that remains: faith, hope and love.",
+      "actividad": "Each person writes a phrase of encouragement for someone from the class and hands it to them before finishing.",
+      "cierre": "Christ, imprint your face on us until others recognize you in us."
+    },
+    {
+      "stationId": "tres",
+      "apertura": "One day the gifts and partial knowledge will cease. What does that say about the things that divide us today?",
+      "seguimiento": "Why is love greater than faith and hope?",
+      "ilustracion": "Love is the only one of the three that is used to describe what God is, not only what we do (1 John 4:8).",
+      "transicion": "And that eternal love did not start in us. Let's go to the source.",
+      "actividad": "Read 1 Corinthians 13:8-13 and make two columns: what expires and what remains.",
+      "cierre": "Anchor us, Lord, in the one thing that will never expire."
+    },
+    {
+      "stationId": "fuente",
+      "apertura": "\"God is love\" (1 John 4:8). What exactly does it mean, and why is it good news?",
+      "seguimiento": "How does your week change when you know that he loved you first?",
+      "ilustracion": "The cross does not measure how much we should love, but how much we have already been loved.",
+      "transicion": "Having received love, it is time to give it to someone with a name.",
+      "actividad": "Read 1 John 4:7-12 and let each one name a concrete way in which God first loved him.",
+      "cierre": "Thank you, Father, because your love does not wait for us to be kind."
+    },
+    {
+      "stationId": "paso",
+      "apertura": "Ellen G. White says that only love flowing from the heart of Christ can heal. Why is that?",
+      "seguimiento": "Who has to receive it from you this week? Think of a name, not a group.",
+      "ilustracion": "Paul did not ask the Corinthians merely to love more in general; he asked them to stop suing one another.",
+      "transicion": "Let's close the portrait with the only thing that completes it: a verb and a name.",
+      "actividad": "Invite each person to say aloud the verb they will practice and, if they wish, only the other person's initial.",
+      "cierre": "Give us, Lord, love with a name and hands that demonstrate it."
+    }
+  ],
+  "patternTemplate": "{name}, you looked into the chapter's mirror, and the first thing you felt was {slot:espejo|lower}. You recognized that {slot:esencia|lower} can sound like clanging metal without love, chose to practice one verb ({slot:verbo|lower}), and release the habit of {slot:sombra|lower}. The canvas is no longer blank: color enters where there was charcoal, because the face you are copying is his.",
+  "outOracion": "Lord, I stood before your mirror, and the first thing I felt was {slot:espejo|lower}. I recognize that {slot:esencia|lower} can become noise when I do it without love. Teach me the verb I am missing: {slot:verbo|lower}. Remove the shadow of {slot:sombra|lower}. Let this be the truth I hold: {slot:rostro} I anchor myself in {slot:tres|lower}, and I receive from you that {slot:fuente|lower}. Give me concrete love for {slot:paso|lower} this week, with a real person who has a name. Thank you that \"{verse}\" ({verseRef}). In Jesus' name, amen.",
+  "outAliento": "{name}, this chapter left you without excuses, and that's fine: it's exactly what Paul wanted. But it doesn't leave you alone. The one who asks you for patience was infinitely patient with you, and the one who asks you not to keep accounts has already deleted yours. You chose to practice {slot:verbo|lower} and drop {slot:sombra|lower}. You're not going to achieve it by clenching your teeth: you're going to receive it. \"Love is from God\" (1 John 4:7), and he has plenty.",
+  "outAccion24": "In the next 24 hours I'm going to {slot:paso|lower}, and I'll do it with the person I wrote down, not with humanity in general.",
+  "outPregunta": "This week I read 1 Corinthians 13 as a mirror rather than a wedding poem, and I discovered that I am missing this: {slot:verbo|lower}. Which verb of love are you missing, and with whom would you practice it this week?",
+  "outTarjeta": "My portrait this week: I stopped reading 1 Corinthians 13 as a poem, I chose to practice {slot:verbo|lower} and drop {slot:sombra|lower}. Verse: \"{verse}\" ({verseRef})."
+}

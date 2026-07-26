@@ -3,6 +3,7 @@ import {
   journeyActions,
   useJourney,
 } from "./journey/index.js";
+import { localizeLegacyKit } from "../lib/localizedLegacyKit.js";
 
 function emptyLegacyKit(lesson) {
   return {
@@ -220,9 +221,13 @@ export function useJourneyKit(lesson) {
       total: slotIds.length,
     };
   }, [legacyKit.slots, slotIds]);
+  const localizedKit = useMemo(
+    () => localizeLegacyKit(lesson, legacyKit),
+    [lesson, legacyKit]
+  );
 
   return {
-    state: legacyKit,
+    state: localizedKit,
     ...derived,
     isFilled: (id) => Boolean(legacyKit.slots[id]),
     fillSlot,

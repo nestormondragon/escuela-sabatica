@@ -6,12 +6,14 @@ import { useLoadedLesson } from "../content/useLoadedLesson.js";
 import { adaptLessonToEpisodes } from "../content/legacyEpisodeAdapter.js";
 import LessonRelief from "../visual-world/LessonRelief.jsx";
 import RouteLoading from "./RouteLoading.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 export default function TeacherRoute() {
+  const { locale, t } = useI18n();
   const { lessonId } = useParams();
-  const loaded = useLoadedLesson(lessonId);
+  const loaded = useLoadedLesson(lessonId, locale);
 
-  if (loaded.loading) return <RouteLoading label="Preparando la guía de clase" />;
+  if (loaded.loading) return <RouteLoading label={t("teacher.loading")} />;
   if (loaded.error || !loaded.lesson) throw loaded.error;
 
   const lesson = loaded.lesson;
@@ -19,11 +21,9 @@ export default function TeacherRoute() {
 
   return (
     <section className="teacher-route" aria-labelledby="teacher-title">
-      <div className="route-eyebrow">Modo maestro · Lección {lesson.number}</div>
+      <div className="route-eyebrow">{t("teacher.eyebrow", { number: lesson.number })}</div>
       <h1 id="teacher-title" data-route-heading>{lesson.title}</h1>
-      <p className="route-deck">
-        Una guía para abrir conversación sin convertir la clase en otra lectura.
-      </p>
+      <p className="route-deck">{t("teacher.deck")}</p>
 
       <div className="teacher-opening">
         <div className="teacher-opening__relief" aria-hidden="true">
@@ -34,7 +34,7 @@ export default function TeacherRoute() {
           <cite>{lesson.verse.ref}</cite>
         </blockquote>
         <Link to={`/presentar/${lesson.id}`} className="btn btn-primary">
-          Vista para presentar
+          {t("teacher.presentation")}
           <Icon name="arrow" size={17} />
         </Link>
       </div>
@@ -51,7 +51,7 @@ export default function TeacherRoute() {
                 <MaestroPanel guide={episode.facilitator} />
               ) : null}
               <Link to={`/leccion/${lesson.id}/episodio/${episode.id}?profundidad=deep`}>
-                Abrir este episodio
+                {t("teacher.openEpisode")}
               </Link>
             </div>
           </li>
@@ -59,8 +59,8 @@ export default function TeacherRoute() {
       </ol>
 
       <section className="teacher-discussion" aria-labelledby="discussion-title">
-        <span>Para dialogar</span>
-        <h2 id="discussion-title">Preguntas que abren la mesa</h2>
+        <span>{t("teacher.dialogue")}</span>
+        <h2 id="discussion-title">{t("teacher.questions")}</h2>
         <ol>
           {lesson.discussion.map((question) => (
             <li key={question}>{question}</li>

@@ -3,9 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <!-- matches --bg-0 in index.css, so the mobile status bar blends with the app -->
-    <meta name="theme-color" content="#0d0f12" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#d5d5d1" media="(prefers-color-scheme: light)" />
+    <!-- AppLayout keeps this synchronized after mount. The inline bootstrap
+         applies the saved preference before CSS paints, preventing a theme or
+         text-size flash while JourneyState initializes. -->
+    <meta name="theme-color" content="#0d0f12" />
+    <script>
+      (() => {
+        const root = document.documentElement;
+        let theme = "dark";
+        let textSize = "normal";
+        let reducedMotion = "system";
+        try {
+          const raw = localStorage.getItem("escuela:journey:2026-Q3");
+          const legacyRaw = raw ? null : localStorage.getItem("escuela:settings");
+          const settings = raw
+            ? JSON.parse(raw)?.settings
+            : legacyRaw
+              ? JSON.parse(legacyRaw)
+              : null;
+          const legacyTheme =
+            settings?.mode === "day"
+              ? "light"
+              : settings?.mode === "night"
+                ? "dark"
+                : null;
+          theme = ["auto", "light", "dark"].includes(settings?.theme)
+            ? settings.theme
+            : legacyTheme || theme;
+          textSize = ["normal", "large", "x-large"].includes(settings?.textSize)
+            ? settings.textSize
+            : textSize;
+          reducedMotion =
+            settings?.reducedMotion === true ? "reduce" : "system";
+        } catch {
+          // Storage may be unavailable or malformed; canonical defaults remain.
+        }
+        const light =
+          theme === "light" ||
+          (theme === "auto" &&
+            matchMedia("(prefers-color-scheme: light)").matches);
+        root.dataset.mode = light ? "day" : "night";
+        root.dataset.textSize = textSize;
+        root.dataset.motion = reducedMotion;
+        root.style.colorScheme = light ? "light" : "dark";
+        document
+          .querySelector('meta[name="theme-color"]')
+          ?.setAttribute("content", light ? "#d5d5d1" : "#0d0f12");
+      })();
+    </script>
 
     <!-- Static fallback. App.jsx replaces this with the live lesson so a
          bookmark or an open tab says which week the reader is on. -->

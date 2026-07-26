@@ -1,9 +1,18 @@
-import React, { useEffect, useId, useMemo, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { stageIndexFor } from "../../components/Centerpiece.jsx";
-import { LESSON_MANIFEST } from "../../content/lessonManifest.generated.js";
+import { lessonManifestForLocale } from "../../content/lessonManifest.generated.js";
 import MosaicPanel from "./MosaicPanel.jsx";
 import SemanticMosaicList from "./SemanticMosaicList.jsx";
 import "./mosaic.css";
+import "./mosaic-motion.css";
+import { useI18n } from "../../i18n/LocaleProvider.jsx";
 
 const PANEL_AREAS = [
   "a", "b", "c", "d", "e", "f", "g",
@@ -29,6 +38,7 @@ function normalizePanel({
   activeLessonId,
   revisited,
   currentNumber,
+  t,
 }) {
   const progress =
     typeof rawProgress === "number"
@@ -62,14 +72,14 @@ function normalizePanel({
   );
 
   const status = [];
-  if (current) status.push("Esta semana");
-  if (completed) status.push("Completada");
-  else if (active) status.push("En curso");
-  else if (upcoming) status.push("Próxima");
-  else if (started) status.push("Iniciada");
-  else status.push("Disponible");
-  if (revisitedState) status.push("Revisitada");
-  if (connected) status.push("Conectada con otra lección");
+  if (current) status.push(t("common.thisWeek"));
+  if (completed) status.push(t("mosaic.status.completed"));
+  else if (active) status.push(t("mosaic.status.inProgress"));
+  else if (upcoming) status.push(t("common.upcoming"));
+  else if (started) status.push(t("mosaic.status.started"));
+  else status.push(t("common.available"));
+  if (revisitedState) status.push(t("mosaic.status.revisited"));
+  if (connected) status.push(t("mosaic.status.connected"));
 
   return {
     total,
@@ -83,11 +93,11 @@ function normalizePanel({
     started,
     stageIndex: stageIndexFor(filledCount),
     primaryStatus:
-      completed ? "Completa" :
-      active ? "En curso" :
-      current ? "Esta semana" :
-      revisitedState ? "Revisitada" :
-      upcoming ? "Próxima" : "Disponible",
+      completed ? t("mosaic.status.complete") :
+      active ? t("mosaic.status.inProgress") :
+      current ? t("common.thisWeek") :
+      revisitedState ? t("mosaic.status.revisited") :
+      upcoming ? t("common.upcoming") : t("common.available"),
     statusLabel: status.join(". "),
     updatedAt: Number(progress.updatedAt || progress.lastVisitedAt || progress.completedAt || 0),
   };
@@ -137,21 +147,26 @@ function chooseMotifIds(items, selectedLessonId, limit) {
  * onNavigate receives (lesson, normalizedPanelState, event).
  */
 export default function QuarterMosaic({
-  lessons = LESSON_MANIFEST,
+  lessons: providedLessons,
   progressByLesson = {},
   getProgress,
   currentLessonId,
   activeLessonId,
   selectedLessonId,
   revisitedLessonIds = EMPTY_IDS,
+  connectionIds = EMPTY_IDS,
   onNavigate,
   onSelectLesson,
-  heading = "Mosaico Vivo",
-  description = "Trece lecciones forman una sola obra. Cada respuesta deja una pieza visible.",
+  heading,
+  description,
   motifLimit = 5,
   showSemanticList = true,
   className = "",
 }) {
+  const { locale, t } = useI18n();
+  const lessons = providedLessons || lessonManifestForLocale(locale);
+  const resolvedHeading = heading || t("nav.mosaic");
+  const resolvedDescription = description || t("mosaic.description");
   const reactId = useId().replace(/:/g, "");
   const headingId = `${reactId}-heading`;
   const descriptionId = `${reactId}-description`;
@@ -175,6 +190,7 @@ export default function QuarterMosaic({
           activeLessonId,
           revisited,
           currentNumber,
+          t,
         }),
       })),
     [
@@ -185,6 +201,7 @@ export default function QuarterMosaic({
       activeLessonId,
       revisited,
       currentNumber,
+      t,
     ]
   );
 
@@ -204,11 +221,58 @@ export default function QuarterMosaic({
     items.findIndex(({ lesson }) => lesson.id === selectedId)
   );
   const [focusIndex, setFocusIndex] = useState(selectedIndex);
+  const [connectionPaths, setConnectionPaths] = useState([]);
   const panelRefs = useRef([]);
+  const courtyardRef = useRef(null);
+  const pointerFrame = useRef(0);
 
   useEffect(() => {
     setFocusIndex(selectedIndex);
   }, [selectedIndex]);
+
+  useLayoutEffect(() => {
+    const courtyard = courtyardRef.current;
+    if (!courtyard) return undefined;
+    const measure = () => {
+      const bounds = courtyard.getBoundingClientRect();
+      const centers = new Map();
+      items.forEach(({ lesson }, index) => {
+        const panel = panelRefs.current[index];
+        if (!panel) return;
+        const rect = panel.getBoundingClientRect();
+        centers.set(lesson.id, {
+          x: ((rect.left + rect.width / 2 - bounds.left) / bounds.width) * 1000,
+          y: ((rect.top + rect.height / 2 - bounds.top) / bounds.height) * 660,
+        });
+      });
+      const next = connectionIds
+        .map((connectionId) => {
+          const [from, to] = String(connectionId).split(":to:");
+          const start = centers.get(from);
+          const end = centers.get(to);
+          if (!start || !end) return null;
+          const bend = Math.min(74, Math.abs(end.x - start.x) * 0.12 + 28);
+          return {
+            id: connectionId,
+            d: `M ${start.x.toFixed(1)} ${start.y.toFixed(1)} C ${(
+              start.x +
+              bend
+            ).toFixed(1)} ${(start.y - bend).toFixed(1)}, ${(
+              end.x -
+              bend
+            ).toFixed(1)} ${(end.y + bend).toFixed(1)}, ${end.x.toFixed(
+              1
+            )} ${end.y.toFixed(1)}`,
+          };
+        })
+        .filter(Boolean);
+      setConnectionPaths(next);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(courtyard);
+    return () => observer.disconnect();
+  }, [connectionIds, items]);
 
   const motifIds = useMemo(
     () => chooseMotifIds(items, selectedId, motifLimit),
@@ -220,8 +284,11 @@ export default function QuarterMosaic({
   const activeItem = items.find(({ lesson }) => lesson.id === selectedId) || items[0];
   const progressSummary =
     completedCount === items.length && items.length > 0
-      ? "Los trece paneles están completos"
-      : `${completedCount} de ${items.length} paneles completos`;
+      ? t("mosaic.completeAll")
+      : t("mosaic.completeCount", {
+          count: completedCount,
+          total: items.length,
+        });
 
   const selectPanel = (lesson, panel, event) => {
     if (!controlledSelection) setInternalSelectedId(lesson.id);
@@ -252,6 +319,28 @@ export default function QuarterMosaic({
     }
   };
 
+  const rakeLight = (event) => {
+    const courtyard = courtyardRef.current;
+    if (!courtyard) return;
+    cancelAnimationFrame(pointerFrame.current);
+    const clientX = event.clientX;
+    const clientY = event.clientY;
+    pointerFrame.current = requestAnimationFrame(() => {
+      const rect = courtyard.getBoundingClientRect();
+      const x = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      const y = Math.max(0, Math.min(1, (clientY - rect.top) / rect.height));
+      courtyard.style.setProperty("--qm-rotate-y", `${((x - 0.5) * 1.8).toFixed(2)}deg`);
+      courtyard.style.setProperty("--qm-rotate-x", `${((0.5 - y) * 1.3).toFixed(2)}deg`);
+    });
+  };
+
+  const settleCamera = () => {
+    const courtyard = courtyardRef.current;
+    if (!courtyard) return;
+    courtyard.style.setProperty("--qm-rotate-y", "0deg");
+    courtyard.style.setProperty("--qm-rotate-x", "0deg");
+  };
+
   return (
     <section
       className={`quarter-mosaic ${className}`.trim()}
@@ -260,23 +349,26 @@ export default function QuarterMosaic({
     >
       <header className="qm-heading">
         <div>
-          <p className="qm-heading__kicker">La obra del trimestre</p>
-          <h2 id={headingId}>{heading}</h2>
-          <p id={descriptionId}>{description}</p>
+          <p className="qm-heading__kicker">{t("mosaic.work")}</p>
+          <h2 id={headingId}>{resolvedHeading}</h2>
+          <p id={descriptionId}>{resolvedDescription}</p>
         </div>
         <div className="qm-heading__progress" aria-live="polite">
           <strong>{progressSummary}</strong>
-          <span>{startedCount} lecciones con huella personal</span>
+          <span>{t("mosaic.tracedLessons", { count: startedCount })}</span>
         </div>
       </header>
 
       <p id={keyboardId} className="qm-sr-only">
-        Usa las flechas para recorrer los paneles. Inicio y Fin llevan al
-        primer y al último panel. Pulsa Entrar una vez para acercar un panel y
-        otra vez para abrir su lección.
+        {t("mosaic.keyboard")}
       </p>
 
-      <figure className="qm-courtyard">
+      <figure
+        ref={courtyardRef}
+        className="qm-courtyard"
+        onPointerMove={rakeLight}
+        onPointerLeave={settleCamera}
+      >
         <svg
           className="qm-seams"
           viewBox="0 0 1000 660"
@@ -302,9 +394,19 @@ export default function QuarterMosaic({
                S700 326 842 370 C910 430 812 480 688 477
                S420 462 250 493 C170 515 230 574 500 606"
           />
+          <g className="qm-seams__connections">
+            {connectionPaths.map((connection) => (
+              <path
+                key={connection.id}
+                className="qm-seams__connection"
+                pathLength="1"
+                d={connection.d}
+              />
+            ))}
+          </g>
         </svg>
 
-        <ol className="qm-courtyard__grid" aria-label="Paneles del trimestre">
+        <ol className="qm-courtyard__grid" aria-label={t("mosaic.panelsLabel")}>
           {items.map(({ lesson, panel }, index) => (
             <li
               key={lesson.id}
@@ -332,7 +434,10 @@ export default function QuarterMosaic({
           <span>{progressSummary}.</span>
           {activeItem ? (
             <span>
-              Selección actual: lección {activeItem.lesson.number}, {activeItem.lesson.title}.
+              {t("mosaic.currentSelection", {
+                number: activeItem.lesson.number,
+                title: activeItem.lesson.title,
+              })}
             </span>
           ) : null}
         </figcaption>

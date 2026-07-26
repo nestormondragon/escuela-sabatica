@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useRef, useState } from "react";
 import { useAppReducedMotion } from "../lib/useAppReducedMotion.js";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 /* =====================================================================
    CrackedVessel — narrative artwork for 2 Corintios 4:7,
@@ -254,9 +255,12 @@ export default function CrackedVessel({
   arc = "reveal",
   debug = false,
   revealOverride = null,
-  title = "Vasija de barro agrietada",
-  desc = "Una vasija de barro hecha a mano, con una grieta profunda por la que se ve la luz que arde dentro.",
+  title,
+  desc,
 }) {
+  const { t: translate } = useI18n();
+  const accessibleTitle = title || translate("vessel.title");
+  const accessibleDesc = desc || translate("vessel.desc");
   const raw = useId().replace(/:/g, "");
   const uid = (n) => `${raw}-${n}`;
   const s = Math.max(0, Math.min(4, stage));
@@ -367,8 +371,8 @@ export default function CrackedVessel({
       data-fracture-settled={revealSettled ? "true" : "false"}
       style={{ display: "block", maxWidth: "100%", height: "auto", overflow: "visible" }}
     >
-      <title id={uid("t")}>{title}</title>
-      <desc id={uid("d")}>{desc}</desc>
+      <title id={uid("t")}>{accessibleTitle}</title>
+      <desc id={uid("d")}>{accessibleDesc}</desc>
 
       <defs>
         <linearGradient id={uid("clay")} x1="14%" y1="6%" x2="86%" y2="94%">

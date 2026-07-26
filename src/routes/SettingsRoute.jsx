@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import {
-  LOCAL_STORAGE_NOTICE,
   journeyActions,
   selectors,
   useJourney,
 } from "../state/journey/index.js";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 function downloadText(text, fileName, type = "application/json") {
   const blob = new Blob([text], { type });
@@ -20,6 +20,7 @@ function downloadText(text, fileName, type = "application/json") {
 
 export default function SettingsRoute() {
   const journey = useJourney();
+  const { locale, t } = useI18n();
   const inputRef = useRef(null);
   const [name, setName] = useState(() => selectors.selectProfileName(journey.state));
   const [notice, setNotice] = useState("");
@@ -35,16 +36,18 @@ export default function SettingsRoute() {
         },
       })
     );
-    setNotice("Nombre guardado en este navegador");
+    setNotice(t("settings.nameSaved"));
   };
 
   const exportAll = () => {
     const archive = journey.exportArchive();
     downloadText(
       typeof archive === "string" ? archive : JSON.stringify(archive, null, 2),
-      "mosaico-vivo-corinto-respaldo.json"
+      locale === "en"
+        ? "living-mosaic-corinth-backup.json"
+        : "mosaico-vivo-corinto-respaldo.json"
     );
-    setNotice("Respaldo descargado");
+    setNotice(t("settings.downloaded"));
   };
 
   const importAll = async (event) => {
@@ -53,9 +56,9 @@ export default function SettingsRoute() {
     try {
       const text = await file.text();
       journey.importArchive(text);
-      setNotice("Respaldo importado");
+      setNotice(t("settings.imported"));
     } catch {
-      setNotice("Ese archivo no es un respaldo válido");
+      setNotice(t("settings.invalidBackup"));
     } finally {
       event.target.value = "";
     }
@@ -64,25 +67,25 @@ export default function SettingsRoute() {
   const resetJourney = () => {
     if (
       window.confirm(
-        "¿Borrar el recorrido nuevo de este trimestre? Las respuestas de la versión anterior se conservarán."
+        t("settings.resetConfirm")
       )
     ) {
       journey.removeJourney({ includeBackup: false });
-      setNotice("El recorrido nuevo fue reiniciado");
+      setNotice(t("settings.resetDone"));
     }
   };
 
   return (
     <section className="settings-route" aria-labelledby="settings-title">
-      <div className="route-eyebrow">Tu espacio</div>
-      <h1 id="settings-title" data-route-heading>Ajustes y privacidad</h1>
-      <p className="route-deck">{LOCAL_STORAGE_NOTICE}</p>
+      <div className="route-eyebrow">{t("settings.eyebrow")}</div>
+      <h1 id="settings-title" data-route-heading>{t("settings.title")}</h1>
+      <p className="route-deck">{t("settings.storage")}</p>
 
       <div className="settings-strata">
         <section>
-          <h2>Cómo te acompaña</h2>
+          <h2>{t("settings.companion")}</h2>
           <label className="setting-field" htmlFor="profile-name">
-            <span>Nombre opcional</span>
+            <span>{t("settings.optionalName")}</span>
             <input
               id="profile-name"
               value={name}
@@ -92,19 +95,42 @@ export default function SettingsRoute() {
             />
           </label>
           <button type="button" className="btn btn-ghost" onClick={saveName}>
-            Guardar nombre
+            {t("settings.saveName")}
           </button>
         </section>
 
         <section>
-          <h2>Apariencia y movimiento</h2>
+          <h2>{t("settings.appearance")}</h2>
           <div className="setting-choice">
-            <span>Tema</span>
-            <div role="group" aria-label="Tema">
+            <span>{t("settings.language")}</span>
+            <div role="group" aria-label={t("settings.language")}>
               {[
-                ["dark", "Noche"],
-                ["light", "Día"],
-                ["auto", "Sistema"],
+                ["es", t("settings.languageEs")],
+                ["en", t("settings.languageEn")],
+              ].map(([value, label]) => (
+                <button
+                  key={value}
+                  type="button"
+                  lang={value}
+                  aria-pressed={locale === value}
+                  onClick={() =>
+                    journey.dispatch(
+                      journeyActions.setSettings({ locale: value })
+                    )
+                  }
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="setting-choice">
+            <span>{t("settings.theme")}</span>
+            <div role="group" aria-label={t("settings.theme")}>
+              {[
+                ["dark", t("settings.themeNight")],
+                ["light", t("settings.themeDay")],
+                ["auto", t("settings.themeSystem")],
               ].map(([value, label]) => (
                 <button
                   key={value}
@@ -120,10 +146,34 @@ export default function SettingsRoute() {
             </div>
           </div>
 
+          <div className="setting-choice">
+            <span>{t("settings.textSize")}</span>
+            <div role="group" aria-label={t("settings.textSize")}>
+              {[
+                ["normal", t("settings.textNormal")],
+                ["large", t("settings.textLarge")],
+                ["x-large", t("settings.textXLarge")],
+              ].map(([value, label]) => (
+                <button
+                  key={value}
+                  type="button"
+                  aria-pressed={(settings.textSize || "normal") === value}
+                  onClick={() =>
+                    journey.dispatch(
+                      journeyActions.setSettings({ textSize: value })
+                    )
+                  }
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <label className="setting-toggle">
             <span>
-              <strong>Reducir movimiento</strong>
-              <small>Quita recorridos, partículas y profundidad</small>
+              <strong>{t("settings.reduceMotion")}</strong>
+              <small>{t("settings.reduceMotionHelp")}</small>
             </span>
             <input
               type="checkbox"
@@ -140,8 +190,8 @@ export default function SettingsRoute() {
 
           <label className="setting-toggle">
             <span>
-              <strong>Respuesta táctil</strong>
-              <small>Una vibración breve al colocar una pieza</small>
+              <strong>{t("settings.haptics")}</strong>
+              <small>{t("settings.hapticsHelp")}</small>
             </span>
             <input
               type="checkbox"
@@ -156,28 +206,25 @@ export default function SettingsRoute() {
         </section>
 
         <section>
-          <h2>Tu información</h2>
-          <p>
-            El respaldo incluye tus respuestas, compromisos y mosaico. No se
-            envía a ningún servidor.
-          </p>
+          <h2>{t("settings.yourInfo")}</h2>
+          <p>{t("settings.backupHelp")}</p>
           <div className="settings-actions">
             <button type="button" className="btn btn-primary" onClick={exportAll}>
-              Descargar respaldo
+              {t("settings.download")}
             </button>
             <button
               type="button"
               className="btn btn-ghost"
               onClick={() => inputRef.current?.click()}
             >
-              Importar respaldo
+              {t("settings.import")}
             </button>
             <input
               ref={inputRef}
               className="sr-only"
               type="file"
               accept="application/json"
-              aria-label="Seleccionar archivo de respaldo"
+              aria-label={t("settings.selectBackup")}
               tabIndex={-1}
               onChange={importAll}
             />
@@ -185,13 +232,10 @@ export default function SettingsRoute() {
         </section>
 
         <section className="settings-danger">
-          <h2>Reiniciar el recorrido nuevo</h2>
-          <p>
-            Esta acción no elimina las claves antiguas. Un regreso a la versión
-            anterior seguirá encontrando sus datos.
-          </p>
+          <h2>{t("settings.resetTitle")}</h2>
+          <p>{t("settings.resetHelp")}</p>
           <button type="button" className="btn btn-ghost" onClick={resetJourney}>
-            Reiniciar
+            {t("settings.reset")}
           </button>
         </section>
       </div>

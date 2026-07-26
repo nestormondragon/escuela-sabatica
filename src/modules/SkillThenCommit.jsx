@@ -3,10 +3,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { reveal } from "../lib/motion.js";
 import { Insight, SkillBadge, SaveBar, ChipRow, Pause } from "./common.jsx";
 import Icon from "../components/Icon.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 /* A short discernment drill, then a personal commitment.
    Used for "Mi paso de fe" (toque de fe vs roce casual). */
 export default function SkillThenCommit({ config, onFill, onSkip }) {
+  const { t } = useI18n();
   const { skill, commit } = config;
   const [i, setI] = useState(0);
   const [answered, setAnswered] = useState(null); // {ok}
@@ -42,7 +44,10 @@ export default function SkillThenCommit({ config, onFill, onSkip }) {
 
       {!done ? (
         <motion.div className="seqcard" key={i} variants={reveal} initial="initial" animate="animate">
-          <div className="seqcount">Frase {i + 1} de {skill.rounds.length}</div>
+          <div className="seqcount">{t("module.phraseCount", {
+            current: i + 1,
+            total: skill.rounds.length,
+          })}</div>
           <p ref={phasePromptRef} className="statementtxt" tabIndex={-1}>{round.t}</p>
           <div className="cat-btns">
             {skill.cats.map((c, k) => {
@@ -83,7 +88,9 @@ export default function SkillThenCommit({ config, onFill, onSkip }) {
                 </div>
                 <div style={{ textAlign: "right", marginTop: 10 }}>
                   <button className="btn btn-ghost" onClick={next} style={{ minHeight: 44, padding: "10px 18px" }}>
-                    {i < skill.rounds.length - 1 ? "Siguiente" : "Ver lo que aprendí"} <Icon name="arrow" size={16} />
+                    {i < skill.rounds.length - 1
+                      ? t("common.next")
+                      : t("module.seeLearning")} <Icon name="arrow" size={16} />
                   </button>
                 </div>
               </motion.div>
@@ -107,6 +114,7 @@ export default function SkillThenCommit({ config, onFill, onSkip }) {
 }
 
 function Committer({ skill, commit, score, onFill, onSkip, seedSub, saveLabel, promptRef }) {
+  const { t } = useI18n();
   const [chosen, setChosen] = useState("");
   const [text, setText] = useState("");
   const value = (text.trim() || chosen).trim();
@@ -114,7 +122,10 @@ function Committer({ skill, commit, score, onFill, onSkip, seedSub, saveLabel, p
   return (
     <motion.div className="stack" variants={reveal} initial="initial" animate="animate">
       <SkillBadge>{skill.badge}</SkillBadge>
-      <Insight label={`Discerniste ${score} de ${skill.rounds.length}`} body={skill.summary} />
+      <Insight label={t("module.discerned", {
+        score,
+        total: skill.rounds.length,
+      })} body={skill.summary} />
       <Pause />
       <p ref={promptRef} className="prompt-q" tabIndex={-1}>{commit.prompt}</p>
       {commit.hint ? <p className="prompt-hint">{commit.hint}</p> : null}
@@ -132,7 +143,7 @@ function Committer({ skill, commit, score, onFill, onSkip, seedSub, saveLabel, p
         />
       </div>
       <SaveBar
-        label={saveLabel || "Guardar esta pieza"}
+        label={saveLabel || t("module.savePiece")}
         disabled={!value}
         onSave={() => onFill(value, { [commit.extraKey]: value }, seedSub)}
         onSkip={onSkip}

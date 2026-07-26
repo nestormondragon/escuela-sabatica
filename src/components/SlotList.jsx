@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Icon from "./Icon.jsx";
 import { listItem, listParent, t } from "../lib/motion.js";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 /* =================================================================
    SlotList — the spine of the anchor. Every slot is visible from the
@@ -14,6 +15,7 @@ import { listItem, listParent, t } from "../lib/motion.js";
    ================================================================= */
 
 export default function SlotList({ slots, values, firstUnfilledId, remaining, onOpen }) {
+  const { t: translate } = useI18n();
   const goalGradient = remaining > 0 && remaining <= 2;
   return (
     <motion.div className="stack" variants={listParent} initial="hidden" animate="show" style={{ gap: 10, display: "flex", flexDirection: "column" }}>
@@ -77,7 +79,7 @@ export default function SlotList({ slots, values, firstUnfilledId, remaining, on
                   whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
                 }}
               >
-                {filled ? values[s.id] : isCurrent ? "Toca para colocar esta pieza" : s.teaser}
+                {filled ? values[s.id] : isCurrent ? translate("slot.place") : s.teaser}
               </span>
             </span>
             {open && !filled ? (

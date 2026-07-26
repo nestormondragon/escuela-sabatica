@@ -5,6 +5,7 @@ import { useLockBodyScroll } from "../lib/useLockBodyScroll.js";
 import { useFocusTrap } from "../lib/useFocusTrap.js";
 import { firstName } from "../lib/name.js";
 import Icon from "./Icon.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 /* =================================================================
    Reward — the "slot filled" moment, shown each time the reader
@@ -17,6 +18,7 @@ import Icon from "./Icon.jsx";
    ================================================================= */
 
 export default function Reward({ open, slotLabel, seedSub, verse, userName, onClose }) {
+  const { t: translate } = useI18n();
   useLockBodyScroll(open);
   const dialogRef = useRef(null);
   useFocusTrap(open, dialogRef);
@@ -40,7 +42,7 @@ export default function Reward({ open, slotLabel, seedSub, verse, userName, onCl
           role="dialog"
           aria-modal="true"
           aria-live="polite"
-          aria-label={`Pieza colocada: ${slotLabel || ""}`}
+          aria-label={translate("reward.aria", { label: slotLabel || "" })}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -70,8 +72,8 @@ export default function Reward({ open, slotLabel, seedSub, verse, userName, onCl
             <button
               className="icon-btn"
               onClick={onClose}
-              aria-label="Cerrar"
-              title="Cerrar"
+              aria-label={translate("common.close")}
+              title={translate("common.close")}
               style={{ position: "absolute", top: 6, right: 6, color: "var(--muted)" }}
             >
               <Icon name="close" size={20} />
@@ -91,12 +93,14 @@ export default function Reward({ open, slotLabel, seedSub, verse, userName, onCl
               <Icon name="check" size={26} weight="bold" />
             </motion.div>
             <div style={{ fontFamily: "var(--ui)", fontSize: "0.64rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--clay)" }}>
-              Pieza colocada
+              {translate("artifact.placed")}
             </div>
             <h3 className="letter" style={{ fontSize: "1.3rem", margin: "4px 0 2px" }}>{slotLabel}</h3>
             {seedSub ? <p className="muted" style={{ fontSize: "0.88rem" }}>{seedSub}</p> : null}
             <p className="muted" style={{ fontSize: "0.9rem", marginTop: 6, fontFamily: "var(--letter)", fontStyle: "italic" }}>
-              {fn ? `Bien hecho, ${fn}.` : "Bien hecho."}
+              {fn
+                ? translate("reward.doneName", { name: fn })
+                : translate("reward.done")}
             </p>
             {verse ? (
               <motion.div
@@ -105,7 +109,7 @@ export default function Reward({ open, slotLabel, seedSub, verse, userName, onCl
                 transition={{ delay: 0.18, duration: 0.4, ease: EASE_OUT }}
                 style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid var(--line)" }}
               >
-                <div className="tag" style={{ marginBottom: 5 }}>Una palabra para hoy</div>
+                <div className="tag" style={{ marginBottom: 5 }}>{translate("reward.word")}</div>
                 <div className="scripture" style={{ fontSize: "1rem", fontStyle: "italic", color: "var(--text-soft)" }}>{verse}</div>
               </motion.div>
             ) : null}
@@ -118,7 +122,7 @@ export default function Reward({ open, slotLabel, seedSub, verse, userName, onCl
               transition={t.tap}
               onClick={onClose}
             >
-              Continuar <Icon name="arrow" size={18} />
+              {translate("common.continue")} <Icon name="arrow" size={18} />
             </motion.button>
           </motion.div>
         </motion.div>

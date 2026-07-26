@@ -1,0 +1,686 @@
+{
+  "number": 9,
+  "slug": "escrita-con-lagrimas",
+  "title": "Written with Tears",
+  "subtitle": "Who is reading your life as though it were a letter?",
+  "kitName": "My Living Letter",
+  "artifactNoun": "letter",
+  "motif": "carta",
+  "stages": [
+    "blanco",
+    "tinta",
+    "lineas",
+    "sello",
+    "entrega"
+  ],
+  "stageLabels": [
+    "Blank page · what I leave unsaid",
+    "Ink runs wet · tears",
+    "Lines appear · truth",
+    "The seal of forgiveness · restoration",
+    "Letter delivered · love read"
+  ],
+  "verseRef": "2 Cor. 2:4",
+  "verseText": "For out of much affliction and anguish of heart I wrote to you with many tears, not to make you sorrowful, but so that you might know how deeply I love you.",
+  "promise": "In a few minutes you will write your Living Letter, {name}: you will name the weight you carry without exposing it, receive again the comfort already given to you, hold your motives up to the light, speak a painful truth without ceasing to love, seal one concrete act of forgiveness, and discover who has been reading your life. Line by line, what you could not put into words will be written.",
+  "ui": {
+    "start": "Begin writing my letter",
+    "emptyKit": "Your letter",
+    "building": "Each answer writes another line",
+    "buildingHint": "Tap the flickering line. Watch the blank page fill until it is ready to be delivered.",
+    "lastPiece": "One line remains",
+    "patternLabel": "What your letter already says",
+    "doneTitle": "Your letter is written",
+    "doneSub": "You wrote it with God and with tears. Open it, save it, and deliver it.",
+    "open": "Open my letter",
+    "back": "Back to my letter",
+    "kitName": "My Living Letter"
+  },
+  "slots": [
+    {
+      "id": "pesar",
+      "n": 1,
+      "label": "The weight I carry",
+      "teaser": "The burden almost no one sees me carry...",
+      "icon": "cloud"
+    },
+    {
+      "id": "consuelo",
+      "n": 2,
+      "label": "The comfort I received",
+      "teaser": "What God gave me that is not mine alone...",
+      "icon": "cup"
+    },
+    {
+      "id": "motivo",
+      "n": 3,
+      "label": "The motive I bring into the light",
+      "teaser": "Why I truly do what I do...",
+      "icon": "eye"
+    },
+    {
+      "id": "malentendido",
+      "n": 4,
+      "label": "What was read backward",
+      "teaser": "My good intention, misunderstood...",
+      "icon": "path"
+    },
+    {
+      "id": "palabra",
+      "n": 5,
+      "label": "The difficult word",
+      "teaser": "What I must say in love and still leave unsaid...",
+      "icon": "scroll"
+    },
+    {
+      "id": "perdon",
+      "n": 6,
+      "label": "The love I reaffirm",
+      "teaser": "How I restore someone who has suffered enough...",
+      "icon": "key"
+    },
+    {
+      "id": "lector",
+      "n": 7,
+      "label": "Who reads my life",
+      "teaser": "The person who reads me without saying so...",
+      "icon": "people"
+    },
+    {
+      "id": "paso",
+      "n": 8,
+      "label": "My step this week",
+      "teaser": "One concrete step and someone with whom I will take it...",
+      "icon": "hand"
+    }
+  ],
+  "stations": [
+    {
+      "id": "pesar",
+      "day": "Saturday · A love that never declined",
+      "tag": "Slot 1 · The weight I carry",
+      "title": "And besides everything else, every day",
+      "story": "Paul once listed the story of his life: lashes, rods, stones, shipwrecks, hunger, cold, and danger everywhere. At the end he named what truly kept him awake: \"Besides everything else, I face daily the pressure of my concern for all the churches\" (2 Cor. 11:28). People hurt him more than wounds did. Yet his love for the Corinthians never went out. Before writing a single line, look at what you carry.",
+      "cue": "Before you write anything, {name}, name what you carry.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "What are you carrying today that hardly anyone sees?",
+        "hint": "Choose the most sincere right now",
+        "saveLabel": "Save to my letter",
+        "seedSub": "Your burden",
+        "options": [
+          {
+            "id": "tension",
+            "label": "A tense relationship that I don't know how to fix",
+            "insight": "Paul wrote two long letters for a church that criticized him. That a relationship hurts you is not weakness: it is love that has not yet given up.",
+            "tags": [
+              "theme:relationship",
+              "posture:seeking",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "juzgado",
+            "label": "Someone completely misunderstood me",
+            "insight": "Paul was called unreliable for changing an itinerary out of love (2 Cor. 1:17). Being misunderstood hurts more when you did the right thing.",
+            "tags": [
+              "react:withdraw",
+              "theme:unity",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "cargo",
+            "label": "I carry people who do not even know I am carrying them",
+            "insight": "That silent concern has a biblical name and apostolic weight. God sees the list of names you bear. He does not ask you to judge yourself, but offers to carry it with you.",
+            "tags": [
+              "theme:service",
+              "posture:surrendering",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "cansancio",
+            "label": "Tired from giving for a long time",
+            "insight": "Giving without receiving eventually dries anyone out. The next step is not to carry more, but to let yourself be comforted first (2 Cor. 1:4).",
+            "tags": [
+              "react:apathy",
+              "theme:service",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "secreto",
+            "label": "A pain of mine that I have not told anyone",
+            "insight": "Paul did not tell everything either, but when he did speak, he said the burden was \"beyond our strength\" (2 Cor. 1:8). Naming it here is already beginning to write it down.",
+            "tags": [
+              "react:fear",
+              "theme:self",
+              "posture:avoidant"
+            ]
+          },
+          {
+            "id": "fragil",
+            "label": "I'm doing fine, but I'm afraid it will break",
+            "insight": "Holding everything together through sheer control is exhausting. The God who delivered Paul from deadly peril will still be the same tomorrow (2 Cor. 1:10).",
+            "tags": [
+              "react:control",
+              "theme:hope",
+              "posture:clinging"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "consuelo",
+      "day": "Sunday · Gratitude",
+      "tag": "Slot 2 · The comfort I received",
+      "title": "Comfort does not come only to stay with you",
+      "story": "In six verses Paul repeats the same root ten times: comfort, comforting. God is \"the Father of compassion and the God of all comfort\" (2 Cor. 1:3). Then comes the turn: he comforts you \"so that we can comfort those in any trouble\" (2 Cor. 1:4). The comfort you received arrived with two addresses written on it: yours and someone else's. No one comforts as well as a person who was comforted in the very place that hurt.",
+      "cue": "{name}, someone is waiting for the comfort that has already reached you.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "What comfort from God have you received that you can now pass on?",
+        "hint": "Think of something real, not something nice",
+        "saveLabel": "Save to my letter",
+        "seedSub": "Your comfort",
+        "closing": "What you went through was not waste. \"If we are troubled, it is for your comfort and salvation\" (2 Cor. 1:6). Your scar is the credential that someone else needs to see.",
+        "options": [
+          {
+            "id": "perdida",
+            "label": "He held me through a loss",
+            "insight": "The ones who have suffered the most are usually the ones who console the best. You already know what phrases are useless, and that is worth gold next to a bed or a tomb.",
+            "tags": [
+              "theme:hope",
+              "posture:clinging",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "limite",
+            "label": "He held me when I thought I couldn't stand",
+            "insight": "Paul felt that he had received \"the sentence of death,\" and he understood why: \"So that we would not trust in ourselves, but in God\" (2 Cor. 1:9).",
+            "tags": [
+              "theme:faith",
+              "posture:surrendering",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "culpa",
+            "label": "He forgave something I could not forgive in myself",
+            "insight": "A person who has received forgiveness can speak to someone who is guilty without crushing them. Keep that tone; you will need it later in this letter.",
+            "tags": [
+              "theme:grace",
+              "posture:humble",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "enfermedad",
+            "label": "Accompanied me in a long illness",
+            "insight": "Long waits teach things that quick miracles can't teach. God used affliction to bring you closer, not to punish you.",
+            "tags": [
+              "theme:faith",
+              "posture:humble",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "libro",
+            "label": "He delivered me from something I had already given up on",
+            "insight": "\"He has delivered us... and he will deliver us again\" (2 Cor. 1:10). Three verb tenses, one enduring trust.",
+            "tags": [
+              "theme:resurrection",
+              "posture:seeking",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "hermanos",
+            "label": "Other believers comforted me in his name",
+            "insight": "This is how the body works: God comforts with borrowed hands. Someone was a living letter to you; now it is your turn.",
+            "tags": [
+              "theme:unity",
+              "theme:service",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "esperando",
+            "label": "Honestly, I'm still waiting for it",
+            "insight": "Saying it out loud is more honest than pretending to be comforted. Paul also asked others to help through prayer (2 Cor. 1:11). Ask someone for that prayer today.",
+            "tags": [
+              "react:doubt",
+              "theme:hope",
+              "posture:seeking"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "motivo",
+      "day": "Monday · Purity and sincerity",
+      "tag": "Slot 3 · The motive I bring into the light",
+      "title": "Motives that withstand the light",
+      "story": "They questioned his character, so Paul placed two words on the table: purity and sincerity (2 Cor. 1:12). The second, eilikrineia, evokes something held in full sunlight with no hidden patchwork showing through. Paul makes clear where that purity comes from: not human wisdom, but God's grace. This is why he could say he was not \"like so many, peddling the word of God for profit\" (2 Cor. 2:17). A ministry is distinguished by what stands behind it.",
+      "cue": "Hold your motives up to the light, {name}. Everything shows there.",
+      "module": {
+        "type": "skillThenCommit",
+        "saveLabel": "Save to my letter",
+        "seedSub": "Your motive",
+        "skill": {
+          "prompt": "Train the ear: sincere love, or self-interest in disguise?",
+          "hint": "The two sentences sound spiritual. Only one is.",
+          "badge": "You're learning to look at your own motives",
+          "cats": [
+            "True love",
+            "Self-interest"
+          ],
+          "rounds": [
+            {
+              "t": "\"I'm telling you this so you can grow up, even if it's hard for me to say.\"",
+              "a": 0,
+              "fb": "SINCERE LOVE: The truth is said to build, not to win an argument."
+            },
+            {
+              "t": "\"I serve gladly, but people need to know I did it.\"",
+              "a": 1,
+              "fb": "Self-interest: when service needs an audience, it has already changed masters."
+            },
+            {
+              "t": "\"I change my plan because it is better for you, even if it makes me look bad.\"",
+              "a": 0,
+              "fb": "Sincere love: That's what Paul did, and even so they called him unsteady (2 Cor. 1:17)."
+            },
+            {
+              "t": "\"I soften the message so everyone will like me.\"",
+              "a": 1,
+              "fb": "Self-interest: \"We do not distort the word of God\" (2 Cor. 4:2). Diluting it is not love; it is trade."
+            },
+            {
+              "t": "\"I cried before I wrote that letter, and still wrote it.\"",
+              "a": 0,
+              "fb": "Sincere love: \"With many tears I wrote to you... So that you would know how much I love you\" (2 Cor. 2:4)."
+            },
+            {
+              "t": "\"If you don't thank me, I'll stop helping.\"",
+              "a": 1,
+              "fb": "Self-interest: love that sends an invoice was never freely given."
+            }
+          ],
+          "summary": "\"Our conscience testifies that we have conducted ourselves... with integrity and godly sincerity\" (2 Cor. 1:12). Clean motives do not mean a perfect life; they mean there is no hidden compartment underneath."
+        },
+        "commit": {
+          "prompt": "Which motive do you want to bring into the light this week?",
+          "hint": "Be specific. Vague motives cannot be examined.",
+          "placeholder": "I want to serve without needing to be noticed...",
+          "extraKey": "motivoLimpio",
+          "options": [
+            "Serve without needing to be noticed",
+            "Tell the truth without wanting to be right",
+            "Help without waiting for them to return it to me",
+            "Talk about Jesus without seeking approval",
+            "Give without keeping track"
+          ]
+        }
+      }
+    },
+    {
+      "id": "malentendido",
+      "day": "Tuesday · Change of plans for love",
+      "tag": "Slot 4 · What was misunderstood",
+      "title": "When your love is misunderstood",
+      "story": "Paul had promised to return to Corinth, but he did not go back. He changed his route, and some assumed the worst: that he was fickle, untrustworthy, and did not really want them. The truth was exactly the opposite. He stayed away because another visit so soon after the previous one would only have added pain (2 Cor. 2:1). Instead of appearing in person, he wrote through tears. His yes remained yes because it rested on another: \"All the promises of God are Yes in Christ\" (2 Cor. 1:20).",
+      "cue": "{name}, someone has misunderstood something you did.",
+      "module": {
+        "type": "perspectiveFlip",
+        "saveLabel": "Save to my letter",
+        "seedSub": "Your intention",
+        "prompt": "Tap each card and view the same action from where God sees it",
+        "hint": "One side is what you see; the other is what they see",
+        "pairs": [
+          {
+            "see": "You changed your plan and were called unreliable.",
+            "sees": "\"All God's promises are Yes in Christ\" (2 Cor. 1:20). Your word rests on his, not on your reputation."
+          },
+          {
+            "see": "You preferred not to appear, and they thought you didn't care anymore.",
+            "sees": "He knows that you stayed away to avoid \"another painful visit\" (2 Cor. 2:1). Sometimes keeping your distance can also be an act of care."
+          },
+          {
+            "see": "It hurts when others judge your intention without asking you.",
+            "sees": "\"We have conducted ourselves... with integrity and godly sincerity\" (2 Cor. 1:12). The One who reads hearts has already read yours."
+          },
+          {
+            "see": "You fear that this will never be completely cleared up.",
+            "sees": "Paul trusted that they would understand fully \"on the day of the Lord Jesus\" (2 Cor. 1:13-14). Not everything is clarified here, and that is all right."
+          }
+        ],
+        "chooseLabel": "This is the truth I needed",
+        "teach": "Being misunderstood is not proof that you were wrong. Sometimes it is the cost of loving well. Paul did not defend himself by attacking. He explained calmly, pointed to the gospel, and continued to love those who doubted him.",
+        "commit": {
+          "prompt": "Write a line of encouragement to your misunderstood self",
+          "hint": "What you would say to a friend who was unfairly judged",
+          "placeholder": "You did not change your plan for comfort; you changed it because...",
+          "extraKey": "intencionClara"
+        }
+      }
+    },
+    {
+      "id": "palabra",
+      "day": "Wednesday · The letter that hurt",
+      "tag": "Slot 5 The word difficult",
+      "title": "The truth that hurts, said with love",
+      "story": "There was a letter we now call \"the severe letter.\" Paul wrote it \"out of great distress and anguish of heart... with many tears\" (2 Cor. 2:4), and made the reason clear: not to crush them, but so they would know how deeply he loved them. Ellen G. White describes it this way: \"He made them understand that it caused him pain to cause them pain.\" Some words have been waiting inside you for months. Keeping them silent is not love; saying them without tears is not love either.",
+      "cue": "{name}, there is a phrase that you haven't said for a long time.",
+      "module": {
+        "type": "pickReveal",
+        "saveLabel": "Save to my letter",
+        "seedSub": "Your hard word",
+        "prompt": "Touch every sentence and stay with the one you have to say",
+        "hint": "Read them slowly. One of them has your name.",
+        "chooseLabel": "This is the one I have to say",
+        "closing": "Say what you need to say, but examine your heart before you open your mouth. If you cannot say it with tears, it may not yet be time.",
+        "allowCustom": {
+          "label": "Write mine",
+          "placeholder": "What I need to tell you is...",
+          "extraKey": "palabraPropia"
+        },
+        "items": [
+          {
+            "t": "\"What you did hurt me.\"",
+            "ref": "2 Cor. 2:4",
+            "meaning": "Naming pain is not revenge. Paul did it crying, and for that his reproach restored instead of breaking."
+          },
+          {
+            "t": "\"I need to apologize before asking you anything else.\"",
+            "ref": "Matt. 5:23-24",
+            "meaning": "\"Leave your offering there... Go, reconcile yourself first.\" There are conversations that have priority over worship."
+          },
+          {
+            "t": "\"I love you too much to keep quiet in this.\"",
+            "ref": "Prov. 27:6",
+            "meaning": "\"Faithful are the wounds of the one who loves.\" The one who never corrects you may not be taking care of you as much as you think."
+          },
+          {
+            "t": "\"I disagree with you, and I'm still with you.\"",
+            "ref": "Efe. 4:15",
+            "meaning": "Following \"the truth in love\" means that the relationship is not broken when the opinion does not coincide."
+          }
+        ]
+      }
+    },
+    {
+      "id": "perdon",
+      "day": "Wednesday · Forgiveness and reaffirmation",
+      "tag": "Slot 6 · The love that I reaffirm",
+      "title": "The discipline that ends in embrace",
+      "story": "Someone in Corinth had offended the church, and the church responded. So far, good. But Paul applies the brake: \"The punishment inflicted on him by the majority is sufficient\" (2 Cor. 2:6). Then he gives the order we almost never give: \"You ought to forgive and comfort him, so that he will not be overwhelmed by excessive sorrow\" (2 Cor. 2:7). He raises the bar again: \"Reaffirm your love for him\" (2 Cor. 2:8). Sin is addressed, but it is addressed with love, because punishment was never the goal. The goal was to bring him back.",
+      "cue": "Go up four steps with me, {name}. Upstairs is a door.",
+      "module": {
+        "type": "stairs",
+        "saveLabel": "Save to my letter",
+        "seedSub": "Your forgiveness",
+        "steps": [
+          {
+            "t": "First: evil is named, it is not disguised.",
+            "fb": "A church that does not face sin is no more loving: it is more comfortable. Paul named him (2 Cor. 2:5)."
+          },
+          {
+            "t": "Second: the correction has a limit.",
+            "fb": "\"This rebuke is enough for such a person\" (2 Cor. 2:6). The punishment that does not end ceased to be discipline."
+          },
+          {
+            "t": "Third: Forgive and also console.",
+            "fb": "\"So that he will not be overwhelmed by excessive sorrow\" (2 Cor. 2:7). Forgiveness that never comforts leaves the other person only half restored."
+          },
+          {
+            "t": "FOURTH: Reaffirm the love where it is seen.",
+            "fb": "\"Reaffirm your love for him\" (2 Cor. 2:8). Forgiveness may begin in private; dignity is restored in public."
+          }
+        ],
+        "leavePrompt": "What do you leave at the door before forgiving?",
+        "leaveHint": "You cannot embrace someone while holding on to that",
+        "leaveOptions": [
+          "The right to remind him every time",
+          "The version of the story where I come out impeccable",
+          "The coldness with which I greet him",
+          "The need for him to take the step first",
+          "The silence with which I am punishing him"
+        ],
+        "allowCustom": {
+          "placeholder": "I leave on the door..."
+        },
+        "prompt": "How are you going to reaffirm your love, specifically?",
+        "hint": "Forgiving in your heart is half the work. The other half becomes visible.",
+        "options": [
+          "Look for him and tell him that he was closed",
+          "Invite him back to my table",
+          "Speak well of him in front of those who criticized him",
+          "Give him a task, a trust, a place",
+          "Write him a message without reproaches today"
+        ],
+        "allowCustom2": {
+          "placeholder": "I'm going to reaffirm my love to...",
+          "extraKey": "perdonPropio"
+        }
+      }
+    },
+    {
+      "id": "lector",
+      "day": "Thursday · Triumph in Christ",
+      "tag": "Slot 7 · Who reads my life",
+      "title": "Someone is reading your life",
+      "story": "A great door opened for Paul in Troas, yet he had no peace because he was waiting for Titus to bring news from Corinth. A pastor's anxiety and God's triumph fit inside the same chest. When the answer finally came, Paul burst out: \"Thanks be to God, who always leads us as captives in Christ's triumphal procession and uses us to spread the aroma of the knowledge of him everywhere\" (2 Cor. 2:14). Soon afterward he gave this week its name: \"You yourselves are our letter, written on our hearts, known and read by everyone\" (2 Cor. 3:2).",
+      "cue": "{name}, there are eyes that read you without telling you.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "Who is reading your life as if it were a letter?",
+        "hint": "Think of someone who watches you closely, even if they never comment",
+        "saveLabel": "Save to my letter",
+        "seedSub": "Your reader",
+        "closing": "You are \"a letter from Christ... written not with ink but with the Spirit of the living God\" (2 Cor. 3:3). You do not have to be a perfect letter. You do need to be legible.",
+        "options": [
+          {
+            "id": "hijo",
+            "label": "A son or a daughter",
+            "insight": "They don't read your arguments: they read your tone when you're tired. That is the letter that remains.",
+            "tags": [
+              "theme:love",
+              "posture:surrendering",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "trabajo",
+            "label": "Someone from work",
+            "insight": "You can't preach much there, but you can be read every day. Your integrity is your longest paragraph.",
+            "tags": [
+              "theme:mission",
+              "posture:seeking",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "alejado",
+            "label": "Someone who left the church",
+            "insight": "They left after reading something in you that hurt. They may return and read something different: fragrance instead of reproach (2 Cor. 2:15).",
+            "tags": [
+              "theme:unity",
+              "theme:grace",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "pareja",
+            "label": "My partner",
+            "insight": "Your partner sees the rough draft, flaws and all. May they find there a Christ who also forgives at home.",
+            "tags": [
+              "theme:relationship",
+              "posture:humble",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "vecino",
+            "label": "A neighbor who never asks me anything",
+            "insight": "The one who does not ask is usually the one who observes the most. The fragrance does not need permission to get there.",
+            "tags": [
+              "theme:mission",
+              "posture:seeking",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "joven",
+            "label": "Someone younger in faith",
+            "insight": "They are copying things you do not even notice. Teach them how you ask for forgiveness, not only how you pray.",
+            "tags": [
+              "theme:service",
+              "posture:surrendering",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "falle",
+            "label": "Someone I failed",
+            "insight": "That person reads your life with a magnifying glass, and has a right. You still write the next page.",
+            "tags": [
+              "react:fear",
+              "theme:humility",
+              "posture:humble"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "paso",
+      "day": "Friday · To study and meditate",
+      "tag": "Slot 8 · My step of the week",
+      "title": "Now deliver it",
+      "story": "\"Those who have endured the greatest suffering are often the ones who bring the greatest comfort to others\" (God's Amazing Grace, p. 122). And again: \"A consecrated Christian life is ever shedding light and comfort and peace... wherever its possessor goes, it leaves a track of light\" (Patriarchs and Prophets, p. 656). A letter written and kept in a drawer comforts no one. Yours already has ink, tears, and a seal. Only delivery remains.",
+      "cue": "{name}, close your letter with something you can do tomorrow.",
+      "module": {
+        "type": "commitDuo",
+        "saveLabel": "Close my letter",
+        "seedSub": "Your step",
+        "stepPrompt": "My concrete step this week",
+        "stepHint": "Touch an idea or write yours",
+        "stepOptions": [
+          "Say that hard word, with tears and no reproaches",
+          "Look for those who I forgave and reaffirm my love",
+          "Pass someone the consolation that I received",
+          "Write a letter of encouragement by hand and deliver it",
+          "Hold a leader of my church instead of criticizing him"
+        ],
+        "stepPlaceholder": "My concrete step...",
+        "stepExtraKey": "pasoTexto",
+        "personPrompt": "The person to whom my letter is addressed",
+        "personHint": "Who has to read this in your life?",
+        "personPlaceholder": "A name...",
+        "personExtraKey": "destinatario"
+      }
+    }
+  ],
+  "encourage": [
+    "\"Not so that they would be sad, but so that they would know how much I love them.\" (2 Cor. 2:4)",
+    "\"Father of mercy and God of all consolation, who comforts us in all our tribulations.\" (2 Cor. 1:3-4)",
+    "\"All the promises of God are in him yes, and in him amen, through us, for the glory of God.\" (2 Cor. 1:20)",
+    "\"Rather they should forgive him and comfort him... I recommend that they reaffirm their love for him.\" (2 Cor. 2:7-8)",
+    "\"Thank God, who always leads us in triumph in Christ Jesus.\" (2 Cor. 2:14)",
+    "\"You yourself are our letter, written in our hearts, known and read by all.\" (2 Cor. 3:2)"
+  ],
+  "discussion": [
+    "Paul insists on his ministerial integrity (2 Cor. 1:12; 2:17; 4:2). Why does purity of motives so much in Christian service, and how is it noticeable when it is missing?",
+    "Paul changed his travel plan for love and they accused him of being unreliable. When to change plans is fidelity and not weakness? What do we do when our good intentions are read backwards?",
+    "The discipline of the Church seeks to restore through forgiveness and the reaffirmation of love (2 Cor. 2:6-8). In what do we fail the most: in not facing sin, or in not restoring the one who has already repented?",
+    "Paul speaks of his restlessness (2 Cor. 2:13) just before speaking of his triumph in Christ (2 Cor. 2:14). How are anxiety and victory held at the same time? What can the Church do to ease the burden of its leaders?"
+  ],
+  "facilitator": [
+    {
+      "stationId": "pesar",
+      "apertura": "Paul ends his list of sufferings with \"concern for all the churches\" (2 Cor. 11:28). Why did that weigh more than the beatings?",
+      "seguimiento": "What spiritual burden are you carrying right now that almost no one in this group knows?",
+      "ilustracion": "There are weights that are not seen on the scale: the names that one carries at bedtime.",
+      "transicion": "Before asking us to comfort others, Paul begins with the comfort he himself received.",
+      "actividad": "Invite each person, if they wish, to name in one word what they are carrying this week.",
+      "cierre": "Lord, you see what we carry in silence. Receive it today."
+    },
+    {
+      "stationId": "consuelo",
+      "apertura": "In 2 Corinthians 1:3-7, the root \"comfort\" appears ten times. What is Paul emphasizing through that repetition?",
+      "seguimiento": "What concrete consolation did you receive from God that you have not passed on to anyone yet?",
+      "ilustracion": "Comfort works like bread: it is shared, or it spoils in storage.",
+      "transicion": "That love was also shown in another less emotional way: with transparent integrity.",
+      "actividad": "Read 2 Corinthians 1:3-11 and write down why Paul says that God comforts us.",
+      "cierre": "Father of all comfort, make us comforters to someone this week."
+    },
+    {
+      "stationId": "motivo",
+      "apertura": "Paul describes his behavior in two words: purity and sincerity (2 Cor. 1:12). What do they mean in practice?",
+      "seguimiento": "Has anyone ever questioned your motives even when you were being honest? What did that teach you about judging other people's motives?",
+      "ilustracion": "The ancient sincerity was tested in full light: if it had hidden patches, the light gave them away.",
+      "transicion": "With these clean reasons, Paul made a decision that was also misunderstood.",
+      "actividad": "Classify common phrases of Christian service: sincere love or self-interest?",
+      "cierre": "Lord, clean us inside, where only you look."
+    },
+    {
+      "stationId": "malentendido",
+      "apertura": "What does Paul's change of itinerary tell us about flexibility in Christian ministry?",
+      "seguimiento": "When was the last time you did something out of love and it was interpreted in exactly the opposite way?",
+      "ilustracion": "Paul's yes did not depend on his fame, but on the yes of God in Christ (2 Cor. 1:19-20).",
+      "transicion": "Instead of a visit that would hurt more, Paul wrote. Let's see that letter.",
+      "actividad": "Read 2 Corinthians 1:15-24 and look for the real reasons for the change of plans.",
+      "cierre": "Faithful God, you read our intentions even if others do not read them."
+    },
+    {
+      "stationId": "palabra",
+      "apertura": "Paul wrote \"with many tears\" (2 Cor. 2:4). How do tears change the way a correction is received?",
+      "seguimiento": "What difficult conversation are you postponing, and what would make it possible this week?",
+      "ilustracion": "\"It made them understand that it cost him pain to cause them pain\" (Adventist Biblical Commentary, t. 6, p. 1094).",
+      "transicion": "That severe letter bore fruit, and the fruit had the form of forgiveness.",
+      "actividad": "Practice in pairs a difficult phrase said with love, without accusations.",
+      "cierre": "Teach us, Lord, to tell the truth without stopping loving."
+    },
+    {
+      "stationId": "perdon",
+      "apertura": "What is the purpose of church discipline according to 2 Corinthians 2:6-8?",
+      "seguimiento": "Where do we fail more often: in failing to address sin, or in failing to restore the repentant person?",
+      "ilustracion": "\"It is sufficient\" (2 Cor. 2:6): some punishments are prolonged by the church long after God has brought them to an end.",
+      "transicion": "When the news of that restoration came, Paul exploded in gratitude.",
+      "actividad": "Read 2 Corinthians 2:5-11 and list the steps: name, limit, forgive, comfort, reaffirm.",
+      "cierre": "Help us restore with the same energy we correct."
+    },
+    {
+      "stationId": "lector",
+      "apertura": "Paul passes from his restlessness in Troas to triumph in Christ in a single verse. How do the two things coexist?",
+      "seguimiento": "If someone read your life as a letter this week, what phrase would they take from it?",
+      "ilustracion": "The fragrance enters the room before the person. Thus Paul describes the believer (2 Cor. 2:14-15).",
+      "transicion": "A written letter asks to be delivered. We close with a specific step.",
+      "actividad": "Read 2 Corinthians 3:2-3 and say aloud who is reading your life.",
+      "cierre": "Write us, Lord, with your spirit, so that we can be read."
+    },
+    {
+      "stationId": "paso",
+      "apertura": "What can members do to ease the burden of church leaders?",
+      "seguimiento": "Who are you going to give your letter to this week, and what are you going to say?",
+      "ilustracion": "\"Those who have endured the greatest suffering are often those who provide greater comfort to others\" (The wonderful grace of God, p. 122).",
+      "transicion": "We gather everything into one small step addressed to a person with a name.",
+      "actividad": "Share a specific step and the name of the person to whom it is addressed.",
+      "cierre": "Give us the courage to deliver what we write with you."
+    }
+  ],
+  "patternTemplate": "{name}, you began by carrying {slot:pesar|lower}, and instead of hiding it, you placed it on the table. You remembered that God comforted you when {slot:consuelo|lower}, and you decided to bring your motives into the light through {slot:motivo|lower}. The first lines are now visible: you are not writing a complaint, but a love letter.",
+  "outOracion": "Lord, I come carrying {slot:pesar|lower}. Thank you that you comforted me when {slot:consuelo|lower}, and that this comfort is not mine alone. Purify my motives in {slot:motivo|lower}. Give me courage to say {slot:palabra|lower} with tears and without harshness, and help me reaffirm my love for {slot:perdon|lower}. May {slot:lector|or:someone watching me} read Christ in me. Thank you that \"{verse}\" ({verseRef}). In Jesus' name, amen.",
+  "outAliento": "{name}, your letter is not written with perfect ink, but with honest tears, and that's how Paul wrote his. You decided to say {slot:palabra|lower} and reaffirm your love to {slot:perdon|lower}: that doesn't break relationships, it restores them. The consolation you received is already on its way to another, and {slot:lector|or:alguien cercano} is reading you better than you think.",
+  "outAccion24": "In the next 24 hours I'm going to {slot:paso|lower}, starting by telling {slot:lector|or:esa persona} what I've been silent about for a long time.",
+  "outPregunta": "This week I understood that the comfort I received when {slot:consuelo|lower} was not only for me, and I decided to reaffirm my love for {slot:perdon|lower}. Who is reading your life as a letter, and what are they reading there?",
+  "outTarjeta": "My letter this week: I was carrying {slot:pesar|lower}, I received comfort when {slot:consuelo|lower}, and I decided to say {slot:palabra|lower} with love. Verse: \"{verse}\" ({verseRef})."
+}

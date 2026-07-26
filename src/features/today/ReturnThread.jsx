@@ -1,7 +1,9 @@
 import React from "react";
 import Icon from "../../components/Icon.jsx";
+import { useI18n } from "../../i18n/LocaleProvider.jsx";
 
 export default function ReturnThread({ item, onResolve }) {
+  const { t } = useI18n();
   if (!item) return null;
 
   return (
@@ -12,7 +14,7 @@ export default function ReturnThread({ item, onResolve }) {
         <p>{item.body}</p>
         {item.kind === "commitment" ? (
           <button type="button" onClick={() => onResolve?.(item.id)}>
-            Ya lo hice
+            {t("today.didIt")}
           </button>
         ) : null}
       </div>

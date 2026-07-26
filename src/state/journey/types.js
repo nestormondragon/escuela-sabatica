@@ -59,6 +59,12 @@
  * @property {Array<Object>} commitments
  * @property {Record<string, Object>} sabbathPacks
  * @property {Object} settings
+ * @property {"auto"|"light"|"dark"} settings.theme
+ * @property {"normal"|"large"|"x-large"} [settings.textSize]
+ * @property {"es"|"en"} [settings.locale]
+ * @property {"system"|boolean} settings.reducedMotion
+ * @property {boolean} settings.haptics
+ * @property {boolean} settings.streakVisible
  * @property {Object} legacy
  *
  * @typedef {Object} JourneyAction

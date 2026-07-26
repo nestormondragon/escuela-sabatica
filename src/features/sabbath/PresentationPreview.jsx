@@ -2,6 +2,7 @@ import React, { useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 import Icon from "../../components/Icon.jsx";
 import LessonRelief from "../../visual-world/LessonRelief.jsx";
+import { useI18n } from "../../i18n/LocaleProvider.jsx";
 
 export default function PresentationPreview({
   lesson,
@@ -9,6 +10,7 @@ export default function PresentationPreview({
   open = false,
   onClose,
 }) {
+  const { t } = useI18n();
   const reactId = useId().replace(/:/g, "");
   const titleId = `${reactId}-presentation-title`;
   const dialogRef = useRef(null);
@@ -59,13 +61,13 @@ export default function PresentationPreview({
       aria-labelledby={titleId}
     >
       <div className="sbf-presentation__topline">
-        <p>Lección {lesson.number}</p>
+        <p>{t("common.lesson", { number: lesson.number })}</p>
         <button
           ref={closeRef}
           type="button"
           className="sbf-presentation__close"
           onClick={onClose}
-          aria-label="Cerrar presentación"
+          aria-label={t("presentation.close")}
         >
           <Icon name="close" size={24} />
         </button>
@@ -73,10 +75,10 @@ export default function PresentationPreview({
 
       <header className="sbf-presentation__header">
         <div className="sbf-presentation__relief" aria-hidden="true">
-          <LessonRelief lesson={lesson} stage={4} priority />
+          <LessonRelief lesson={lesson} stage={4} filled={8} priority />
         </div>
         <div className="sbf-presentation__title">
-          <span>Sábado en comunidad</span>
+          <span>{t("presentation.community")}</span>
           <h2 id={titleId}>{lesson.title}</h2>
           <p>{lesson.verse?.ref}</p>
         </div>
@@ -99,7 +101,7 @@ export default function PresentationPreview({
       </div>
 
       <footer className="sbf-presentation__footer">
-        <p>Folio preparado para conversar en comunidad</p>
+        <p>{t("presentation.footer")}</p>
         <cite>{lesson.verse?.ref}</cite>
       </footer>
     </section>

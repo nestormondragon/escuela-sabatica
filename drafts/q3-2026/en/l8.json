@@ -1,0 +1,666 @@
+{
+  "number": 8,
+  "slug": "poder-de-resurreccion",
+  "title": "Resurrection Power",
+  "subtitle": "What, exactly, does the empty tomb promise the name that hurts you most?",
+  "kitName": "My Living Hope",
+  "artifactNoun": "hope",
+  "motif": "alba",
+  "stages": [
+    "noche",
+    "rubor",
+    "alba",
+    "aurora",
+    "pleno"
+  ],
+  "stageLabels": [
+    "Dark night · grief",
+    "First blush of dawn · a promise",
+    "Dawn rises · certainty",
+    "Full sunrise · victory",
+    "Broad daylight · reunion"
+  ],
+  "verseRef": "1 Cor. 15:14, 17",
+  "verseText": "And if Christ has not been raised, then our preaching is in vain and your faith is also in vain.",
+  "promise": "In a few minutes you will raise your Living Hope, {name}: you will name the loss you carry, see why the empty tomb withstood the scrutiny of those who were there, understand what it truly means that your loved ones sleep, and hold one concrete promise with the name of someone you love inside it. Piece by piece, the night begins to find a horizon.",
+  "ui": {
+    "start": "Begin my living hope",
+    "emptyKit": "Your hope",
+    "building": "Each piece lets in a little more light",
+    "buildingHint": "Tap the glowing piece. Watch the closed night become dawn.",
+    "lastPiece": "One piece remains",
+    "patternLabel": "Your pattern at dawn",
+    "doneTitle": "Your hope is alive",
+    "doneSub": "You assembled it with God, without pretending it does not hurt. Open it, save it, and share it.",
+    "open": "Open my hope",
+    "back": "Back to my hope",
+    "kitName": "My Living Hope"
+  },
+  "slots": [
+    {
+      "id": "perdida",
+      "n": 1,
+      "label": "The loss I carry",
+      "teaser": "What death took from me...",
+      "icon": "heart"
+    },
+    {
+      "id": "testigos",
+      "n": 2,
+      "label": "The evidence that sustains me",
+      "teaser": "Why I believe it truly happened...",
+      "icon": "people"
+    },
+    {
+      "id": "vano",
+      "n": 3,
+      "label": "What is not in vain",
+      "teaser": "What still stands because he lives...",
+      "icon": "anchor"
+    },
+    {
+      "id": "sueno",
+      "n": 4,
+      "label": "What I believe about sleep",
+      "teaser": "Where the person who died truly is...",
+      "icon": "moon"
+    },
+    {
+      "id": "primicia",
+      "n": 5,
+      "label": "The seed that is sown",
+      "teaser": "What God sees where I see a grave...",
+      "icon": "seed"
+    },
+    {
+      "id": "cuerpo",
+      "n": 6,
+      "label": "What I long to see restored",
+      "teaser": "What death broke and he will remake...",
+      "icon": "sun"
+    },
+    {
+      "id": "victoria",
+      "n": 7,
+      "label": "The promise I hold",
+      "teaser": "What the empty tomb promises about my loss...",
+      "icon": "crown"
+    },
+    {
+      "id": "paso",
+      "n": 8,
+      "label": "My step this week",
+      "teaser": "One concrete step and someone I will accompany...",
+      "icon": "path"
+    }
+  ],
+  "stations": [
+    {
+      "id": "perdida",
+      "day": "Saturday · Everything is held here",
+      "tag": "Slot 1 · The loss I carry",
+      "title": "Before doctrine, your grief",
+      "story": "This chapter was not born in a classroom. It was born because people in Corinth had buried their loved ones and then heard someone say there was no resurrection. Paul does not answer with a cold theory. He responds because he knows what would be lost if that claim were true. Before looking at the evidence, look at what you carry. The resurrection is not a subject to archive; it is the reason your pain has a horizon.",
+      "cue": "Take your time, {name}. Here you can tell the truth about what you miss.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "What loss do you bring today with you?",
+        "hint": "No one else will see it. Choose the most honest, not the most presentable",
+        "saveLabel": "Save to my hope",
+        "seedSub": "Your loss",
+        "closing": "There is no single correct way to carry grief. There is only a God who does not ask you to hide it: \"Do not grieve like the rest, who have no hope\" (1 Thess. 4:13). Notice that it does not say, \"Do not grieve.\" It says your grief has somewhere to look.",
+        "options": [
+          {
+            "id": "reciente",
+            "label": "A recent death I still cannot take in",
+            "insight": "You are in the place where your body still does not believe what your mind knows. Do not rush. Jesus wept before a tomb he himself was about to open (John 11:35).",
+            "tags": [
+              "theme:hope",
+              "posture:clinging",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "antigua",
+            "label": "It was years ago, and it still hurts the same",
+            "insight": "Old grief is not failed grief. You loved for a long time, so the absence also lasts. The promise does not expire with the years: \"The dead in Christ will rise first\" (1 Thess. 4:16).",
+            "tags": [
+              "theme:love",
+              "posture:clinging",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "sinDespedida",
+            "label": "I couldn't say goodbye",
+            "insight": "The conversation left unfinished may weigh on you almost as much as the death itself. Resurrection means not only reunion, but the possibility of completing what was interrupted.",
+            "tags": [
+              "theme:hope",
+              "react:withdraw",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "preguntas",
+            "label": "His death left me questions about God",
+            "insight": "Asking is not betraying faith. Job asked, and in the middle of the questions he said, \"I know that my Redeemer lives\" (Job 19:25). You can hold both things at once.",
+            "tags": [
+              "react:doubt",
+              "theme:faith",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "acompano",
+            "label": "It is not my grief; I am accompanying someone who carries it",
+            "insight": "Holding another person is tiring too. What you learn here will not be theory; it will be what you can offer when they run out of words.",
+            "tags": [
+              "theme:service",
+              "posture:seeking",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "propia",
+            "label": "I feel the weight of my own mortality",
+            "insight": "Facing the fact that you will die takes more courage than avoiding it. Paul called death \"the last enemy\" (1 Cor. 15:26): a real enemy whose defeat already has a date.",
+            "tags": [
+              "react:fear",
+              "theme:hope",
+              "posture:seeking"
+            ]
+          },
+          {
+            "id": "otraPerdida",
+            "label": "I lost something that I will never recover here",
+            "insight": "Not every death has a funeral. Some losses receive no help or ritual for burial. God's promise includes them too: he \"will wipe every tear\" (Rev. 21:4), not only some.",
+            "tags": [
+              "theme:grace",
+              "posture:humble",
+              "tone:tender"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "testigos",
+      "day": "Sunday · Proclaiming the resurrection of Christ",
+      "tag": "Slot 2 · The evidence that supports me",
+      "title": "\"Ask them what they saw\"",
+      "story": "Paul summarizes the gospel in four strokes: Christ died for our sins, was buried, rose on the third day, and appeared to witnesses (1 Cor. 15:3-8). That final stroke is stubbornly concrete. Paul names witnesses and adds that more than five hundred saw Jesus at once, most of whom were still alive when he wrote. It is almost a challenge: go ask them. He is not asking you to leap into a void. He is handing you a list of addresses.",
+      "cue": "{name}, look at this calmly: Paul is not asking you to believe without evidence.",
+      "module": {
+        "type": "pickReveal",
+        "saveLabel": "Save to my hope",
+        "seedSub": "Your evidence",
+        "prompt": "Explore each piece of evidence and keep the one that steadies you most",
+        "hint": "Not the most impressive. The one that serves you when you doubt",
+        "chooseLabel": "This is the one that holds me",
+        "closing": "Jesus told them, \"You are witnesses of these things\" (Luke 24:48). Two thousand years later, you did not see the empty tomb, but you have seen what the risen Christ does with broken people. That too is testimony.",
+        "allowCustom": {
+          "label": "Write mine",
+          "placeholder": "What convinces me is...",
+          "extraKey": "evidenciaPropia"
+        },
+        "items": [
+          {
+            "t": "More than five hundred saw him at once, and most were still alive",
+            "ref": "1 Cor. 15:6",
+            "meaning": "Paul wrote while the witnesses could still contradict him. No one invents an alibi that anyone is invited to verify."
+          },
+          {
+            "t": "Those who fled terrified died holding what they saw",
+            "ref": "Hech. 4:33",
+            "meaning": "The same people who hid on Friday preached in the streets weeks later. Something happened between those two moments."
+          },
+          {
+            "t": "No one could ever present a body",
+            "ref": "Luc. 24:2-3",
+            "meaning": "It was enough to open the tomb to end Christianity the first month. It was never done, because there was nothing to show."
+          },
+          {
+            "t": "The whole Old Testament pointed to this before it happened",
+            "ref": "Luc. 24:44-47",
+            "meaning": "Jesus himself opened the Scriptures to show that his death and his resurrection were written. It was not an emergency plan."
+          }
+        ]
+      }
+    },
+    {
+      "id": "vano",
+      "day": "Monday · The risen Christ, our only hope",
+      "tag": "Slot 3 · What is not in vain",
+      "title": "Either everything falls or everything holds",
+      "story": "Paul does something daring: he rests the entire Christian faith on a single stone and says that if it fails, the whole building falls. If Christ was not raised, preaching is empty, faith is empty, the apostles are false witnesses, we remain in our sins, and those who died are lost. No ornament, no escape. Then comes the turn: \"But Christ has indeed been raised\" (1 Cor. 15:20). Everything that fell now holds.",
+      "cue": "Pay attention here, {name}: everything else hangs on this.",
+      "module": {
+        "type": "skillThenCommit",
+        "saveLabel": "Save to my hope",
+        "seedSub": "What holds",
+        "skill": {
+          "prompt": "Order each phrase: Does it belong to the world without resurrection, or to the world with the empty tomb?",
+          "hint": "Paul does exactly this exercise in 1 Corinthians 15",
+          "badge": "You're learning to see what your faith hangs from",
+          "cats": [
+            "If Christ did not rise",
+            "But Christ was resurrected"
+          ],
+          "rounds": [
+            {
+              "t": "\"Our preaching is vain and your faith is also vain.\"",
+              "a": 0,
+              "fb": "If he did not resurrect: without resurrection, the message remains hollow (1 Cor. 15:14)."
+            },
+            {
+              "t": "\"He has become the firstfruits of those who sleep.\"",
+              "a": 1,
+              "fb": "Because he was raised: he is the first fruit, and the harvest follows where the first fruit has gone (1 Cor. 15:20)."
+            },
+            {
+              "t": "\"They are still in their sins,\" because no one paid anything.",
+              "a": 0,
+              "fb": "If he did not resurrect: A cross without resurrection is just one more execution (1 Cor. 15:17)."
+            },
+            {
+              "t": "\"The last enemy that will be destroyed is death.\"",
+              "a": 1,
+              "fb": "Because he was raised: death has a date of defeat, not an endless reign (1 Cor. 15:26)."
+            },
+            {
+              "t": "Those who have already slept in Christ were lost forever.",
+              "a": 0,
+              "fb": "If he did not rise: it would be the cruelest phrase of all (1 Cor. 15:18). And it is precisely the one that Paul denies."
+            },
+            {
+              "t": "\"Your work in the Lord is not in vain.\"",
+              "a": 1,
+              "fb": "Because he was raised: nothing you do out of love for him is lost (1 Cor. 15:58)."
+            }
+          ],
+          "summary": "Notice what you just did: every terrible consequence depends on an \"if\" that proved false. Christ was raised. Therefore the ones you love are not lost, your faith is not an illusion, and your labor is not waste."
+        },
+        "commit": {
+          "prompt": "What thing of yours ceases to be in vain because he lives?",
+          "hint": "Something concrete that you were about to give up",
+          "placeholder": "Because he lives, it is not in vain...",
+          "extraKey": "noEsVano",
+          "options": [
+            "The forgiveness I received on the cross",
+            "The years I cared for someone who is no longer here",
+            "The faith I taught someone who died before me",
+            "The service I do and that nobody sees",
+            "The long wait that has brought no answer"
+          ]
+        }
+      }
+    },
+    {
+      "id": "sueno",
+      "day": "Monday · Those who sleep",
+      "tag": "Slot 4 · What I believe about sleep",
+      "title": "Where the person you loved truly is",
+      "story": "The whole chapter loses its meaning if everyone has already gone to heaven. Why promise a future resurrection if no one is waiting? The Bible uses another word: sleep. \"Our friend Lazarus has fallen asleep, but I am going there to wake him up\" (John 11:11). Those who died are not suffering, wandering far away, or watching and taking notes. They rest. For them there is no felt wait: the next thing they experience will be the trumpet and the face of Jesus.",
+      "cue": "It is important to be precise here, {name}, because this changes how you grieve.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "What have you been told, or believed, about where the dead are?",
+        "hint": "No shame. Almost all of us have heard several versions",
+        "saveLabel": "Save to my hope",
+        "seedSub": "Your rest",
+        "closing": "The Bible speaks calmly and clearly: \"the dead know nothing\" (Eccl. 9:5) and \"their plans come to nothing\" (Ps. 146:4). This does not take your loved one away; it frees you from imagining them conscious yet absent. They sleep without pain or fear until \"the dead will be raised imperishable\" (1 Cor. 15:52) when Christ returns.",
+        "options": [
+          {
+            "id": "miraDesdeArriba",
+            "label": "\"They are looking down on me from heaven\"",
+            "insight": "This is often said at funerals and comes from love. The Bible offers something gentler: your loved one is not watching from a distance, but resting. Not one day of your life is lost to them, because for them no time will have passed.",
+            "tags": [
+              "theme:truth",
+              "posture:seeking",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "duerme",
+            "label": "They sleep and will awaken when Jesus returns",
+            "insight": "That is exactly what Paul teaches. And there is a hidden gift there: whoever sleeps does not count the years. Close your eyes, and the next thing you see is Christ's return.",
+            "tags": [
+              "theme:resurrection",
+              "theme:hope",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "noSe",
+            "label": "Honestly, I don't know what to believe",
+            "insight": "It is all right to begin there. You do not need to solve everything today. Look at what the text says and let it release you from ideas that distress you.",
+            "tags": [
+              "react:doubt",
+              "posture:seeking",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "miedoJuicio",
+            "label": "I am afraid to think about where they are",
+            "insight": "That fear is a burden that God never asked you to carry. The destiny of the one you love is in the hands of the fairest and most compassionate judge in the universe, not in your evaluation. You can drop it there.",
+            "tags": [
+              "react:fear",
+              "theme:grace",
+              "posture:surrendering"
+            ]
+          },
+          {
+            "id": "nada",
+            "label": "I think there is simply nothing after death",
+            "insight": "If that were true, Paul would agree with you on something: \"Let's eat and drink, that tomorrow we will die\" (1 Cor. 15:32). But he saw the Risen One, and therefore he wrote otherwise.",
+            "tags": [
+              "react:doubt",
+              "theme:faith",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "consuelo",
+            "label": "I need it to be true rather than understand",
+            "insight": "That is not weakness. This is why the promise was given: \"Encourage one another with these words\" (1 Thess. 4:18). It is doctrine to lean on, not merely study from afar.",
+            "tags": [
+              "theme:hope",
+              "posture:clinging",
+              "tone:tender"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "primicia",
+      "day": "Tuesday · Christ, the first",
+      "tag": "Slot 5 · The seed that is sown",
+      "title": "What God sees where you see a tomb",
+      "story": "\"How are the dead raised? With what kind of body will they come?\" (1 Cor. 15:35). Paul answers with a field. The seed placed in the ground must cease to be only a seed. What emerges does not look like what was buried, yet it has continuity with it. Christ is the firstfruits: the first sheaf to rise announces that the whole harvest follows. Seen from heaven, a cemetery is a sown field.",
+      "cue": "Change the angle for a moment, {name}, and look at the same scene with new eyes.",
+      "module": {
+        "type": "perspectiveFlip",
+        "saveLabel": "Save to my hope",
+        "seedSub": "Your seed",
+        "prompt": "Touch every card to see what God sees",
+        "hint": "The same scene, two glances",
+        "pairs": [
+          {
+            "see": "You see a gravestone engraved with an ending date.",
+            "sees": "God sees a seed sown: \"What you sow does not come to life unless it dies\" (1 Cor. 15:36)."
+          },
+          {
+            "see": "You see a body that disease slowly extinguished.",
+            "sees": "\"It is sown perishable; it is raised imperishable. It is sown in weakness; it is raised in power\" (1 Cor. 15:42-43)."
+          },
+          {
+            "see": "You see a definitive goodbye, without return.",
+            "sees": "Christ is the firstfruits (1 Cor. 15:20). Where the first sheaf has already risen, the whole harvest has an open path."
+          },
+          {
+            "see": "You see the years go by and nothing changes.",
+            "sees": "For those who sleep there are no years. Close your eyes and the next thing you hear is the trumpet (1 Cor. 15:52)."
+          }
+        ],
+        "chooseLabel": "This is the look I needed",
+        "teach": "Baptism says the same thing with water: you go down like someone being buried and rise like someone being resurrected (Col. 2:12). Every baptized believer has already rehearsed, bodily, what God promises actually to do. The resurrection is not a beautiful metaphor; it is God's miracle in real matter.",
+        "commit": {
+          "prompt": "Write what you wish you could see how God sees it",
+          "hint": "It can be a place, a date, a memory that you avoid",
+          "placeholder": "I want to learn to see...",
+          "extraKey": "miradaNueva",
+          "shareable": true
+        }
+      }
+    },
+    {
+      "id": "cuerpo",
+      "day": "Wednesday · The resurrected body",
+      "tag": "Slot 6 · What I long for restored",
+      "title": "Real bodies, no wear",
+      "story": "Paul does not promise ghosts. He uses the same word, body, for what is sown and what is raised: there is continuity. Yet the contrasts are enormous. What is earthly, perishable, weak, and natural rises heavenly, imperishable, powerful, and spiritual (1 Cor. 15:42-44). Jesus \"will transform our lowly bodies so that they will be like his glorious body\" (Phil. 3:21). Real, recognizable, and never to be broken again.",
+      "cue": "Allow yourself to wish this, {name}. It's not naivety.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "Of all that death or illness broke, what do you long for more to see restored?",
+        "hint": "Be specific. God is not offended by the concrete",
+        "saveLabel": "Save to my hope",
+        "seedSub": "Your longing",
+        "closing": "All we know now is wear, illness, and farewell, so life without them is hard to imagine. Yet this is exactly the promise: \"the dead will be raised imperishable\" (1 Cor. 15:52). Not an edited version of this life, but life without what ruined it.",
+        "options": [
+          {
+            "id": "voz",
+            "label": "His voice, as it sounded",
+            "insight": "The resurrected saints in Ellen G. White's vision did not emerge in silence. They came out shouting \"Victory!\" There will be voices, and one of them will say your name again.",
+            "tags": [
+              "theme:love",
+              "posture:clinging",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "abrazo",
+            "label": "The hug that was interrupted",
+            "insight": "\"The friends disunited by death gathered again to never separate again\" (The History of Redemption, p. 361). Real bodies mean real arms.",
+            "tags": [
+              "theme:hope",
+              "theme:love",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "mente",
+            "label": "His mind, that the disease was erasing",
+            "insight": "You said goodbye twice: first to the person's mind, then to their body. The one who rises carries neither loss. They return whole, and they recognize you.",
+            "tags": [
+              "theme:resurrection",
+              "posture:clinging",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "miCuerpo",
+            "label": "My own body, tired or sick",
+            "insight": "\"The bodies that had descended to the tomb with the marks of the disease were resurrected endowed with immortal health and vigor.\" Your diagnosis does not have the last word on you.",
+            "tags": [
+              "theme:hope",
+              "posture:surrendering",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "tiempo",
+            "label": "The years that robbed us",
+            "insight": "Here time is the thief. There the clock ends: there will be no countdown to any relationship that God restores.",
+            "tags": [
+              "theme:hope",
+              "react:withdraw",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "pendiente",
+            "label": "What remained unfixed between us",
+            "insight": "Some grief hurts because of what was never said. God \"will wipe every tear\" (Rev. 21:4), including tears of guilt. Reconciliation belongs to the promise too.",
+            "tags": [
+              "theme:grace",
+              "posture:humble",
+              "tone:raw"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "victoria",
+      "day": "Thursday · The final victory over death",
+      "tag": "Slot 7 · The promise I hold",
+      "title": "Death, where is your sting?",
+      "story": "At the end of the chapter, Paul stops arguing and begins to sing. The trumpet sounds. In the blink of an eye, those who sleep rise imperishable and those who live are transformed (1 Cor. 15:51-53). Then the promise is fulfilled: \"Death has been swallowed up in victory\" (1 Cor. 15:54). The anthem becomes a challenge to the defeated enemy: \"Where, O death, is your sting?\" (1 Cor. 15:55). It is time to forge this hope, link by link.",
+      "cue": "Hold this with both hands, {name}. It is for you and for the one you love.",
+      "module": {
+        "type": "anchorChain",
+        "saveLabel": "Seal my hope",
+        "seedSub": "Your promise",
+        "links": [
+          {
+            "t": "Christ truly rose",
+            "fb": "It is not an inspiring idea: it is a fact with witnesses, with a date and with an empty tomb (1 Cor. 15:4-8)."
+          },
+          {
+            "t": "He is the first, not the exception",
+            "fb": "What happened to him is the advance of what will happen to his own (1 Cor. 15:20-23)."
+          },
+          {
+            "t": "Those I love sleep, they are not lost",
+            "fb": "They rest without pain, and their next conscious moment is the coming of Jesus (1 Thess. 4:16)."
+          },
+          {
+            "t": "Death has a date of defeat",
+            "fb": "\"The last enemy that will be destroyed is death\" (1 Cor. 15:26). Real enemy, and with the days numbered."
+          }
+        ],
+        "prompt": "Which promise will you hold over the loss you named at the beginning?",
+        "hint": "Choose one, or write yours with your name inside",
+        "options": [
+          "That I will see them again, with a body and a voice",
+          "That they are not suffering or waiting: they rest",
+          "That time will not have passed",
+          "That the last thing I lost is not the last thing I will know about them",
+          "That the One who defeated death also holds my grief"
+        ],
+        "allowCustom": {
+          "placeholder": "I hold this promise...",
+          "extraKey": "promesaPropia"
+        }
+      }
+    },
+    {
+      "id": "paso",
+      "day": "Friday · To study and meditate",
+      "tag": "Slot 8 · My step of the week",
+      "title": "A hope that walks",
+      "story": "\"The divinity of Christ is the believer's assurance of eternal life\" (The Desire of Ages, p. 530). Paul closes the chapter without letting us drift: \"Stand firm. Let nothing move you. Always give yourselves fully to the work of the Lord, because you know that your labor in the Lord is not in vain\" (1 Cor. 15:58). Resurrection does not remove you from this week. It returns you to it with a reason to act. Take one step, and do not take it alone.",
+      "cue": "Choose one small, real step, {name}, that you can take tomorrow.",
+      "module": {
+        "type": "commitDuo",
+        "saveLabel": "Close my hope",
+        "seedSub": "Your step",
+        "stepPrompt": "My concrete step this week",
+        "stepHint": "Touch an idea or write yours",
+        "stepOptions": [
+          "Read all of 1 Corinthians 15 slowly and aloud",
+          "Visit the tomb or the memory without running away from the pain",
+          "Write what I will say when I see them again",
+          "Memorize 1 Corinthians 15:55",
+          "Tell someone who doubts why I do believe"
+        ],
+        "stepPlaceholder": "My concrete step...",
+        "stepExtraKey": "pasoTexto",
+        "personPrompt": "Someone who is in mourning and whom I am going to accompany",
+        "personHint": "You don't have to have words. Just show up",
+        "personPlaceholder": "A name...",
+        "personExtraKey": "acompanar"
+      }
+    }
+  ],
+  "encourage": [
+    "\"But Christ has indeed been raised from the dead, the firstfruits of those who have fallen asleep.\" (1 Cor. 15:20)",
+    "\"Death has been swallowed up in victory. Where, O death, is your sting?\" (1 Cor. 15:54-55)",
+    "\"I am the resurrection and the life; the one who believes in me will live, even though they die.\" (John 11:25)",
+    "\"We do not want you to ignore those who sleep, so that you do not get sad like the others who have no hope.\" (1 Thess. 4:13)",
+    "\"I know whom I have believed, and am convinced that he is able to guard what I have entrusted to him until that day.\" (2 Tim. 1:12)",
+    "\"Be firm and constant, knowing that your work in the Lord is not in vain.\" (1 Cor. 15:58)"
+  ],
+  "discussion": [
+    "The first Christians were eyewitnesses of the resurrection (Acts 2:32; 4:33). Two thousand years later, how can we be \"witnesses\" of something we didn't see with our eyes?",
+    "Paul says that without the resurrection the preaching of the cross would be irrelevant (1 Cor. 15:14). Why would the death of Christ alone not enough? What does that tell us about the power of his resurrection?",
+    "\"If the dead do not rise, let us eat and drink, that tomorrow we will die\" (1 Cor. 15:32). What is Paul really saying about how we live when we believe that there is nothing after?",
+    "Discuss carefully about the state of the dead. Why does 1 Corinthians 15 lose all meaning if when the saved die immediately they go to heaven? And what concrete consolation gives someone who buried a loved one?"
+  ],
+  "facilitator": [
+    {
+      "stationId": "perdida",
+      "apertura": "Why do you think Paul dedicates an entire chapter to the resurrection and not just a paragraph?",
+      "seguimiento": "Without giving names if you don't want to: What loss makes this topic not theory for you?",
+      "ilustracion": "Some people in Corinth had already buried loved ones when they heard there was no resurrection. This chapter is the response of a pastor, not merely a teacher.",
+      "transicion": "If it depends so much on this, let's first see why Paul was so sure it happened.",
+      "actividad": "Keep thirty seconds of silence so that everyone remembers who they carry in their hearts this week.",
+      "cierre": "Lord, you cried in front of a tomb. Accompany today those who are in mourning in this class."
+    },
+    {
+      "stationId": "testigos",
+      "apertura": "What weight does Paul's reference to more than five hundred living witnesses carry (1 Cor. 15:6)?",
+      "seguimiento": "What things do we readily believe without having seen them ourselves?",
+      "ilustracion": "Paul practically says, \"Ask them what they saw.\" No one invites scrutiny of a story they invented.",
+      "transicion": "If the fact is firm, let's see what falls if someone denies it.",
+      "actividad": "Read 1 Corinthians 15:3-8 and make a list together of the witnesses Paul mentions.",
+      "cierre": "Thank you, Lord, because your resurrection resisted the examination of those who were there."
+    },
+    {
+      "stationId": "vano",
+      "apertura": "Paul lists six consequences of denying the resurrection. Which one do you think is the most serious and why?",
+      "seguimiento": "What things in your life would be empty if Christ had not risen?",
+      "ilustracion": "The Greek word kenos means emptiness. A faith without resurrection is a beautiful container with nothing inside.",
+      "transicion": "Paul turns in verse 20 with a \"but.\" Before continuing, let's clarify what happens to those who have already died.",
+      "actividad": "Distribute 1 Corinthians 15:13-19 and let each one read out a consequence.",
+      "cierre": "Because you live, Lord, nothing we do for you is lost."
+    },
+    {
+      "stationId": "sueno",
+      "apertura": "What sense would 1 Corinthians 15 have if we were already with God in heaven when we died?",
+      "seguimiento": "What ideas about death did you hear at the last funeral you attended?",
+      "ilustracion": "Jesus said \"Lazarus sleeps\" and had to clarify that he spoke of his death (John 11:11-14). He chose that word on purpose.",
+      "transicion": "If they sleep, someone has to wake them up. Let's see who was the first to get up.",
+      "actividad": "Compare Ecclesiastes 9:5, Psalm 146:4, and 1 Thessalonians 4:13-17 in three groups.",
+      "cierre": "Thank you that our loved ones rest and that their next awakening will be at your coming."
+    },
+    {
+      "stationId": "primicia",
+      "apertura": "What does it mean that Jesus is \"the firstfruits\" and not merely one person who was resurrected?",
+      "seguimiento": "How does the image of the seed help you when you think of a cemetery?",
+      "ilustracion": "The firstfruits were the first sheaf presented in the temple: visible assurance that the whole harvest would follow.",
+      "transicion": "If a harvest is coming, we should ask what kind of body will be raised.",
+      "actividad": "Read 1 Corinthians 15:36-44 and name the three analogies that Paul uses.",
+      "cierre": "Sow in us the certainty that what is buried in you is not lost."
+    },
+    {
+      "stationId": "cuerpo",
+      "apertura": "Why is it important that Paul uses the word \"body\" for both what is sown and what is raised?",
+      "seguimiento": "How does this promise help us respond to our physical limitations today?",
+      "ilustracion": "\"Spiritual\" does not mean immaterial: Jesus will transform our bodies to be like his glorified body (Phil. 3:21).",
+      "transicion": "From transformed bodies we pass to the exact moment in which it occurs: the final trumpet.",
+      "actividad": "Make a list together of the four contrasts in 1 Corinthians 15:42-44.",
+      "cierre": "Give us hope in the body and not only in the soul, Lord of life."
+    },
+    {
+      "stationId": "victoria",
+      "apertura": "Why does Paul go from argument to singing in 1 Corinthians 15:54-57?",
+      "seguimiento": "What concrete promise do you need to hold this week about someone you lost?",
+      "ilustracion": "The sting is like that of a bee that has already struck and lost its power. Death still hurts, but it can no longer kill forever.",
+      "transicion": "A hope like this does not remain still. It ends in a concrete step.",
+      "actividad": "Recite together 1 Corinthians 15:55 out loud, like the challenge that is.",
+      "cierre": "Thank you that the last enemy's days are already numbered."
+    },
+    {
+      "stationId": "paso",
+      "apertura": "How does Paul connect the future resurrection with being \"steadfast and immovable\" today (1 Cor. 15:58)?",
+      "seguimiento": "Who in our environment is grieving right now and needs company, no explanations?",
+      "ilustracion": "Ellen G. White describes the reunion: \"Friends long separated by death are united, nevermore to part.\"",
+      "transicion": "Let's close by gathering what each person assembled and the step they will take this week.",
+      "actividad": "Let each one say a name to accompany this week, and pray for that person.",
+      "cierre": "Make us steadfast people, with living hope and hands ready to serve."
+    }
+  ],
+  "patternTemplate": "{name}, you started by naming what you almost never say out loud: {slot:perdida|lower}. Then you looked at the evidence and kept this one: {slot:testigos|lower}. You understood that those you love sleep and that their next moment is the coming, and now you hold a concrete promise: {slot:victoria|lower}. The night is still night, but it already has a light edge.",
+  "outOracion": "Lord, I come carrying this: {slot:perdida|lower}. I will not hide it or pretend it does not hurt. Thank you that your resurrection is not a pleasant idea but a fact, and that {slot:testigos|lower}. Because of your victory, {slot:vano|lower} is no longer in vain. Keep my loved ones as they sleep, and keep me while I wait. I long for the day you restore {slot:cuerpo|lower}. Today I hold your promise: {slot:victoria|lower}. Because \"{verse}\" ({verseRef}). In Jesus' name, amen.",
+  "outAliento": "{name}, your sadness is not a lack of faith. It is love left without its recipient for a while. You named {slot:perdida|lower}, and you did not stop there: you held onto {slot:victoria|lower}. The tomb was empty, your loved ones rest, and the last enemy already has a defeat date. Keep crying if you need to, but cry while looking toward the sunrise.",
+  "outAccion24": "In the next 24 hours I'm going to {slot:paso|lower}, and I'm going to look for the mourning person I wrote down to accompany them without rushing their pain.",
+  "outPregunta": "This week I studied 1 Corinthians 15 and understood that I hold this: {slot:victoria|lower}. If you had to say a single real thing to someone who just buried the one he loved, what would you say?",
+  "outTarjeta": "My hope this week: I named {slot:perdida|lower}, I learned that mine sleep until he returns, and I maintain that {slot:victoria|lower}. Verse: \"{verse}\" ({verseRef})."
+}

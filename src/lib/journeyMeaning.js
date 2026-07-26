@@ -1,41 +1,66 @@
 const CAPABILITIES = Object.freeze({
   choiceInsight: {
     id: "notice-influence",
-    label: "Observar tu respuesta con honestidad",
+    es: "Observar tu respuesta con honestidad",
+    en: "Notice your response honestly",
   },
   skillThenCommit: {
     id: "restorative-discernment",
-    label: "Practicar discernimiento y elegir un paso",
+    es: "Practicar discernimiento y elegir un paso",
+    en: "Practice discernment and choose a step",
   },
   perspectiveFlip: {
     id: "perspective-taking",
-    label: "Mirar desde otra perspectiva",
+    es: "Mirar desde otra perspectiva",
+    en: "See from another perspective",
   },
   pickReveal: {
     id: "text-shaped-choice",
-    label: "Explorar una decisión a la luz del texto",
+    es: "Explorar una decisión a la luz del texto",
+    en: "Explore a decision in light of the text",
   },
   anchorChain: {
     id: "trace-a-sequence",
-    label: "Conectar una verdad paso a paso",
+    es: "Conectar una verdad paso a paso",
+    en: "Connect a truth step by step",
   },
   stairs: {
     id: "name-and-release",
-    label: "Nombrar y soltar una carga",
+    es: "Nombrar y soltar una carga",
+    en: "Name and release a burden",
   },
   commitDuo: {
     id: "relational-action",
-    label: "Convertir una convicción en un paso acompañado",
+    es: "Convertir una convicción en un paso acompañado",
+    en: "Turn a conviction into an accompanied step",
   },
 });
 
-export function capabilityForModule(moduleType) {
-  return (
-    CAPABILITIES[moduleType] || {
-      id: "reflect-and-respond",
-      label: "Convertir una lectura en una respuesta",
-    }
+const FALLBACK_CAPABILITY = Object.freeze({
+  id: "reflect-and-respond",
+  es: "Convertir una lectura en una respuesta",
+  en: "Turn a reading into a response",
+});
+
+function localizedCapability(capability, locale) {
+  return {
+    id: capability.id,
+    label: locale === "en" ? capability.en : capability.es,
+  };
+}
+
+export function capabilityForModule(moduleType, locale = "es") {
+  return localizedCapability(
+    CAPABILITIES[moduleType] || FALLBACK_CAPABILITY,
+    locale
   );
+}
+
+export function capabilityLabelForId(capabilityId, locale = "es") {
+  const capability =
+    Object.values(CAPABILITIES).find((entry) => entry.id === capabilityId) ||
+    FALLBACK_CAPABILITY;
+  return localizedCapability(capability, locale).label;
 }
 
 export function latestOpenCommitment(state, lessonId = null) {

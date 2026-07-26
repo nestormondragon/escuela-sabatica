@@ -8,13 +8,17 @@
 
 **Platform:** Responsive web app, designed mobile first and requiring no runtime API
 
-**Language:** Spanish
+**Languages:** Spanish and English, selectable per device
 
-**Source material:** The 13 official Spanish Adult Bible Study Guide PDFs for Q3 2026, covering 1 and 2 Corinthians
+**Source material:** The 13 official Spanish Adult Bible Study Guide PDFs for
+Q3 2026, covering 1 and 2 Corinthians. The English edition preserves the same
+stable lesson, station, slot, and Scripture-reference topology.
 
 ## Primary user
 
-The primary user is a Spanish-speaking Seventh-day Adventist adult who studies the weekly Sabbath School lesson privately during the week and may bring one thought, question, prayer, or commitment to the Sabbath class.
+The primary user is a Spanish- or English-speaking Seventh-day Adventist adult
+who studies the weekly Sabbath School lesson privately during the week and may
+bring one thought, question, prayer, or commitment to the Sabbath class.
 
 The current product is intentionally personal. It is primarily used by one reader, Néstor, but its interaction model should remain respectful and understandable for another adult reader without requiring product training.
 
@@ -124,7 +128,8 @@ The focused interaction flow for one weekly lesson. It should reveal one station
 - Existing local storage must migrate without losing answers.
 - Existing motif implementations and their verified narrative stage mapping are source assets to preserve and integrate.
 - Framer Motion may be used for interface choreography.
-- Ambient loops must remain CSS based.
+- One visible full-size artifact may own one capped, visibility-aware WebGL
+  render loop. All other ambient surfaces remain static or one-shot.
 - SVG filters must not become persistent mobile paint costs.
 - Ordinary interface icons must come from the existing Phosphor family.
 - The app must remain functional if haptics, sharing, clipboard, image export, or local storage are unavailable.
@@ -132,7 +137,13 @@ The focused interaction flow for one weekly lesson. It should reveal one station
 ## Content rules
 
 - The PDF and draft JSON pipeline is the source of truth.
-- All visible product copy is Spanish.
+- All visible product copy, accessibility copy, dates, titles, generated folio
+  fields, and lesson content must resolve through the selected Spanish or
+  English locale.
+- Stable IDs, tags, slot keys, and saved answers never change when locale
+  changes.
+- Switching locale may regenerate untouched synthesized folio text, but must
+  preserve fields the reader edited.
 - Do not use em dashes or en dashes in visible copy.
 - Never fabricate Bible quotations, lesson claims, or source references.
 - Personal callbacks must quote or paraphrase only data the reader actually entered.

@@ -1,0 +1,657 @@
+{
+  "number": 4,
+  "slug": "tu-cuerpo-su-templo",
+  "title": "Your Body, His Temple",
+  "subtitle": "What have you learned to tolerate without realizing it?",
+  "kitName": "My Temple",
+  "artifactNoun": "temple",
+  "motif": "barro",
+  "stages": [
+    "grieta",
+    "arcilla",
+    "torno",
+    "horno",
+    "templo"
+  ],
+  "stageLabels": [
+    "Cracked clay · what I name",
+    "Clay in his hands · seen",
+    "On the wheel · being formed",
+    "Through the fire · restored",
+    "Living temple · bought at a price"
+  ],
+  "verseRef": "1 Cor. 6:19-20",
+  "verseText": "Do you not know that your body is a temple of the Holy Spirit, who is in you and whom you have from God? You are not your own.",
+  "promise": "In a few minutes you will build your Temple, {name}: you will name what entered your life without permission, face what you learned to tolerate, distinguish correction that heals from shame that destroys, and hold on to the phrase that changes everything: you were bought at a price. Piece by piece, cracked clay will take the shape of a temple.",
+  "ui": {
+    "start": "Start building my temple",
+    "emptyKit": "your temple",
+    "building": "Each answer sets a stone",
+    "buildingHint": "Touch the piece that shines. You will see cracked clay take shape until it becomes a temple.",
+    "lastPiece": "a piece is missing",
+    "patternLabel": "Your pattern in the clay",
+    "doneTitle": "Your temple is standing",
+    "doneSub": "You didn't lift it alone. Open it, save it, share it.",
+    "open": "open my temple",
+    "back": "Return to my temple",
+    "kitName": "My Temple"
+  },
+  "slots": [
+    {
+      "id": "influencia",
+      "n": 1,
+      "label": "What is forming me",
+      "teaser": "What comes in without me deciding...",
+      "icon": "cloud"
+    },
+    {
+      "id": "tolerancia",
+      "n": 2,
+      "label": "What I let slide",
+      "teaser": "What I do with what I know is not right...",
+      "icon": "eye"
+    },
+    {
+      "id": "restauracion",
+      "n": 3,
+      "label": "My step towards restoration",
+      "teaser": "The correction that I have been avoiding for a long time...",
+      "icon": "hand"
+    },
+    {
+      "id": "pleito",
+      "n": 4,
+      "label": "The conflict I stopped fueling",
+      "teaser": "What I want to resolve at the right table...",
+      "icon": "path"
+    },
+    {
+      "id": "pertenencia",
+      "n": 5,
+      "label": "My body, not mine",
+      "teaser": "How will I treat what belongs to him…",
+      "icon": "heart"
+    },
+    {
+      "id": "huida",
+      "n": 6,
+      "label": "What I will flee from",
+      "teaser": "What Joseph taught me to leave behind…",
+      "icon": "flame"
+    },
+    {
+      "id": "precio",
+      "n": 7,
+      "label": "The truth that sustains me",
+      "teaser": "I was bought at a price…",
+      "icon": "anchor"
+    },
+    {
+      "id": "paso",
+      "n": 8,
+      "label": "My step of the week",
+      "teaser": "A concrete step and someone to walk with me...",
+      "icon": "sun"
+    }
+  ],
+  "stations": [
+    {
+      "id": "influencia",
+      "day": "Saturday · What enters without permission",
+      "tag": "Piece 1 · What is forming me",
+      "title": "Everything that enters leaves a mark",
+      "story": "Your mind is like a sponge: what passes through your eyes and ears does not disappear, even if you do not remember it. It remains, slowly influencing what you think, feel, and do. The same was true in Corinth. After pleading with the believers to end their divisions (1 Cor. 1-4), Paul had to address immorality, lawsuits, and marriage (1 Cor. 5-7), because the city's values had made their way into the church without anyone choosing them.",
+      "cue": "Before moving forward, {name}, take an unhurried look at what has been shaping you.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "What influence from your environment entered you without you deciding?",
+        "hint": "No one else will read this. Choose the most honest answer.",
+        "saveLabel": "Save in my temple",
+        "seedSub": "what shapes you",
+        "closing": "Naming it is not an accusation. It opens the door for the Spirit to enter where you once left it open.",
+        "options": [
+          {
+            "id": "pantallas",
+            "label": "Early-morning screens",
+            "insight": "What you watch when tired stays awake with you. This is not a character flaw; it is an open door at a vulnerable hour.",
+            "tags": [
+              "react:apathy",
+              "theme:self",
+              "posture:avoidant"
+            ]
+          },
+          {
+            "id": "humor",
+            "label": "The humor that normalizes everything",
+            "insight": "Laughter is a silent teacher: it teaches us what is no longer serious. Corinth also got used to laughing.",
+            "tags": [
+              "theme:truth",
+              "react:apathy",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "prisa",
+            "label": "The rush that leaves me without prayer",
+            "insight": "When the day starts without him, someone else talks to you first. And the first one who speaks usually stays.",
+            "tags": [
+              "theme:prayer",
+              "react:control",
+              "posture:seeking"
+            ]
+          },
+          {
+            "id": "aprobacion",
+            "label": "The need to be liked",
+            "insight": "Many Corinthians wanted their city's approval. It is a deeply human desire, but it shapes more of your life than you may realize.",
+            "tags": [
+              "react:fear",
+              "theme:relationship",
+              "posture:clinging"
+            ]
+          },
+          {
+            "id": "cansancio",
+            "label": "The fatigue that lowers my defenses",
+            "insight": "We almost never fall because our convictions change; we fall from exhaustion. Recognizing that is wisdom, not defeat.",
+            "tags": [
+              "theme:humility",
+              "posture:humble",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "voz",
+            "label": "The voice that says that nothing matters anymore",
+            "insight": "That calm voice is lying. “You are not your own” (1 Cor. 6:19) means the opposite of worthlessness: you matter so much that a price was paid for you.",
+            "tags": [
+              "react:doubt",
+              "theme:hope",
+              "tone:raw"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "tolerancia",
+      "day": "Sunday · Dissonance between faith and practice",
+      "tag": "Part 2 · What I let go",
+      "title": "When what is tolerated becomes normal",
+      "story": "Paul learns of something that not even the pagan city approved of: a man living with his father's wife (1 Cor. 5:1). What hurts Paul most is not only the sin, but also the church's response. Instead of grieving, the believers were proud of how tolerant they were (1 Cor. 5:2). In the name of love, they tolerated what was actually blindness. Paul does not write to tear them down: “I do not write this to shame you, but to warn you as my beloved children” (1 Cor. 4:14).",
+      "cue": "{name}, you don't need to tell anyone. Just look at it.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "What do you usually do with what you know is not right?",
+        "hint": "In you or around you. Choose what you really do",
+        "saveLabel": "Save in my temple",
+        "seedSub": "what you let go",
+        "closing": "Being able to name it already lets in the light. Be careful of the other extreme too: the goal was never to prove yourself right, but to help someone come home.",
+        "options": [
+          {
+            "id": "mirar",
+            "label": "look the other way",
+            "insight": "It is the quickest response and the costliest. What goes unseen cannot heal; it simply moves into a room farther inside.",
+            "tags": [
+              "react:withdraw",
+              "theme:truth",
+              "posture:avoidant"
+            ]
+          },
+          {
+            "id": "justificar",
+            "label": "Justify it, because today everything is accepted",
+            "insight": "Corinth had its own version of that phrase: “everything is permitted” (1 Cor. 6:12). Paul does not deny it. He qualifies it: not everything builds up.",
+            "tags": [
+              "react:apathy",
+              "theme:sin",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "comentar",
+            "label": "Discuss it with others, but never with the person I should",
+            "insight": "Talking about someone is easy; talking to someone is hard. Only the second restores.",
+            "tags": [
+              "react:withdraw",
+              "theme:unity",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "dureza",
+            "label": "Point it out harshly",
+            "insight": "The truth without tenderness hurts without healing. Paul was stern, yes, but with an eye toward returning him to the table (2 Cor. 2:7).",
+            "tags": [
+              "react:pride",
+              "theme:humility",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "callar",
+            "label": "Keep silent for fear of losing someone",
+            "insight": "That fear comes from loving the person. God understands it. But the silence that protects the bond sometimes sinks the one you love.",
+            "tags": [
+              "react:fear",
+              "theme:relationship",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "hablar",
+            "label": "Talk about it face to face and with affection",
+            "insight": "That is rare and costly, and it is exactly what Paul asked for. Keep bringing the conversation to God in prayer.",
+            "tags": [
+              "theme:love",
+              "posture:humble",
+              "tone:resolute"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "restauracion",
+      "day": "Monday · Dealing with the difficult",
+      "tag": "Piece 3 · My step towards restoration",
+      "title": "The discipline that aims to heal",
+      "story": "Paul's words sound harsh to modern ears: remove the offender from among you, do not associate with them, hand this man over to Satan (1 Cor. 5:2, 5, 11). But read the end of the phrase: “so that the spirit may be saved” (1 Cor. 5:5). Biblical discipline was never meant to humiliate. It is a treatment intended to bring someone back. That is why Paul later writes: “they must forgive him and comfort him” (2 Cor. 2:7). The process reaches its goal when the person sits at the table again.",
+      "cue": "Here it is better to go slowly, {name}. This is not about punishing anyone.",
+      "module": {
+        "type": "skillThenCommit",
+        "saveLabel": "Save in my temple",
+        "seedSub": "your step towards restoration",
+        "skill": {
+          "prompt": "Train your ear: correction that restores, or punishment that destroys?",
+          "hint": "They both sound firm. Only one seeks to bring you back",
+          "badge": "You are learning to distinguish the correction that heals",
+          "cats": [
+            "Correction that restores",
+            "Punishment that destroys"
+          ],
+          "rounds": [
+            {
+              "t": "\"I tell you this because I want to see you back at the table.\"",
+              "a": 0,
+              "fb": "Restores: The stated goal is return, not final expulsion (2 Cor. 2:7)."
+            },
+            {
+              "t": "\"Let everyone know what you did.\"",
+              "a": 1,
+              "fb": "Destroys: public exposure was not Paul's method. He sought to save, not to make a spectacle of someone."
+            },
+            {
+              "t": "\"I'm going to talk to you first, alone.\"",
+              "a": 0,
+              "fb": "Restores: this is how Jesus taught us to begin (Matt. 18:15). First the person, then the process."
+            },
+            {
+              "t": "\"After this, you are no longer one of us.\"",
+              "a": 1,
+              "fb": "Destroys: biblical discipline is temporary and ends in an embrace, not a life sentence."
+            },
+            {
+              "t": "\"Let's go with you while you get out of this.\"",
+              "a": 0,
+              "fb": "Restores: no one finds a way out alone. The church that corrects also helps carry the burden (Gal. 6:1)."
+            },
+            {
+              "t": "\"It's better not to mention it, so as not to make it uncomfortable.\"",
+              "a": 1,
+              "fb": "Destroys by omission: that was Corinth's error. Silence left the man alone in his ruin."
+            }
+          ],
+          "summary": "God's correction never ends at the door; ends on the table. “That the spirit may be saved” (1 Cor. 5:5) is the phrase that commands everything else."
+        },
+        "commit": {
+          "prompt": "What step towards restoration have you been avoiding for a long time?",
+          "hint": "Just one, this week's size",
+          "placeholder": "The step I have been postponing is…",
+          "extraKey": "pasoRestaurador",
+          "options": [
+            "Apologize to the person I have been avoiding",
+            "Accept a correction that was already given to me",
+          "Reach out to someone who walked away quietly",
+            "Talk to my pastor about something I keep quiet about",
+          "Sit down again with someone I stopped talking to"
+          ]
+        }
+      }
+    },
+    {
+      "id": "pleito",
+      "day": "Tuesday · Protecting identity",
+      "tag": "Piece 4 · The lawsuit that stopped feeding",
+      "title": "Family wounds are not healed in public court",
+      "story": "Believers were suing one another in the city courts (1 Cor. 6:1). Paul does not debate civil law. He grieves over what the lawsuits say about the church as a family. In Roman courts, the person with the highest rank, the most money, or the best connections usually won. Yet the church, which will one day judge with Christ, could not sit down to resolve its own disputes. Paul's question still stings: why not suffer the wrong rather than lose a brother or sister (1 Cor. 6:7)?",
+      "cue": "Think about a conflict of yours as you read, {name}, and don't let go of it yet.",
+      "module": {
+        "type": "pickReveal",
+        "saveLabel": "Save in my temple",
+        "seedSub": "your lawsuit",
+        "prompt": "Which of these things do you want to stop doing with your conflict?",
+        "hint": "Touch each one and keep the one that is yours",
+        "chooseLabel": "This is what I'm going to leave",
+        "closing": "No conflict is resolved in the wrong court. Take it to the table where there is bread, prayer and people who truly love you.",
+        "allowCustom": {
+          "label": "write mine",
+          "placeholder": "With my conflict I am going to stop…",
+          "extraKey": "pleitoPropio"
+        },
+        "items": [
+          {
+            "t": "Take a fellow believer before an outside court",
+            "ref": "1 Cor. 6:1",
+            "meaning": "What belongs to the family should be discussed within the family. Taking it outside rarely seeks only justice; it often seeks allies."
+          },
+          {
+            "t": "Win the lawsuit and lose your brother",
+            "ref": "1 Cor. 6:7",
+            "meaning": "\"Why not rather be wronged?\" Some victories cost too much: they cost a relationship."
+          },
+          {
+            "t": "Talk about it with everyone except the person involved",
+            "ref": "Matt. 18:15",
+            "meaning": "\"Go and point out the fault, just between the two of you.\" Jesus' order protects the other person's dignity."
+          },
+          {
+            "t": "Let the strongest be right",
+            "ref": "James 2:1-4",
+            "meaning": "In Rome, rank decided who was right. Not among us: faith must show no favoritism."
+          }
+        ]
+      }
+    },
+    {
+      "id": "pertenencia",
+      "day": "Wednesday · The antidote",
+      "tag": "Piece 5 · My body, not mine",
+      "title": "Washed, sanctified, justified",
+      "story": "Some in Corinth reasoned like this: the stomach is for food, so the body is for sex (1 Cor. 6:13). Paul answers with three truths that change the equation. First: “you were washed, you were sanctified, you were justified” (1 Cor. 6:11). That is already true. Second: we are members of Christ, united to him (1 Cor. 6:15, 17). Third: your body is a temple of the Spirit (1 Cor. 6:19). Grace does not free you to sin; Christ freed you from sin. Who you are shapes what you do.",
+      "cue": "Let these cards return God's gaze to you, {name}.",
+      "module": {
+        "type": "perspectiveFlip",
+        "saveLabel": "Save in my temple",
+        "seedSub": "your belonging",
+        "prompt": "Touch each card to see your body as God sees it",
+        "hint": "Two ways of looking at the same life",
+        "pairs": [
+          {
+            "see": "You feel that your body is yours alone and you do with it whatever you want.",
+            "sees": "\"You are not your own; you were bought at a price\" (1 Cor. 6:19-20). Belonging is not losing freedom. It is being held by the One who loves you."
+          },
+          {
+            "see": "You carry a list of what you used to be and mistake it for your name.",
+            "sees": "\"You were washed, you were sanctified\" (1 Cor. 6:11). What God has already done comes before your effort."
+          },
+          {
+            "see": "You think Christian freedom means it doesn't matter what you do.",
+            "sees": "You were delivered from sin, not freed for it (Rom. 6:18). Grace does not erase God's design; it restores it."
+          },
+          {
+            "see": "You see your body as a problem that needs to be monitored.",
+            "sees": "Your body is a \"temple of the Holy Spirit\" (1 Cor. 6:19). God does not watch from the outside; he chose to dwell within you."
+          }
+        ],
+        "chooseLabel": "This is the truth that I needed",
+        "teach": "You do not flee immorality merely by gritting your teeth. The change begins within: united with Christ (1 Cor. 6:17), indwelt by his Spirit (1 Cor. 6:19), and presenting your body as “a living sacrifice, holy, acceptable to God” (Rom. 12:1).",
+        "commit": {
+          "prompt": "Write how you are going to treat what belongs to him this week.",
+          "hint": "Concrete and small is worth more than solemn and vague",
+          "placeholder": "I'm going to treat my body like...",
+          "extraKey": "pertenenciaTexto",
+          "shareable": true
+        }
+      }
+    },
+    {
+      "id": "huida",
+      "day": "Thursday · Flee, like Joseph",
+      "tag": "Piece 6 · What I will flee from",
+      "title": "Running is also loyalty",
+      "story": "When Potiphar's wife insisted, Joseph did not debate: \"he fled and went out\" (Gen. 39:12). It was not cowardice, but clarity. Some battles are won far from the battlefield. That is why Paul writes “flee from sexual immorality” (1 Cor. 6:18) between two immense truths: you are united to the Lord, and you are the temple of his Spirit. In the next chapter, he discusses marriage and singleness with a candor the church has sometimes lost. We can talk about these things, and we must.",
+      "cue": "{name}, choose something real, not the most presentable.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "What do you need to flee from this week, like Joseph fled?",
+        "hint": "Only you and God read this. Be specific",
+        "saveLabel": "Save in my temple",
+        "seedSub": "your escape",
+        "closing": "Fleeing is not cowardice; it is knowing where you cannot remain. And you do not flee alone. You flee toward Someone who already lives in you.",
+        "options": [
+          {
+            "id": "conversacion",
+            "label": "A conversation that has already crossed the line",
+            "insight": "It almost always starts innocently and ends in secrecy. The secrecy is the warning sign.",
+            "tags": [
+              "react:withdraw",
+              "theme:truth",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "noche",
+            "label": "What I open when I'm alone at night",
+            "insight": "The failure there is often not willpower, but strategy. Joseph did not stay in the room and resist; he left.",
+            "tags": [
+              "theme:self",
+              "posture:humble",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "amistad",
+            "label": "A friendship that became something else",
+            "insight": "Naming it hurts because the affection is real. But honesty now can prevent much greater harm later.",
+            "tags": [
+              "react:fear",
+              "theme:relationship",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "vacio",
+            "label": "The void that I fill with anything",
+            "insight": "Beneath the habit there is often a hunger for companionship. Bring the hunger to God, not only the habit.",
+            "tags": [
+              "theme:hope",
+              "posture:seeking",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "imagen",
+            "label": "An image that comes back to my mind",
+            "insight": "Its return is not your sentence. You decide whether to open the door to it or hand it over in prayer.",
+            "tags": [
+              "react:doubt",
+              "theme:grace",
+              "posture:surrendering"
+            ]
+          },
+          {
+            "id": "soledad",
+            "label": "The loneliness that I don't tell anyone",
+            "insight": "Isolation is fertile ground. Just one friend who knows the truth changes your entire week.",
+            "tags": [
+              "react:withdraw",
+              "theme:service",
+              "posture:seeking"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "precio",
+      "day": "Bought at a price",
+      "tag": "Piece 7 · The truth that sustains me",
+      "title": "You are not your own, and that is good news",
+      "story": "Gather what you have placed here: what entered without permission, what you let slide, the step you avoided, the lawsuit, your body, your escape. It all hangs on one phrase: “you were bought at a price” (1 Cor. 6:20). Before asking anything of you, Paul reminds you who you already are. Christian ethics does not begin with effort; it begins with rescue.",
+      "cue": "Receive it slowly, {name}. This supports everything else.",
+      "module": {
+        "type": "anchorChain",
+        "saveLabel": "Receive and save",
+        "seedSub": "the truth that sustains you",
+        "chain": [
+          {
+            "word": "you were bought",
+            "line": "“You were bought at a price” (1 Cor. 6:20). You did not earn the place; someone else paid for it."
+          },
+          {
+            "word": "you were washed",
+            "line": "\"They have been washed, they have been sanctified\" (1 Cor. 6:11). Your past is no longer your name."
+          },
+          {
+            "word": "you were inhabited",
+            "line": "Your body is “the temple of the Holy Spirit” (1 Cor. 6:19). He doesn't visit you from time to time: he lives there."
+          },
+          {
+            "word": "you were restored",
+            "line": "“You must forgive him and comfort him” (2 Cor. 2:7). When God corrects, the last word is a hug."
+          }
+        ],
+        "climax": "That's why Paul doesn't argue with you: he reminds you of who you are. “Glorify God in your body” (1 Cor. 6:20) is not a burden placed on you; it's what comes out when you understand that you were rescued.",
+        "prompt": "Which of these truths will you hold this week?",
+        "hint": "The one you find hardest to believe is usually the one you need the most.",
+        "options": [
+          "that I was bought at a price",
+          "That I have already been washed and I am not my past",
+          "That his Spirit lives within me",
+          "That God's correction ends in an embrace"
+        ],
+        "allowCustom": {
+          "placeholder": "I'm going to stand on that...",
+          "extraKey": "precioPropio"
+        }
+      }
+    },
+    {
+      "id": "paso",
+      "day": "Friday · To study and meditate",
+      "tag": "Piece 8 · My step of the week",
+      "title": "One step, and someone with you",
+      "story": "Ellen White wrote: \"When one is completely emptied of self, when all false gods are expelled from the soul, the void is filled by the Spirit of Christ\" (The Home Missionary, Nov. 1893, p. 29). This is not about trying harder, but about emptying yourself and letting Christ fill the space. We almost never do this alone. The church exists so no one has to find the way back without a companion. One piece is still missing, the most concrete one of all.",
+      "cue": "Close with something you can do tomorrow, {name}.",
+      "module": {
+        "type": "commitDuo",
+        "saveLabel": "close my temple",
+        "seedSub": "your step",
+        "stepPrompt": "My specific step this week",
+        "stepHint": "Tap an idea or write your own",
+        "stepOptions": [
+          "Close the door through which harmful things enter",
+          "Find the person with whom I have the dispute",
+          "Tell someone you trust what you keep quiet",
+          "Start the day praying before picking up the phone",
+          "Write in my Bible that I was bought with a price"
+        ],
+        "stepPlaceholder": "my specific step...",
+        "stepExtraKey": "pasoTexto",
+        "personPrompt": "Someone walk with me this week",
+        "personHint": "Not a judge, a partner. Who can it be?",
+        "personPlaceholder": "a name...",
+        "personExtraKey": "compania"
+      }
+    }
+  ],
+  "encourage": [
+    "“Do you not know that your body is a temple of the Holy Spirit, who is in you and whom you have from God? You are not your own.” (1 Cor. 6:19)",
+    "“They have been bought with a price; therefore glorify God in your body.” (1 Cor. 6:20)",
+    "“You have been washed, you have been sanctified, you have been justified in the name of the Lord Jesus Christ.” (1 Cor. 6:11)",
+    "“I do not write this to shame you, but to admonish you as my beloved children.” (1 Cor. 4:14)",
+    "“They should rather forgive him and console him, so that he is not consumed by excessive sadness.” (2 Cor. 2:7)",
+    "“Flee from sexual immorality.” (1 Cor. 6:18)"
+  ],
+  "discussion": [
+    "Many Corinthian believers wanted approval from the culture around them. Where do you see that same desire in us today, and what does it do to our identity as a church?",
+    "In 1 Corinthians 5 and 6, Paul repeats “do you not know” seven times (1 Cor. 5:6; 6:2, 3, 9, 15, 16, 19), expecting a resounding yes. What do we know well yet live as though we did not know it?",
+    "Biblical discipline seeks to restore, not expel (1 Cor. 5:5; 2 Cor. 2:7). How do we avoid the two extremes: the harshness that humiliates and the silence that abandons?",
+    "Marriage comes from God and must be honored (Gen. 2:18-24; Heb. 13:4). In an age that considers it outdated, how do we show that it is a gift from Eden rather than an inherited rule?"
+  ],
+  "facilitator": [
+    {
+      "stationId": "influencia",
+      "apertura": "Where do the customs that we take for granted in the church actually come from?",
+      "seguimiento": "What environmental influence do you think is shaping us the most without us noticing it?",
+      "ilustracion": "The mind is a sponge: it absorbs what you see and hear, even when you do not remember it, and releases it through your decisions.",
+      "transicion": "If the environment enters without permission, let's see what we end up tolerating without realizing it.",
+      "actividad": "Let each person name out loud, if they want, a single influence that they would like to filter out this week.",
+      "cierre": "Lord, guard the doors of our senses and cleanse what has already entered."
+    },
+    {
+      "stationId": "tolerancia",
+      "apertura": "Paul is scandalized twice in 1 Corinthians 5: by sin and by the pride of tolerating it. Why does the second hurt so much?",
+      "seguimiento": "What behaviors clearly condemned in Scripture are we in danger of tolerating in the name of love?",
+      "ilustracion": "Hanging a painting over a leak does not fix it. What stays hidden continues to damage the wall.",
+      "transicion": "If there is something to be corrected, the next question is how to correct it without destroying anyone.",
+      "actividad": "Read 1 Corinthians 5:1-2 and 1 Corinthians 4:14 together and compare Paul's tone in both.",
+      "cierre": "Give us love with open eyes, Lord, and courage to name what hurts."
+    },
+    {
+      "stationId": "restauracion",
+      "apertura": "“That the spirit may be saved” (1 Cor. 5:5). How does that sentence change the way we read the entire chapter?",
+      "seguimiento": "When can church discipline be said to have served its purpose?",
+      "ilustracion": "A cast is tight and uncomfortable, but it helps a bone heal and bear weight again. Biblical discipline is a cast, not condemnation.",
+      "transicion": "From personal restoration, we move to conflict between believers and what the city sees in us.",
+      "actividad": "Compare 1 Corinthians 5:5 with 2 Corinthians 2:5-10 and follow the same man's journey.",
+      "cierre": "Teach us to correct as you correct: firm, brief and with the table set."
+    },
+    {
+      "stationId": "pleito",
+      "apertura": "Why does it bother Paul so much that two believers take their dispute to a civil court?",
+      "seguimiento": "What does the way we resolve our internal conflicts say about us?",
+      "ilustracion": "In Roman courts, the person with the highest rank and the most money usually won. The church needed a different standard.",
+      "transicion": "Behind both the lawsuit and the immorality lies the same question: to whom do this body and this life belong?",
+      "actividad": "Read 1 Corinthians 6:1-8 and ask what specific table is missing in your congregation.",
+      "cierre": "Make us a family that sits down to talk before accusing."
+    },
+    {
+      "stationId": "pertenencia",
+      "apertura": "Why does Paul list sexual sins along with idolatry, theft, and covetousness (1 Cor. 6:9-10)?",
+      "seguimiento": "What changes in practice when someone truly believes that their body is a temple of the Spirit?",
+      "ilustracion": "Three verbs in the past: washed, sanctified, justified (1 Cor. 6:11). God already acted before asking us for anything.",
+      "transicion": "If that is already true of us, let us hear the most practical advice of all: flee.",
+      "actividad": "Read 1 Corinthians 6:9-11 and underline the “already” in verse 11.",
+      "cierre": "Thank you because you washed us before we knew how to ask for it."
+    },
+    {
+      "stationId": "huida",
+      "apertura": "“Flee” (1 Cor. 6:18) is an odd verb for a courageous apostle. Why does he order us to run and not resist?",
+      "seguimiento": "How can we talk about sexuality in the church truthfully and without shame?",
+      "ilustracion": "Joseph left his cloak and ran (Gen. 39:12). He lost a piece of clothing and kept an entire life.",
+      "transicion": "The strength to flee does not come from us. It comes from knowing the price paid for us.",
+      "actividad": "Read Genesis 39:6-18 and count how many times the idea of fleeing appears.",
+      "cierre": "Give us quick feet for what harms us and a slow heart to judge others."
+    },
+    {
+      "stationId": "precio",
+      "apertura": "What changes when someone understands that they were “bought with a price” (1 Cor. 6:20)?",
+      "seguimiento": "Which of these truths do you find most difficult to believe about yourself?",
+      "ilustracion": "No one pays a high price for something they don't care about. Price reveals the value God gives you.",
+      "transicion": "Anchored in that rescue, let's take a concrete step for the coming days.",
+      "actividad": "Recite 1 Corinthians 6:19-20 together and name the link you need most today.",
+      "cierre": "We rely on your rescue, not on our performance."
+    },
+    {
+      "stationId": "paso",
+      "apertura": "\"The void is filled by the Spirit of Christ.\" What needs to be emptied first for that to happen?",
+      "seguimiento": "Who could you ask to walk with you this week, without judging you?",
+      "ilustracion": "No one gets out of a well alone: someone holds the rope up. That's why the church exists.",
+      "transicion": "Let's close with a concrete step and a name next to it.",
+      "actividad": "Share a single step for the week and, if you want, who you are going to invite.",
+      "cierre": "Fill us with your Spirit and give us companions for the journey."
+    }
+  ],
+  "patternTemplate": "{name}, you began by naming what entered without permission: {slot:influencia|lower|or:something you did not choose}. You recognized that when something is wrong you tend to {slot:tolerancia|lower|or:let it slide}, and yet you did not hide. You decided to flee from {slot:huida|lower|or:what you know is harming you} and made this affirmation: “I hold on to the truth {slot:precio|lower|or:that I was bought at a price}”. The clay is still clay, but now it has the shape of a temple.",
+  "outOracion": "Lord, I come as I am. I admit what entered without my choosing: “{slot:influencia|or:things I never chose}”. I admit that when something is wrong I often {slot:tolerancia|lower|or:look the other way}. Today I choose this step toward restoration: “{slot:restauracion|or:reach out again to the person who hurt me}”. In this conflict I surrender this pattern: “{slot:pleito|or:feeding it in silence}”. I will flee from “{slot:huida|or:what I know is harming me}”. You showed me what belonging means: {slot:pertenencia|or:my body is your temple}. I hold on to the truth {slot:precio|lower|or:that I was bought at a price}. Thank you because “{verse}” ({verseRef}). In the name of Jesus, amen.",
+  "outAliento": "{name}, nothing you mentioned today disqualifies you. Paul wrote those hard pages to restore, not to shame, and that is still God's intention for you. You are going to flee from {slot:huida|lower|or:what you know is harming you} and carry this affirmation with you: “I hold on to the truth {slot:precio|lower|or:that I was bought at a price}”. You do not do this in your own strength; you do it because you were already bought at a price and the Spirit lives within you.",
+  "outAccion24": "In the next 24 hours I will {slot:paso|lower|or:take a concrete step toward restoration}, and I will flee from {slot:huida|lower|or:what I know is harming me}.",
+  "outPregunta": "This week I understood that my body is a temple of the Spirit and that I was bought at a price. I chose to hold on to the truth {slot:precio|lower|or:that I was bought at a price}. What have you learned to tolerate without realizing it, and what might change if you truly knew you had been rescued?",
+  "outTarjeta": "My temple this week: I admitted that I tend to {slot:tolerancia|lower|or:look the other way}, decided to flee from {slot:huida|lower|or:what I know is harming me}, and held on to the truth {slot:precio|lower|or:that I was bought at a price}.\nVerse: “{verse}” ({verseRef}).",
+  "arc": "restore"
+}

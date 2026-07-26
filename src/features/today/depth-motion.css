@@ -1,0 +1,45 @@
+.depth-choice {
+  isolation: isolate;
+}
+
+.depth-choice__inlay {
+  position: absolute;
+  inset: 3px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(145deg, rgb(255 229 211 / 0.16), transparent 38%),
+    var(--material-terracotta),
+    #93452f;
+  background-size: auto, 280px 280px, auto;
+  box-shadow:
+    inset 1px 1px 0 rgb(255 226 205 / 0.16),
+    inset -2px -3px 4px rgb(74 27 18 / 0.45),
+    0 3px 6px rgb(0 0 0 / 0.28);
+  clip-path: polygon(2% 1%, 98% 3%, 100% 92%, 93% 100%, 1% 97%, 0 7%);
+}
+
+.depth-choice[data-active="true"] {
+  background-color: transparent;
+  box-shadow: none;
+  color: #fff0e6;
+  text-shadow: 0 1px 1px rgb(76 24 13 / 0.74);
+}
+
+.depth-choice[data-active="true"] small {
+  color: #f0c7b4;
+}
+
+:root[data-mode="day"] .depth-choice[data-active="true"] {
+  color: #fff7f0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depth-choice__inlay {
+    transition: none !important;
+  }
+}
+
+:root[data-motion="reduce"] .depth-choice__inlay {
+  transition: none !important;
+}

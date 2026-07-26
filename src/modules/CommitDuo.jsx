@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { ChipRow, SaveBar, Pause } from "./common.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 /* Two commitments: a concrete step + someone to encourage.
    Used for "Mi paso de la semana". */
 export default function CommitDuo({ config, onFill, onSkip }) {
+  const { t } = useI18n();
   const [chosen, setChosen] = useState("");
   const [step, setStep] = useState("");
   const [person, setPerson] = useState("");
@@ -41,7 +43,7 @@ export default function CommitDuo({ config, onFill, onSkip }) {
       </div>
 
       <SaveBar
-        label={config.saveLabel || "Guardar y cerrar"}
+        label={config.saveLabel || t("module.saveClose")}
         disabled={!stepValue}
         onSave={() =>
           onFill(stepValue, { [config.stepExtraKey]: stepValue, [config.personExtraKey]: person.trim() }, config.seedSub)

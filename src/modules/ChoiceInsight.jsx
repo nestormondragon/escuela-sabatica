@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Privacy, Insight, OptionList, SaveBar, Pause } from "./common.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 /* Pick one option → a tailored insight → save it to the anchor.
    Used for "Mi tormenta" and "Mi primera reacción". */
 export default function ChoiceInsight({ config, onFill, onSkip }) {
+  const { t } = useI18n();
   const [picked, setPicked] = useState(null);
 
   return (
@@ -19,7 +21,7 @@ export default function ChoiceInsight({ config, onFill, onSkip }) {
         {picked ? (
           <div className="stack" key={picked.id}>
             <div role="status" aria-live="polite" aria-atomic="true">
-              <Insight label="Para ti" body={picked.insight} />
+              <Insight label={t("module.forYou")} body={picked.insight} />
             </div>
             {config.closing ? (
               <>
@@ -28,7 +30,7 @@ export default function ChoiceInsight({ config, onFill, onSkip }) {
               </>
             ) : null}
             <SaveBar
-              label={config.saveLabel || "Guardar esta pieza"}
+              label={config.saveLabel || t("module.savePiece")}
               onSave={() => onFill(picked.label, null, config.seedSub, picked.tags)}
               onSkip={onSkip}
             />

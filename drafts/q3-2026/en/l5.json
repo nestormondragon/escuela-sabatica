@@ -1,0 +1,689 @@
+{
+  "number": 5,
+  "slug": "gloria",
+  "title": "All for His Glory",
+  "subtitle": "Where does your right end and care for another person begin?",
+  "forDate": "2026-08-01",
+  "kitName": "My Freedom",
+  "artifactNoun": "freedom",
+  "motif": "cruz",
+  "stages": [
+    "madero",
+    "vertical",
+    "travesano",
+    "alzada",
+    "gloria"
+  ],
+  "stageLabels": [
+    "Beams on the ground · all things lawful",
+    "Upright raised · God first",
+    "Crossbeam set · I see my neighbor",
+    "Cross standing · I release my right",
+    "Cross alight · all for his glory"
+  ],
+  "verseRef": "1 Cor. 10:31",
+  "verseText": "Whether you eat or drink or whatever you do, do it all for the glory of God.",
+  "promise": "In a few minutes you will raise your Freedom, {name}: you will face what is lawful for you, let love set a boundary around being right, choose a right to release, choose one table, and write your rule of life. Piece by piece, two loose beams will become a standing cross, and eating, drinking, and shopping will no longer feel like small things.",
+  "ui": {
+    "start": "Begin raising my freedom",
+    "emptyKit": "Your freedom",
+    "building": "Every choice raises a beam",
+    "buildingHint": "Touch the piece that shines. You will see two loose pieces of wood become a standing cross.",
+    "lastPiece": "a piece is missing",
+    "patternLabel": "Your pattern on the cross",
+    "doneTitle": "Your freedom is standing",
+    "doneSub": "You raised it, with God. Open it, save it, share it.",
+    "open": "open my freedom",
+    "back": "Return to my freedom",
+    "kitName": "My Freedom"
+  },
+  "slots": [
+    {
+      "id": "licito",
+      "n": 1,
+      "label": "What is lawful for me",
+      "teaser": "The land where I am free...",
+      "icon": "key"
+    },
+    {
+      "id": "amor",
+      "n": 2,
+      "label": "Love over my reason",
+      "teaser": "Where being right was not enough for me...",
+      "icon": "heart"
+    },
+    {
+      "id": "derecho",
+      "n": 3,
+      "label": "The right that I release",
+      "teaser": "What corresponds to me and I deliver...",
+      "icon": "hand"
+    },
+    {
+      "id": "firme",
+      "n": 4,
+      "label": "Where I think I am firm",
+      "teaser": "The exact point where it could fall…",
+      "icon": "path"
+    },
+    {
+      "id": "mesa",
+      "n": 5,
+      "label": "The table I choose",
+      "teaser": "Two drinks and one loyalty…",
+      "icon": "cup"
+    },
+    {
+      "id": "idolo",
+      "n": 6,
+      "label": "The idol that I left",
+      "teaser": "The good thing that took its place...",
+      "icon": "crown"
+    },
+    {
+      "id": "gloria",
+      "n": 7,
+      "label": "My rule of life",
+      "teaser": "What I do freely and what I release for love...",
+      "icon": "bread"
+    },
+    {
+      "id": "paso",
+      "n": 8,
+      "label": "My step of the week",
+      "teaser": "A concrete step and someone to take care of…",
+      "icon": "people"
+    }
+  ],
+  "stations": [
+    {
+      "id": "licito",
+      "day": "Saturday Everything is lawful for me",
+      "tag": "Piece 1 · What is lawful for me",
+      "title": "Lawful does not always mean good",
+      "story": "In Corinth the question seemed to be on the menu: can I eat this meat or not? Underneath was something much larger. Paul does not respond with a list of permissions, but with a cutting phrase: \"Everything is lawful for me, but not everything is expedient\" (1 Cor. 10:23). Your freedom is real, Christ bought it and no one can take it away from you. Precisely for this reason it matters: what you do with what is lawful to you ends up saying who you love.",
+      "cue": "{name}, start with the most honest answer: where do you exercise your freedom almost without thinking about it?",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "In what area do you use your freedom almost without thinking about it?",
+        "hint": "Choose the most sincere one right now",
+        "saveLabel": "Save in my freedom",
+        "seedSub": "your free land",
+        "closing": "None of these things are prohibited. That is precisely the question. Paul does not discuss what you can do, but what is expedient and what builds up (1 Cor. 10:23).",
+        "options": [
+          {
+            "id": "comida",
+            "label": "What I eat and what I drink",
+            "insight": "Paul chose to start with the plate, not the theology. If God fits on your table, he fits on everything else.",
+            "tags": [
+              "theme:self",
+              "posture:seeking",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "compras",
+            "label": "What I buy and how I buy it",
+            "insight": "Each purchase is a vote. “The earth is the Lord's and its fullness” (1 Cor. 10:26), including the money that passed through your hands today.",
+            "tags": [
+              "theme:generosity",
+              "react:control",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "pantalla",
+            "label": "What I see when no one sees me",
+            "insight": "Freedom alone is the most difficult to sustain, because no one applauds you or corrects you. Only God looks, and he looks with love.",
+            "tags": [
+              "react:withdraw",
+              "theme:sin",
+              "posture:avoidant"
+            ]
+          },
+          {
+            "id": "redes",
+            "label": "What I publish and what I share",
+            "insight": "Paul asked believers to consider how their words and actions would affect others. Vulnerable people are reading what you post.",
+            "tags": [
+              "react:pride",
+              "theme:truth",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "tiempo",
+            "label": "How I use my free time",
+            "insight": "No one will ask you to account for your spare hours. That's why they say so much about you. What you choose when nothing forces you is what you truly love.",
+            "tags": [
+              "react:apathy",
+              "theme:self",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "palabras",
+            "label": "What I say when I'm confident",
+            "insight": "Confidence lets your guard down and turns up the volume. There you can tell if love governs your freedom or only tolerates it.",
+            "tags": [
+              "theme:love",
+              "posture:humble",
+              "tone:raw"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "amor",
+      "day": "Sunday Knowledge versus love",
+      "tag": "Piece 2 · Love over my reason",
+      "title": "Being right is not the same as loving",
+      "story": "The “strong ones” of Corinth were right: idols do not exist, and meat is just meat (1 Cor. 8:4). But Paul tells them something uncomfortable: “Knowledge puffs up, but love builds up” (1 Cor. 8:1). A brother who had recently left paganism saw them eating and concluded that the gospel and idolatry fit together. Their reasoning was correct, but its effect was devastating. “If anyone thinks he knows anything, he does not yet know anything as he ought to know” (1 Cor. 8:2).",
+      "cue": "Let your guard down here, {name}: being right is not enough.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "Where are you right but still at risk of hurting someone?",
+        "hint": "Think about a specific scene from this week",
+        "saveLabel": "Save in my freedom",
+        "seedSub": "your reason without love",
+        "closing": "True knowledge does not begin with how much you know: \"If anyone loves God, he is known by him\" (1 Cor. 8:3). Moses had already ordered it this way: one God, and love him with all your heart (Deut. 6:4-5).",
+        "options": [
+          {
+            "id": "doctrina",
+            "label": "A doctrinal argument that I won",
+            "insight": "Winning an argument and losing a brother is bad business. The truth that does not build has not yet reached its destination.",
+            "tags": [
+              "react:pride",
+              "theme:truth",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "consejo",
+            "label": "Advice I gave without being asked",
+            "insight": "Knowing the answer is not the same as being the right one to give it. Sometimes love listens first and speaks later.",
+            "tags": [
+              "react:control",
+              "theme:humility",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "mesa",
+            "label": "My freedom to eat and drink in front of others",
+            "insight": "This is the literal case of 1 Corinthians 8. The harmless thing in your house can be a stumble at the next table (1 Cor. 8:9).",
+            "tags": [
+              "theme:unity",
+              "posture:seeking",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "redes",
+            "label": "What I defend on social media",
+            "insight": "You write to be right; someone weak reads you to know if it is worth following Christ. They are two different conversations.",
+            "tags": [
+              "react:pride",
+              "theme:unity",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "casa",
+            "label": "My way of correcting those at home",
+            "insight": "At home you can tell if your knowledge puffs up or edifies, because there no one applauds you for being right.",
+            "tags": [
+              "react:control",
+              "theme:love",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "nuevo",
+            "label": "My plans in front of a new believer",
+            "insight": "A new believer may not yet distinguish between what you do and what Christ approves. For now, your life is their biblical commentary.",
+            "tags": [
+              "theme:service",
+              "posture:avoidant",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "ninguno",
+            "label": "Nothing that I can see, and that worries me",
+            "insight": "That restlessness is healthy. “If anyone thinks he knows anything, he does not yet know anything as he ought to know” (1 Cor. 8:2). Ask someone who knows you closely.",
+            "tags": [
+              "react:doubt",
+              "theme:humility",
+              "posture:humble"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "derecho",
+      "day": "Monday · Selfless love",
+      "tag": "Piece 3 · The right I release",
+      "title": "Paul had the right, and chose not to use it",
+      "story": "Paul lists everything that was rightfully his: the right to eat and drink at the expense of the church, the right to travel with a believing wife, the right to a salary for preaching. The Lord Himself commanded it: “Let those who preach the gospel live by the gospel” (1 Cor. 9:14). And then he writes the phrase that explains it all: “We have not used this right” (1 Cor. 9:12). He made tents so as not to charge anyone anything (Acts 18:3).",
+      "cue": "{name}, check your own rights list before proceeding.",
+      "module": {
+        "type": "pickReveal",
+        "saveLabel": "Save in my freedom",
+        "seedSub": "the right you surrender",
+        "prompt": "Choose the right that you are willing to let go of for love",
+        "hint": "Play each one, stay with the one that costs you the most",
+        "chooseLabel": "This is the right that I let go",
+        "closing": "Paul did not do any of this with a martyr's expression. He did it “for the sake of the gospel” (1 Cor. 9:23), because someone else mattered more than his comfort. Giving something up does not deny your right; it puts that right at the service of a person with a name.",
+        "allowCustom": {
+          "label": "write mine",
+          "placeholder": "The right that I am going to release is…",
+          "extraKey": "derechoPropio"
+        },
+        "items": [
+          {
+            "t": "My right to collect what I am owed",
+            "ref": "1 Cor. 9:12",
+            "meaning": "Paul was able to live from the gospel and chose to work with his hands. There are debts that should be forgiven rather than collected."
+          },
+          {
+            "t": "My right to defend myself when I am misjudged",
+            "ref": "1 Cor. 4:3",
+            "meaning": "\"I care very little about being judged by you.\" There are reputations that are best cared for by leaving them in the hands of God."
+          },
+          {
+            "t": "My right to do what the Bible does not prohibit",
+            "ref": "1 Cor. 10:23",
+            "meaning": "\"Everything is lawful for me, but not everything builds.\" The limit is not set by a new rule: it is set by the brother who is watching you."
+          },
+          {
+            "t": "My right to rest from the needs of others",
+            "ref": "1 Cor. 9:19",
+            "meaning": "\"Being free of all, I have become a servant of all.\" The freedom of Christ is not saved: it is spent on people."
+          }
+        ]
+      }
+    },
+    {
+      "id": "firme",
+      "day": "Tuesday · Learning from the past",
+      "tag": "Piece 4 · Where I believe I am firm",
+      "title": "If you think you are standing, take care not to fall",
+      "story": "Israel had the cloud, the sea, the manna and the water from the rock. Privilege upon privilege, and yet many desired evil things in the wilderness (1 Cor. 10:6). Paul tells this not for us to point fingers, but for us to look at ourselves: “These things happened to them as an example, and they are written for our warning” (1 Cor. 10:11). Then comes the letter's most humble warning: \"Let him who thinks he stands take heed lest he fall\" (1 Cor. 10:12). And immediately, the promise: there is always a way out.",
+      "cue": "Don't rush past here, {name}. This warning is for those who already believe they are safe.",
+      "module": {
+        "type": "skillThenCommit",
+        "saveLabel": "Save in my freedom",
+        "seedSub": "your weak point",
+        "skill": {
+          "prompt": "Train your eye: is it a way out that God gives, or an excuse that I make?",
+          "hint": "God promises exit, not immunity",
+          "badge": "You are learning to recognize the exit that God opens",
+          "cats": [
+            "Way out that God gives",
+            "Excuse that I make"
+          ],
+          "rounds": [
+            {
+              "t": "\"I get up and leave the place before the conversation continues.\"",
+              "a": 0,
+              "fb": "Exit that God gives: it almost always has a door and feet. “Flee from idolatry” (1 Cor. 10:14)."
+            },
+            {
+              "t": "“I am already strong in this; it does not affect me.”",
+              "a": 1,
+              "fb": "Excuse that I make: it is exactly the phrase that Paul dismantles in 1 Cor. 10:12."
+            },
+            {
+              "t": "\"I ask someone I trust to ask me how I'm doing.\"",
+              "a": 0,
+              "fb": "Exit that God gives: many times the exit has a name, face and telephone number."
+            },
+            {
+              "t": "“I am baptized and serve in the church; that protects me.”",
+              "a": 1,
+              "fb": "Excuse I make: Israel crossed the sea and ate the manna, and still fell (1 Cor. 10:1-5)."
+            },
+            {
+              "t": "\"I delete the application, change the route, turn off the device.\"",
+              "a": 0,
+              "fb": "Exit that God gives: concrete, uncomfortable and effective. He provides it, you take it."
+            },
+            {
+              "t": "\"Just this once, and tomorrow I'll go back to business as usual.\"",
+              "a": 1,
+              "fb": "Excuse that I make: \"just this time\" was the language of the desert for forty years."
+            }
+          ],
+          "summary": "God does not promise that temptation will not come. He promises that “with temptation he will also provide a way out, so that you may be able to endure” (1 Cor. 10:13). The exit is already set. You need to use it."
+        },
+        "commit": {
+          "prompt": "At what point do you need to stop believing yourself to be firm?",
+          "hint": "Naming it out loud already puts you halfway to the exit",
+          "placeholder": "The point where I think I am firm is…",
+          "extraKey": "puntoFirme",
+          "options": [
+            "My appetite when I'm tired",
+            "My phone alone at night",
+            "My way of spending without thinking",
+            "My tongue when I'm in confidence",
+            "My certainty that it would not happen to me anymore"
+          ]
+        }
+      }
+    },
+    {
+      "id": "mesa",
+      "day": "Wednesday · Warning against idolatry",
+      "tag": "Piece 5 · The table I choose",
+      "title": "You can't drink from both cups",
+      "story": "In Corinth, meat sacrificed in the temples ended up in the market, mixed with the rest. Paul was surprisingly free: buy it, eat it at home, ask no questions, because idols do not exist (1 Cor. 8:4; 10:25). But he drew a firm line: do not enter the temple or sit at that table. \"You cannot drink the cup of the Lord and the cup of demons\" (1 Cor. 10:21). The meat does not change. What changes is whom your body says you belong to.",
+      "cue": "{name}, go up slowly: each step brings you closer to a single table.",
+      "module": {
+        "type": "stairs",
+        "saveLabel": "Save in my freedom",
+        "seedSub": "your table",
+        "steps": [
+          {
+            "t": "Market meat is just meat.",
+            "fb": "True, and Paul defends it: \"The earth is the Lord's and the fullness of it\" (1 Cor. 10:26). His freedom was real, not feigned."
+          },
+          {
+            "t": "The idol is nothing, but the cult is not innocent.",
+            "fb": "Behind the hollow statue there is something that does seek your loyalty: “what the Gentiles sacrifice, they sacrifice to demons” (1 Cor. 10:20)."
+          },
+          {
+            "t": "Sitting at your table unites me with Christ.",
+            "fb": "\"The cup of blessing that we bless, is it not the communion of the blood of Christ?\" (1 Cor. 10:16). Eating together is belonging."
+          },
+          {
+            "t": "Sitting at the other table unites me with what I don't want.",
+            "fb": "\"No one can serve two masters\" (Matt. 6:24). The body sits where the heart had already decided."
+          }
+        ],
+        "leavePrompt": "What do you leave at the door before sitting at your table?",
+        "leaveHint": "Leave one thing behind to receive something better",
+        "leaveOptions": [
+          "The custom that I no longer even defend",
+          "The environment where I always end up giving in",
+          "The expense that swallows up my month",
+          "The friendship that drags me where I don't want",
+          "The double life of weekends"
+        ],
+        "allowCustom": {
+          "placeholder": "I leave at the door..."
+        },
+        "prompt": "What table are you sitting at this week?",
+        "hint": "A single loyalty, said in all the letters",
+        "options": [
+          "The Lord's table, also with my appetite",
+          "The Lord's table, even if it costs me friends",
+          "The Lord's table, with my money included",
+          "The Lord's table, without double life",
+          "The Lord's table, with my entire house"
+        ],
+        "allowCustom2": {
+          "placeholder": "I sit at the table…",
+          "extraKey": "mesaPropia"
+        }
+      }
+    },
+    {
+      "id": "idolo",
+      "day": "Thursday · Overcoming idolatry",
+      "tag": "Piece 6 · The idol I left",
+      "title": "Almost anything can become an idol",
+      "story": "The rich young man kept the commandments since he was a child and left sad (Mark 10:22). His problem was not a statue: he loved his possessions more than God and more than the poor. Ellen White put it bluntly: By idolatry Paul did not mean just the worship of images, but “self-serving, the love of ease, the indulgence of the appetites and passions.” That is why the apostle unites the two great commandments, as Jesus did: love God with everything and your neighbor as yourself (Mark 12:28-31).",
+      "cue": "Be brave here, {name}: name the good that took God's place.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "What good thing is becoming an idol to you?",
+        "hint": "It is recognized by what you are willing to sacrifice to keep it",
+        "saveLabel": "Save in my freedom",
+        "seedSub": "your idol",
+        "closing": "An idol is almost never something ugly. It is usually something good that you gave first place to. “I am the Lord; this is my name, and I will not give my glory to another” (Isa. 42:8).",
+        "options": [
+          {
+            "id": "trabajo",
+            "label": "My work and what I achieve",
+            "insight": "Performing well is a gift. It becomes an idol when your value rises and falls with your results, and your family pays the difference.",
+            "tags": [
+              "react:control",
+              "theme:self",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "dinero",
+            "label": "My money and the security it gives me",
+            "insight": "The rich young man was not a bad man, but his possessions had become his master. “Sell what you have and give to the poor” (Mark 10:21) was not a punishment; it was a rescue.",
+            "tags": [
+              "react:fear",
+              "theme:generosity",
+              "posture:clinging"
+            ]
+          },
+          {
+            "id": "imagen",
+            "label": "My image and what they think of me",
+            "insight": "Living for other people's approval is like worshiping a mirror. Only one gaze has already chosen to love you before your next success.",
+            "tags": [
+              "react:pride",
+              "theme:truth",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "comodidad",
+            "label": "My comfort and my rest",
+            "insight": "The love of comfort is silent idolatry: it never asks you to worship anything, it only asks you not to move for anyone.",
+            "tags": [
+              "react:apathy",
+              "theme:service",
+              "posture:avoidant"
+            ]
+          },
+          {
+            "id": "apetito",
+            "label": "My appetite and my cravings",
+            "insight": "Paul beat his body and put it in bondage so as not to be disqualified (1 Cor. 9:27). Not out of contempt for the body, but out of love for the race.",
+            "tags": [
+              "theme:self",
+              "posture:surrendering",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "afecto",
+            "label": "The affection of someone to whom I do not set limits",
+            "insight": "Loving a person a lot is good. When that person decides your conscience, you no longer love them: you adore them.",
+            "tags": [
+              "react:fear",
+              "theme:relationship",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "razon",
+            "label": "My need to be right",
+            "insight": "\"Knowledge puffs up\" (1 Cor. 8:1). When defending your position matters more than caring for another person, your intellect has already become an altar.",
+            "tags": [
+              "react:pride",
+              "theme:humility",
+              "posture:proud"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "gloria",
+      "day": "The ordinary, for his glory",
+      "tag": "Piece 7 · My rule of life",
+      "title": "If you eat, if you drink, if you do something else",
+      "story": "Here Paul closes three whole chapters with a phrase that fits in your pocket: \"Whether you eat, or drink, or do anything else, do it all to the glory of God\" (1 Cor. 10:31). He did not say: do religious things for the glory of God. He said: eat. Drink. Do whatever else fills your day. The smallest thing in your life has an audience. “No one should seek their own good, but the good of others” (1 Cor. 10:24). This is how Paul imitated Christ (1 Cor. 11:1).",
+      "cue": "Look again at your ordinary day, {name}. None of it is insignificant.",
+      "module": {
+        "type": "perspectiveFlip",
+        "saveLabel": "Save in my freedom",
+        "seedSub": "your rule of life",
+        "prompt": "Tap each card to see your day as God sees it",
+        "hint": "Two looks on the same small gesture",
+        "pairs": [
+          {
+            "see": "Eating and drinking is just solving hunger.",
+            "sees": "“Whether you eat, or drink, or do anything else, do it all to the glory of God” (1 Cor. 10:31): your daily table is a small altar."
+          },
+          {
+            "see": "What you buy is your business and no one else's.",
+            "sees": "“Let no one seek his own good, but that of another” (1 Cor. 10:24): someone, somewhere, lives off what you decide to buy."
+          },
+          {
+            "see": "What you publish takes the day.",
+            "sees": "Paul asked us to wonder what influence our words and actions would have on others. Someone weak in faith is reading you today."
+          },
+          {
+            "see": "Giving up a right leaves you with less.",
+            "sees": "\"Be imitators of me, as I am of Christ\" (1 Cor. 11:1): what you release out of love is the only thing in your life that resembles it."
+          }
+        ],
+        "chooseLabel": "This is the look I needed",
+        "teach": "The glory of God is not reserved for Sabbath morning. It is lived out at the table, in the shopping cart, in the message you write, and in the right you decide not to use. None of that is small when it affects another person.",
+        "commit": {
+          "prompt": "Write your rule of life in a sentence: what you do freely and what you let go for love",
+          "hint": "Concrete, yours, applicable from tomorrow",
+          "placeholder": "I am free to… and I renounce… for…",
+          "extraKey": "reglaDeVida",
+          "shareable": true
+        }
+      }
+    },
+    {
+      "id": "paso",
+      "day": "Friday · To study and meditate",
+      "tag": "Piece 8 · My step of the week",
+      "title": "Let no one stumble over you",
+      "story": "\"If you see that doing certain things which you have a perfect right to do hinders the progress of God's work, refrain from doing those things\" (Testimonies for the Church, vol. 9, p. 172). This is a strange kind of freedom: you measure its height by what you choose not to use. Paul did not seek his own benefit, “but the good of many, so that they may be saved” (1 Cor. 10:33). Only one thing remains: a step you can take tomorrow, and a real person to care for.",
+      "cue": "Before closing, {name}, leave something here that you can do tomorrow.",
+      "module": {
+        "type": "commitDuo",
+        "saveLabel": "close my freedom",
+        "seedSub": "your step",
+        "stepPrompt": "My specific step this week",
+        "stepHint": "Tap an idea or write your own",
+        "stepOptions": [
+          "Stop doing something lawful that hurts someone",
+          "Give up a right without announcing it to anyone",
+          "Review where my money is really going",
+          "Ask someone if something of mine is bothering them",
+          "Set my table and my appetite under prayer"
+        ],
+        "stepPlaceholder": "my specific step...",
+        "stepExtraKey": "pasoTexto",
+        "personPrompt": "The person I'm going to take care of",
+        "personHint": "Who is the weak brother that your freedom could hurt?",
+        "personPlaceholder": "a name...",
+        "personExtraKey": "cuidado"
+      }
+    }
+  ],
+  "encourage": [
+    "“So, whether you eat, or drink, or do anything else, do it all to the glory of God.” (1 Cor. 10:31)",
+    "“Everything is lawful for me, but not everything is convenient; \"Everything is lawful for me, but not everything builds.” (1 Cor. 10:23)",
+    "“Knowledge puffs up, but love builds.” (1 Cor. 8:1)",
+    "“No one seeks his own good, but that of the other.” (1 Cor. 10:24)",
+    "“He who thinks he stands firm, take care lest he fall.” (1 Cor. 10:12)",
+    "“God is faithful, who will not allow you to be tempted beyond what you can resist, but will also provide a way out with the temptation.” (1 Cor. 10:13)"
+  ],
+  "discussion": [
+    "Paul says that the behavior of a mature Christian can unintentionally stunt the growth of an immature one. Think about real situations in this church: why is loving God above all and loving your neighbor as yourself the only way to solve that?",
+    "What good things can a faithful believer turn into idols? How do you know that something you care deeply about has already taken God's place in your life?",
+    "Paul says that he disciplined his body so that he would not be disqualified from preaching (1 Cor. 9:27). According to this week's study, what can disqualify someone who announces the gospel today?",
+    "“Flee from idolatry” (1 Cor. 10:14). Why is idolatry so serious, and where does your freedom end to begin caring for your brother?"
+  ],
+  "facilitator": [
+    {
+      "stationId": "licito",
+      "apertura": "\"Everything is lawful for me, but not everything is beneficial.\" What is the difference between what is permitted and what is beneficial?",
+      "seguimiento": "In what area do you use your freedom almost without thinking about it?",
+      "ilustracion": "In Corinth the question seemed like a menu item, but underneath was the real question: who do you love when no one forces you to do anything?",
+      "transicion": "If freedom is real, we need to see who sets the limit: not a new rule, but love.",
+      "actividad": "Let each of you name, if you wish, an area of your life where you have never stopped to think.",
+      "cierre": "Lord, you bought my freedom. Teach me to use it as you would use it."
+    },
+    {
+      "stationId": "amor",
+      "apertura": "Why does Paul contrast knowledge with love in 1 Corinthians 8?",
+      "seguimiento": "In what situations can knowledge without love become really bad?",
+      "ilustracion": "The “strong ones” had the right theology and the wrong effect: a new brother saw them and concluded that the gospel and idolatry were compatible.",
+      "transicion": "If love edifies more than reason, let's see what that looks like in Paul's concrete life.",
+      "actividad": "Read 1 Corinthians 8:1-3 and discuss what it means to be known by God versus to know much.",
+      "cierre": "Father, may my knowledge never puff me up, but instead build up those around me."
+    },
+    {
+      "stationId": "derecho",
+      "apertura": "What rights does Paul list in 1 Corinthians 9:1-6, and what did he do with them?",
+      "seguimiento": "Are there rights you could use but would be better to surrender in order to be a more effective witness?",
+      "ilustracion": "The Lord himself commanded that those who preach the gospel live by it, and Paul made tents so as not to charge anyone anything.",
+      "transicion": "That same Paul immediately warns that not even he was safe from falling.",
+      "actividad": "Let each one secretly write down a legitimate right that they could renounce this week.",
+      "cierre": "Lord, teach us to let go of what is ours when someone needs it most."
+    },
+    {
+      "stationId": "firme",
+      "apertura": "What sins did Israel commit in the desert, and why did their privileges make them more serious?",
+      "seguimiento": "\"He who thinks he stands firm, take care lest he fall.\" Who among us has not experienced that warning?",
+      "ilustracion": "Cloud, sea, manna, and water from the rock. Privilege upon privilege, and still the wilderness was filled with graves.",
+      "transicion": "If God always promises a way out, it is worth looking at the door Paul points to: the table where we sit.",
+      "actividad": "Read 1 Corinthians 10:13 and mention specific ways that God has already provided for you.",
+      "cierre": "Keep us, Lord, especially where we believe we are safest."
+    },
+    {
+      "stationId": "mesa",
+      "apertura": "Why does Paul allow buying meat from the market and prohibit entering the pagan temple?",
+      "seguimiento": "What tables in our culture today ask us for a loyalty that only belongs to God?",
+      "ilustracion": "The meat was the same in both places. What changed was the table, and the table says who you belong to.",
+      "transicion": "If idolatry is not just a statue, it is worth asking what idols fit into a Christian life.",
+      "actividad": "Compare 1 Corinthians 10:16 with 10:21 and describe what “fellowship” means in each case.",
+      "cierre": "Lord, we do not want two cups or two tables. Seat us at yours."
+    },
+    {
+      "stationId": "idolo",
+      "apertura": "The rich young man fulfilled the commandments and left sad. What was he really missing?",
+      "seguimiento": "What idols, if any, do you need to get rid of this week?",
+      "ilustracion": "Ellen G. White defines idolatry as self-serving, the love of comfort, and the indulgence of appetites.",
+      "transicion": "With idolatry defeated, the more practical question remains: what do I do with my Monday morning?",
+      "actividad": "Read Mark 12:28-31 and explain how the two commandments tear down every idol.",
+      "cierre": "Lord, let nothing in us take the glory that belongs to you. Take first place."
+    },
+    {
+      "stationId": "gloria",
+      "apertura": "Why does Paul close three chapters on idolatry by talking about eating and drinking?",
+      "seguimiento": "What does it look like, in your particular week, to do it all for the glory of God?",
+      "ilustracion": "Anything that usurps the glory that belongs to God alone is a form of idolatry (Isa. 42:8), and anything done for Him becomes worship.",
+      "transicion": "Let's get all of this down to a concrete step and a named person.",
+      "actividad": "Let everyone write their rule of life in a single sentence and read it if they wish.",
+      "cierre": "May our plate, our money and our words give you glory today."
+    },
+    {
+      "stationId": "paso",
+      "apertura": "What does it mean not to do anything that hinders the progress of God's work, even if we have the right?",
+      "seguimiento": "Who is the specific person your freedom could hurt this week?",
+      "ilustracion": "Paul did not seek his own benefit, but that of many, so that they would be saved. Thus he imitated Christ (1 Cor. 10:33; 11:1).",
+      "transicion": "Let's bring it all together in a freedom shaped by the cross and a step for the days ahead.",
+      "actividad": "Share a concrete step for this week and the name of someone you will care for.",
+      "cierre": "Give us a freedom in the shape of a cross, which is measured by what it gives up."
+    }
+  ],
+  "patternTemplate": "{name}, you named where your freedom is tested most: “{slot:licito}”. You saw where being right had failed to love: “{slot:amor}”. You chose a right to release: “{slot:derecho}”. You also named what must leave first place: “{slot:idolo}”. At the door you left “{slot:mesa}” and chose one table: “{slot:mesaPropia|or:the Lord's table}”. The two beams have crossed. What began as permission is becoming a way to love.",
+  "outOracion": "Lord, my freedom is yours, because you bought it. I name where I use it almost without thinking: “{slot:licito}”. I admit where being right has not led me to love: “{slot:amor}”. Today I release “{slot:derecho}” and leave “{slot:idolo}” at the door. Guard me where I think I stand firm: “{slot:firme}”. Before sitting down, I leave “{slot:mesa}” at the door. I choose one table: “{slot:mesaPropia|or:the Lord's table}”. Teach me to live the ordinary as sacred, because “{verse}” ({verseRef}). In the name of Jesus, amen.",
+  "outAliento": "{name}, your freedom did not become smaller today; it took the shape of a cross. You chose this right to release: “{slot:derecho}”. You also named what must leave first place: “{slot:idolo}”. Those choices did not diminish you. They gave your freedom the shape of Christ, who did not seek his own good but the good of many. Your food, your money, and your words now have an audience, and God receives them.",
+  "outAccion24": "In the next 24 hours I'm going to {slot:paso|lower}, and I'm going to drop {slot:derecho|lower} for the love of someone with a name.",
+  "outPregunta": "This week I named where my freedom is tested most: “{slot:licito}”. I also chose this right to release for love: “{slot:derecho}”. Is there something you have every right to do that it would be more loving not to do?",
+  "outTarjeta": "My freedom this week: I named “{slot:licito}”, released “{slot:derecho}”, and left “{slot:idolo}” behind. My rule is this: {slot:gloria|or:do everything for his glory}\nVerse: “{verse}” ({verseRef})."
+}

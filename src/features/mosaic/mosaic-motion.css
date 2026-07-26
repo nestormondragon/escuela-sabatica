@@ -1,0 +1,135 @@
+.qm-courtyard {
+  --qm-rotate-x: 0deg;
+  --qm-rotate-y: 0deg;
+  perspective: 1400px;
+}
+
+.qm-courtyard__grid {
+  transform:
+    rotateX(var(--qm-rotate-x))
+    rotateY(var(--qm-rotate-y))
+    translateZ(0);
+  transform-origin: 50% 45%;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+.qm-courtyard::before {
+  z-index: 3;
+  background:
+    radial-gradient(
+      32% 24% at 26% 12%,
+      rgb(255 246 226 / 0.18),
+      transparent 72%
+    ),
+    radial-gradient(
+      50% 58% at 92% 96%,
+      rgb(0 0 0 / 0.34),
+      transparent 76%
+    );
+  mix-blend-mode: screen;
+  transition: background-position 120ms linear;
+}
+
+.qm-panel[data-selected="true"] {
+  transform:
+    translateY(-11px)
+    translateZ(24px)
+    rotateX(var(--qm-rotate-x))
+    rotateY(var(--qm-rotate-y))
+    scale(1.026);
+}
+
+.qm-panel[data-selected="true"]::before {
+  background:
+    radial-gradient(
+      58% 48% at 32% 18%,
+      rgb(255 246 226 / 0.17),
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(5 6 7 / 0.02) 30%,
+      rgb(5 6 7 / 0.4) 64%,
+      rgb(5 6 7 / 0.93) 100%
+    );
+}
+
+.qm-seams__connection {
+  fill: none;
+  stroke: #ef754a;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  filter: drop-shadow(0 0 6px rgb(239 106 61 / 0.42));
+  opacity: 0.8;
+  animation: qm-draw-connection 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+:root[data-mode="day"] .qm-courtyard::before {
+  background:
+    radial-gradient(
+      34% 26% at 26% 12%,
+      rgb(255 255 255 / 0.46),
+      transparent 73%
+    ),
+    radial-gradient(
+      50% 58% at 92% 96%,
+      rgb(73 62 51 / 0.14),
+      transparent 76%
+    );
+  mix-blend-mode: soft-light;
+}
+
+:root[data-mode="day"] .qm-panel[data-selected="true"]::before {
+  background:
+    radial-gradient(
+      58% 48% at 32% 18%,
+      rgb(255 255 255 / 0.52),
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.02) 28%,
+      rgb(230 228 221 / 0.68) 65%,
+      rgb(223 221 214 / 0.96) 100%
+    );
+}
+
+@keyframes qm-draw-connection {
+  from {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 0.8;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .qm-courtyard__grid {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qm-courtyard__grid {
+    transform: none;
+    transition: none;
+  }
+
+  .qm-seams__connection {
+    animation: none;
+  }
+}
+
+:root[data-motion="reduce"] .qm-courtyard__grid {
+  transform: none;
+  transition: none;
+}
+
+:root[data-motion="reduce"] .qm-seams__connection {
+  animation: none;
+}

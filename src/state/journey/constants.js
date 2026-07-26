@@ -13,6 +13,8 @@ export const JOURNEY_LESSON_IDS = Object.freeze(
 export const DEPTHS = Object.freeze(["minute", "study", "deep"]);
 export const ROLES = Object.freeze(["participant", "teacher", "both"]);
 export const THEMES = Object.freeze(["auto", "light", "dark"]);
+export const TEXT_SIZES = Object.freeze(["normal", "large", "x-large"]);
+export const LOCALES = Object.freeze(["es", "en"]);
 export const LESSON_STATUSES = Object.freeze([
   "not-started",
   "active",

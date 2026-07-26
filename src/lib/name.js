@@ -31,6 +31,10 @@ export function vocative(raw) {
    name can prefix an existing sentence: `${fn}, ${lcFirst(sentence)}`. */
 export function lcFirst(str) {
   const s = String(str || "");
+  // English first-person "I" is a word, not an ordinary initial. Keeping it
+  // uppercase also protects authored labels such as "I stopped feeding it"
+  // when they are embedded in a longer sentence.
+  if (/^I(?=\b|['’])/.test(s)) return s;
   return s.charAt(0).toLowerCase() + s.slice(1);
 }
 
@@ -70,30 +74,47 @@ export function fillName(text, rawName) {
   const fn = firstName(rawName);
   let s = String(text || "");
   if (fn) return s.replace(/\{name\}/g, fn);
-  return s
+  const cleaned = s
     .replace(/\{name\}\s*[,:]\s*/g, "")
     .replace(/\s*[,:]\s*\{name\}/g, "")
     .replace(/\{name\}/g, "")
     .replace(/\s{2,}/g, " ")
     .replace(/\s+([.,:;!?])/g, "$1")
     .trim();
+  return cleaned.replace(
+    /^([“"'«¿¡([{]*)(\p{Ll})/u,
+    (_, opening, letter) => `${opening}${letter.toLocaleUpperCase()}`
+  );
 }
 
 /* A short, reverent, scene-neutral cue that always carries the name —
    used so EVERY station screen greets the reader once, warmly, without
    repeating the same phrasing. Returns "" when there is no name. */
-const CUES = [
-  (n) => `Detente un momento aquí, ${n}.`,
-  (n) => `Respira, ${n}. Esta parte es para ti.`,
-  (n) => `Sigamos con calma, ${n}.`,
-  (n) => `${n}, deja que esto te hable hoy.`,
-  (n) => `Esto es entre tú y Dios, ${n}.`,
-  (n) => `Tómate tu tiempo, ${n}.`,
-  (n) => `${n}, no hay prisa en este paso.`,
-  (n) => `Que estas palabras calen hondo, ${n}.`,
-];
-export function warmCue(name, seed) {
+const CUES = {
+  es: [
+    (n) => `Detente un momento aquí, ${n}.`,
+    (n) => `Respira, ${n}. Esta parte es para ti.`,
+    (n) => `Sigamos con calma, ${n}.`,
+    (n) => `${n}, deja que esto te hable hoy.`,
+    (n) => `Esto es entre tú y Dios, ${n}.`,
+    (n) => `Tómate tu tiempo, ${n}.`,
+    (n) => `${n}, no hay prisa en este paso.`,
+    (n) => `Que estas palabras calen hondo, ${n}.`,
+  ],
+  en: [
+    (n) => `Pause here for a moment, ${n}.`,
+    (n) => `Take a breath, ${n}. This part is for you.`,
+    (n) => `Let’s continue gently, ${n}.`,
+    (n) => `${n}, let this speak to you today.`,
+    (n) => `This is between you and God, ${n}.`,
+    (n) => `Take your time, ${n}.`,
+    (n) => `${n}, there is no rush in this step.`,
+    (n) => `May these words sink in deeply, ${n}.`,
+  ],
+};
+export function warmCue(name, seed, locale = "es") {
   const fn = firstName(name);
   if (!fn) return "";
-  return CUES[hashStr(seed) % CUES.length](fn);
+  const cues = CUES[locale === "en" ? "en" : "es"];
+  return cues[hashStr(seed) % cues.length](fn);
 }

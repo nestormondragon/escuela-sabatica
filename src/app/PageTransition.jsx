@@ -2,10 +2,11 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
 } from "framer-motion";
 import { Outlet, useLocation } from "react-router-dom";
 import { EASE_OUT } from "../lib/motion.js";
+import { useAppReducedMotion } from "../lib/useAppReducedMotion.js";
+import "./route-motion.css";
 
 const DIRECTION = {
   forward: 16,
@@ -24,7 +25,7 @@ export default function PageTransition({
   className = "",
 }) {
   const location = useLocation();
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useAppReducedMotion();
   const pageRef = useRef(null);
   const focusedKeyRef = useRef(null);
   const [focusReadyKey, setFocusReadyKey] = useState(null);
@@ -98,9 +99,30 @@ export default function PageTransition({
         exit: { opacity: 1 },
       }
     : {
-        initial: { opacity: 0, x: offset * 0.65 },
-        animate: { opacity: 1, x: 0 },
-        exit: { opacity: 0, x: offset * -0.35 },
+        initial: {
+          opacity: 0,
+          x: offset * 0.55,
+          y: 12,
+          scale: 0.992,
+          clipPath: "inset(0 0 3.5% 0)",
+          filter: "blur(4px)",
+        },
+        animate: {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          scale: 1,
+          clipPath: "inset(0 0 0% 0)",
+          filter: "blur(0px)",
+        },
+        exit: {
+          opacity: 0,
+          x: offset * -0.25,
+          y: -6,
+          scale: 0.996,
+          clipPath: "inset(2% 0 0 0)",
+          filter: "blur(2px)",
+        },
       };
 
   return (
@@ -118,6 +140,31 @@ export default function PageTransition({
           reduceMotion ? { duration: 0 } : { duration: 0.23, ease: EASE_OUT }
         }
       >
+        {!reduceMotion ? (
+          <motion.span
+            className="mcv-page-transition__material-wipe"
+            aria-hidden="true"
+            initial={{
+              clipPath: "inset(0 100% 0 0)",
+              opacity: 0,
+              scaleY: 0.5,
+            }}
+            animate={{
+              clipPath: [
+                "inset(0 100% 0 0)",
+                "inset(0 0% 0 0)",
+                "inset(0 0 0 100%)",
+              ],
+              opacity: [0, 1, 0],
+              scaleY: [0.5, 1, 0.65],
+            }}
+            transition={{
+              duration: 0.72,
+              times: [0, 0.48, 1],
+              ease: [0.16, 1, 0.3, 1],
+            }}
+          />
+        ) : null}
         {content}
       </motion.div>
     </AnimatePresence>

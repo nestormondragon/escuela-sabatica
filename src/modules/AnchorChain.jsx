@@ -5,10 +5,12 @@ import { SaveBar, ChipRow, Pause } from "./common.jsx";
 import { buzz } from "../lib/haptics.js";
 import Icon from "../components/Icon.jsx";
 import { useAppReducedMotion } from "../lib/useAppReducedMotion.js";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 /* Romans 5:3-5 forged link by link, then drop the anchor (press &
    hold) on the hope you choose. Used for "Mi esperanza". */
 export default function AnchorChain({ config, onFill, onSkip }) {
+  const { t: translate } = useI18n();
   const [forged, setForged] = useState(0); // how many links forged
   const total = config.chain.length;
   const allForged = forged >= total;
@@ -34,8 +36,8 @@ export default function AnchorChain({ config, onFill, onSkip }) {
 
   return (
     <div className="stack">
-      <p className="prompt-q">{allForged ? config.climax : "Arma la cadena, eslabón por eslabón"}</p>
-      {!allForged ? <p className="prompt-hint">Toca el siguiente eslabón</p> : null}
+      <p className="prompt-q">{allForged ? config.climax : translate("module.buildChain")}</p>
+      {!allForged ? <p className="prompt-hint">{translate("module.tapNextLink")}</p> : null}
 
       <div className="stack" style={{ gap: 0 }}>
         {config.chain.map((link, k) => {
@@ -98,10 +100,10 @@ export default function AnchorChain({ config, onFill, onSkip }) {
             </div>
             <HoldToSeal
               disabled={!value}
-              label="Mantén presionado · sella tu decisión"
+              label={translate("module.holdSeal")}
               onComplete={() => onFill(value, custom ? { [config.allowCustom.extraKey]: value } : null, config.seedSub)}
             />
-            <div className="skip-wrap"><button className="skip" onClick={onSkip}>Saltar por ahora</button></div>
+            <div className="skip-wrap"><button className="skip" onClick={onSkip}>{translate("module.skip")}</button></div>
           </motion.div>
         ) : null}
       </AnimatePresence>
@@ -111,6 +113,7 @@ export default function AnchorChain({ config, onFill, onSkip }) {
 
 /* press-and-hold to seal a commitment (asymmetric: slow fill, snap back) */
 function HoldToSeal({ onComplete, label, disabled }) {
+  const { t: translate } = useI18n();
   const reduced = useAppReducedMotion();
   const [fill, setFill] = useState(0);
   const holding = useRef(false);
@@ -151,7 +154,7 @@ function HoldToSeal({ onComplete, label, disabled }) {
     <button
       onPointerDown={start} onPointerUp={stop} onPointerLeave={stop} onPointerCancel={stop}
       onKeyDown={onKey}
-      aria-label={`${label} (o pulsa Enter)`}
+      aria-label={translate("module.holdOrEnter", { label })}
       className="btn btn-primary btn-block"
       disabled={disabled}
       style={{ position: "relative", overflow: "hidden", userSelect: "none", touchAction: "none", opacity: disabled ? 0.5 : 1, minHeight: 56 }}

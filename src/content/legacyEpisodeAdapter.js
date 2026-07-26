@@ -1,13 +1,25 @@
-const CANONICAL_DAYS = [
-  "Sábado de apertura",
-  "Domingo",
-  "Lunes",
-  "Martes",
-  "Miércoles",
-  "Jueves",
-  "Profundizar",
-  "Viernes",
-];
+const CANONICAL_DAYS = {
+  es: [
+    "Sábado de apertura",
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Profundizar",
+    "Viernes",
+  ],
+  en: [
+    "Opening Sabbath",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Go deeper",
+    "Friday",
+  ],
+};
 
 export const DEPTHS = {
   minute: {
@@ -28,10 +40,11 @@ export const DEPTHS = {
 };
 
 export function adaptLessonToEpisodes(lesson) {
+  const days = CANONICAL_DAYS[lesson?.locale === "en" ? "en" : "es"];
   return lesson.stations.map((station, index) => ({
     id: station.id,
     index,
-    canonicalDay: CANONICAL_DAYS[index] || station.day,
+    canonicalDay: days[index] || station.day,
     title: station.title,
     tag: station.tag,
     cue: station.cue,

@@ -1,0 +1,676 @@
+{
+  "number": 11,
+  "slug": "mayordomia-y-mision",
+  "title": "Stewardship and Mission",
+  "subtitle": "What if giving were not a bill, but a privilege?",
+  "kitName": "My Sowing",
+  "artifactNoun": "sowing",
+  "motif": "siembra",
+  "stages": [
+    "puno",
+    "mano",
+    "grano",
+    "surco",
+    "siembra"
+  ],
+  "stageLabels": [
+    "Closed fist · what is mine is mine",
+    "The hand opens · I look at grace",
+    "The seed falls · I give with joy",
+    "The furrows join · I do not give alone",
+    "Sowing complete · grace overflows"
+  ],
+  "verseRef": "2 Cor. 8:9",
+  "verseText": "For you know the grace of our Lord Jesus Christ: though he was rich, for your sake he became poor, so that through his poverty you might become rich.",
+  "promise": "In a few minutes you will assemble your Sowing, {name}: you will honestly name what you feel when you hear the word giving, look at the One who was rich and became poor, choose your reason, decide beforehand, recognize what you grip too tightly, and take one concrete step of generosity. Piece by piece, a closed hand learns to open.",
+  "ui": {
+    "start": "Begin my sowing",
+    "emptyKit": "Your sowing",
+    "building": "Each piece opens the hand a little more",
+    "buildingHint": "Tap the glowing piece. Watch the hand open until the sowing overflows.",
+    "lastPiece": "One piece remains",
+    "patternLabel": "Your pattern in the mosaic",
+    "doneTitle": "Your sowing is complete",
+    "doneSub": "You sowed it with God. Open it, save it, and share it.",
+    "open": "Open my sowing",
+    "back": "Back to my sowing",
+    "kitName": "My Sowing"
+  },
+  "slots": [
+    {
+      "id": "eco",
+      "n": 1,
+      "label": "How giving sounds to me",
+      "teaser": "The first thing I feel when I hear the word...",
+      "icon": "voice"
+    },
+    {
+      "id": "modelo",
+      "n": 2,
+      "label": "The model I follow",
+      "teaser": "Though rich, he became poor for me...",
+      "icon": "cross"
+    },
+    {
+      "id": "motivo",
+      "n": 3,
+      "label": "My reason for giving",
+      "teaser": "Why I give when I truly give...",
+      "icon": "heart"
+    },
+    {
+      "id": "plan",
+      "n": 4,
+      "label": "What I decide beforehand",
+      "teaser": "Purposed in the heart, not improvised...",
+      "icon": "scroll"
+    },
+    {
+      "id": "actitud",
+      "n": 5,
+      "label": "The attitude I am missing",
+      "teaser": "Joy, willingness, privilege, surrender...",
+      "icon": "gift"
+    },
+    {
+      "id": "union",
+      "n": 6,
+      "label": "What I become part of",
+      "teaser": "My offering enters something larger...",
+      "icon": "people"
+    },
+    {
+      "id": "puno",
+      "n": 7,
+      "label": "What I grip too tightly",
+      "teaser": "What I have not yet released...",
+      "icon": "hand"
+    },
+    {
+      "id": "paso",
+      "n": 8,
+      "label": "My sowing this week",
+      "teaser": "One concrete act and someone with whom I will do it...",
+      "icon": "seed"
+    }
+  ],
+  "stations": [
+    {
+      "id": "eco",
+      "day": "Saturday · Giving is the language of heaven",
+      "tag": "Piece 1 How it sounds to me",
+      "title": "What do you feel when you hear \"offering\"?",
+      "story": "Paul did not send the Corinthians a bill. He offered them something: the opportunity to support poor believers in Judea whom they might never meet. He called this a privilege (2 Cor. 8:4). Before talking about amounts, notice your reaction. The word giving awakens something in you, and that response says more about your heart than your bank balance does.",
+      "cue": "Be honest here, {name}. No one else can see your response.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "When you hear the word give, the first thing you feel is...",
+        "hint": "Choose the most sincere, not the most correct",
+        "saveLabel": "Save",
+        "seedSub": "Your first reaction",
+        "closing": "Whatever your reaction, this chapter does not begin with you. It begins with \"the grace that God has given\" (2 Cor. 8:1). Grace is received first; then it gives.",
+        "options": [
+          {
+            "id": "alegria",
+            "label": "Joy, giving is already part of me",
+            "insight": "\"God loves the cheerful giver\" (2 Cor. 9:7). Take care of that joy: it does not come from having plenty, it comes from having received grace.",
+            "tags": [
+              "theme:generosity",
+              "posture:surrendering",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "culpa",
+            "label": "Guilt for how little I give",
+            "insight": "Guilt is a poor planter. Paul said to give \"not reluctantly\" (2 Cor. 9:7). God does not want your remorse; he wants your heart, and he wants it free.",
+            "tags": [
+              "react:fear",
+              "theme:grace",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "factura",
+            "label": "One more bill",
+            "insight": "If giving sounds like a tax, something has broken along the way. The gospel never presents you with an invoice. It shows you a cross and invites your response.",
+            "tags": [
+              "react:apathy",
+              "theme:generosity",
+              "posture:clinging"
+            ]
+          },
+          {
+            "id": "miedo",
+            "label": "Afraid that it will not reach",
+            "insight": "The Macedonians gave from extreme poverty (2 Cor. 8:2). God knows your scarcity and never despises it. Start where you are, not where you would like to be.",
+            "tags": [
+              "react:fear",
+              "posture:clinging",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "esquivo",
+            "label": "A topic I prefer to dodge",
+            "insight": "Dodging it doesn't make it disappear, it just leaves it without light. Look at the topic once and you will see that it was not a threat, it was an invitation.",
+            "tags": [
+              "react:withdraw",
+              "theme:self",
+              "posture:avoidant"
+            ]
+          },
+          {
+            "id": "duda",
+            "label": "Doubt about where it goes",
+            "insight": "Paul shared that concern: he put Titus and two brothers chosen by the churches in charge of the funds (2 Cor. 8:18-23). Transparency is also part of faith.",
+            "tags": [
+              "react:doubt",
+              "theme:truth",
+              "posture:seeking"
+            ]
+          },
+          {
+            "id": "ganas",
+            "label": "Want to give more than I give",
+            "insight": "That desire is not yours alone. It is the Spirit teaching you heaven's language, the language that begins with \"God so loved... that he gave\" (John 3:16).",
+            "tags": [
+              "theme:mission",
+              "posture:seeking",
+              "tone:tender"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "modelo",
+      "day": "Sunday · The example of Jesus",
+      "tag": "Piece 2 · The model I look at",
+      "title": "Being rich, he became poor",
+      "story": "Paul tells the whole story of redemption in one verse, using the language of wealth: \"Though he was rich, yet for your sake he became poor\" (2 Cor. 8:9). His riches were the glory he shared with the Father before the world existed (John 17:5). His poverty was real: he had nowhere to lay his head (Luke 9:58). You are never asked to imitate something God did not do first, at infinitely greater cost.",
+      "cue": "Pause here, {name}, before you think about numbers.",
+      "module": {
+        "type": "perspectiveFlip",
+        "saveLabel": "Save",
+        "seedSub": "Your model",
+        "prompt": "Touch each card and see Jesus' self-giving as heaven sees it",
+        "hint": "Two ways to read the same scene",
+        "pairs": [
+          {
+            "see": "You see a Jesus who was born poor by chance.",
+            "sees": "\"He became poor\" (2 Cor. 8:9). It was a deliberate decision, made for you."
+          },
+          {
+            "see": "You see a manger and a cross separated for thirty-three years.",
+            "sees": "It is one long act of self-giving: \"He emptied himself, taking the form of a servant\" (Phil. 2:7)."
+          },
+          {
+            "see": "You think God needs your money.",
+            "sees": "\"Everything comes from you, and we have given you only what comes from your hand\" (1 Chron. 29:14). You add nothing to God; you respond to him."
+          },
+          {
+            "see": "You think giving leaves you with less.",
+            "sees": "His poverty enriched us, and not with coins. What love gives is not lost; it is sown."
+          }
+        ],
+        "chooseLabel": "This is the look I needed",
+        "teach": "Stewardship and mission are two sides of the same coin. God gave his Son with a clear purpose: \"That everyone who believes in him does not perish\" (John 3:16). The resources we manage exist so others can come to know him. We do not give in order to receive; we give because we have already received.",
+        "commit": {
+          "prompt": "Write what the phrase \"became poor for you\" does inside you",
+          "hint": "An honest line is enough",
+          "placeholder": "When I think he left everything for me...",
+          "extraKey": "modeloTexto",
+          "shareable": true
+        }
+      }
+    },
+    {
+      "id": "motivo",
+      "day": "Monday · Motivation",
+      "tag": "Piece 3 · My reason for giving",
+      "title": "Four reasons, none is fear",
+      "story": "Chapters 8 and 9 of 2 Corinthians begin and end with grace (2 Cor. 8:1; 9:15). Between those two boundaries, Paul gives four reasons to give: gratitude for what we received, a desire to resemble Jesus, a desire to share what was entrusted to us, and sincere love. None is pressure. None is guilt. None promises that God will give you more than you put in.",
+      "cue": "Touch every reason, {name}, and stay with the one that is true in you today.",
+      "module": {
+        "type": "pickReveal",
+        "saveLabel": "Save",
+        "seedSub": "Your reason",
+        "prompt": "Choose the reason that really moves you today",
+        "hint": "Tap each to see what's behind",
+        "chooseLabel": "This is my reason",
+        "closing": "All four begin in the same place: \"Thanks be to God for his indescribable gift!\" (2 Cor. 9:15). You received first. Everything else is a response.",
+        "allowCustom": {
+          "label": "Write mine",
+          "placeholder": "I give because...",
+          "extraKey": "motivoPropio"
+        },
+        "items": [
+          {
+            "t": "Gratitude for the grace I already received",
+            "ref": "2 Cor. 9:15",
+            "meaning": "Giving buys nothing because everything has already been paid. It is one way God gives us to say thank you with our hands."
+          },
+          {
+            "t": "The desire to look like Jesus",
+            "ref": "2 Cor. 8:9",
+            "meaning": "He gave it all, not a percentage. Every time you open your hand, your character looks a little more like his."
+          },
+          {
+            "t": "Share what God entrusted to me",
+            "ref": "2 Cor. 9:11",
+            "meaning": "\"You will be enriched so that you can be generous.\" The blessing's destination is not the storehouse, but the neighbor."
+          },
+          {
+            "t": "Sincere love, no obligation",
+            "ref": "2 Cor. 8:8",
+            "meaning": "\"Where your treasure is, there will also be your heart\" (Matt. 6:21). What you give reveals who you love, without the need for speeches."
+          }
+        ]
+      }
+    },
+    {
+      "id": "plan",
+      "day": "Tuesday · Planning",
+      "tag": "Piece 4 What I decide beforehand",
+      "title": "As proposed in his heart",
+      "story": "God did not improvise your salvation. The plan existed before the world fell (Rev. 13:8). This is why Paul writes that each person should give \"what you have decided in your heart\" (2 Cor. 9:7). The Greek verb carries the sense of deciding beforehand. Good giving is not an emotional impulse on Sabbath morning. It is a calm decision proportionate to what you actually have, \"according to what one has, not according to what one does not have\" (2 Cor. 8:12).",
+      "cue": "Let's sharpen your judgment, {name}, before the moment comes.",
+      "module": {
+        "type": "skillThenCommit",
+        "saveLabel": "Save",
+        "seedSub": "Your decision",
+        "skill": {
+          "prompt": "Decided in the heart, or pulled out by pressure?",
+          "hint": "Six situations. Classify them.",
+          "badge": "You're learning to give with a cool head and a warm heart",
+          "cats": [
+            "Determined in the heart",
+            "PULLED OUT BY PRESSURE"
+          ],
+          "rounds": [
+            {
+              "t": "\"I set aside my offering on payday, before I spend anything.\"",
+              "a": 0,
+              "fb": "Determined in the heart: the first thing you separate reveals the first thing you love."
+            },
+            {
+              "t": "\"I give what's left in my pocket when the bag passes.\"",
+              "a": 1,
+              "fb": "Pressed out by pressure: it is not evil, but it is careless. What is not decided beforehand is left to chance."
+            },
+            {
+              "t": "\"I chose a proportion of my income and checked it once a year.\"",
+              "a": 0,
+              "fb": "Determined in the heart: the tithe is defined by the Bible; the proportion of your offerings is decided through prayer."
+            },
+            {
+              "t": "\"Say more than I could because the others were looking at me.\"",
+              "a": 1,
+              "fb": "Started by pressure: \"Not with sadness, nor out of necessity\" (2 Cor. 9:7). God does not accept offerings collected out of shame."
+            },
+            {
+              "t": "\"I give according to what I have, not according to what I would like to have.\"",
+              "a": 0,
+              "fb": "Determined in the heart: the offering is acceptable \"according to what one has\" (2 Cor. 8:12)."
+            },
+            {
+              "t": "\"I promised a lot in an emotional moment and then I left it halfway.\"",
+              "a": 1,
+              "fb": "Started by pressure: the same thing happened to the Corinthians. Paul does not shame them, he encourages them to finish what they started (2 Cor. 8:11)."
+            }
+          ],
+          "summary": "Planning does not remove spontaneity from generosity; it removes chance. Decide calmly beforehand what proportion you believe is right before God, and then follow through."
+        },
+        "commit": {
+          "prompt": "What are you going to decide beforehand, starting this week?",
+          "hint": "Concrete, sustainable, yours",
+          "placeholder": "I will decide that...",
+          "extraKey": "planTexto",
+          "options": [
+            "Put aside the offering before spending anything",
+            "Fix a proportion and hold it",
+            "Finish the commitment that I left half",
+            "Put date and quantity in my calendar",
+            "Reserve hours too, not just money"
+          ]
+        }
+      }
+    },
+    {
+      "id": "actitud",
+      "day": "Wednesday · Attitude",
+      "tag": "Piece 5 · The attitude that I lack",
+      "title": "They pleaded for the privilege of giving",
+      "story": "The Macedonians were truly poor. Even so, \"their extreme poverty welled up in rich generosity\" (2 Cor. 8:2). They gave joyfully and voluntarily and, strangest of all, \"they urgently pleaded with us for the privilege of sharing\" (2 Cor. 8:4). They begged for the chance to give. Before offering their money, \"they gave themselves first of all to the Lord\" (2 Cor. 8:5). There is the secret: this was not a campaign, but consecration.",
+      "cue": "One of these attitudes may be missing, {name}. Name it honestly.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "The attitude of the Macedonians that I lack the most is…",
+        "hint": "Choose the one that makes you most uncomfortable: it is usually the real one",
+        "saveLabel": "Save",
+        "seedSub": "Your attitude",
+        "closing": "Notice the order in 2 Corinthians 8:5: first they gave themselves to the Lord, and then they gave what they had. It is never the other way around. Once you give yourself, your grip on everything else begins to loosen.",
+        "options": [
+          {
+            "id": "alegre",
+            "label": "Joy in giving, without reluctance",
+            "insight": "The Greek word Paul uses here for joy appears nowhere else in the New Testament. God is not seeking an amount; he is looking at the spirit in which you give it.",
+            "tags": [
+              "theme:generosity",
+              "posture:surrendering",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "escasez",
+            "label": "Generosity even if I lack",
+            "insight": "Poverty and generosity can coexist; Macedonia proved it. A little given from a little carries more weight in heaven than much given from what is left over.",
+            "tags": [
+              "theme:faith",
+              "posture:surrendering",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "voluntario",
+            "label": "Give without anyone asking me",
+            "insight": "\"With pleasure\" (2 Cor. 8:3) means that no one had to push them. When the initiative is born in you, it is no longer a collection: it is worship.",
+            "tags": [
+              "theme:service",
+              "posture:seeking",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "privilegio",
+            "label": "See it as a privilege rather than a burden",
+            "insight": "They pleaded for the privilege of participating (2 Cor. 8:4). Changing one word, from duty to privilege, transforms the entire experience.",
+            "tags": [
+              "theme:grace",
+              "posture:humble",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "yo",
+            "label": "Give myself, not only what I own",
+            "insight": "This is the easiest part to avoid: sign the check so you do not have to surrender your life. But they \"gave themselves first of all to the Lord\" (2 Cor. 8:5).",
+            "tags": [
+              "react:control",
+              "theme:humility",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "masquedinero",
+            "label": "Give time and presence, not just money",
+            "insight": "Being generous is not limited to money. Time, influence and attention are also goods that God entrusted to you for the mission.",
+            "tags": [
+              "theme:service",
+              "theme:mission",
+              "posture:seeking"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "union",
+      "day": "Thursday · Unity",
+      "tag": "Piece 6 · What is it attached to?",
+      "title": "An offering that breaks down walls",
+      "story": "Paul's collection had a second and beautiful purpose: he wanted Gentile churches and Jewish believers in Jerusalem to recognize one another as family. People who had once been rivals now supported one another with their resources. This is why those entrusted with the gift are called \"representatives of the churches and an honor to Christ\" (2 Cor. 8:23). Few things divide a church like money. Given with eyes fixed on God, few things can unite it so powerfully.",
+      "cue": "Look, {name}: how far can what leaves your hand travel?",
+      "module": {
+        "type": "anchorChain",
+        "saveLabel": "Save",
+        "seedSub": "Your union",
+        "links": [
+          {
+            "t": "My offering comes out of my hand",
+            "fb": "That is the last point you control, and where the interesting part begins."
+          },
+          {
+            "t": "It joins the gifts of people I don't know",
+            "fb": "It stops being yours and becomes ours. Paul called that fellowship (2 Cor. 9:13)."
+          },
+          {
+            "t": "It reaches believers who will never repay me",
+            "fb": "Thus the wall fell between Jews and Gentiles: some gave, others received, all remained family (Rom. 15:26-27)."
+          },
+          {
+            "t": "It returns to God as gratitude",
+            "fb": "\"They glorify God for your generosity\" (2 Cor. 9:13). Your offering does not end in a receipt: it ends in worship."
+          }
+        ],
+        "prompt": "What part of the mission do you want to be united to?",
+        "hint": "Hold down to seal your link",
+        "options": [
+          "The mission in my own city",
+          "Those who serve where no one looks at them",
+          "A distant church that I will never visit",
+          "The brothers who are in need today",
+          "The work that will follow when I am not"
+        ],
+        "allowCustom": {
+          "placeholder": "I want to be attached to...",
+          "extraKey": "unionPropia"
+        }
+      }
+    },
+    {
+      "id": "puno",
+      "day": "What I still press",
+      "tag": "Piece 7 · What I grip too tightly",
+      "title": "Open your hand, even if you tremble",
+      "story": "Ellen G. White said it plainly: money, time, and influence are gifts received from God's hand, and those whose hearts are filled with Christ's love regard them as resources for the gospel. The question is not how much you have, but what you hold so tightly that it can no longer serve anyone else. Naming it does not condemn you. Naming it begins to loosen your fingers.",
+      "cue": "You've come this far, {name}. This is the part that costs.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "What is hardest for me today is…",
+        "hint": "Only you are going to read this",
+        "saveLabel": "Save",
+        "seedSub": "What you press",
+        "closing": "You do not release it in order to remain empty. You release it because the One who gave everything for you holds what you open. \"Everything comes from you, and we have given you only what comes from your hand\" (1 Chron. 29:14).",
+        "options": [
+          {
+            "id": "dinero",
+            "label": "Money, even if I don't say it out loud",
+            "insight": "It is the most honest admission and one of the hardest to say aloud. Jesus spoke about money often, never to embarrass people, but to free them.",
+            "tags": [
+              "react:control",
+              "theme:generosity",
+              "posture:clinging"
+            ]
+          },
+          {
+            "id": "tiempo",
+            "label": "My free time, the little that remains",
+            "insight": "That fatigue is real and God sees it. But ask yourself if you are protecting rest or just avoiding people.",
+            "tags": [
+              "react:withdraw",
+              "theme:service",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "control",
+            "label": "Control of my plans",
+            "insight": "Giving always implies losing control of what you gave. God asks you because he himself did it first, delivering his Son into human hands.",
+            "tags": [
+              "react:control",
+              "theme:humility",
+              "posture:clinging"
+            ]
+          },
+          {
+            "id": "reserva",
+            "label": "My reservation just in case",
+            "insight": "The Macedonians had no reserve fund, yet they still gave. Saving is not wrong, but \"just in case\" can sometimes become the household's true god.",
+            "tags": [
+              "react:fear",
+              "theme:faith",
+              "posture:clinging"
+            ]
+          },
+          {
+            "id": "casa",
+            "label": "My house and my space",
+            "insight": "The closed door feels safe. But the early church grew in rooms borrowed by people who decided that their space was not only theirs.",
+            "tags": [
+              "react:withdraw",
+              "theme:unity",
+              "posture:avoidant"
+            ]
+          },
+          {
+            "id": "reputacion",
+            "label": "My reputation and my influence",
+            "insight": "Jesus \"made himself of no reputation\" (Phil. 2:7). Your influence is also a resource for mission, not a trophy.",
+            "tags": [
+              "react:pride",
+              "theme:cross",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "energia",
+            "label": "My energy, I hardly have any left",
+            "insight": "Then begin with the first thing God asks: give yourself (2 Cor. 8:5). The rest can come as you are able, not under pressure.",
+            "tags": [
+              "theme:grace",
+              "posture:humble",
+              "tone:raw"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "paso",
+      "day": "Friday · To study and meditate",
+      "tag": "Piece 8 · My sowing this week",
+      "title": "A concrete sowing, this week",
+      "story": "\"The Lord does not need our offerings. We cannot enrich Him by our gifts\" (Counsels on Stewardship, p. 18). Giving buys you nothing and does not make God richer. It makes you more like Jesus and places you inside his mission. This is why the exercise ends with something small, dated, and verifiable: a concrete offering, a specific service, a real person. Sowing is completed not in reflection, but in an open hand.",
+      "cue": "Last step, {name}: make it small, but make it real.",
+      "module": {
+        "type": "commitDuo",
+        "saveLabel": "Close my sowing",
+        "seedSub": "Your step",
+        "stepPrompt": "My concrete act of generosity this week",
+        "stepHint": "Touch an idea or write yours",
+        "stepOptions": [
+          "Give a decided offering in advance",
+          "Pay something that another today cannot pay",
+          "Give hours to those who need them",
+          "Retake my fidelity in the tithe",
+          "Offer me for a church service"
+        ],
+        "stepPlaceholder": "This week I'm going to...",
+        "stepExtraKey": "pasoTexto",
+        "personPrompt": "Someone I'm going to involve",
+        "personHint": "Giving is almost never done well in solitude",
+        "personPlaceholder": "A name...",
+        "personExtraKey": "compartir"
+      }
+    }
+  ],
+  "encourage": [
+    "\"Because you already know the grace of our Lord Jesus Christ, who out of love for you became poor, being rich, so that you with your poverty would be enriched.\" (2 Cor. 8:9)",
+    "\"Each one gives as he proposed in his heart: not with sadness, or out of necessity, because God loves the cheerful giver.\" (2 Cor. 9:7)",
+    "\"Because God so loved the world, that he has given his only begotten Son.\" (John 3:16)",
+    "\"His deep poverty abounded in riches of his generosity.\" (2 Cor. 8:2)",
+    "\"They gave themselves first to the Lord, and then to us by the will of God.\" (2 Cor. 8:5)",
+    "\"Thank God for his ineffable gift!\" (2 Cor. 9:15)"
+  ],
+  "discussion": [
+    "Read again 2 Corinthians 8:9. Why is the example of Jesus, and not the promise of receiving something in return, the foundation of every Christian stewardship?",
+    "John 3:16 suggests that giving is the language of heaven. Compare with John 15:13; Ephesians 5:2 and 1 John 3:16. What do these passages have in common?",
+    "The Macedonians prayed for the privilege of giving from their extreme poverty. What does it take in a heart to stop feeling like a burden?",
+    "In addition to the systematic offerings, what other things do you administer (time, house, influence, office) that you could put at the service of the mission this week?"
+  ],
+  "facilitator": [
+    {
+      "stationId": "eco",
+      "apertura": "Without filtering your response, what is the first thing you feel when the church talks about offerings?",
+      "seguimiento": "Where do you think that reaction comes from: from a teaching, from an experience, from a fear?",
+      "ilustracion": "Paul did not invoice the Corinthians. He offered them an opportunity, and the Macedonians begged for that privilege (2 Cor. 8:4).",
+      "transicion": "Before we talk about quantities, let's look at who we are imitating when we give.",
+      "actividad": "Invite each person to say in one word what the subject of money in the church awakens in them.",
+      "cierre": "Lord, take guilt and fear from us, and leave us only gratitude."
+    },
+    {
+      "stationId": "modelo",
+      "apertura": "Paul tells the whole story of redemption in one verse using financial language. Why do you think he does that?",
+      "seguimiento": "In what sense was Jesus rich, and in what sense did he become poor?",
+      "ilustracion": "John 17:5 shows the glory he left; Luke 9:58 shows that he had nowhere to lay his head. These are the two ends of the same act of self-giving.",
+      "transicion": "If that is the model, let's see what reasons really move us to give.",
+      "actividad": "Read 2 Corinthians 8:9 and Philippians 2:5-8 and compare the two descriptions of the same descent.",
+      "cierre": "Thank you, Jesus, because you left everything before asking us for anything."
+    },
+    {
+      "stationId": "motivo",
+      "apertura": "How many reasons to give do you find in 2 Corinthians 8 and 9?",
+      "seguimiento": "Which of those reasons is the one that appears the least in our church conversations?",
+      "ilustracion": "The passage begins with grace (2 Cor. 8:1) and ends with the ineffable gift (2 Cor. 9:15). Everything else goes in between.",
+      "transicion": "With our reasons clear, let's talk about something very practical: planning.",
+      "actividad": "Distribute the four reasons and ask each group to find the text that supports its reason.",
+      "cierre": "May we give out of gratitude, Lord, never out of fear."
+    },
+    {
+      "stationId": "plan",
+      "apertura": "\"As each one has decided in the heart\" (2 Cor. 9:7). What does it mean to decide beforehand?",
+      "seguimiento": "What is the difference between the tithe ratio and the proportion of the offerings?",
+      "ilustracion": "The Greek verb includes the sense of deciding in advance. Thoughtful giving has a calendar.",
+      "transicion": "With the plan, let's look at the attitude with which the Macedonians did everything.",
+      "actividad": "Discuss in pairs one concrete practice that helps you decide beforehand rather than in the moment.",
+      "cierre": "Give us, Father, the calm to decide and the resolve to follow through."
+    },
+    {
+      "stationId": "actitud",
+      "apertura": "How do you explain people in extreme poverty pleading for the privilege of giving?",
+      "seguimiento": "Which of the five attitudes in 2 Corinthians 8:1-5 do we most lack as a church?",
+      "ilustracion": "\"They gave themselves first to the Lord\" (2 Cor. 8:5). The order is never reversed: first the person, then the pocket.",
+      "transicion": "That personal surrender is what later unites an entire family of churches.",
+      "actividad": "Read 2 Corinthians 8:1-5 aloud and make a list of everything the Macedonians did.",
+      "cierre": "Receive us first, Lord, and then what we bring."
+    },
+    {
+      "stationId": "union",
+      "apertura": "Why did Paul insist so much that it was the Gentiles who helped Jerusalem?",
+      "seguimiento": "How can money unite a church, and how can it divide it?",
+      "ilustracion": "Those in charge were called \"messengers of the churches and glory of Christ\" (2 Cor. 8:23). Faithful handling is also testimony.",
+      "transicion": "Before committing, let's be honest with what we still have to let go.",
+      "actividad": "Read Romans 15:26-27 and comment on what mutual debt Paul describes between Jews and Gentiles.",
+      "cierre": "Unite your church, Lord, even in the way it administers."
+    },
+    {
+      "stationId": "puno",
+      "apertura": "What things do we manage besides money, and which of them costs us the most to let go?",
+      "seguimiento": "Do we use excuses not to give when we could actually do more?",
+      "ilustracion": "Money, time and influence are gifts received from the hand of God (The Acts of the Apostles, p. 249).",
+      "transicion": "We close with something small, concrete, and dated.",
+      "actividad": "In silence, invite each person to identify one thing they grip too tightly. No one needs to say it aloud.",
+      "cierre": "Loosen our fingers, Lord, without taking away our peace."
+    },
+    {
+      "stationId": "paso",
+      "apertura": "\"The Lord does not need our offerings.\" If so, why does he ask us to give?",
+      "seguimiento": "What concrete act of generosity can you do before next Saturday?",
+      "ilustracion": "God allows us to show appreciation for his mercies through self-sacrificing efforts on behalf of others; he has provided no other way (Counsels on Stewardship, p. 20).",
+      "transicion": "Let's keep the commitment and ask that it be fulfilled.",
+      "actividad": "Let each one share a single concrete step and who it will involve.",
+      "cierre": "Make us, Lord, a generous, cheerful church with open hands."
+    }
+  ],
+  "patternTemplate": "{name}, you began by naming how the word giving sounded to you: {slot:eco|lower}. From there you looked at the One who, though rich, became poor. Your reason became {slot:motivo|lower}, you decided beforehand on {slot:plan|lower}, and dared to name what you grip most tightly: {slot:puno|lower}. The pieces now form a clear image: a hand learning to open.",
+  "outOracion": "Lord, I come honestly: the word giving still sounds like {slot:eco|lower} to me. Thank you that though you were rich, you became poor for me. I want to give because of {slot:motivo|lower}, not pressure or guilt. Today I decide beforehand on {slot:plan|lower}. Give me the attitude I am missing, {slot:actitud|lower}, and join me to {slot:union|lower}. You know what I grip: {slot:puno|lower}. Open my fingers patiently. Let my offering never try to buy anything from you, because \"{verse}\" ({verseRef}). In Jesus' name, amen.",
+  "outAliento": "None of this makes God richer, {name}, and it does not need to. It makes you resemble Jesus, who gave everything before asking you for anything. You named what you grip, {slot:puno|lower}, and still chose to sow {slot:paso|lower}. That is not a tax paid, but a privilege received. God does not need your offering; he gave you a way to say thank you with your hands.",
+  "outAccion24": "In the next 24 hours I will take the first step towards {slot:paso|lower}, and I will decide beforehand {slot:plan|lower}.",
+  "outPregunta": "This week I discovered that what it costs me the most to release is {slot:puno|lower}, and I decided to plant {slot:paso|lower}. What is the first thing you feel when you hear the word give, and what would you like it to be?",
+  "outTarjeta": "My seed this week: I give by {slot:motivo|lower}, I decided beforehand {slot:plan|lower} and I'm dropping {slot:puno|lower}. Verse: \"{verse}\" ({verseRef})."
+}

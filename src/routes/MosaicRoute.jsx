@@ -1,23 +1,26 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/Icon.jsx";
-import { LESSON_MANIFEST } from "../content/lessonManifest.generated.js";
+import { lessonManifestForLocale } from "../content/lessonManifest.generated.js";
 import { currentLessonSummary, preloadLesson } from "../content/loadLesson.js";
 import QuarterMosaic from "../features/mosaic/QuarterMosaic.jsx";
 import { useJourney } from "../state/journey/index.js";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 export default function MosaicRoute() {
+  const { locale, t } = useI18n();
   const navigate = useNavigate();
   const { state } = useJourney();
-  const current = currentLessonSummary();
+  const lessons = lessonManifestForLocale(locale);
+  const current = currentLessonSummary(undefined, locale);
   const [selectedId, setSelectedId] = useState(current.id);
   const selected =
-    LESSON_MANIFEST.find((lesson) => lesson.id === selectedId) || current;
+    lessons.find((lesson) => lesson.id === selectedId) || current;
 
   const progressByLesson = useMemo(
     () =>
       Object.fromEntries(
-        LESSON_MANIFEST.map((lesson) => {
+        lessons.map((lesson) => {
           const record = state.lessons[lesson.id];
           const panel = state.mosaic.panels[lesson.id];
           const legacy = record?.legacyKit;
@@ -48,15 +51,15 @@ export default function MosaicRoute() {
           ];
         })
       ),
-    [current.id, state.lessons]
+    [current.id, lessons, state.lessons]
   );
   const selectedConnectionCount =
     state.mosaic.panels[selected.id]?.connectionIds?.length || 0;
 
   const select = (lesson) => {
-    preloadLesson(lesson.id);
+    preloadLesson(lesson.id, locale);
     if (selectedId === lesson.id) {
-      navigate(`/leccion/${lesson.id}`);
+      navigate(`/leccion/${lesson.id}`, { viewTransition: true });
       return;
     }
     setSelectedId(lesson.id);
@@ -66,50 +69,52 @@ export default function MosaicRoute() {
     <section className="mosaic-route" aria-labelledby="mosaic-route-title">
       <div className="mosaic-route__intro">
         <div>
-          <div className="route-eyebrow">Trece semanas · una historia</div>
-          <h1 id="mosaic-route-title" data-route-heading>Tu Corinto está tomando forma</h1>
+          <div className="route-eyebrow">{t("mosaic.eyebrow")}</div>
+          <h1 id="mosaic-route-title" data-route-heading>{t("mosaic.title")}</h1>
         </div>
-        <p>
-          No son trece tareas separadas. Cada panel conserva una decisión y
-          cambia lo que puedes reconocer en el siguiente.
-        </p>
+        <p>{t("mosaic.deck")}</p>
       </div>
 
       <QuarterMosaic
-        lessons={LESSON_MANIFEST}
+        lessons={lessons}
         progressByLesson={progressByLesson}
         currentLessonId={current.id}
         activeLessonId={
-          LESSON_MANIFEST.find(
+          lessons.find(
             (lesson) => state.lessons[lesson.id]?.status === "active"
           )?.id || current.id
         }
         selectedLessonId={selectedId}
+        connectionIds={state.mosaic.revealedConnectionIds}
         onNavigate={select}
-        heading="Trece paneles, una sola obra"
-        description="Selecciona una piedra para acercarla. Vuelve a seleccionarla para entrar en la lección."
+        heading={t("mosaic.heading")}
+        description={t("mosaic.description")}
       />
 
       <aside className="mosaic-selection" aria-live="polite">
         <div>
-          <span>Panel {String(selected.number).padStart(2, "0")}</span>
+          <span>{t("mosaic.panel", {
+            number: String(selected.number).padStart(2, "0"),
+          })}</span>
           <h2>{selected.title}</h2>
           <p>{selected.subtitle}</p>
           {selectedConnectionCount ? (
             <p className="mosaic-selection__connection">
               <Icon name="path" size={15} />
               {selectedConnectionCount === 1
-                ? "Este panel ya está unido a otra lección."
-                : `Este panel conserva ${selectedConnectionCount} uniones con otras lecciones.`}
+                ? t("mosaic.oneConnection")
+                : t("mosaic.connections", { count: selectedConnectionCount })}
             </p>
           ) : null}
         </div>
         <button
           type="button"
           className="world-action compact"
-          onClick={() => navigate(`/leccion/${selected.id}`)}
+          onClick={() =>
+            navigate(`/leccion/${selected.id}`, { viewTransition: true })
+          }
         >
-          <span>Entrar en esta lección</span>
+          <span>{t("mosaic.enter")}</span>
           <Icon name="arrow" size={19} />
         </button>
       </aside>

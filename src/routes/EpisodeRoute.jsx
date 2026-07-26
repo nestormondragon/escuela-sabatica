@@ -15,21 +15,26 @@ import {
   journeyActions,
   selectors,
 } from "../state/journey/index.js";
-import { fillName } from "../lib/name.js";
+import { fillName, lcFirst } from "../lib/name.js";
 import { capabilityForModule } from "../lib/journeyMeaning.js";
 import ArtifactMutation from "../features/episode/ArtifactMutation.jsx";
+import { visualForLesson } from "../visual-world/lessonVisualManifest.js";
 import RouteLoading from "./RouteLoading.jsx";
+import KineticHeading from "../components/KineticHeading.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 export default function EpisodeRoute() {
+  const { locale, t } = useI18n();
   const { lessonId, episodeId } = useParams();
-  const loaded = useLoadedLesson(lessonId);
+  const loaded = useLoadedLesson(lessonId, locale);
 
-  if (loaded.loading) return <RouteLoading label="Abriendo la mesa de estudio" />;
+  if (loaded.loading) return <RouteLoading label={t("episode.loading")} />;
   if (loaded.error || !loaded.lesson) throw loaded.error;
   return <EpisodeReady lesson={loaded.lesson} episodeId={episodeId} />;
 }
 
 function EpisodeReady({ lesson, episodeId }) {
+  const { locale, t } = useI18n();
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const journey = useJourney();
@@ -48,7 +53,7 @@ function EpisodeReady({ lesson, episodeId }) {
       )
     : "";
 
-  if (!episode?.id) throw new Error("El episodio solicitado no existe");
+  if (!episode?.id) throw new Error(t("episode.missing"));
 
   const prior = useMemo(() => {
     const index = lesson.stations.findIndex((station) => station.id === episode.id);
@@ -97,7 +102,12 @@ function EpisodeReady({ lesson, episodeId }) {
   const handleFill = (value, extraPatch, seedSub, tags) => {
     const slot = episode.slot;
     const recordedAt = new Date().toISOString();
-    const capability = capabilityForModule(episode.module.type);
+    const wasFilled = kit.isFilled(episode.slotId);
+    const nextFilled = Math.min(
+      kit.total,
+      kit.filledCount + (wasFilled ? 0 : 1)
+    );
+    const capability = capabilityForModule(episode.module.type, locale);
     const previousLessonId =
       lesson.number > 1 ? `l${lesson.number - 1}` : null;
     const previousPanel = previousLessonId
@@ -142,6 +152,9 @@ function EpisodeReady({ lesson, episodeId }) {
     }
 
     setMutation({
+      lesson,
+      filled: nextFilled,
+      total: kit.total,
       label: slot?.label || episode.title,
       value,
       insight: seedSub,
@@ -165,27 +178,39 @@ function EpisodeReady({ lesson, episodeId }) {
       <article className="episode-canvas" aria-labelledby="episode-title">
         <button type="button" className="route-back" onClick={back}>
           <Icon name="arrowLeft" size={17} />
-          Volver a la lección
+          {t("episode.back")}
         </button>
 
         <header className="episode-heading">
           <span className="route-eyebrow">
-            {episode.canonicalDay} · {episode.depth === "minute" ? "1 minuto" : episode.depth === "deep" ? "A fondo" : "Estudiar"}
+            {episode.canonicalDay} · {episode.depth === "minute"
+              ? t("common.oneMinute")
+              : episode.depth === "deep"
+                ? t("common.deep")
+                : t("common.study")}
           </span>
-          <h1 id="episode-title" data-route-heading>{episode.title}</h1>
+          <KineticHeading
+            id="episode-title"
+            data-route-heading
+            motionPreset="compact"
+          >
+            {episode.title}
+          </KineticHeading>
           {cue ? <p>{cue}</p> : null}
         </header>
 
         {prior ? (
           <PersonalNote>
-            Antes colocaste «{prior.value}» en {prior.label.toLowerCase()}. Mira
-            qué cambia cuando lo traes hasta esta pregunta.
+            {t("episode.prior", {
+              value: prior.value,
+              label: lcFirst(prior.label),
+            })}
           </PersonalNote>
         ) : null}
 
         {episode.showStory && episode.story ? (
           <div className="episode-story">
-            <span>Antes de elegir</span>
+            <span>{t("episode.beforeChoosing")}</span>
             <p>{episode.story}</p>
           </div>
         ) : null}
@@ -195,6 +220,10 @@ function EpisodeReady({ lesson, episodeId }) {
             module={episode.module}
             onFill={handleFill}
             onSkip={back}
+            lessonId={lesson.id}
+            slotId={episode.slotId}
+            pieceIndex={kit.filledCount}
+            materialVerb={visualForLesson(lesson.id).materialVerb}
           />
         </div>
 

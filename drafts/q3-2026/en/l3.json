@@ -1,0 +1,688 @@
+{
+  "number": 3,
+  "slug": "unidad-en-cristo",
+  "title": "Unity in Christ",
+  "forDate": "2026-07-18",
+  "subtitle": "Which side are you on, and what would it cost you to be the first to yield?",
+  "kitName": "My Mosaic",
+  "artifactNoun": "mosaic",
+  "motif": "mosaico",
+  "stages": [
+    "fragmentos",
+    "borde",
+    "juntura",
+    "figura",
+    "entero"
+  ],
+  "stageLabels": [
+    "Loose pieces · fracture",
+    "Edge appears · I recognize myself",
+    "Joint closes · I yield first",
+    "Image appears · Christ at the center",
+    "Whole mosaic · one image"
+  ],
+  "verseRef": "1 Cor. 1:10",
+  "verseText": "I appeal to you, brothers and sisters, in the name of our Lord Jesus Christ: agree with one another in what you say, and let there be no divisions among you.",
+  "promise": "In a few minutes you will assemble your Mosaic, {name}: you will name the division you are really part of, see why Paul treated it as an emergency, distinguish loyalty to Christ from loyalty to a side, and decide what it would cost you to yield first. Many fragments, one image.",
+  "ui": {
+    "start": "Start putting together my mosaic",
+    "emptyKit": "Your mosaic",
+    "building": "Each answer fits a piece",
+    "buildingHint": "Choose the piece that is waiting. You will see loose fragments become one image.",
+    "lastPiece": "a piece is missing",
+    "patternLabel": "The image in your mosaic",
+    "doneTitle": "Your mosaic is complete",
+    "back": "Back to my mosaic",
+    "kitName": "My Mosaic"
+  },
+  "slots": [
+    {
+      "id": "bando",
+      "n": 1,
+      "label": "The side I know",
+      "teaser": "The division that I am part of…",
+      "icon": "people"
+    },
+    {
+      "id": "grieta",
+      "n": 2,
+      "label": "The crack I name",
+      "teaser": "How the fabric begins to tear…",
+      "icon": "voice"
+    },
+    {
+      "id": "centro",
+      "n": 3,
+      "label": "What I put under your lordship",
+      "teaser": "The opinion that I stop defending...",
+      "icon": "crown"
+    },
+    {
+      "id": "leche",
+      "n": 4,
+      "label": "My version of “I am from…”",
+      "teaser": "The phrase that betrays my immaturity...",
+      "icon": "bread"
+    },
+    {
+      "id": "mente",
+      "n": 5,
+      "label": "What is hard for me to yield",
+      "teaser": "The price of having the mind of Christ…",
+      "icon": "cup"
+    },
+    {
+      "id": "costo",
+      "n": 6,
+      "label": "What I leave at the door",
+      "teaser": "What I let go to be able to serve...",
+      "icon": "cross"
+    },
+    {
+      "id": "senal",
+      "n": 7,
+      "label": "The truth that I hold",
+      "teaser": "What the world sees when we are one...",
+      "icon": "star"
+    },
+    {
+      "id": "paso",
+      "n": 8,
+      "label": "My step of the week",
+      "teaser": "A specific step and a person…",
+      "icon": "path"
+    }
+  ],
+  "stations": [
+    {
+      "id": "bando",
+      "day": "Saturday · Have you seen sides forming?",
+      "tag": "Piece 1 · The side I know",
+      "title": "We get together, and inside we fight",
+      "story": "Wolves, dolphins and even ants live in groups. Chimpanzees form communities of fifteen to one hundred and fifty and are famous for their close bonds. They are also famous because, within that group, they fight. We are not so different: we get together, and inside we split into sides, almost always around someone with charisma. It happens in families, at work and yes, also in church. That was exactly what Paul found in Corinth, and he didn't leave it for the end of the letter: it was the first thing he wrote.",
+      "cue": "Before looking at Corinth, {name}, look at your own side of the divide.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "Where have you seen up close a division that still hurts?",
+        "hint": "Choose the most real, not the most presentable",
+        "saveLabel": "Save to my tile",
+        "seedSub": "your side",
+        "closing": "Naming the crack does not make it bigger. It leaves it visible, which is the only thing that allows it to be repaired.",
+        "options": [
+          {
+            "id": "lider",
+            "label": "Sides around a leader of my church",
+            "insight": "It is the breaking of Corinth, word for word. Overvaluing a leader creates rivalry, and rivalry divides.",
+            "tags": [
+              "theme:unity",
+              "react:pride",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "estilo",
+            "label": "Two ways of doing things that are not tolerated",
+            "insight": "Paul sought unity in diversity, never uniformity. The problem is not that they think differently: it is that they no longer listen to each other.",
+            "tags": [
+              "theme:truth",
+              "react:control",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "familia",
+            "label": "A crack within my family",
+            "insight": "It hurts more there because you cannot simply change families. The same remedy works there too: the person who yields first becomes more like Christ.",
+            "tags": [
+              "theme:relationship",
+              "react:fear",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "trabajo",
+            "label": "A dispute at work or study",
+            "insight": "The gospel does not stay in the temple. If the mind of Christ does not fit into your Monday, it has not yet left Sunday.",
+            "tags": [
+              "theme:service",
+              "react:apathy",
+              "posture:avoidant"
+            ]
+          },
+          {
+            "id": "yo",
+            "label": "If I'm honest, the side is me",
+            "insight": "That phrase is difficult to write and is worth more than a speech. Paul had to shout to the Corinthians what you just admitted to yourself.",
+            "tags": [
+              "theme:humility",
+              "posture:humble",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "lejos",
+            "label": "I walked away so I wouldn't have to fight",
+            "insight": "Retreating feels like peace, but the fabric remains torn. Unity is not the absence of friction: it is a determined presence.",
+            "tags": [
+              "react:withdraw",
+              "posture:avoidant",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "ninguno",
+            "label": "Right now I don't see any division nearby",
+            "insight": "What a relief. Keep that peace carefully and with prayer: in Corinth they didn't see it coming either.",
+            "tags": [
+              "theme:hope",
+              "posture:seeking",
+              "tone:resolute"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "grieta",
+      "day": "Sunday · The problem of closed groups",
+      "tag": "Piece 2 · The crack I name",
+      "title": "Paul used harsh words on purpose",
+      "story": "When Paul described what was happening in Corinth he did not soften anything. He used “schisma,” the word for a torn cloth, and “eris,” strife. And he placed that strife on the same list as envy, deceit, and murder (Rom. 1:29). We like to think that a church division is a matter of temperament. Paul treated it as sin. He did it because he saw how far it goes: brothers suing each other before judges, and a Lord's Supper celebrated by people who didn't even speak to each other.",
+      "cue": "Look at these four cracks, {name}, and choose the one that most resembles yours.",
+      "module": {
+        "type": "pickReveal",
+        "saveLabel": "Save to my tile",
+        "seedSub": "your crack",
+        "prompt": "Which of these cracks do you recognize best?",
+        "hint": "Tap each one to see what's underneath",
+        "chooseLabel": "This is the one I recognize",
+        "closing": "Paul opened the letter with this before any other topic. If he gave division that much attention, you can face it honestly today too.",
+        "allowCustom": {
+          "label": "write mine",
+          "placeholder": "The crack that hurts me the most is…",
+          "extraKey": "grietaPropia"
+        },
+        "items": [
+          {
+            "t": "Schisma: the cloth that tears",
+            "ref": "1 Cor. 1:10",
+            "meaning": "It is the word for a garment torn in two. No division begins with a shout: it begins with a thread that gives way in silence."
+          },
+          {
+            "t": "“Eris”: the strife that disguises itself as zeal",
+            "ref": "1 Cor. 1:11",
+            "meaning": "Paul lists it alongside envy and deception (Rom. 1:29). He never treated it as a minor character flaw."
+          },
+          {
+            "t": "Brothers who sue each other before judges",
+            "ref": "1 Cor. 6:5",
+            "meaning": "“I say this to shame you,” Paul wrote. Winning the case and losing your brother is not having won."
+          },
+          {
+            "t": "Divided even at the Lord's Supper",
+            "ref": "1 Cor. 11:17-22",
+            "meaning": "They brought the dispute to the very table meant to unite them. There you can see how hard a believer's heart can become."
+          }
+        ]
+      }
+    },
+    {
+      "id": "centro",
+      "day": "Monday · Centered on Jesus",
+      "tag": "Piece 3 · What I put under his lordship",
+      "title": "Is Christ divided?",
+      "story": "Paul asks two questions that leave no room for argument: \"Is Christ divided? Was Paul crucified for you?\" (1 Cor. 1:13). No and no. We were called “to fellowship with his Son Jesus Christ” (1 Cor. 1:9), not into fellowship with a human name. The word Paul uses for “joined together” comes from katartizō, which means returning something to its proper condition, like setting a dislocated bone. It hurts for a moment and then works again. We are one body with many different parts (1 Cor. 12:27): unity in diversity, never uniformity.",
+      "cue": "Train your ear, {name}, because the two voices sound very similar.",
+      "module": {
+        "type": "skillThenCommit",
+        "saveLabel": "Save to my tile",
+        "seedSub": "your center",
+        "skill": {
+          "prompt": "Loyalty to Christ, or loyalty to one side?",
+          "hint": "Six real sentences. Classify them without embellishing your answer.",
+          "badge": "You are learning to distinguish Christ from your group",
+          "cats": [
+            "Christ Centered",
+            "Focused on one side"
+          ],
+          "rounds": [
+            {
+              "t": "\"I appreciate my pastor because he taught me to love the Bible.\"",
+              "a": 0,
+              "fb": "Christ-centered: You value the leader without putting him in the place of Jesus (1 Cor. 4:1)."
+            },
+            {
+              "t": "\"If he leaves this church, I'll follow him.\"",
+              "a": 1,
+              "fb": "Focused on one side: was he crucified for you? (1 Cor. 1:13)."
+            },
+            {
+              "t": "\"Here we think differently and we remain one body.\"",
+              "a": 0,
+              "fb": "Christ-centered: that is unity in diversity, exactly what Paul called for (1 Cor. 12:27)."
+            },
+            {
+              "t": "\"Those who don't think like us don't understand anything.\"",
+              "a": 1,
+              "fb": "Centered on one side: the group became the filter of the truth, and Christ was left out."
+            },
+            {
+              "t": "\"I submit my opinion to the lordship of Christ, even if it costs me.\"",
+              "a": 0,
+              "fb": "Centered on Christ: He is Lord, and that is where the discussion ends (1 Cor. 1:9)."
+            },
+            {
+              "t": "\"Our small group no longer welcomes new people.\"",
+              "a": 1,
+              "fb": "Side-centered: an open small group builds; a closed one becomes a clique."
+            }
+          ],
+          "summary": "Katartizō: put back in its place. When cliques form, relationships need to be restored, and that only happens through unity in Christ and the death of self that that unity implies."
+        },
+        "commit": {
+          "prompt": "What opinion of yours are you going to put under the lordship of Christ this week?",
+          "hint": "Not the one he would ask you for in theory: the one you already know what it is.",
+          "placeholder": "I'm going to let go my way…",
+          "extraKey": "centroTexto",
+          "options": [
+            "My way of always having the last word",
+            "My opinion on how worship should be done",
+            "My certainty that the other is wrong",
+            "My loyalty to a group above the church",
+            "My habit of commenting instead of speaking directly"
+          ]
+        }
+      }
+    },
+    {
+      "id": "leche",
+      "day": "Tuesday · Wisdom and maturity",
+      "tag": "Piece 4 · My version of “I am from…”",
+      "title": "Still on milk",
+      "story": "Paul told them something uncomfortable: “I could not speak to you as to spiritual people, but as to carnal people, like children” (1 Cor. 3:1). The proof of their immaturity was that one said, \"I belong to Paul,\" and another, \"I belong to Apollos\" (1 Cor. 3:4). Mature Christians eat solid food; those nourished only by milk have not yet trained their senses to discern (Heb. 5:13-14). God's wisdom is not like the wisdom of this world; it is revealed on a cross. Paul and Apollos were “God's fellow workers” (1 Cor. 3:9), nothing more and nothing less.",
+      "cue": "Be honest here, {name}: almost all of us have a modern version of that phrase.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "Today, my version of “I belong to Paul” sounds like this…",
+        "hint": "Choose the one that most resembles your inner voice",
+        "saveLabel": "Save to my tile",
+        "seedSub": "your phrase",
+        "closing": "None of this disqualifies you. It just says there is solid food waiting for you: “we have the mind of Christ” (1 Cor. 2:16), and that mind changes who you align with.",
+        "options": [
+          {
+            "id": "siempre",
+            "label": "I belong to the old guard, the ones who really know",
+            "insight": "Seniority is not maturity. In Corinth the veterans also formed cliques.",
+            "tags": [
+              "react:pride",
+              "theme:truth",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "entienden",
+            "label": "“I am one of those who understand the doctrine of truth”",
+            "insight": "Paul calls the Corinthians wise and royal with cutting irony (1 Cor. 4:8,10). Knowledge without humility is milk disguised as solid food.",
+            "tags": [
+              "react:pride",
+              "theme:self",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "visto",
+            "label": "I belong to the leader who made me feel seen",
+            "insight": "He is human and even tender. Just be careful that gratitude toward a leader does not take the place of loyalty to Christ.",
+            "tags": [
+              "theme:relationship",
+              "posture:clinging",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "decepcion",
+            "label": "\"I belonged to someone, and they disappointed me\"",
+            "insight": "It hurts because you gave him a weight that no human being can carry. The good news is that the only one who never falls has already been crucified for you.",
+            "tags": [
+              "react:doubt",
+              "theme:faith",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "nadie",
+            "label": "“I don't belong to anyone, and that's what I'm proud of”",
+            "insight": "Be careful: independence can also become a one-person camp. The body has many parts, and none of them works well in isolation.",
+            "tags": [
+              "react:withdraw",
+              "posture:avoidant",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "usoName",
+            "label": "\"I belong to Christ\", and I say it to win the argument",
+            "insight": "That was the fourth party of Corinth (1 Cor. 1:12). Using your name as a group flag is the hardest division to detect.",
+            "tags": [
+              "react:control",
+              "theme:sin",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "cansado",
+            "label": "\"I'm tired of having to be something\"",
+            "insight": "That weariness can be the beginning of maturity. Belonging to Christ brings rest; belonging to a side is exhausting.",
+            "tags": [
+              "react:apathy",
+              "posture:seeking",
+              "tone:tender"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "mente",
+      "day": "Wednesday · A Christ-like service",
+      "tag": "Piece 5 · What is hard for me to yield",
+      "title": "The mind of Christ comes at a cost",
+      "story": "“We have the mind of Christ” (1 Cor. 2:16). It sounds beautiful until you read what it is: “Being in the form of God, he did not count equality with God a thing to be grasped, but made himself of no reputation, taking the form of a servant” (Phil. 2:6-7). In the Greco-Roman world, philosophers, politicians, and teachers competed for prestige, and the church of Corinth copied that way of life. In Philippi they were also beginning to divide. The remedy was the same: die to the self and seek the good of the other above one's own. Someone has to give in first. That almost always hurts.",
+      "cue": "Turn over each card, {name}, and see what's on the other side.",
+      "module": {
+        "type": "perspectiveFlip",
+        "saveLabel": "Save to my tile",
+        "seedSub": "your cost",
+        "prompt": "Touch each card to see unity as Christ sees it",
+        "hint": "What you see, and what he sees",
+        "pairs": [
+          {
+            "see": "Giving in first feels like losing.",
+            "sees": "“He made himself of no reputation, taking the form of a servant” (Phil. 2:7). This is what the one who actually won looks like."
+          },
+          {
+            "see": "You hope they will first acknowledge that you were right.",
+            "sees": "Christ, \"being in the form of God,\" did not hold fast to what was His (Phil. 2:6). He gave up the right before anyone asked him to."
+          },
+          {
+            "see": "Serving someone who hurt you seems humiliating.",
+            "sees": "\"He humbled himself and became obedient to death, even death on a cross\" (Phil. 2:8). The humiliation was the path, not the accident."
+          },
+          {
+            "see": "You think that they should start the unity.",
+            "sees": "“Let this mind be in you, which was also in Christ Jesus” (Phil. 2:5). The text begins with you, not with them."
+          }
+        ],
+        "chooseLabel": "This is the one I needed to see",
+        "teach": "That is the mind of Christ: not a lofty idea, but a downward movement. Being “servants of Christ” and “stewards” (1 Cor. 4:1-2) means that nothing you defend so strongly really belongs to you.",
+        "commit": {
+          "prompt": "Write down what it would cost you, specifically, to be the first to yield.",
+          "hint": "Be specific. Pride hides in general answers.",
+          "placeholder": "Giving in first would cost me…",
+          "extraKey": "costoCeder"
+        }
+      }
+    },
+    {
+      "id": "costo",
+      "day": "Thursday · A lifestyle that reflects the cross",
+      "tag": "Piece 6 · What I leave at the door",
+      "title": "Go up the steps, leave something down",
+      "story": "Not forming cliques does not mean despising those who lead. God commissions people to care for his work, and leaders whose lives reflect the submission of the cross deserve to be heard. Only the cross has the power to transform manipulative control into submission to the Word. Paul describes the apostles as sentenced to death, hungry, thirsty, and homeless, insulted and slandered, “the dregs of the world” (1 Cor. 4:9-13). And he points out the root of the whole problem with a single word: pride (1 Cor. 4:6).",
+      "cue": "Climb with me, {name}, one step at a time.",
+      "module": {
+        "type": "stairs",
+        "saveLabel": "Save to my tile",
+        "seedSub": "your delivery",
+        "steps": [
+          {
+            "t": "Support leaders without turning them into idols",
+            "fb": "You can deeply appreciate someone without putting their name where Christ's goes."
+          },
+          {
+            "t": "Attribute to God everything that goes well",
+            "fb": "Even Jesus, in his earthly ministry, gave glory to the Father (John 17:4)."
+          },
+          {
+            "t": "Accept that suffering for Christ is normal",
+            "fb": "Scourges, prisons, shipwrecks, hunger, cold (2 Cor. 11:23-28). Paul never counted that as failure."
+          },
+          {
+            "t": "Recognize that pride is the root",
+            "fb": "\"Let no one be conceited\" (1 Cor. 4:6). Every division has its first broken thread there."
+          }
+        ],
+        "leavePrompt": "Before the last step, leave something at the door",
+        "leaveHint": "What can't go up with you",
+        "leaveOptions": [
+          "My need to be right",
+          "The resentment that has already become a habit",
+          "The irony with which I speak about the other side",
+          "My fear of looking like the weak one",
+          "The silence with which I punish someone"
+        ],
+        "allowCustom": {
+          "placeholder": "I leave at the door..."
+        },
+        "prompt": "Now, knowing what it costs, what do you promise?",
+        "hint": "A small and fulfilled promise is worth more than a big and forgotten one.",
+        "options": [
+          "I'm going to talk to that person face to face.",
+          "I'm going to stop fueling the conversation that divides",
+          "I'm going to serve someone on the other side",
+          "I will ask for forgiveness without demanding anything in return",
+          "I'm going to pray for the person I least want to pray for."
+        ],
+        "allowCustom2": {
+          "placeholder": "I promise…",
+          "extraKey": "costoTexto"
+        }
+      }
+    },
+    {
+      "id": "senal",
+      "day": "The unity that the world watches",
+      "tag": "Piece 7 · The truth I hold",
+      "title": "So that the world believes",
+      "story": "The night before the cross, Jesus did not pray for the growth of the church or its prestige. He prayed for their unity: “that they may all be one, that the world may believe that you sent me” (John 17:21). Unity is not an adornment of testimony: it is testimony. That is why Ellen White wrote that “this unity baffles the enemy, so he is determined to eliminate its existence” (Testimonies for the Church, vol. 1, p. 294). When you split into sides, you don't just lose peace. You take away from the world the most compelling argument it had.",
+      "cue": "Stay with one truth, {name}, the one you can reach quickly.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "What truth will you hold when the temptation to take sides returns?",
+        "hint": "The one you want to remember in the middle of the next discussion",
+        "saveLabel": "Save to my tile",
+        "seedSub": "your truth",
+        "closing": "Leave it at hand. The temptation to take sides never warns before it arrives.",
+        "options": [
+          {
+            "id": "nodividido",
+            "label": "That Christ is not divided, and neither should I be",
+            "insight": "“Is Christ divided? Was Paul crucified for you?” (1 Cor. 1:13). You already knew the answer; now it is time to live it.",
+            "tags": [
+              "theme:unity",
+              "theme:cross",
+              "posture:surrendering"
+            ]
+          },
+          {
+            "id": "cuerpo",
+            "label": "That I can think differently without ceasing to be a body",
+            "insight": "“You are the body of Christ, and each one of you is a part of it” (1 Cor. 12:27). Unity in diversity, never uniformity.",
+            "tags": [
+              "theme:unity",
+              "theme:truth",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "mundo",
+            "label": "That the world believes when it sees us united",
+            "insight": "“That they may all be one, that the world may believe that you sent me” (John 17:21). That was the test that Jesus chose, and no other.",
+            "tags": [
+              "theme:mission",
+              "theme:unity",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "ceder",
+            "label": "That giving in first is to look like Jesus",
+            "insight": "He did not wait for someone to deserve it; he emptied himself first (Phil. 2:7). Yielding does not diminish you; it aligns you with Christ.",
+            "tags": [
+              "theme:humility",
+              "posture:humble",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "orgullo",
+            "label": "That pride is the root, and I already left it at the door",
+            "insight": "\"Let no one be conceited\" (1 Cor. 4:6). All division begins there, and can stop right there.",
+            "tags": [
+              "react:pride",
+              "theme:sin",
+              "posture:surrendering"
+            ]
+          },
+          {
+            "id": "edificar",
+            "label": "That I am here to build up, not to tear down",
+            "insight": "God refines his church “from the spirit of discord and contention, so that its members may build up instead of tearing down” (Testimonies for the Church, vol. 4, p. 21).",
+            "tags": [
+              "theme:service",
+              "posture:seeking",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "desconcierta",
+            "label": "May our unity baffle the enemy",
+            "insight": "\"This unity baffles the enemy, so he is determined to eliminate its existence\" (Testimonies for the Church, vol. 1, p. 294). Your peace is not a detail; it is a battlefront.",
+            "tags": [
+              "theme:hope",
+              "react:fear",
+              "tone:resolute"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "paso",
+      "day": "Friday · To study and meditate",
+      "tag": "Piece 8 · My step of the week",
+      "title": "One piece does not make a mosaic",
+      "story": "“God is leading a people to stand in perfect unity on the platform of eternal truth” (Testimonies for the Church, vol. 4, p. 21). This process does not happen in the abstract. It happens in a conversation you choose to have, a message you choose to write, or a name you choose to say again without venom. You are one piece. Alone, it says little; fitted together with others, it becomes part of an image the world needs to see. Only the simplest and hardest thing remains: taking the step.",
+      "cue": "Choose one step, {name}, that you can take tomorrow.",
+      "module": {
+        "type": "commitDuo",
+        "saveLabel": "Close my mosaic",
+        "seedSub": "your step",
+        "stepPrompt": "My specific step this week",
+        "stepHint": "Tap an idea or write your own",
+        "stepOptions": [
+          "Find that person and speak without defending myself",
+          "Apologize for something I said about someone",
+          "Stop the divisive conversation when it starts",
+          "Serve in something that no one will applaud",
+          "Pray every day for those who are on the other side"
+        ],
+        "stepPlaceholder": "my specific step...",
+        "stepExtraKey": "pasoTexto",
+        "personPrompt": "The person I'm going to close the crack with",
+        "personHint": "You already know his name. Write it down.",
+        "personPlaceholder": "a name...",
+        "personExtraKey": "personaUnidad"
+      }
+    }
+  ],
+  "encourage": [
+    "“I beg you, brothers, in the name of our Lord Jesus Christ, that you all speak the same thing and that there be no divisions among you.” (1 Cor. 1:10)",
+    "“Is Christ divided? Was Paul crucified for you?” (1 Cor. 1:13)",
+    "“Let this mind be in you, which was also in Christ Jesus.” (Phil. 2:5)",
+    "“He made himself of no reputation, taking the form of a servant.” (Phil. 2:7)",
+    "“You are the body of Christ, and each of you is a part of it.” (1 Cor. 12:27)",
+    "“So that they may all be one, so that the world may believe that you sent me.” (John 17:21)"
+  ],
+  "discussion": [
+    "Jesus prayed, “That they may all be one, that the world may believe that you sent me” (John 17:21-23). Why is unity in Christ such a powerful argument for the gospel, and why does division hinder the mission of the church?",
+    "Read 1 Corinthians 4:9-13 and notice how the apostles are described. How is this description similar or opposed to what we admire in a leader today?",
+    "In 1 Corinthians 4:16, Paul asks that you imitate him. What is the difference between imitating a leader and exalting him until he becomes the center?",
+    "What is the difference between a small group and a closed group, and what can our local church do so that the former does not become the latter?"
+  ],
+  "facilitator": [
+    {
+      "stationId": "bando",
+      "apertura": "Have you ever seen a faction form in a church? What triggered it?",
+      "seguimiento": "What does it feel like to be on a side without having consciously chosen it?",
+      "ilustracion": "Chimpanzees live in groups of fifteen to one hundred and fifty individuals with very close bonds, and even then they fight among themselves. Being together does not guarantee being united.",
+      "transicion": "If it happens to us, let's see how harshly Paul described the same thing in Corinth.",
+      "actividad": "Let each person name in a single word the type of division they have seen up close."
+    },
+    {
+      "stationId": "grieta",
+      "apertura": "Why do you think Paul put the theme of unity before any other in his letter?",
+      "seguimiento": "Is it difficult for us to see strife as a sin and not just a difference in character?",
+      "ilustracion": "\"Schisma\" describes a cloth being torn. The tear rarely begins with a noise; it starts with a thread.",
+      "transicion": "Having named the crack, Paul takes us to the only center capable of closing it.",
+      "actividad": "Read 1 Corinthians 1:10-17 and write down each word Paul uses for division."
+    },
+    {
+      "stationId": "centro",
+      "apertura": "\"Is Christ divided?\" (1 Cor. 1:13). What answer was Paul expecting and why did he formulate it this way?",
+      "seguimiento": "What opinion of your own is most difficult for you to submit to the lordship of Christ?",
+      "ilustracion": "Katartizō is the word for a bone that is put back into place. It hurts for a moment and then it works again.",
+      "transicion": "If the center is Christ, then saying “I am of Paul” reveals something about our maturity.",
+      "actividad": "Classify real phrases together: loyalty to Christ or loyalty to one side?"
+    },
+    {
+      "stationId": "leche",
+      "apertura": "Why does Paul connect cliques with spiritual immaturity (1 Cor. 3:1-4)?",
+      "seguimiento": "What has been your experience of feeling let down by someone you greatly admired?",
+      "ilustracion": "Milk and solid food (Heb. 5:13-14). Maturity is not a matter of years in church, but of training our senses to discern.",
+      "transicion": "Solid food has a name: the mind of Christ. Let's see what it contains.",
+      "actividad": "Discuss the difference between admiring a leader and depending on them."
+    },
+    {
+      "stationId": "mente",
+      "apertura": "What does “we have the mind of Christ” (1 Cor. 2:16) mean in practice?",
+      "seguimiento": "What would it cost you, specifically, to be the first to yield in a current conflict?",
+      "ilustracion": "Philippians 2:5-8 describes a downward movement: from the form of God to the form of a servant, and from there to the cross.",
+      "transicion": "That descent also defines the lifestyle of Christian leadership.",
+      "actividad": "Read Philippians 2:1-8 aloud and look for each verb that describes what Jesus released."
+    },
+    {
+      "stationId": "costo",
+      "apertura": "How do you support a leader without making that person the center of your Christian identity?",
+      "seguimiento": "How much have you suffered for the sake of Christ, whatever your role in the church?",
+      "ilustracion": "Paul lists lashes, shipwrecks, hunger, and cold (2 Cor. 11:23-28), and calls the apostles “the dregs of the world” (1 Cor. 4:13).",
+      "transicion": "Underneath all this lies a root: pride. And above all this one sign shines: unity.",
+      "actividad": "Let each of you write privately one thing you should leave at the door this week."
+    },
+    {
+      "stationId": "senal",
+      "apertura": "Why did Jesus choose unity as the test that would convince the world (John 17:21)?",
+      "seguimiento": "What is your community losing every time it divides?",
+      "ilustracion": "\"This unity baffles the enemy, so he is determined to eliminate its existence\" (Testimonies for the Church, vol. 1, p. 294).",
+      "transicion": "With that truth in hand, let's move on to a concrete step for the next few days.",
+      "actividad": "Recite 1 Corinthians 1:10 together and name the truth you most need to hold this week."
+    },
+    {
+      "stationId": "paso",
+      "apertura": "What does it mean that God refines his church so that its members “build up rather than tear down”?",
+      "seguimiento": "With whom do you need to close a rift this week, and what is stopping you?",
+      "ilustracion": "A single tile means nothing. Fitted together with others, it forms a face that can be seen from afar.",
+      "transicion": "Let's close by putting together our own Mosaic and committing to a real step.",
+      "actividad": "Share a single concrete step for this week and, if you wish, who you will take it with."
+    }
+  ],
+  "patternTemplate": "{name}, you named the division you know best: “{slot:bando}”. You dared to name its fracture: “{slot:grieta}”. You also discovered your modern version of “I belong to Paul”: “{slot:leche}”. Then you placed this under the lordship of Christ: “{slot:centro}”. You saw what yielding looks like through the mind of Christ: {slot:mente} The pieces are beginning to fit; what was broken is forming one image.",
+  "outOracion": "Lord Jesus, you are not divided, and I am. I confess the division I know best: “{slot:bando}”. I name its fracture: “{slot:grieta}”. Forgive my modern way of saying \"I belong to Paul\": “{slot:leche}”. Today I place this under your lordship: “{slot:centro}”. You showed me what yielding looks like: {slot:mente} I admit what yielding first would cost me: “{slot:costoCeder|or:what it costs me to yield first}”. I leave “{slot:costo}” at your door and cling to this truth: “{slot:senal}”. May what you asked be fulfilled in me: “{verse}” ({verseRef}). Amen.",
+  "outAliento": "{name}, everyone does not have to yield before the mosaic can begin to form. One person has to go first, and today you said it could be you. You named the cost honestly: “{slot:costoCeder|or:what it costs me to yield first}”. That is not weakness. It is the mind of Christ, the One who emptied himself before anyone deserved it. Your piece is now in place, and the image is becoming visible.",
+  "outAccion24": "In the next 24 hours I will {slot:paso|lower}, and I will leave {slot:costo|lower} at the door.",
+  "outPregunta": "This week I named the division I know best: “{slot:bando}”. I also named what yielding first would cost me: “{slot:costoCeder|or:what it costs me to yield first}”. Which side are you on without realizing it, and what would it cost you to be the first to yield?",
+  "outTarjeta": "My mosaic this week: I named the fracture “{slot:grieta}”, placed “{slot:centro}” under the lordship of Christ, and chose this truth: “{slot:senal}”.\nVerse: “{verse}” ({verseRef})."
+}

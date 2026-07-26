@@ -1,0 +1,656 @@
+{
+  "number": 2,
+  "slug": "mensaje-cruz",
+  "title": "Foolishness and Power",
+  "subtitle": "What part of the gospel shames you into silence?",
+  "kitName": "My Cross",
+  "artifactNoun": "cross",
+  "motif": "cruz",
+  "stages": [
+    "madero",
+    "verguenza",
+    "cruce",
+    "levantada",
+    "gloria"
+  ],
+  "stageLabels": [
+    "Bare wood · scandal",
+    "Noonday shadow · shame",
+    "Crossed beams · debt settled",
+    "Cross raised · power of God",
+    "Glorious cross · reconciled"
+  ],
+  "verseRef": "1 Cor. 1:18",
+  "verseText": "The message of the cross is foolishness to those who are perishing, but to us who are being saved it is the power of God.",
+  "promise": "In a few minutes you will raise your Cross, {name}: you will name what makes you ashamed of the gospel, face the scandal Rome refused even to mention, see the debt that was nailed to the wood, and discover why what looks like foolishness is truly the power of God. Piece by piece, an instrument of shame will become your place of reconciliation.",
+  "ui": {
+    "start": "Start lifting my cross",
+    "emptyKit": "Your cross",
+    "building": "Each answer fits a piece of wood",
+    "buildingHint": "Choose the piece that is waiting. You will see bare wood become a raised cross.",
+    "lastPiece": "a piece is missing",
+    "patternLabel": "What your cross reveals",
+    "doneTitle": "Your cross is lifted",
+    "doneSub": "You didn't make it: you received it. Open it, save it, share it.",
+    "open": "open my cross",
+    "back": "Return to my cross",
+    "kitName": "My Cross"
+  },
+  "slots": [
+    {
+      "id": "escandalo",
+      "n": 1,
+      "label": "What embarrasses me",
+      "teaser": "The part of the gospel that I soften…",
+      "icon": "voice"
+    },
+    {
+      "id": "centro",
+      "n": 2,
+      "label": "What covers the cross",
+      "teaser": "That which takes away its power...",
+      "icon": "cross"
+    },
+    {
+      "id": "locura",
+      "n": 3,
+      "label": "The excuse I give",
+      "teaser": "The argument that I stop repeating to myself...",
+      "icon": "eye"
+    },
+    {
+      "id": "deuda",
+      "n": 4,
+      "label": "My debt settled",
+      "teaser": "What was left nailed to the wood...",
+      "icon": "scroll"
+    },
+    {
+      "id": "espera",
+      "n": 5,
+      "label": "What didn't go as expected",
+      "teaser": "Where God didn't act my way...",
+      "icon": "path"
+    },
+    {
+      "id": "debil",
+      "n": 6,
+      "label": "My weak part",
+      "teaser": "Which I think disqualifies me...",
+      "icon": "seed"
+    },
+    {
+      "id": "gloria",
+      "n": 7,
+      "label": "The truth that sustains me",
+      "teaser": "The power of God on the cross…",
+      "icon": "anchor"
+    },
+    {
+      "id": "paso",
+      "n": 8,
+      "label": "My step of the week",
+      "teaser": "A concrete step and who do I tell...",
+      "icon": "hand"
+    }
+  ],
+  "stations": [
+    {
+      "id": "escandalo",
+      "day": "Saturday · The message of the cross",
+      "tag": "Box 1 · What embarrasses me",
+      "title": "Cicero said: don't even think about it",
+      "story": "Cicero asked the Roman people to keep the idea of the cross far from their minds. Not merely out of Roman law, but out of Roman thought. It was an obscenity, a punishment so degrading that educated people did not even mention it. Yet Paul placed that unspeakable word at the center of everything: “the message of the cross is the power of God” (1 Cor. 1:18). Before we continue, be honest: there is a part of the gospel that you, too, prefer not to mention aloud.",
+      "cue": "Start here, {name}, with the truth you usually soften.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "What part of the gospel is most difficult for you to say out loud?",
+        "hint": "Choose the one that really bothers you today",
+        "saveLabel": "Save on my cross",
+        "seedSub": "your scandal",
+        "closing": "What you keep silent about is not a defect of the gospel: it is its edge. Paul didn't polish it to make it sound acceptable. He preached it as it was, and that was the power.",
+        "options": [
+          {
+            "id": "ejecutado",
+            "label": "That God became human and died by execution",
+            "insight": "It sounds impossible because it is, if God were as we imagine him. The cross reveals how far he was willing to go.",
+            "tags": [
+              "theme:cross",
+              "posture:seeking",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "sinmerito",
+            "label": "That I cannot save myself with my effort",
+            "insight": "It's hard to say because it dismantles the resume. \"Those who are being saved\" (1 Cor. 1:18): the source is outside of you, and that offends pride before it comforts it.",
+            "tags": [
+              "react:pride",
+              "theme:grace",
+              "posture:proud"
+            ]
+          },
+          {
+            "id": "juicio",
+            "label": "That there is a judgment and a literal return",
+            "insight": "You are afraid of ridicule, or of the subject itself. Remember who judges: the one who already carried the sentence in your place.",
+            "tags": [
+              "react:fear",
+              "theme:hope",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "autoridad",
+            "label": "That his Word commands my tastes",
+            "insight": "What is at stake is not an argument, but the rudder. Letting go feels like losing; at the cross, it is called winning.",
+            "tags": [
+              "react:control",
+              "theme:truth",
+              "posture:clinging"
+            ]
+          },
+          {
+            "id": "pecado",
+            "label": "That I need forgiveness, not just improvement",
+            "insight": "\"He himself bore our sins in his body on the tree\" (1 Pet. 2:24). He didn't come to touch you up: he came to rescue you.",
+            "tags": [
+              "theme:sin",
+              "posture:humble",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "publico",
+            "label": "That I believe all this in front of my people",
+            "insight": "Paul knew exactly how the Greeks would see him: weak-minded. He said it anyway, and some believed.",
+            "tags": [
+              "react:withdraw",
+              "theme:mission",
+              "posture:avoidant"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "centro",
+      "day": "Sunday · The gospel of the cross",
+      "tag": "Box 2 What covers the cross",
+      "title": "May it not be emptied of power",
+      "story": "Paul writes that he was sent to preach “not with wisdom of words, lest the cross of Christ become in vain” (1 Cor. 1:17). In Athens he used logic, science and philosophy, and reaped little. He arrived in Corinth and decided to know “nothing except Jesus Christ and him crucified” (1 Cor. 2:2). It's not that eloquence is bad. The thing is that nothing should remain in front of the cross, covering it.",
+      "cue": "Look carefully, {name}: something is being placed before your cross.",
+      "module": {
+        "type": "pickReveal",
+        "saveLabel": "Save on my cross",
+        "seedSub": "what the cover",
+        "prompt": "What is draining the cross of its power in your life?",
+        "hint": "Play each phrase and keep the most yours",
+        "chooseLabel": "This is the one that covers my cross",
+        "closing": "When you remove what hinders, nothing less remains: Christ remains. And he is “the power of God and the wisdom of God” (1 Cor. 1:24).",
+        "allowCustom": {
+          "label": "write mine",
+          "placeholder": "What is placed before the cross is…",
+          "extraKey": "centroPropio"
+        },
+        "items": [
+          {
+            "t": "Adorn the cross until it stops bothering you",
+            "ref": "1 Cor. 1:17",
+            "meaning": "A merely decorative cross no longer shocks anyone, but neither does it save. Paul feared that eloquent words would empty the cross of its power."
+          },
+          {
+            "t": "Follow the preacher and not the Crucified",
+            "ref": "1 Cor. 1:12-15",
+            "meaning": "In Corinth they argued about who had baptized them. Paul cuts it short: none of them were crucified for you."
+          },
+          {
+            "t": "Ask for a sign before trusting",
+            "ref": "1 Cor. 1:22",
+            "meaning": "\"Jews ask for signs.\" When you demand proof tailored to your expectations, you may dismiss the sign God has already given as unimpressive."
+          },
+          {
+            "t": "Demand that the gospel sound reasonable",
+            "ref": "1 Cor. 1:22-23",
+            "meaning": "\"The Greeks seek wisdom.\" If you only accept what fits into your logic, you are left with a god your size."
+          }
+        ]
+      }
+    },
+    {
+      "id": "locura",
+      "day": "Monday · Foolishness for those who perish",
+      "tag": "Box 3 · The excuse I give",
+      "title": "Foolishness, according to whom?",
+      "story": "The Greek word is mōria: not a lack of intelligence, but a lack of discernment, stubbornness, and rebellion. The message centered on a Galilean Jew crucified by Rome and raised from the dead to atone for the whole world. No educated Corinthian could take him seriously. No Jew expected a Messiah executed by the empire he was supposed to overthrow. Yet there, in that impossible city, some believed. God always has people who are willing.",
+      "cue": "Train your ear here, {name}, and learn to distinguish the two voices.",
+      "module": {
+        "type": "skillThenCommit",
+        "saveLabel": "Save on my cross",
+        "seedSub": "your excuse",
+        "skill": {
+          "prompt": "Wisdom of this world, or power of the cross?",
+          "hint": "They both sound safe. Just one salvo.",
+          "badge": "You are learning to recognize the voice that saves",
+          "cats": [
+            "Wisdom of this world",
+            "power of the cross"
+          ],
+          "rounds": [
+            {
+              "t": "\"If God were real, he wouldn't choose to die like a criminal.\"",
+              "a": 0,
+              "fb": "Wisdom of this world: measure God with the yardstick of prestige. The cross breaks that rod."
+            },
+            {
+              "t": "\"The weakness of God is stronger than men.\"",
+              "a": 1,
+              "fb": "Power of the cross: it does not say that God is weak, but that even what seems like his weakness exceeds all our strength (1 Cor. 1:25)."
+            },
+            {
+              "t": "\"A Messiah executed by Rome cannot be the Messiah.\"",
+              "a": 0,
+              "fb": "Wisdom of this world: was exactly the Jewish objection. God did not come to overthrow an empire, but to defeat death."
+            },
+            {
+              "t": "\"It pleased God to save believers through the foolishness of preaching.\"",
+              "a": 1,
+              "fb": "Power of the cross: the method that seems absurd is the one that God chose on purpose (1 Cor. 1:21)."
+            },
+            {
+              "t": "“I am improving little by little; that is enough.”",
+              "a": 0,
+              "fb": "Wisdom of this world: gradual improvement never pays off a debt. Ruin is self-inflicted; salvation is a gift."
+            },
+            {
+              "t": "\"God chose the foolish things of the world to shame the wise.\"",
+              "a": 1,
+              "fb": "Power of the cross: this is why he chose you, and not the improved version of you (1 Cor. 1:27)."
+            }
+          ],
+          "summary": "The same cross, two readings. “Folly to those who are perishing, the power of God to those who are being saved” (1 Cor. 1:18). The difference is not in the wood: it is in who looks at it."
+        },
+        "commit": {
+          "prompt": "What worldly excuse will you stop repeating this week?",
+          "hint": "Name it, then stop giving it the microphone",
+          "placeholder": "I'm going to stop telling myself that...",
+          "extraKey": "excusaPropia",
+          "options": [
+            "That faith is a crutch for the weak",
+            "That I'm already good enough",
+            "That I need to understand everything before believing",
+            "That talking about the cross would make me look bad",
+            "That God should prove himself with a sign"
+          ]
+        }
+      }
+    },
+    {
+      "id": "deuda",
+      "day": "Tuesday · Power to those being saved",
+      "tag": "Box 4 · My debt settled",
+      "title": "The record nailed to the tree",
+      "story": "Look at what happened there without rushing past it. Reconciliation: “making peace through the blood of his cross” (Col. 1:20). Humility: he became obedient to the point of death on a cross (Phil. 2:8). And a debt paid: the record against us was taken out of the way and nailed to the tree (Col. 2:14). In Gethsemane, he asked for the cup to pass from him. That prayer measures the price.",
+      "cue": "Don't rush past here, {name}. This cost more than you estimate.",
+      "module": {
+        "type": "perspectiveFlip",
+        "saveLabel": "Save on my cross",
+        "seedSub": "your debt",
+        "prompt": "Touch each card to see the cross as God sees it",
+        "hint": "What looks like defeat, seen from the sky",
+        "pairs": [
+          {
+            "see": "You see one more Roman execution, brutal and anonymous.",
+            "sees": "“Through him to reconcile all things to himself, making peace through the blood of his cross” (Col. 1:20)."
+          },
+          {
+            "see": "You see your debt growing, year after year, unpayable.",
+            "sees": "“By canceling the writing of the ordinances that was against us, he put it out of the way, nailing it to the cross” (Col. 2:14)."
+          },
+          {
+            "see": "You think you are saving yourself by trying.",
+            "sees": "The text says “those who are being saved” (1 Cor. 1:18): the action is his, and the source is outside you."
+          },
+          {
+            "see": "You feel like your injuries don't matter to anyone.",
+            "sees": "“By whose stripes you were healed” (1 Pet. 2:24). He chose to heal you with his own."
+          }
+        ],
+        "chooseLabel": "This is the one I needed to see",
+        "teach": "Destruction is something one does to oneself. Salvation, on the other hand, can only be received: “the wages of sin is death, but the free gift of God is eternal life” (Rom. 6:23). Nobody pays themselves a gift.",
+        "commit": {
+          "prompt": "Write what the cross tells you today about your debt",
+          "hint": "Say it in the first person, without embellishments",
+          "placeholder": "The cross tells me that my debt…",
+          "extraKey": "deudaTexto",
+          "shareable": true
+        }
+      }
+    },
+    {
+      "id": "espera",
+      "day": "Wednesday · A crucified Messiah",
+      "tag": "Box 5 What didn't go as expected",
+      "title": "Against all expectations",
+      "story": "The disciples argued and became afraid every time Jesus announced the cross (Mark 8:31-32; 9:30-32). Nobody wanted it. It fit neither Jewish nor Greek expectations. Yet it was the plan. If God accomplished the most important act in history by a route that seemed wrong to everyone, it is worth asking what he may be doing today through the route that seems wrong to you.",
+      "cue": "Bring here what still hurts you, {name}, and put it at the foot of the tree.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "In what area did God not act as you expected?",
+        "hint": "Choose what's still open, not what you've already closed",
+        "saveLabel": "Save on my cross",
+        "seedSub": "your expectation",
+        "closing": "All heaven saw its King die on the empire's most despised instrument. If God knew what he was doing there, he knows what he is doing here too. “The foolishness of God is wiser than men” (1 Cor. 1:25).",
+        "options": [
+          {
+            "id": "sanidad",
+            "label": "A healing that did not come",
+            "insight": "I am not asking you to understand it all. Look instead at who stands beside you here: the One who also asked for the cup to pass from him.",
+            "tags": [
+              "react:doubt",
+              "theme:faith",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "puerta",
+            "label": "A door that slammed",
+            "insight": "Paul also wanted to go to places where the Spirit would not let him. A closed door is not always punishment; sometimes it is direction.",
+            "tags": [
+              "react:control",
+              "theme:hope",
+              "posture:clinging"
+            ]
+          },
+          {
+            "id": "oracion",
+            "label": "A prayer with no visible answer",
+            "insight": "Silence is not absence. Between Friday and Sunday there was also a Saturday that seemed like the end of everything.",
+            "tags": [
+              "react:doubt",
+              "theme:prayer",
+              "posture:seeking"
+            ]
+          },
+          {
+            "id": "persona",
+            "label": "A person who never changed",
+            "insight": "It hurts to love without seeing fruit. Paul loved the whole Corinthian church, divided and foolish as it was, and he did not leave.",
+            "tags": [
+              "react:withdraw",
+              "theme:relationship",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "tardanza",
+            "label": "A rescue that took too long",
+            "insight": "God's timing is almost never ours, and it almost always turns out to be right. Hold on in the meantime.",
+            "tags": [
+              "react:fear",
+              "theme:hope",
+              "posture:clinging"
+            ]
+          },
+          {
+            "id": "plan",
+            "label": "A plan of mine that he disarmed",
+            "insight": "Disarming is not destroying. Sometimes you have to let go of the good plan to receive the true one.",
+            "tags": [
+              "react:pride",
+              "theme:humility",
+              "posture:surrendering"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "debil",
+      "day": "Thursday · Christ, power and wisdom of God",
+      "tag": "Box 6 · My weak part",
+      "title": "Not many were wise",
+      "story": "“Look, brothers, at your calling: there are not many wise according to the flesh, nor many powerful, nor many noble” (1 Cor. 1:26). It is not an insult: it is the signature of God. He chose the foolish to shame the wise and the weak to shame the strong, so that no one would boast before him. That detail of yours that you think is disqualifying may be exactly the reason why he chose you.",
+      "cue": "Be honest with me here, {name}: what do you think disqualifies you?",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": true,
+        "prompt": "What weak part of you do you think leaves you out?",
+        "hint": "Choose the first thing that came to mind",
+        "saveLabel": "Save on my cross",
+        "seedSub": "your weakness",
+        "closing": "God doesn't use you despite that. Many times he uses you for that reason, “so that no one can boast in his presence” (1 Cor. 1:29). The treasure goes in clay vessels on purpose.",
+        "options": [
+          {
+            "id": "estudios",
+            "label": "My lack of studies",
+            "insight": "Paul left rhetoric in Athens and arrived in Corinth with only one thing: Christ crucified. That was enough.",
+            "tags": [
+              "theme:humility",
+              "posture:humble",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "pasado",
+            "label": "my past",
+            "insight": "The man who wrote this persecuted Christians. If your past was disqualifying, Paul would not have written a line.",
+            "tags": [
+              "react:withdraw",
+              "theme:sin",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "timidez",
+            "label": "my shyness",
+            "insight": "Paul was among them “with weakness, fear, and much trembling” (1 Cor. 2:3). And that's how the Spirit showed himself.",
+            "tags": [
+              "react:fear",
+              "theme:service",
+              "posture:avoidant"
+            ]
+          },
+          {
+            "id": "recursos",
+            "label": "my little money",
+            "insight": "What you can give fits entirely in the hands of God, and there it yields more than you calculate.",
+            "tags": [
+              "theme:generosity",
+              "posture:humble",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "caracter",
+            "label": "My difficult character",
+            "insight": "Corinth was a church full of difficult people, and Paul called it holy. God works with what is available, including you.",
+            "tags": [
+              "react:pride",
+              "theme:self",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "fe",
+            "label": "My faith, small and unsteady",
+            "insight": "Salvation does not rest on the size of your faith, but on the weight of the cross that supports it.",
+            "tags": [
+              "react:doubt",
+              "theme:faith",
+              "posture:seeking"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "gloria",
+      "day": "The power that holds my cross",
+      "tag": "Box 7 · The truth that sustains me",
+      "title": "Power of God, for you",
+      "story": "Gather what you brought: what embarrasses you, what covered the cross, the excuse you gave, the debt paid, the wait that still hurts, and the weakness you thought was disqualifying. It all hangs on a single phrase: “to those who are being saved it is the power of God” (1 Cor. 1:18). The timbers are already crossed. You only need to raise them.",
+      "cue": "Pick this up with you, {name}, and don't let it go during the week.",
+      "module": {
+        "type": "anchorChain",
+        "saveLabel": "Receive your power and save",
+        "seedSub": "your truth",
+        "links": [
+          {
+            "t": "The cross was public shame",
+            "fb": "So detestable that Rome asked not to think about it. God chose that exact place to reveal himself."
+          },
+          {
+            "t": "The cross settled my debt",
+            "fb": "The record against you was nailed there. Not filed away, but voided (Col. 2:14)."
+          },
+          {
+            "t": "The cross reconciled me",
+            "fb": "You no longer negotiate your entry. “He made peace through the blood of his cross” (Col. 1:20)."
+          },
+          {
+            "t": "The cross is the power of God",
+            "fb": "What the world calls foolishness is the force that is saving you right now."
+          }
+        ],
+        "prompt": "What truth of the cross are you going to lean on this week?",
+        "hint": "Choose one and repeat it when the weight returns",
+        "options": [
+          "That my debt has already been paid in full",
+          "That God came to the cross for me",
+          "That God's weakness is stronger than my strength",
+          "That I'm not saving myself",
+          "That the shame that he avoided he already carried"
+        ],
+        "allowCustom": {
+          "placeholder": "I will rely on that…",
+          "extraKey": "gloriaPropia"
+        }
+      }
+    },
+    {
+      "id": "paso",
+      "day": "Friday · To study and meditate",
+      "tag": "Box 8 · My step of the week",
+      "title": "Glory on the cross",
+      "story": "\"For Paul, the cross was the only object of supreme interest\" (The Acts of the Apostles, p. 185). From the day he saw the infinite love of God revealed in that death, he did not stop glorying in it. A change like this is not argued: it is lived and told. And it almost always starts with something small and concrete, done before the week is over.",
+      "cue": "Before you close, {name}, name a step you can take tomorrow.",
+      "module": {
+        "type": "commitDuo",
+        "saveLabel": "close my cross",
+        "seedSub": "your step",
+        "stepPrompt": "My specific step this week",
+        "stepHint": "Tap an idea or write your own",
+        "stepOptions": [
+          "Read the chapter “The Calvary”",
+          "Tell bluntly why I believe in the cross",
+          "Memorize 1 Corinthians 1:18 and repeat it every day",
+          "Ask someone for forgiveness, with the cross in the middle",
+          "Stop defending myself and let God defend me"
+        ],
+        "stepPlaceholder": "my specific step...",
+        "stepExtraKey": "pasoTexto",
+        "personPrompt": "Someone I will tell about the cross to",
+        "personHint": "Think about who you think is the most difficult case.",
+        "personPlaceholder": "a name...",
+        "personExtraKey": "compartir"
+      }
+    }
+  ],
+  "encourage": [
+    "“The message of the cross is foolishness to those who are lost; but for those who are saved it is the power of God.” (1 Cor. 1:18)",
+    "“I determined not to know anything among you except Jesus Christ, and him crucified.” (1 Cor. 2:2)",
+    "“The foolishness of God is wiser than men, and the weakness of God is stronger than men.” (1 Cor. 1:25)",
+    "“Annulling the record of the decrees that were against us, he put it out of the way by nailing it to the cross.” (Col. 2:14)",
+    "“Who himself bore our sins in his body on the tree; by whose wounds you were healed.” (1 Pet. 2:24)",
+    "“And through him reconcile all things to himself, making peace through the blood of his cross.” (Col. 1:20)"
+  ],
+  "discussion": [
+    "In Gethsemane Jesus prayed: “My Father, if it is possible, let this cup pass from me” (Matt. 26:39). What does that prayer tell us about the real price He paid on the cross?",
+    "Paul states that “the foolishness of God is wiser than men” (1 Cor. 1:25). How is God's wisdom different today from that which our culture applauds?",
+    "A crucified Christ was a scandal to the Jews and foolishness to the Greeks. What truths we preach today provoke the same reaction, and why shouldn't we tone them down?",
+    "\"The natural man receives not the things of the Spirit of God\" (1 Cor. 2:14). So how do we talk about Jesus in a way that touches the heart, and what role do our actions play?"
+  ],
+  "facilitator": [
+    {
+      "stationId": "escandalo",
+      "apertura": "Cicero asked Rome not to even think about the cross. Why did Paul make that word the center of his preaching?",
+      "seguimiento": "What part of the gospel do you find most difficult to mention in front of others?",
+      "ilustracion": "Imagine preaching today with the electric chair in the center. That was the emotional charge of the cross in the first century.",
+      "transicion": "If that is the scandal, let's see what things end up covering it up until it is stripped of power.",
+      "actividad": "Invite each person, if they wish, to name in one sentence the part of the gospel they usually soften.",
+      "cierre": "Lord, give us courage to say without embellishment what you did not embellish."
+    },
+    {
+      "stationId": "centro",
+      "apertura": "What did Paul mean by “lest the cross of Christ become vain” (1 Cor. 1:17)?",
+      "seguimiento": "Can a good sermon obscure the message of the cross? How do you notice when that happens?",
+      "ilustracion": "In Athens Paul used logic and philosophy with little fruit; in Corinth he focused on Christ crucified, and a church was born.",
+      "transicion": "With the center clarified, let's face the usual objection: that all this sounds crazy.",
+      "actividad": "Read 1 Corinthians 1:12-17 and discuss why divisions arise from putting people before the cross.",
+      "cierre": "Take away, Lord, everything that stands between your cross and our eyes."
+    },
+    {
+      "stationId": "locura",
+      "apertura": "The Greek word mōria points more to rebellion than to a lack of intelligence. Does that change how we understand 1 Corinthians 1:18?",
+      "seguimiento": "What objections do you hear today that are, basically, the same as those from Corinth?",
+      "ilustracion": "The Jews expected a Messiah who would overthrow Rome; they received one crucified by Rome. Nothing could have sounded more absurd.",
+      "transicion": "And yet, that foolishness paid something concrete. Let's look at the price.",
+      "actividad": "Classify phrases between wisdom of this world and power of the cross, and explain your criteria.",
+      "cierre": "Teach us, Lord, to call power what the world calls foolishness."
+    },
+    {
+      "stationId": "deuda",
+      "apertura": "Colossians 1:20, Colossians 2:14, Philippians 2:8 and 1 Peter 2:24. What did Jesus achieve on the cross according to each text?",
+      "seguimiento": "\"Those who are being saved\": what changes when salvation is understood as a present journey as well as a completed gift?",
+      "ilustracion": "The debt record was posted for everyone to see when it was settled. That's what God did with ours.",
+      "transicion": "If God paid off the debt by an unexpected route, let's talk about our expectations.",
+      "actividad": "Read Romans 6:23 and contrast “pays” with “free gift.”",
+      "cierre": "Thank you, Lord, because what we could not pay you nailed to the tree."
+    },
+    {
+      "stationId": "espera",
+      "apertura": "Why did the disciples find the idea of a crucified Messiah so repulsive (Mark 8:31-32)?",
+      "seguimiento": "At what point in your life did God not act as you expected, and what did you learn afterwards?",
+      "ilustracion": "The most important plan in history seemed, to everyone present, a complete failure on Friday afternoon.",
+      "transicion": "If God's paths are not ours, neither are his criteria for choosing people.",
+      "actividad": "Read Acts 13:38-47 and discuss how Paul explains the cross to an audience who was not expecting it.",
+      "cierre": "We trust, Lord, even when we do not understand your route."
+    },
+    {
+      "stationId": "debil",
+      "apertura": "\"You are not many wise according to the flesh\" (1 Cor. 1:26). Is it a reproach or a consolation?",
+      "seguimiento": "What weakness of yours have you used as an excuse for not serving?",
+      "ilustracion": "Paul arrived in Corinth “in weakness, fear, and much trembling” (1 Cor. 2:3), and a church was born there.",
+      "transicion": "Let us now gather everything we have seen into a single truth that sustains the week.",
+      "actividad": "Read 1 Corinthians 1:26-29 and name, if you wish, an area where you feel unqualified.",
+      "cierre": "Use our weakness, Lord, so that no one boasts before you."
+    },
+    {
+      "stationId": "gloria",
+      "apertura": "Why does Paul call Christ “the power of God and the wisdom of God” (1 Cor. 1:24) and not just Savior?",
+      "seguimiento": "Which of the truths of the cross do you need most this week?",
+      "ilustracion": "The same tree that humiliated the condemned is today the highest point in the history of the universe.",
+      "transicion": "With that truth in hand, let's take a concrete step for the next few days.",
+      "actividad": "Recite 1 Corinthians 1:18 together and say out loud what it means to each of you.",
+      "cierre": "Uphold us, Lord, by the power of your cross."
+    },
+    {
+      "stationId": "paso",
+      "apertura": "Ellen White says that the cross was for Paul \"the only object of supreme interest.\" What does that mean in practice?",
+      "seguimiento": "Who could you talk to about the cross this week, even if it seems like the most difficult case?",
+      "ilustracion": "Paul went from persecuting the Crucified One to glorying in him. That turn began with an encounter, not an argument.",
+      "transicion": "Let's close by writing down the step and the name.",
+      "actividad": "Share a specific step for the week and who you will talk to.",
+      "cierre": "Give us, Lord, the courage to glory in your cross this week."
+    }
+  ],
+  "patternTemplate": "{name}, you named the gospel truth that is hardest for you to say: “{slot:escandalo}”. You faced what had displaced the cross: “{slot:centro}”. You released this excuse: “{slot:locura}”. Then you brought a waiting wound to the foot of the wood: “{slot:espera}”. What Rome called obscene is becoming, in your hands, the place where your debt was paid.",
+  "outOracion": "Lord, I come to your cross. I confess the truth that is hard for me to say: “{slot:escandalo}”. I confess what I let displace the cross: “{slot:centro}”. Today I release this excuse: “{slot:locura}”. I place this waiting wound before you: “{slot:espera}”. I also give you what I thought disqualified me: “{slot:debil}”. Thank you that my debt was nailed to the wood and that you made peace through your blood. I stand on this truth: “{slot:gloria}”. Thank you because “{verse}” ({verseRef}). In the name of Jesus, amen.",
+  "outAliento": "{name}, what the world calls foolishness is exactly what is saving you. You released this excuse: “{slot:locura}”. You chose to stand on this truth: “{slot:gloria}”. And what you brought as a disqualification, “{slot:debil}”, turns out to be the very material God chooses. Your debt is not pending; it is nailed, settled, and out of the way.",
+  "outAccion24": "In the next 24 hours I will {slot:paso|lower}. I will also stop repeating this excuse: “{slot:locura}”.",
+  "outPregunta": "This week I named the gospel truth that is hard for me to say: “{slot:escandalo}”. I also learned to stand on this truth: “{slot:gloria}”. What part of the gospel is hardest for you to say out loud, and why do you think it makes you so uncomfortable?",
+  "outTarjeta": "My cross this week: I released the excuse “{slot:locura}”, handed over “{slot:debil}”, and chose this truth: “{slot:gloria}”.\nVerse: “{verse}” ({verseRef})."
+}

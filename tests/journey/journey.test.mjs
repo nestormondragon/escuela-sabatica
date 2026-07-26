@@ -38,6 +38,11 @@ import {
   exportShareSelection,
   importJourneyArchive,
 } from "../../src/state/journey/transfer.js";
+import {
+  attachChoiceReferences,
+  localizeLegacyKit,
+} from "../../src/lib/localizedLegacyKit.js";
+import { fillName, lcFirst } from "../../src/lib/name.js";
 
 const NOW = "2026-07-25T12:00:00.000Z";
 
@@ -252,6 +257,114 @@ test("reducer increments revisions and rejects stale storage events", () => {
     journeyReducer(changed, journeyActions.reconcileExternal(fresh)),
     fresh
   );
+});
+
+test("text-size settings default safely and remain compatible with older v2 records", () => {
+  const state = createEmptyJourneyState({ now: NOW, writerId: "text-size" });
+  assert.equal(state.settings.textSize, "normal");
+  assert.equal(validateJourneyState(state).ok, true);
+
+  const olderV2 = structuredClone(state);
+  delete olderV2.settings.textSize;
+  assert.equal(validateJourneyState(olderV2).ok, true);
+
+  const enlarged = journeyReducer(olderV2, {
+    ...journeyActions.setSettings({ textSize: "large" }),
+    meta: {
+      writerId: "text-size",
+      updatedAt: "2026-07-25T12:01:00.000Z",
+    },
+  });
+  assert.equal(enlarged.settings.textSize, "large");
+  assert.equal(validateJourneyState(enlarged).ok, true);
+
+  const invalid = structuredClone(state);
+  invalid.settings.textSize = "huge";
+  assert.equal(validateJourneyState(invalid).ok, false);
+  assert.match(
+    validateJourneyState(invalid).errors.join(" "),
+    /settings\.textSize/
+  );
+});
+
+test("locale defaults to Spanish and remains compatible with older v2 records", () => {
+  const state = createEmptyJourneyState();
+  assert.equal(state.settings.locale, "es");
+  assert.equal(validateJourneyState(state).ok, true);
+
+  const olderV2 = structuredClone(state);
+  delete olderV2.settings.locale;
+  assert.equal(validateJourneyState(olderV2).ok, true);
+
+  const english = journeyReducer(olderV2, {
+    ...journeyActions.setSettings({ locale: "en" }),
+    meta: {
+      writerId: "locale-test",
+      updatedAt: "2026-07-25T12:00:00.000Z",
+    },
+  });
+  assert.equal(english.settings.locale, "en");
+  assert.equal(validateJourneyState(english).ok, true);
+
+  const invalid = structuredClone(english);
+  invalid.settings.locale = "fr";
+  assert.equal(validateJourneyState(invalid).ok, false);
+  assert.match(validateJourneyState(invalid).errors.join(" "), /settings\.locale/);
+});
+
+test("authored choices follow the locale while reader-written text stays untouched", () => {
+  const stationEs = {
+    slot: "influencia",
+    module: {
+      type: "choiceInsight",
+      options: [
+        { id: "pantallas", label: "Las pantallas de madrugada" },
+        { id: "prisa", label: "La prisa que me deja sin oración" },
+      ],
+    },
+  };
+  const stationEn = {
+    slot: "influencia",
+    module: {
+      type: "choiceInsight",
+      options: [
+        { id: "pantallas", label: "Late-night screens" },
+        { id: "prisa", label: "The rush that leaves me without prayer" },
+      ],
+    },
+  };
+  const refs = attachChoiceReferences(
+    stationEs.module,
+    stationEs.slot,
+    stationEs.module.options[1].label,
+    { prayer: "Mi oración escrita" }
+  );
+  const localized = localizeLegacyKit(
+    { stations: [stationEn] },
+    {
+      slots: { influencia: stationEs.module.options[1].label },
+      extra: { ...refs, prayer: "Mi oración escrita" },
+    }
+  );
+
+  assert.equal(
+    localized.slots.influencia,
+    "The rush that leaves me without prayer"
+  );
+  assert.equal(localized.extra.prayer, "Mi oración escrita");
+});
+
+test("removing an empty name leaves a naturally capitalized sentence", () => {
+  assert.equal(
+    fillName("{name}, no hay prisa en este paso.", ""),
+    "No hay prisa en este paso."
+  );
+  assert.equal(
+    fillName("Before moving on, {name}, pause here.", ""),
+    "Before moving on, pause here."
+  );
+  assert.equal(lcFirst("The conflict I stopped feeding"), "the conflict I stopped feeding");
+  assert.equal(lcFirst("I stopped feeding the conflict"), "I stopped feeding the conflict");
 });
 
 test("private fields never enter the selective share payload", () => {

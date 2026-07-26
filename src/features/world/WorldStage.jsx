@@ -5,6 +5,8 @@ import { stageIndexFor } from "../../components/Centerpiece.jsx";
 import Icon from "../../components/Icon.jsx";
 import { useAppReducedMotion } from "../../lib/useAppReducedMotion.js";
 import LessonRelief from "../../visual-world/LessonRelief.jsx";
+import { useI18n } from "../../i18n/LocaleProvider.jsx";
+import { isRemovalLesson } from "../../visual-world/lessonVisualManifest.js";
 
 export default function WorldStage({
   lesson,
@@ -15,14 +17,20 @@ export default function WorldStage({
   compact = false,
   priority = false,
 }) {
+  const { t } = useI18n();
   const reduced = useAppReducedMotion();
   const stage = stageIndexFor(filled);
+  const removal = isRemovalLesson(lesson.id);
 
   return (
     <section
       className={`world-stage${compact ? " is-compact" : ""}`}
       data-stage={stage}
-      aria-label={`Panel de la lección ${lesson.number}. ${filled} de ${total} piezas colocadas.`}
+      aria-label={t(removal ? "world.revealPanelLabel" : "world.panelLabel", {
+        number: lesson.number,
+        filled,
+        total,
+      })}
     >
       <motion.div
         className="world-stage__architecture"
@@ -34,9 +42,9 @@ export default function WorldStage({
         }}
       >
         <div className="world-stage__lintel">
-          <span>Corinto</span>
+          <span>{t("context.corinth")}</span>
           <i aria-hidden="true" />
-          <span>Lección {lesson.number}</span>
+          <span>{t("common.lesson", { number: lesson.number })}</span>
         </div>
 
         <div className="world-stage__neighbor world-stage__neighbor--previous" aria-hidden="true">
@@ -53,6 +61,8 @@ export default function WorldStage({
           <LessonRelief
             lesson={lesson}
             stage={stage}
+            filled={filled}
+            total={total}
             compact={compact}
             priority={priority}
           />
@@ -61,23 +71,26 @@ export default function WorldStage({
 
         <div className="world-stage__caption">
           <span>
-            <small>El objeto que estás formando</small>
+            <small>{t(removal ? "world.revealing" : "world.forming")}</small>
             {lesson.kitName}
           </span>
           <span>
             <small>{lesson.verseRef}</small>
-            {filled} de {total}
+            {t(removal ? "common.regions" : "common.pieces", { filled, total })}
           </span>
         </div>
 
         <div
           className="world-stage__tesserae"
           role="progressbar"
-          aria-label="Piezas colocadas"
+          aria-label={t(removal ? "world.regionsLabel" : "world.piecesLabel")}
           aria-valuemin="0"
           aria-valuemax={total}
           aria-valuenow={filled}
-          aria-valuetext={`${filled} de ${total} piezas colocadas`}
+          aria-valuetext={t(
+            removal ? "context.regionsRevealed" : "context.piecesPlaced",
+            { filled, total }
+          )}
         >
           {Array.from({ length: total }, (_, index) => (
             <i key={index} data-set={String(index < filled)} aria-hidden="true" />
@@ -86,7 +99,7 @@ export default function WorldStage({
       </motion.div>
 
       <Link className="world-stage__mosaic-link" to="/mosaico">
-        <span>Ver el muro completo</span>
+        <span>{t("world.fullWall")}</span>
         <Icon name="arrow" size={16} />
       </Link>
     </section>

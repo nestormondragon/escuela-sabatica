@@ -3,10 +3,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { reveal, t, EASE_OUT } from "../lib/motion.js";
 import { Insight, SaveBar, Pause } from "./common.jsx";
 import Icon from "../components/Icon.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
+
+function asSentence(text) {
+  const value = String(text || "").trim();
+  return /[.!?…]$/.test(value) ? value : `${value}.`;
+}
 
 /* Flip cards: what you see → what Jesus sees. Choose the truth you
    needed, then write an encouraging message. Used for Emmaus. */
 export default function PerspectiveFlip({ config, onFill, onSkip }) {
+  const { t: translate } = useI18n();
   const [flipped, setFlipped] = useState({});
   const [sel, setSel] = useState(null);
   const [aliento, setAliento] = useState("");
@@ -38,8 +45,8 @@ export default function PerspectiveFlip({ config, onFill, onSkip }) {
               style={{ perspective: 1000, width: "100%", textAlign: "left", background: "none", border: "none", padding: 0 }}
               aria-label={
                 isFlipped
-                  ? `${p.sees}. ${isSel ? "Seleccionada" : "Seleccionar esta verdad"}`
-                  : `${p.see}. Revelar otra perspectiva`
+                  ? `${p.sees}. ${isSel ? translate("module.selected") : translate("module.selectTruth")}`
+                  : `${asSentence(p.see)} ${translate("module.revealPerspective")}`
               }
               aria-expanded={isFlipped}
               aria-pressed={isSel}
@@ -80,12 +87,16 @@ export default function PerspectiveFlip({ config, onFill, onSkip }) {
           );
         })}
       </div>
-      <p className="prompt-hint">{allFlipped ? "Toca la verdad que necesitabas" : "Toca cada carta para girarla"}</p>
+      <p className="prompt-hint">
+        {allFlipped
+          ? translate("module.chooseNeededTruth")
+          : translate("module.flipEach")}
+      </p>
 
       <AnimatePresence>
         {sel != null ? (
           <motion.div className="stack" variants={reveal} initial="initial" animate="animate" key="commit">
-            <Insight label="La verdad que sostienes" body={config.pairs[sel].sees} />
+            <Insight label={translate("module.truthHeld")} body={config.pairs[sel].sees} />
             <Pause />
             <p className="story" style={{ borderLeftColor: "var(--clay)" }}>{config.teach}</p>
             <p className="prompt-q" style={{ fontSize: "1.2rem" }}>{config.commit.prompt}</p>
@@ -101,7 +112,7 @@ export default function PerspectiveFlip({ config, onFill, onSkip }) {
               />
             </div>
             <SaveBar
-              label={config.saveLabel || "Guardar esta pieza"}
+              label={config.saveLabel || translate("module.savePiece")}
               disabled={!value}
               onSave={() => onFill(value, { [config.commit.extraKey]: aliento.trim() }, config.seedSub)}
               onSkip={onSkip}

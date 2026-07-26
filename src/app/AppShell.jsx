@@ -4,6 +4,7 @@ import ContextRail from "./ContextRail.jsx";
 import PrimaryNav from "./PrimaryNav.jsx";
 import RouteAnnouncer from "./RouteAnnouncer.jsx";
 import { MATERIAL_TEXTURES } from "../assets/generated/visualManifest.generated.js";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 import "./app-shell.css";
 
 /**
@@ -30,6 +31,7 @@ export default function AppShell({
   getRouteTitle,
   mainClassName = "",
 }) {
+  const { t } = useI18n();
   const content = children ?? <Outlet />;
   const navigation = <PrimaryNav variant="rail" />;
   const materialStyle = {
@@ -43,7 +45,7 @@ export default function AppShell({
   return (
     <div className="mcv-app-shell" style={materialStyle}>
       <a className="mcv-skip-link" href="#contenido-principal">
-        Saltar al contenido
+        {t("app.skip")}
       </a>
 
       <div className="mcv-app-shell__frame">
@@ -72,7 +74,7 @@ export default function AppShell({
             <div className="mcv-app-shell__split">
               <aside
                 className="mcv-app-shell__world"
-                aria-label="Relieve y progreso de la lección"
+                aria-label={t("app.worldLabel")}
               >
                 {world}
               </aside>

@@ -1,6 +1,7 @@
 import React from "react";
 import Icon from "./Icon.jsx";
 import { useToast } from "./Toast.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 /* =================================================================
    Topbar — home/kit button, lesson brand, theme + maestro toggles,
@@ -18,6 +19,7 @@ export default function Topbar({
   onHome,
   onOpenLessons,
 }) {
+  const { t } = useI18n();
   const toast = useToast();
   const handleMaestro = () => {
     onToggleMaestro();
@@ -25,22 +27,22 @@ export default function Topbar({
     // inside a station, so without this the toggle felt like it did nothing.
     toast(
       maestro
-        ? "Modo maestro desactivado"
-        : "Modo maestro activado · guía para dirigir la clase"
+        ? t("legacy.teacherOff")
+        : t("legacy.teacherOn")
     );
   };
   return (
     <header className="topbar">
       <div className="topbar-inner">
-        <button className="icon-btn" onClick={onHome} aria-label="Mi mosaico" title="Mi mosaico">
+        <button className="icon-btn" onClick={onHome} aria-label={t("legacy.myMosaic")} title={t("legacy.myMosaic")}>
           <Icon name="mosaic" size={20} />
         </button>
         <button
           className="brand"
           onClick={onOpenLessons}
           style={{ textAlign: "left", cursor: "pointer", flexDirection: "row", alignItems: "center", gap: 8, minHeight: 44 }}
-          aria-label="Elegir lección"
-          title="Elegir lección"
+          aria-label={t("context.chooseLesson")}
+          title={t("context.chooseLesson")}
         >
           <span style={{ minWidth: 0 }}>
             <span className="ttl" style={{ display: "flex", alignItems: "center", gap: 5 }}>
@@ -54,8 +56,8 @@ export default function Topbar({
         <button
           className="icon-btn"
           onClick={onToggleMode}
-          aria-label={mode === "day" ? "Modo noche" : "Modo día"}
-          title={mode === "day" ? "Modo noche" : "Modo día"}
+          aria-label={mode === "day" ? t("context.useNight") : t("context.useDay")}
+          title={mode === "day" ? t("context.useNight") : t("context.useDay")}
         >
           <Icon name={mode === "day" ? "moon" : "sun"} size={19} />
         </button>
@@ -64,10 +66,10 @@ export default function Topbar({
           className="switch"
           aria-pressed={maestro}
           onClick={handleMaestro}
-          aria-label="Modo maestro · guía para dirigir la clase"
-          title="Modo maestro · guía para dirigir la clase"
+          aria-label={t("maestro.heading")}
+          title={t("maestro.heading")}
         >
-          <span className="switch-label">Maestro</span>
+          <span className="switch-label">{t("context.teacher")}</span>
           <span className="track"><span className="knob" /></span>
         </button>
       </div>

@@ -1,22 +1,66 @@
-import React, { useMemo, useState } from "react";
+import React, {
+  Suspense,
+  lazy,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import Centerpiece from "../components/Centerpiece.jsx";
 import { reliefForLesson } from "../assets/generated/visualManifest.generated.js";
 import { visualForLesson } from "./lessonVisualManifest.js";
+import ReliefAssembly from "./ReliefAssembly.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 import "./visual-world.css";
+import "./material-world.css";
 
 const STAGE_REVEAL = [0.16, 0.37, 0.58, 0.79, 1];
+const MaterialWorldCanvas = lazy(() => import("./MaterialWorldCanvas.jsx"));
+
+function supportsMaterialWorld(compact) {
+  if (compact || typeof document === "undefined") return false;
+  if (navigator.connection?.saveData) return false;
+  try {
+    const canvas = document.createElement("canvas");
+    return Boolean(canvas.getContext("webgl2") || canvas.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
 
 export default function LessonRelief({
   lesson,
   stage = 0,
+  filled,
+  total = 8,
   compact = false,
   priority = false,
   className = "",
 }) {
+  const { locale, t } = useI18n();
   const [loadState, setLoadState] = useState("loading");
+  const [renderer, setRenderer] = useState("dom");
+  const [allowWebGL] = useState(() => supportsMaterialWorld(compact));
   const safeStage = Math.max(0, Math.min(4, Number(stage) || 0));
+  const pieceCount = Math.max(
+    0,
+    Math.min(
+      total,
+      Number.isFinite(filled)
+        ? Number(filled)
+        : safeStage >= 4
+          ? total
+          : safeStage * 2
+    )
+  );
   const relief = reliefForLesson(lesson?.id);
   const visual = visualForLesson(lesson?.id);
+  const removal = visual.progression === "remove";
+  const description =
+    locale === "en" ? visual.descriptionEn || visual.description : visual.description;
+  const pieceStatus = t(removal ? "common.regions" : "common.pieces", {
+    filled: pieceCount,
+    total,
+  });
   const reveal = STAGE_REVEAL[safeStage];
   const image = compact ? relief.thumb : relief.mobile;
   const srcSet = compact
@@ -37,16 +81,21 @@ export default function LessonRelief({
     [lesson]
   );
   const Root = compact ? "span" : "figure";
+  const markWebGLReady = useCallback(() => setRenderer("webgl"), []);
+  const markWebGLFailed = useCallback(() => setRenderer("dom"), []);
 
   return (
     <Root
       className={`lesson-relief${compact ? " is-compact" : ""} ${className}`.trim()}
       data-load-state={loadState}
       data-stage={safeStage}
+      data-pieces={pieceCount}
+      data-piece-set={visual.pieceSet}
+      data-renderer={renderer}
       {...(compact
         ? {
             role: "img",
-            "aria-label": `${visual.description} Etapa ${safeStage + 1} de 5.`,
+            "aria-label": `${description} ${pieceStatus}.`,
           }
         : {})}
       style={{
@@ -70,65 +119,41 @@ export default function LessonRelief({
         )
       ) : null}
 
-      {compact ? (
-        <span className="lesson-relief__image-field" aria-hidden="true">
-          <img
-            className="lesson-relief__image lesson-relief__image--base"
-            src={image}
-            srcSet={srcSet}
-            sizes={sizes}
-            alt=""
-            loading={priority ? "eager" : "lazy"}
-            fetchpriority={priority ? "high" : "auto"}
-            decoding="async"
-            onLoad={() => setLoadState("ready")}
-            onError={() => setLoadState("failed")}
+      <img
+        className="lesson-relief__preload"
+        src={image}
+        srcSet={srcSet}
+        sizes={sizes}
+        alt=""
+        loading={priority ? "eager" : "lazy"}
+        fetchpriority={priority ? "high" : "auto"}
+        decoding="async"
+        onLoad={() => setLoadState("ready")}
+        onError={() => setLoadState("failed")}
+      />
+
+      {loadState === "ready" ? (
+        <ReliefAssembly lesson={lesson} image={image} filled={pieceCount} />
+      ) : null}
+
+      {allowWebGL && loadState === "ready" ? (
+        <Suspense fallback={null}>
+          <MaterialWorldCanvas
+            lesson={lesson}
+            image={image}
+            filled={pieceCount}
+            total={total}
+            onReady={markWebGLReady}
+            onFailure={markWebGLFailed}
           />
-          <img
-            className="lesson-relief__image lesson-relief__image--revealed"
-            src={image}
-            srcSet={srcSet}
-            sizes={sizes}
-            alt=""
-            loading={priority ? "eager" : "lazy"}
-            fetchpriority="auto"
-            decoding="async"
-          />
-          <span className="lesson-relief__kiln-line" />
-          <span className="lesson-relief__edge-light" />
-        </span>
-      ) : (
-        <div className="lesson-relief__image-field" aria-hidden="true">
-          <img
-            className="lesson-relief__image lesson-relief__image--base"
-            src={image}
-            srcSet={srcSet}
-            sizes={sizes}
-            alt=""
-            loading={priority ? "eager" : "lazy"}
-            fetchpriority={priority ? "high" : "auto"}
-            decoding="async"
-            onLoad={() => setLoadState("ready")}
-            onError={() => setLoadState("failed")}
-          />
-          <img
-            className="lesson-relief__image lesson-relief__image--revealed"
-            src={image}
-            srcSet={srcSet}
-            sizes={sizes}
-            alt=""
-            loading={priority ? "eager" : "lazy"}
-            fetchpriority="auto"
-            decoding="async"
-          />
-          <span className="lesson-relief__kiln-line" />
-          <span className="lesson-relief__edge-light" />
-        </div>
-      )}
+        </Suspense>
+      ) : null}
+
+      <span className="lesson-relief__edge-light" aria-hidden="true" />
 
       {!compact ? (
         <figcaption className="sr-only">
-          {visual.description} Etapa {safeStage + 1} de 5.
+          {description} {pieceStatus}.
         </figcaption>
       ) : null}
     </Root>

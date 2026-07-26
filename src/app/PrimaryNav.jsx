@@ -1,11 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Icon from "../components/Icon.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
 export const PRIMARY_DESTINATIONS = [
-  { to: "/hoy", label: "Hoy", icon: "spark" },
-  { to: "/mosaico", label: "Mosaico", icon: "mosaic" },
-  { to: "/sabado", label: "Sábado", icon: "sunrise" },
+  { to: "/hoy", labelKey: "nav.today", icon: "spark" },
+  { to: "/mosaico", labelKey: "nav.mosaic", icon: "mosaic" },
+  { to: "/sabado", labelKey: "nav.sabbath", icon: "sunrise" },
 ];
 
 /**
@@ -17,12 +18,13 @@ export const PRIMARY_DESTINATIONS = [
 export default function PrimaryNav({
   variant = "dock",
   destinations = PRIMARY_DESTINATIONS,
-  ariaLabel = "Destinos principales",
+  ariaLabel,
 }) {
+  const { t } = useI18n();
   return (
     <nav
       className={`mcv-primary-nav mcv-primary-nav--${variant}`}
-      aria-label={ariaLabel}
+      aria-label={ariaLabel || t("nav.primary")}
     >
       <ul className="mcv-primary-nav__list">
         {destinations.map((destination) => (
@@ -42,7 +44,11 @@ export default function PrimaryNav({
                     size={variant === "dock" ? 22 : 20}
                     weight={isActive ? "fill" : "regular"}
                   />
-                  <span>{destination.label}</span>
+                  <span>
+                    {destination.labelKey
+                      ? t(destination.labelKey)
+                      : destination.label}
+                  </span>
                 </>
               )}
             </NavLink>

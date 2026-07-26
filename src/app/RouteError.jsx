@@ -5,20 +5,21 @@ import {
   useRouteError,
 } from "react-router-dom";
 import Icon from "../components/Icon.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
 
-function errorCopy(error) {
+function errorCopy(error, t) {
   if (isRouteErrorResponse(error) && error.status === 404) {
     return {
-      eyebrow: "Ruta no encontrada",
-      title: "Esta pieza no pertenece al mosaico.",
-      body: "Puedes volver a Hoy sin perder lo que ya guardaste.",
+      eyebrow: t("error.route404.eyebrow"),
+      title: t("error.route404.title"),
+      body: t("error.route404.body"),
     };
   }
 
   return {
-    eyebrow: "Algo no encajó",
-    title: "La superficie no pudo abrirse.",
-    body: "Tus respuestas siguen guardadas en este dispositivo. Intenta cargarla de nuevo o vuelve a Hoy.",
+    eyebrow: t("error.route.eyebrow"),
+    title: t("error.route.title"),
+    body: t("error.route.body"),
   };
 }
 
@@ -26,8 +27,9 @@ function errorCopy(error) {
  * `errorElement` for the data router. It never clears local data.
  */
 export default function RouteError() {
+  const { t } = useI18n();
   const error = useRouteError();
-  const copy = errorCopy(error);
+  const copy = errorCopy(error, t);
 
   return (
     <main className="mcv-route-error" id="contenido-principal">
@@ -40,16 +42,16 @@ export default function RouteError() {
       <div className="mcv-route-error__actions">
         <button type="button" onClick={() => window.location.reload()}>
           <Icon name="refresh" size={18} />
-          Volver a cargar
+          {t("error.reload")}
         </button>
         <Link to="/hoy">
           <Icon name="arrowLeft" size={18} />
-          Ir a Hoy
+          {t("error.goToday")}
         </Link>
       </div>
       {import.meta.env.DEV && error instanceof Error ? (
         <details className="mcv-route-error__details">
-          <summary>Detalle técnico</summary>
+          <summary>{t("error.technical")}</summary>
           <pre>{error.stack || error.message}</pre>
         </details>
       ) : null}

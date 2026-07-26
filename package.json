@@ -27,9 +27,11 @@
     "canvas-confetti": "^1.9.3",
     "framer-motion": "^11.11.17",
     "html-to-image": "^1.11.11",
+    "matter-js": "^0.20.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.18.1"
+    "react-router-dom": "^7.18.1",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@svgdotjs/svg.js": "^3.2.7",

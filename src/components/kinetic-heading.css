@@ -1,0 +1,25 @@
+.kinetic-heading {
+  text-wrap: balance;
+}
+
+.kinetic-heading__clip {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.kinetic-heading__word {
+  display: inline-block;
+  transform-origin: 20% 100%;
+  will-change: transform, filter;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kinetic-heading__word {
+    will-change: auto;
+  }
+}
+
+:root[data-motion="reduce"] .kinetic-heading__word {
+  will-change: auto;
+}

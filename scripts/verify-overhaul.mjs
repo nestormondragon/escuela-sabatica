@@ -30,10 +30,16 @@ if (Number.isNaN(QA_NOW_MS)) {
   throw new Error(`QA_NOW is not a valid date: ${QA_NOW_ISO}`);
 }
 
+const configuredEngines = new Set(
+  (process.env.QA_ENGINES || "chromium,webkit")
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean)
+);
 const browserFactories = [
   ["chromium", chromium],
   ["webkit", webkit],
-];
+].filter(([engineName]) => configuredEngines.has(engineName));
 
 const viewports = [
   { name: "mobile", width: 390, height: 844 },
@@ -95,6 +101,64 @@ const routes = [
     path: "/ajustes",
     heading: /Ajustes y privacidad/i,
     title: /^Ajustes y privacidad · Escuela Sabática$/,
+  },
+];
+
+const englishSmokeRoutes = [
+  {
+    name: "today",
+    path: "/hoy",
+    heading: /Everything that enters leaves a mark/i,
+    title: /^Today · Sabbath School$/,
+  },
+  {
+    name: "mosaic",
+    path: "/mosaico",
+    heading: /Your Corinth is taking shape/i,
+    title: /^Quarter mosaic · Sabbath School$/,
+  },
+  {
+    name: "sabbath",
+    path: "/sabado",
+    heading: /The folio is waiting for your first piece/i,
+    title: /^Sabbath folio · Sabbath School$/,
+  },
+  {
+    name: "lessons",
+    path: "/lecciones",
+    heading: /The open letters/i,
+    title: /^Quarter lessons · Sabbath School$/,
+  },
+  {
+    name: "lesson-l4",
+    path: "/leccion/l4",
+    heading: /Your Body, His Temple/i,
+    title: /^Lesson journey · Your Body, His Temple · Sabbath School$/,
+  },
+  {
+    name: "teacher-l4",
+    path: "/maestro/l4",
+    heading: /Your Body, His Temple/i,
+    title: /^Teacher guide · Your Body, His Temple · Sabbath School$/,
+  },
+  {
+    name: "presentation-l4",
+    path: "/presentar/l4",
+    heading: /First choose what to show/i,
+    title: /^Presentation view · Your Body, His Temple · Sabbath School$/,
+  },
+  {
+    name: "episode-l4",
+    path: "/leccion/l4/episodio/influencia?profundidad=minute",
+    heading: /Everything that enters leaves a mark/i,
+    title:
+      /^Study episode · Your Body, His Temple · Sabbath School$/,
+  },
+  {
+    name: "settings",
+    path: "/ajustes",
+    heading: /Settings and privacy/i,
+    title: /^Settings and privacy · Sabbath School$/,
   },
 ];
 
@@ -217,7 +281,11 @@ async function inspectLandmarks(page, expectedHeading, primaryDestination) {
   const visibleHeadings = page.locator("main h1:visible");
   const headingCount = await visibleHeadings.count();
   assert(headingCount >= 1, "no visible h1 in the main landmark");
-  const heading = (await visibleHeadings.first().innerText()).trim();
+  const firstHeading = visibleHeadings.first();
+  const heading = (
+    (await firstHeading.getAttribute("aria-label")) ||
+    (await firstHeading.innerText())
+  ).trim();
   assert(
     expectedHeading.test(heading),
     `unexpected route heading ${JSON.stringify(heading)}`
@@ -551,7 +619,7 @@ async function verifyDirectRouteReload(browser, engineName) {
 }
 
 async function verifyVisualAssetSystem(browser, engineName) {
-  const checkName = `${engineName}/local-relief-asset-system`;
+  const checkName = `${engineName}/material-world-asset-system`;
   const context = await createQaContext(browser, {
     viewport: { width: 390, height: 844 },
     colorScheme: "dark",
@@ -576,12 +644,6 @@ async function verifyVisualAssetSystem(browser, engineName) {
     for (let index = 0; index < 13; index += 1) {
       const relief = reliefs.nth(index);
       await relief.scrollIntoViewIfNeeded();
-      await relief.evaluate((element) => {
-        element.querySelector("img")?.scrollIntoView({
-          block: "center",
-          inline: "nearest",
-        });
-      });
       await relief.waitFor({ state: "visible" });
       await page.waitForFunction(
         (position) =>
@@ -593,11 +655,18 @@ async function verifyVisualAssetSystem(browser, engineName) {
 
     const mosaicAssets = await reliefs.evaluateAll((elements) =>
       elements.map((element) => {
-        const image = element.querySelector(".lesson-relief__image--base");
+        const image = element.querySelector(".lesson-relief__preload");
         const source = image?.currentSrc || image?.src || "";
         const url = source ? new URL(source, location.href) : null;
+        const pieces = [
+          ...element.querySelectorAll(".relief-assembly__piece[data-piece]"),
+        ];
         return {
           state: element.dataset.loadState,
+          renderer: element.dataset.renderer,
+          pieceCount: Number(element.dataset.pieces),
+          regionCount: pieces.length,
+          regionIds: pieces.map((piece) => piece.dataset.piece),
           source,
           sameOrigin: url?.origin === location.origin,
           naturalWidth: image?.naturalWidth || 0,
@@ -613,6 +682,11 @@ async function verifyVisualAssetSystem(browser, engineName) {
       mosaicAssets.every(
         (asset) =>
           asset.state === "ready" &&
+          asset.renderer === "dom" &&
+          asset.pieceCount >= 0 &&
+          asset.pieceCount <= 8 &&
+          asset.regionCount === 8 &&
+          new Set(asset.regionIds).size === 8 &&
           asset.sameOrigin &&
           asset.naturalWidth > 0 &&
           asset.naturalHeight > 0 &&
@@ -629,16 +703,26 @@ async function verifyVisualAssetSystem(browser, engineName) {
 
     await page.goto(relativeUrl("/hoy"), { waitUntil: "domcontentloaded" });
     await waitForRoute(page);
-    const activeRelief = page.locator(
-      ".world-stage .lesson-relief[data-load-state='ready']"
-    );
+    const activeRelief = page.locator(".world-stage .lesson-relief");
     await activeRelief.first().waitFor({ state: "visible" });
+    await page.waitForFunction(
+      () =>
+        document.querySelector(".world-stage .lesson-relief")?.dataset
+          .loadState === "ready"
+    );
     const activeAsset = await activeRelief.first().evaluate((element) => {
-      const image = element.querySelector(".lesson-relief__image--base");
+      const image = element.querySelector(".lesson-relief__preload");
       const source = image?.currentSrc || image?.src || "";
       const url = source ? new URL(source, location.href) : null;
+      const pieces = [
+        ...element.querySelectorAll(".relief-assembly__piece[data-piece]"),
+      ];
       return {
         stage: element.dataset.stage,
+        renderer: element.dataset.renderer,
+        pieceCount: Number(element.dataset.pieces),
+        regionCount: pieces.length,
+        regionIds: pieces.map((piece) => piece.dataset.piece),
         source,
         sameOrigin: url?.origin === location.origin,
         naturalWidth: image?.naturalWidth || 0,
@@ -648,7 +732,9 @@ async function verifyVisualAssetSystem(browser, engineName) {
     assert(
       activeAsset.sameOrigin &&
         activeAsset.naturalWidth > 0 &&
-        activeAsset.naturalHeight > 0,
+        activeAsset.naturalHeight > 0 &&
+        activeAsset.regionCount === 8 &&
+        new Set(activeAsset.regionIds).size === 8,
       `active world relief failed local production loading: ${JSON.stringify(
         activeAsset
       )}`
@@ -666,6 +752,7 @@ async function verifyVisualAssetSystem(browser, engineName) {
       mosaicReliefCount: mosaicAssets.length,
       uniqueSources,
       allSourcesLocal: true,
+      artifactRegionsPerRelief: 8,
       activeAsset,
       diagnostics,
     });
@@ -688,6 +775,14 @@ async function longRunningAnimations(page) {
             typeof timing.duration === "number" ? timing.duration : null,
           iterations:
             timing.iterations === Infinity ? "Infinity" : timing.iterations,
+          materialWorldOwner:
+            animation.effect?.target instanceof Element
+              ? Boolean(
+                  animation.effect.target.closest(
+                    ".lesson-relief[data-renderer='webgl']"
+                  )
+                )
+              : false,
           target:
             animation.effect?.target instanceof Element
               ? {
@@ -745,26 +840,29 @@ async function inspectReducedMaterialRoute(page, routePath, expectedRootMode) {
         rootMode: document.documentElement.dataset.motion,
         reliefs: reliefs.map((relief) => ({
           stage: relief.dataset.stage,
+          pieceCount: Number(relief.dataset.pieces),
+          renderer: relief.dataset.renderer,
           loadState: relief.dataset.loadState,
-          clipPath: getComputedStyle(
-            relief.querySelector(".lesson-relief__image--revealed")
-          ).clipPath,
-          reveal: transitionSample(
-            relief.querySelector(".lesson-relief__image--revealed")
+          canvas: transitionSample(
+            relief.querySelector(".material-world-canvas")
           ),
-          imageField: transitionSample(
-            relief.querySelector(".lesson-relief__image-field")
-          ),
-          kilnLine: transitionSample(
-            relief.querySelector(".lesson-relief__kiln-line")
-          ),
+          pieces: [
+            ...relief.querySelectorAll(
+              ".relief-assembly__piece[data-piece]"
+            ),
+          ].map((piece) => ({
+            id: piece.dataset.piece,
+            set: piece.dataset.set,
+            active: piece.dataset.active,
+            transform: getComputedStyle(piece).transform,
+            opacity: getComputedStyle(piece).opacity,
+            transition: transitionSample(piece),
+          })),
         })),
-        tesserae: [...document.querySelectorAll(".world-stage__tesserae i")].map(
-          (tile) => ({
-            set: tile.dataset.set,
-            transition: transitionSample(tile),
-          })
-        ),
+        worldCanvasCount: document.querySelectorAll(
+          ".material-world-canvas[data-world-canvas]"
+        ).length,
+        diagnostics: window.__CORINTH_WORLD_DIAGNOSTICS__ || null,
       };
     });
 
@@ -782,34 +880,46 @@ async function inspectReducedMaterialRoute(page, routePath, expectedRootMode) {
     immediate.reliefs.every(
       (relief) =>
         relief.loadState === "ready" &&
-        relief.reveal.durationMs <= 1 &&
-        relief.reveal.delayMs <= 1 &&
-        relief.imageField.durationMs <= 1 &&
-        relief.imageField.delayMs <= 1 &&
-        relief.kilnLine.durationMs <= 1 &&
-        relief.kilnLine.delayMs <= 1
+        relief.pieces.length === 8 &&
+        new Set(relief.pieces.map((piece) => piece.id)).size === 8 &&
+        relief.pieces.every(
+          (piece) =>
+            piece.transition.durationMs <= 1 &&
+            piece.transition.delayMs <= 1
+        ) &&
+        (!relief.canvas ||
+          (relief.canvas.durationMs <= 1 && relief.canvas.delayMs <= 1))
     ),
-    `${routePath} did not immediately settle all relief transitions: ${JSON.stringify(
+    `${routePath} did not immediately settle all material-piece transitions: ${JSON.stringify(
       immediate.reliefs
     )}`
   );
   assert(
-    immediate.tesserae.every(
-      (tile) =>
-        tile.transition.durationMs <= 1 && tile.transition.delayMs <= 1
-    ),
-    `${routePath} did not immediately settle world tesserae: ${JSON.stringify(
-      immediate.tesserae
-    )}`
-  );
-  assert(
     JSON.stringify(
-      immediate.reliefs.map(({ stage, clipPath }) => ({ stage, clipPath }))
+      immediate.reliefs.map(({ pieceCount, pieces }) => ({
+        pieceCount,
+        pieces: pieces.map(({ id, set, active, transform, opacity }) => ({
+          id,
+          set,
+          active,
+          transform,
+          opacity,
+        })),
+      }))
     ) ===
       JSON.stringify(
-        later.reliefs.map(({ stage, clipPath }) => ({ stage, clipPath }))
+        later.reliefs.map(({ pieceCount, pieces }) => ({
+          pieceCount,
+          pieces: pieces.map(({ id, set, active, transform, opacity }) => ({
+            id,
+            set,
+            active,
+            transform,
+            opacity,
+          })),
+        }))
       ),
-    `${routePath} relief state changed after reduction: ${JSON.stringify({
+    `${routePath} material-piece state changed after reduction: ${JSON.stringify({
       immediate: immediate.reliefs,
       later: later.reliefs,
     })}`
@@ -818,6 +928,15 @@ async function inspectReducedMaterialRoute(page, routePath, expectedRootMode) {
     animations.length === 0,
     `${routePath} retains long-running motion: ${JSON.stringify(animations)}`
   );
+  if (later.diagnostics) {
+    assert(
+      later.diagnostics.reducedMotion === true &&
+        later.diagnostics.active === false,
+      `${routePath} material-world diagnostics are active under reduced motion: ${JSON.stringify(
+        later.diagnostics
+      )}`
+    );
+  }
 
   return { routePath, immediate, later, animations };
 }
@@ -918,7 +1037,7 @@ async function verifyReducedMotion(browser, engineName) {
 }
 
 async function verifyAmbientMotionBudget(browser, engineName) {
-  const checkName = `${engineName}/ambient-motion-budget`;
+  const checkName = `${engineName}/single-material-world-owner`;
   const context = await createQaContext(browser, {
     viewport: { width: 390, height: 844 },
     colorScheme: "dark",
@@ -932,14 +1051,78 @@ async function verifyAmbientMotionBudget(browser, engineName) {
   try {
     await page.goto(relativeUrl("/hoy"), { waitUntil: "domcontentloaded" });
     await waitForRoute(page);
+    await page.waitForFunction(
+      () =>
+        document.querySelector(
+          ".world-stage .lesson-relief[data-renderer='webgl'] .material-world-canvas[data-world-canvas]"
+        ) &&
+        window.__CORINTH_WORLD_DIAGNOSTICS__?.renderer === "three" &&
+        window.__CORINTH_WORLD_DIAGNOSTICS__?.drawCalls > 0 &&
+        window.__CORINTH_WORLD_DIAGNOSTICS__?.triangles > 0 &&
+        Number.isFinite(window.__CORINTH_WORLD_DIAGNOSTICS__?.fps) &&
+        window.__CORINTH_WORLD_DIAGNOSTICS__.fps > 0,
+      null,
+      { timeout: NAVIGATION_TIMEOUT }
+    );
+    const materialWorld = await page.evaluate(() => {
+      const canvases = [
+        ...document.querySelectorAll(
+          ".material-world-canvas[data-world-canvas]"
+        ),
+      ];
+      const owners = [
+        ...document.querySelectorAll(
+          ".lesson-relief[data-renderer='webgl']"
+        ),
+      ].filter((element) => {
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        return (
+          rect.width > 0 &&
+          rect.height > 0 &&
+          style.display !== "none" &&
+          style.visibility !== "hidden"
+        );
+      });
+      return {
+        canvasCount: canvases.length,
+        visibleOwnerCount: owners.length,
+        canvasLessons: canvases.map((canvas) => canvas.dataset.worldCanvas),
+        diagnostics: window.__CORINTH_WORLD_DIAGNOSTICS__ || null,
+      };
+    });
     const animations = await longRunningAnimations(page);
-    const ambientLoops = animations.filter(
+    const ambientCssLoops = animations.filter(
       (animation) => animation.iterations === "Infinity"
     );
     assert(
-      ambientLoops.length === 0,
-      `the loaded material world retains an ambient loop: ${JSON.stringify(
-        ambientLoops
+      materialWorld.canvasCount === 1 &&
+        materialWorld.visibleOwnerCount === 1,
+      `expected exactly one active material-world owner: ${JSON.stringify(
+        materialWorld
+      )}`
+    );
+    assert(
+      materialWorld.diagnostics?.active === true &&
+        materialWorld.diagnostics?.visible === true &&
+        materialWorld.diagnostics?.tabVisible === true &&
+        materialWorld.diagnostics?.reducedMotion === false &&
+        materialWorld.diagnostics?.renderer === "three" &&
+        materialWorld.diagnostics?.lessonId === "l4" &&
+        materialWorld.diagnostics?.drawCalls > 0 &&
+        materialWorld.diagnostics?.triangles > 0 &&
+        materialWorld.diagnostics?.fps > 0,
+      `material-world diagnostics are incomplete or inactive: ${JSON.stringify(
+        materialWorld.diagnostics
+      )}`
+    );
+    const foreignLoops = ambientCssLoops.filter(
+      (animation) => !animation.materialWorldOwner
+    );
+    assert(
+      foreignLoops.length === 0,
+      `a second ambient-motion owner is running outside the active world: ${JSON.stringify(
+        foreignLoops
       )}`
     );
     assert(
@@ -947,7 +1130,11 @@ async function verifyAmbientMotionBudget(browser, engineName) {
         diagnostics.consoleErrors.length === 0,
       `runtime errors while measuring motion: ${JSON.stringify(diagnostics)}`
     );
-    recordPass(checkName, { ambientLoops, diagnostics });
+    recordPass(checkName, {
+      materialWorld,
+      ambientCssLoops,
+      diagnostics,
+    });
   } catch (error) {
     recordFailure(checkName, error, { diagnostics });
   } finally {
@@ -1032,30 +1219,67 @@ async function verifyDayTheme(browser, engineName) {
     await page.waitForFunction(
       () => document.documentElement.dataset.mode === "day"
     );
-    await page.goto(relativeUrl("/hoy"), { waitUntil: "domcontentloaded" });
-    await waitForRoute(page);
-
-    const day = await inspectPrimaryTokenContrast(page);
-
-    assert(day.mode === "day", "day theme did not survive navigation");
-    assert(
-      day.textContrast >= 4.5,
-      `day body contrast is ${day.textContrast.toFixed(2)}:1`
-    );
-    assert(
-      day.actionContrast >= 4.5,
-      `day action contrast is ${day.actionContrast.toFixed(2)}:1`
-    );
-    const overflow = await inspectHorizontalOverflow(page);
-    assert(
-      overflow.overflow <= TOLERANCE_PX,
-      `day theme has ${overflow.overflow}px horizontal overflow`
-    );
+    const daySamples = [];
+    for (const routePath of [
+      "/hoy",
+      "/mosaico",
+      "/sabado",
+      "/lecciones",
+      "/leccion/l4",
+      "/ajustes",
+    ]) {
+      await page.goto(relativeUrl(routePath), {
+        waitUntil: "domcontentloaded",
+      });
+      await waitForRoute(page);
+      const contrast = await inspectPrimaryTokenContrast(page);
+      const overflow = await inspectHorizontalOverflow(page);
+      const rootPresentation = await page.evaluate(() => ({
+        mode: document.documentElement.dataset.mode,
+        colorScheme: document.documentElement.style.colorScheme,
+        bodyBackground: getComputedStyle(document.body).backgroundColor,
+        mainColor: getComputedStyle(
+          document.querySelector("main") || document.body
+        ).color,
+      }));
+      assert(
+        contrast.mode === "day" &&
+          rootPresentation.mode === "day" &&
+          rootPresentation.colorScheme === "light",
+        `${routePath} did not retain the day presentation: ${JSON.stringify(
+          rootPresentation
+        )}`
+      );
+      assert(
+        contrast.textContrast >= 4.5,
+        `${routePath} day body contrast is ${contrast.textContrast.toFixed(
+          2
+        )}:1`
+      );
+      assert(
+        contrast.actionContrast >= 4.5,
+        `${routePath} day action contrast is ${contrast.actionContrast.toFixed(
+          2
+        )}:1`
+      );
+      assert(
+        overflow.overflow <= TOLERANCE_PX,
+        `${routePath} day theme has ${overflow.overflow}px horizontal overflow`
+      );
+      daySamples.push({
+        routePath,
+        contrast,
+        overflow,
+        rootPresentation,
+      });
+    }
     assert(
       diagnostics.pageErrors.length === 0 &&
         diagnostics.consoleErrors.length === 0,
       `runtime errors in day theme: ${JSON.stringify(diagnostics)}`
     );
+    await page.goto(relativeUrl("/hoy"), { waitUntil: "domcontentloaded" });
+    await waitForRoute(page);
     const screenshot = path.join(OUTPUT_DIR, engineName, "day-theme-today.png");
     await fs.mkdir(path.dirname(screenshot), { recursive: true });
     await page.screenshot({
@@ -1063,7 +1287,252 @@ async function verifyDayTheme(browser, engineName) {
       fullPage: true,
       animations: "disabled",
     });
-    recordPass(checkName, { night, day, overflow, diagnostics, screenshot });
+    recordPass(checkName, {
+      night,
+      daySamples,
+      diagnostics,
+      screenshot,
+    });
+  } catch (error) {
+    recordFailure(checkName, error, { diagnostics });
+  } finally {
+    await context.close();
+  }
+}
+
+async function verifyTextSizePersistence(browser, engineName) {
+  const checkName = `${engineName}/text-size-persistence`;
+  const context = await createQaContext(browser, {
+    viewport: { width: 390, height: 844 },
+    colorScheme: "dark",
+  });
+  const page = await context.newPage();
+  const diagnostics = createPageDiagnostics(page);
+  page.setDefaultTimeout(ACTION_TIMEOUT);
+  page.setDefaultNavigationTimeout(NAVIGATION_TIMEOUT);
+
+  try {
+    await page.goto(relativeUrl("/ajustes"), {
+      waitUntil: "domcontentloaded",
+    });
+    await waitForRoute(page);
+    const initial = await page.evaluate(() => ({
+      value: document.documentElement.dataset.textSize,
+      rootFontSize: Number.parseFloat(
+        getComputedStyle(document.documentElement).fontSize
+      ),
+    }));
+    assert(initial.value === "normal", `initial text size is ${initial.value}`);
+
+    const sizeGroup = page.getByRole("group", {
+      name: "Tamaño del texto",
+      exact: true,
+    });
+    await sizeGroup
+      .getByRole("button", { name: "Muy grande", exact: true })
+      .click();
+    await page.waitForFunction(() => {
+      const raw = localStorage.getItem("escuela:journey:2026-Q3");
+      if (!raw) return false;
+      const state = JSON.parse(raw);
+      return (
+        document.documentElement.dataset.textSize === "x-large" &&
+        state.settings?.textSize === "x-large"
+      );
+    });
+    const enlarged = await page.evaluate(() => ({
+      value: document.documentElement.dataset.textSize,
+      rootFontSize: Number.parseFloat(
+        getComputedStyle(document.documentElement).fontSize
+      ),
+    }));
+    assert(
+      enlarged.rootFontSize > initial.rootFontSize,
+      `x-large text did not increase the root font size: ${JSON.stringify({
+        initial,
+        enlarged,
+      })}`
+    );
+
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await waitForRoute(page);
+    assert(
+      (await page.evaluate(
+        () => document.documentElement.dataset.textSize
+      )) === "x-large",
+      "x-large text size did not survive reload"
+    );
+    assert(
+      await page
+        .getByRole("group", { name: "Tamaño del texto", exact: true })
+        .getByRole("button", { name: "Muy grande", exact: true })
+        .getAttribute("aria-pressed") === "true",
+      "settings did not expose the persisted x-large choice"
+    );
+
+    const overflowSamples = [];
+    for (const routePath of ["/ajustes", "/hoy", "/mosaico", "/leccion/l4"]) {
+      await page.goto(relativeUrl(routePath), {
+        waitUntil: "domcontentloaded",
+      });
+      await waitForRoute(page);
+      const overflow = await inspectHorizontalOverflow(page);
+      assert(
+        overflow.overflow <= TOLERANCE_PX,
+        `${routePath} overflows by ${overflow.overflow}px at x-large text`
+      );
+      overflowSamples.push({ routePath, overflow });
+    }
+    assert(
+      diagnostics.pageErrors.length === 0 &&
+        diagnostics.consoleErrors.length === 0,
+      `runtime errors while changing text size: ${JSON.stringify(diagnostics)}`
+    );
+    recordPass(checkName, {
+      initial,
+      enlarged,
+      overflowSamples,
+      diagnostics,
+    });
+  } catch (error) {
+    recordFailure(checkName, error, { diagnostics });
+  } finally {
+    await context.close();
+  }
+}
+
+async function verifyEnglishLocale(browser, engineName) {
+  const checkName = `${engineName}/english-shell-and-route-smoke`;
+  const context = await createQaContext(browser, {
+    viewport: { width: 390, height: 844 },
+    colorScheme: "dark",
+  });
+  const page = await context.newPage();
+  const diagnostics = createPageDiagnostics(page);
+  page.setDefaultTimeout(ACTION_TIMEOUT);
+  page.setDefaultNavigationTimeout(NAVIGATION_TIMEOUT);
+
+  try {
+    await page.goto(relativeUrl("/ajustes"), {
+      waitUntil: "domcontentloaded",
+    });
+    await waitForRoute(page);
+    await page
+      .getByRole("group", { name: "Idioma", exact: true })
+      .getByRole("button", { name: "English", exact: true })
+      .click();
+    await page.waitForFunction(() => {
+      const raw = localStorage.getItem("escuela:journey:2026-Q3");
+      if (!raw) return false;
+      const state = JSON.parse(raw);
+      return (
+        document.documentElement.lang === "en" &&
+        state.settings?.locale === "en"
+      );
+    });
+    await page
+      .getByRole("heading", { name: "Settings and privacy", exact: true })
+      .waitFor({ state: "visible" });
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await waitForRoute(page);
+    assert(
+      (await page.evaluate(() => document.documentElement.lang)) === "en",
+      "English locale did not survive reload"
+    );
+
+    const shell = await page.evaluate(() => ({
+      lang: document.documentElement.lang,
+      skipLink: document.querySelector(".mcv-skip-link")?.textContent?.trim(),
+      contextLabel: document
+        .querySelector(".mcv-context-rail")
+        ?.getAttribute("aria-label"),
+      primaryNavLabel: document
+        .querySelector(".mcv-primary-nav")
+        ?.getAttribute("aria-label"),
+      settingsLabel: document
+        .querySelector('[aria-label="Open settings"]')
+        ?.getAttribute("aria-label"),
+    }));
+    assert(
+      shell.lang === "en" &&
+        shell.skipLink === "Skip to content" &&
+        shell.contextLabel === "Study context" &&
+        shell.primaryNavLabel === "Primary destinations" &&
+        shell.settingsLabel === "Open settings",
+      `the app shell did not switch completely to English: ${JSON.stringify(
+        shell
+      )}`
+    );
+
+    const routeSamples = [];
+    for (const route of englishSmokeRoutes) {
+      await page.goto(relativeUrl(route.path), {
+        waitUntil: "domcontentloaded",
+      });
+      await waitForRoute(page);
+      const routeHeading = page.locator("main h1:visible").first();
+      const heading = (
+        (await routeHeading.getAttribute("aria-label")) ||
+        (await routeHeading.innerText())
+      ).trim();
+      const title = await page.title();
+      const overflow = await inspectHorizontalOverflow(page);
+      const unresolvedTokens = await inspectUnresolvedTemplateTokens(page);
+      assert(
+        (await page.evaluate(() => document.documentElement.lang)) === "en",
+        `${route.path} reset the document language`
+      );
+      assert(
+        route.heading.test(heading),
+        `${route.path} has unexpected English heading ${JSON.stringify(
+          heading
+        )}`
+      );
+      assert(
+        route.title.test(title),
+        `${route.path} has unexpected English title ${JSON.stringify(title)}`
+      );
+      assert(
+        overflow.overflow <= TOLERANCE_PX,
+        `${route.path} has ${overflow.overflow}px horizontal overflow in English`
+      );
+      assert(
+        unresolvedTokens.length === 0,
+        `${route.path} exposes unresolved English tokens: ${unresolvedTokens.join(
+          ", "
+        )}`
+      );
+      await page
+        .getByRole("link", { name: "Today", exact: true })
+        .first()
+        .waitFor({ state: "visible" });
+      await page
+        .getByRole("link", { name: "Mosaic", exact: true })
+        .first()
+        .waitFor({ state: "visible" });
+      await page
+        .getByRole("link", { name: "Sabbath", exact: true })
+        .first()
+        .waitFor({ state: "visible" });
+      routeSamples.push({
+        name: route.name,
+        path: route.path,
+        heading,
+        title,
+        overflow,
+      });
+    }
+    assert(
+      diagnostics.pageErrors.length === 0 &&
+        diagnostics.consoleErrors.length === 0 &&
+        diagnostics.requestFailures.length === 0,
+      `runtime errors during English smoke: ${JSON.stringify(diagnostics)}`
+    );
+    recordPass(checkName, {
+      shell,
+      routeSamples,
+      diagnostics,
+    });
   } catch (error) {
     recordFailure(checkName, error, { diagnostics });
   } finally {
@@ -1146,6 +1615,141 @@ async function installJourneySeed(context, state, legacyEntries = {}) {
   );
 }
 
+async function completeRestorationRitual(page, expectedType) {
+  const ritual = page.locator(".restoration-ritual");
+  await ritual.waitFor({ state: "visible" });
+  if (expectedType) {
+    assert(
+      (await ritual.getAttribute("data-type")) === expectedType,
+      `expected ${expectedType} ritual, found ${await ritual.getAttribute(
+        "data-type"
+      )}`
+    );
+  }
+  const evidence = await ritual.evaluate((element) => ({
+    type: element.dataset.type,
+    title: element.querySelector("h2")?.textContent?.trim(),
+    hasInteractiveStage: Boolean(
+      element.querySelector(
+        "canvas, [draggable], button[aria-label], [role='slider'], .ritual-immediate"
+      )
+    ),
+    hasDirectCompletion: Boolean(element.querySelector(".ritual-direct")),
+  }));
+  assert(
+    evidence.title &&
+      evidence.hasInteractiveStage &&
+      evidence.hasDirectCompletion,
+    `ritual is missing its interaction or accessible completion path: ${JSON.stringify(
+      evidence
+    )}`
+  );
+  await ritual.locator(".ritual-direct").click();
+  await ritual.waitFor({ state: "detached", timeout: ACTION_TIMEOUT });
+  return evidence;
+}
+
+async function verifyArtifactPieceProgress(browser, engineName) {
+  const checkName = `${engineName}/eight-region-artifact-progress`;
+  const slots = {
+    influencia: "Las pantallas de la madrugada",
+    tolerancia: "Dejarlo pasar",
+    restauracion: "Escuchar antes de responder",
+    pleito: "Buscar tener la última palabra",
+    pertenencia: null,
+    huida: null,
+    precio: null,
+    paso: null,
+  };
+  const state = makeSeededJourney((journey) => {
+    journey.lessons.l4.status = "active";
+    journey.lessons.l4.legacyKit = makeLegacyKit({
+      kitName: "Mi Templo",
+      slots,
+    });
+    journey.mosaic.panels.l4.state = "in-progress";
+  });
+  const context = await createQaContext(browser, {
+    viewport: { width: 390, height: 844 },
+    colorScheme: "dark",
+  });
+  await installJourneySeed(context, state);
+  const page = await context.newPage();
+  const diagnostics = createPageDiagnostics(page);
+  page.setDefaultTimeout(ACTION_TIMEOUT);
+  page.setDefaultNavigationTimeout(NAVIGATION_TIMEOUT);
+
+  try {
+    await page.goto(relativeUrl("/hoy"), { waitUntil: "domcontentloaded" });
+    await waitForRoute(page);
+    const relief = page.locator(".world-stage .lesson-relief").first();
+    await relief.waitFor({ state: "visible" });
+    await page.waitForFunction(
+      () =>
+        document.querySelector(".world-stage .lesson-relief")?.dataset
+          .loadState === "ready"
+    );
+    const artifact = await relief.evaluate((element) => {
+      const pieces = [
+        ...element.querySelectorAll(".relief-assembly__piece[data-piece]"),
+      ];
+      return {
+        pieceCount: Number(element.dataset.pieces),
+        regionCount: pieces.length,
+        regionIds: pieces.map((piece) => piece.dataset.piece),
+        setRegions: pieces
+          .filter((piece) => piece.dataset.set === "true")
+          .map((piece) => piece.dataset.piece),
+        unsetRegions: pieces
+          .filter((piece) => piece.dataset.set !== "true")
+          .map((piece) => piece.dataset.piece),
+        progression: element.querySelector(".relief-assembly")?.dataset
+          .progression,
+      };
+    });
+    const progressbar = page.locator(".world-stage__tesserae");
+    assert(artifact.pieceCount === 4, `artifact reports ${artifact.pieceCount}/8`);
+    assert(
+      artifact.regionCount === 8 && new Set(artifact.regionIds).size === 8,
+      `artifact regions are not eight distinct pieces: ${JSON.stringify(
+        artifact
+      )}`
+    );
+    assert(
+      artifact.setRegions.length === 4 && artifact.unsetRegions.length === 4,
+      `persisted piece state does not match 4/8: ${JSON.stringify(artifact)}`
+    );
+    assert(
+      artifact.progression === "assemble",
+      `l4 uses unexpected progression ${artifact.progression}`
+    );
+    assert(
+      (await progressbar.getAttribute("aria-valuenow")) === "4" &&
+        (await progressbar.getAttribute("aria-valuemax")) === "8",
+      "semantic progress does not match the eight visual regions"
+    );
+    assert(
+      diagnostics.pageErrors.length === 0 &&
+        diagnostics.consoleErrors.length === 0,
+      `runtime errors while checking artifact progress: ${JSON.stringify(
+        diagnostics
+      )}`
+    );
+    recordPass(checkName, {
+      artifact,
+      semanticProgress: {
+        now: 4,
+        max: 8,
+      },
+      diagnostics,
+    });
+  } catch (error) {
+    recordFailure(checkName, error, { diagnostics });
+  } finally {
+    await context.close();
+  }
+}
+
 async function verifyPrivateJourneyFlow(browser, engineName) {
   const checkName = `${engineName}/private-journey-completion`;
   const legacyEntries = seededLegacyEntries();
@@ -1182,6 +1786,16 @@ async function verifyPrivateJourneyFlow(browser, engineName) {
     await page
       .getByRole("button", { name: /Guardar en mi templo/i })
       .click();
+    const beforeRitualCompletion = await page.evaluate(() => {
+      const raw = localStorage.getItem("escuela:journey:2026-Q3");
+      if (!raw) return null;
+      return JSON.parse(raw).lessons?.l4?.legacyKit?.slots?.influencia || null;
+    });
+    assert(
+      beforeRitualCompletion === null,
+      "answer persisted before the restoration ritual was completed"
+    );
+    const ritual = await completeRestorationRitual(page, "choiceInsight");
     await page
       .getByRole("heading", { name: /Lo que me va formando/i })
       .waitFor({ state: "visible" });
@@ -1306,6 +1920,7 @@ async function verifyPrivateJourneyFlow(browser, engineName) {
     recordPass(checkName, {
       selectedValue: afterReload,
       privacy: investment.value.privacy,
+      ritual,
       legacyKeys: persisted.allLegacyKeys,
       diagnostics,
       screenshot,
@@ -1850,6 +2465,10 @@ async function verifyMeaningfulInvestmentLoop(browser, engineName) {
     await page
       .getByRole("button", { name: "Cerrar mi mosaico", exact: true })
       .click();
+    const commitmentRitual = await completeRestorationRitual(
+      page,
+      "commitDuo"
+    );
     await page
       .getByRole("heading", { name: "Mi paso de la semana", exact: true })
       .waitFor({ state: "visible" });
@@ -1903,6 +2522,10 @@ async function verifyMeaningfulInvestmentLoop(browser, engineName) {
     await page
       .getByRole("button", { name: /Guardar en mi templo/i })
       .click();
+    const influenceRitual = await completeRestorationRitual(
+      page,
+      "choiceInsight"
+    );
     await page.getByText(
       "Práctica ejercitada: Observar tu respuesta con honestidad",
       { exact: true }
@@ -1948,6 +2571,7 @@ async function verifyMeaningfulInvestmentLoop(browser, engineName) {
       returnThread: "commitment:l3:paso",
       commitmentCreatedThrough: "CommitDuo",
       commitmentCreatedAt: savedCommitment.createdAt,
+      rituals: [commitmentRitual, influenceRitual],
       diagnostics,
     });
   } catch (error) {
@@ -1984,10 +2608,13 @@ async function verifyBrowser(engineName, browserType) {
     }
 
     await verifyVisualAssetSystem(browser, engineName);
+    await verifyArtifactPieceProgress(browser, engineName);
     await verifyDirectRouteReload(browser, engineName);
     await verifyReducedMotion(browser, engineName);
     await verifyAmbientMotionBudget(browser, engineName);
     await verifyDayTheme(browser, engineName);
+    await verifyTextSizePersistence(browser, engineName);
+    await verifyEnglishLocale(browser, engineName);
     await verifyPrivateJourneyFlow(browser, engineName);
     await verifyResetDoesNotResurrectLegacy(browser, engineName);
     await verifyExplicitSabbathLesson(browser, engineName);
@@ -2003,6 +2630,13 @@ async function verifyBrowser(engineName, browserType) {
 }
 
 async function main() {
+  if (browserFactories.length === 0) {
+    throw new Error(
+      `QA_ENGINES did not select a supported engine: ${[
+        ...configuredEngines,
+      ].join(", ")}`
+    );
+  }
   if (isInsideProject(OUTPUT_DIR)) {
     throw new Error(
       `QA_OUTPUT_DIR must be outside the source tree (${PROJECT_ROOT}); received ${OUTPUT_DIR}`

@@ -2,17 +2,18 @@
 
 Handoff document. Read this before changing the app.
 
-This file describes both the full product-experience overhaul and the later
-**Corinto Vivo / El Atrio Restaurado** material-world rewrite. The material
-rewrite was prepared from commit `03097e2` on branch
-`codex-material-world`. Its exact pre-rewrite state and the older pre-product
-overhaul state are both preserved under [Rollback](#rollback).
+This file describes the full product-experience overhaul, the
+**Corinto Vivo / El Atrio Restaurado** material-world rewrite, and the later
+interactive-world expansion. The interactive expansion was prepared from
+commit `29971d24ca9affe6bb0b04c826a5b69f142a97a0` on branch
+`codex-material-world`. Every earlier checkpoint is preserved under
+[Rollback](#rollback).
 
 ## Product
 
-This is a Spanish-language Seventh-day Adventist Sabbath School app for the Q3
-2026 study of 1 and 2 Corinthians. It is local-first, single-reader software
-that also supports a teacher and a deliberate presentation view.
+This is a bilingual Spanish/English Seventh-day Adventist Sabbath School app
+for the Q3 2026 study of 1 and 2 Corinthians. It is local-first, single-reader
+software that also supports a teacher and a deliberate presentation view.
 
 The product is no longer organized as "tap and read" devotional cards. Its
 central model is **Mosaico Vivo de Corinto**:
@@ -40,6 +41,8 @@ Read:
 - React Router DOM 7.18.1
 - Vite 8.1.5 with `@vitejs/plugin-react` 6.0.1
 - Framer Motion 11.18.2
+- Three.js 0.185.1 for a lazy, capped PBR artifact scene
+- Matter.js 0.20.0 for the lazy anchor-weight ritual
 - Phosphor React icons 2.1.10
 - local Outfit Variable and EB Garamond Variable font packages
 - Playwright 1.62.0 for Chromium and WebKit verification
@@ -112,10 +115,13 @@ src/features/today/       Chispa, depth choice, returned commitments
 src/features/world/       persistent architectural stage and lesson relief
 src/features/mosaic/      quarter artifact and semantic list
 src/features/episode/     mutation reward and intentional exit
+src/features/artifact/    direct-manipulation restoration rituals and progress
 src/features/sabbath/     folio, share preview, presentation
 src/state/journey/        JourneyState v2, migration, persistence, privacy
 src/modules/              the seven interaction grammars
 src/content/              generated lesson modules and lazy manifest
+src/content/en/           generated English lesson modules
+src/i18n/                 localized shell dictionary and locale provider
 src/visual-world/         lesson relief rendering and visual metadata
 src/assets/generated/     local responsive WebP reliefs and material textures
 design-sources/           source PNGs, prompts, provenance, asset instructions
@@ -133,14 +139,18 @@ board. The app is now one inhabitable Corinthian restoration courtyard:
 - Mosaico shows all 13 reliefs in one archaeological grout bed,
 - Sábado is a papyrus and limestone workbench rather than another card page.
 
-This is deliberately a hybrid system:
+This is deliberately a hybrid system. It does not rely on one large SVG or
+drop a finished PNG onto the page:
 
 ```text
 HTML/React     live copy, controls, state, focus, accessibility
-local raster  material credibility, relief, pores, grain, contact occlusion
-CSS           architecture, lighting, crops, stage masks, responsive depth
-Framer + CSS   bounded route, reveal, and material-placement motion
-SVG           compact/loading/failure fallback and limited topology only
+local raster   material credibility, relief, pores, grain, contact occlusion
+Three/WebGL    eight physical PBR regions, displacement, light, bloom, camera
+Canvas 2D      scratch and brush removal rituals
+Matter.js      one bounded, lazy physics ritual
+CSS            architecture, lighting, masks, optical grain, responsive depth
+Framer + CSS   route match cuts, kinetic type, placement and folio motion
+SVG            compact/loading/failure fallback and limited topology only
 ```
 
 Full-size loading and failure states use the legacy Centerpiece SVG. Compact
@@ -152,9 +162,11 @@ primary hero art.
 `/leccion/:lessonId`, including episode routes, so those views approach the
 same artifact instead of remounting a copy. Mosaico and Sábado reuse the same
 lesson imagery and state without mounting that persistent stage.
-`LessonRelief` owns responsive image selection and the five-stage
-dormant-to-restored reveal. Route content remains ordinary semantic DOM beside
-it.
+`LessonRelief` owns responsive image selection and the eight-region
+dormant-to-restored state. `MaterialWorldCanvas` progressively assembles or
+excavates the object from separate PBR regions; `ReliefAssembly` is the
+semantic DOM fallback. Exactly one visible material-world owner may animate in
+a viewport. Route content remains ordinary semantic DOM beside it.
 
 ### Product loop
 
@@ -165,7 +177,8 @@ return thread or Chispa
   -> choose 1 minuto, Estudiar, or A fondo
   -> attempt before explanation where appropriate
   -> invest a phrase, decision, or action
-  -> see the same artifact change
+  -> perform the lesson's physical material verb
+  -> see one region assemble, open, polish, join, settle, or reveal
   -> accumulate capability evidence and cross-week joins
   -> edit/select material for the Sábado folio
   -> return later to a remembered commitment or phrase
@@ -189,9 +202,11 @@ mutation with a generic modal, generic confetti, or a score.
 Q3 2026 contains 13 authored lesson drafts.
 
 ```text
-drafts/q3-2026/*.json              source of truth
+drafts/q3-2026/*.json              Spanish source of truth
+drafts/q3-2026/en/*.json           English source of truth
 scripts/build-lessons.mjs          normalize and validate
 src/content/l1.js ... l13.js       generated output
+src/content/en/l1.js ... l13.js    generated English output
 src/content/lessonManifest.generated.js
 src/content/loadLesson.js          dynamic lesson imports
 ```
@@ -206,7 +221,7 @@ Hard rules:
 
 - Never hand-edit `src/content/lN.js`.
 - Edit the matching JSON draft, then regenerate.
-- Visible application copy contains no em dash or en dash.
+- Visible application copy in either language contains no em dash or en dash.
 - Slot and station IDs must pair exactly.
 - Every referenced icon must exist in `src/components/Icon.jsx`.
 - Template tokens must render cleanly with real answers.
@@ -241,6 +256,14 @@ The v2 state includes:
 - revealed cross-week connection IDs,
 - saved Sábado packs,
 - theme, reduced motion, and haptic settings.
+- locale and text-size settings.
+
+Pre-authored selectable answers store a structural localization reference in
+addition to the legacy visible value. Switching language resolves the same
+authored choice in the new lesson module; reader-written text is never
+translated or rewritten. Choices saved before this expansion have no safe
+structural reference and therefore remain in their original language. Do not
+guess or machine-translate those legacy values.
 
 Migration is additive:
 
@@ -280,6 +303,8 @@ The Creative North Star is **Corinto Vivo · El Atrio Restaurado**.
 - The persistent world becomes a side-by-side scene at 1120px, not 980px.
 - Mobile: compact context rail, focused canvas, safe-area destination dock.
 - Touch targets: at least 44 by 44 CSS pixels.
+- Reader text size: normal, large, or extra large from Settings, persisted in
+  JourneyState and verified for route overflow.
 
 The quarter mosaic is one authored spatial composition, not a card gallery.
 Completed, current, connected, upcoming, and revisited panels have semantic
@@ -298,7 +323,9 @@ Do not reintroduce:
 
 ## Motion architecture
 
-The motion verbs are **Set**, **Reveal**, and **Return**.
+The motion verbs are **Set**, **Reveal**, and **Return**. The interaction
+vocabulary also includes brush, drag, turn, hold, trace, bind, and weight, but
+each appears only when it expresses the active lesson's material verb.
 
 - Press: about 120ms.
 - Selection: about 180ms.
@@ -309,11 +336,14 @@ The motion verbs are **Set**, **Reveal**, and **Return**.
 
 Load-bearing rules:
 
-- Only transform and opacity are used for continuously changing UI motion.
-- The loaded raster material world has no infinite animation. The full-size
-  legacy SVG fallback is unmounted as soon as the relief is ready.
+- Continuously changing DOM UI uses transform and opacity.
+- The PBR scene has one bounded, frame-capped ambient owner. It pauses when
+  hidden, stops when its WebGL context is lost, and is static under reduced
+  motion.
+- Full-size legacy SVG fallback is unmounted as soon as the relief is ready.
 - Backdrop texture, relief grain, kiln spill, and CSS blend layers are static.
-- One-shot geometry may use `requestAnimationFrame`.
+- One-shot geometry and direct manipulation may use `requestAnimationFrame`;
+  every loop and delayed completion needs explicit cleanup.
 - Press-and-hold interactions expose immediate keyboard completion.
 - In-app reduced motion and operating-system reduced motion both remove loops,
   paths, particles, parallax, and spatial choreography.
@@ -321,8 +351,10 @@ Load-bearing rules:
   partially revealed content.
 - Hidden content is not essential to completion.
 - SVG filter parameters are not animated continuously.
-- Generated raster grain, `mix-blend-mode`, blur, and displacement are never
-  animated.
+- Generated raster grain and expensive DOM gradient positions remain static.
+- Desktop PBR uses restrained post-processing; compact/mobile lowers DPR and
+  disables the post stack. WebKit skips the PMREM environment path because it
+  produced `texImage3D` failures.
 
 `src/lib/useAppReducedMotion.js` joins the in-app setting with the system
 preference for custom interactions. `MotionConfig` handles Framer Motion.
@@ -334,9 +366,11 @@ confetti is not part of the current reward system.
 
 ## Visual assets, reliefs, and SVG fallbacks
 
-The primary narrative artwork is now a checked-in local raster relief system.
-It is not a screenshot of the UI. Generated imagery contains no application
-copy, user data, labels, or controls.
+The primary narrative artwork combines checked-in local relief sources with
+procedural eight-region geometry. The image is not the progression: pieces
+assemble, detach, turn, join, or are uncovered as real layers in the DOM or
+WebGL scene. Generated imagery contains no application copy, user data,
+labels, or controls.
 
 Authoritative masters:
 
@@ -395,7 +429,8 @@ dependencies. Vessel construction is still documented in
 
 ## Accessibility
 
-- Spanish document language and route-specific titles.
+- Spanish and English document language, route-specific titles, dates, ARIA
+  descriptions, controls, lesson modules, and Sábado material.
 - One main landmark and visible skip link.
 - New route headings receive focus after transition completion.
 - One visible H1 per primary route.
@@ -405,6 +440,7 @@ dependencies. Vessel construction is still documented in
 - Saved artifact changes use polite live feedback.
 - Sábado sharing is explicit and consent-aware.
 - Reduced motion is available in the app and follows the system by default.
+- Normal, large, and extra-large reading sizes are available in Settings.
 - Day and night primary text/action pairs meet WCAG AA.
 
 ## QA
@@ -467,10 +503,12 @@ It verifies:
 - no console errors or failed requests,
 - direct-route reload,
 - deterministic calendar behavior at `2026-07-25`,
+- Spanish/English shell, lesson, title, date, ARIA, and route persistence,
+- normal/large/extra-large type settings without horizontal overflow,
 - route-title and destination-heading focus,
 - delayed lazy-module heading focus,
 - system and in-app reduced motion,
-- zero ambient loops after the local relief is loaded,
+- exactly one visible material-world owner and no loop under reduced motion,
 - day and night primary-token contrast,
 - exact preservation of v1 during migration,
 - reset without v1 resurrection,
@@ -480,23 +518,32 @@ It verifies:
 - same-route intentional-exit focus,
 - a commitment created through `CommitDuo`, reloaded, and returned in Hoy,
 - capability evidence and cross-week connection loop,
-- 13 distinct Mosaico relief sources, successful responsive image decode, and
-  same-origin local delivery for both the wall and active world.
+- 13 distinct Mosaico relief sources, four deterministic eight-region topology
+  families, successful responsive image decode, and same-origin local delivery,
+- tactile ritual completion before durable persistence,
+- WebGL diagnostics, cleanup, fallback, piece count, and renderer ownership.
 
-Release result on 2026-07-25:
+Final release result on 2026-07-25:
 
 ```text
-48 route/viewport/engine renders
-31 server, asset, motion, privacy, focus, and product-loop checks
-79 passed
+48 route/viewport checks across mobile, tablet, and desktop
+36 engine-specific material, motion, privacy, focus, and product-loop checks
+1 global server and asset check
+Chromium: 42 passed
+WebKit: 42 passed
+85 passed
 0 failed
-0 warnings
+1 non-failing headless Chromium screenshot warning
 ```
+
+The warning is Chromium's GPU `ReadPixels` stall diagnostic during screenshot
+capture. It produced no application console error and no failed rendering or
+interaction check.
 
 Journey unit result:
 
 ```text
-9 passed
+13 passed
 0 failed
 ```
 
@@ -507,8 +554,10 @@ and implementation review.
 
 Latest production build:
 
-- CSS: 126,661 bytes raw and 24,692 bytes gzip
-- initial JavaScript chunks plus runtime: 205,759 bytes gzip
+- CSS: about 158KB raw and 31KB gzip
+- core initial JavaScript and shared chunks: about 237KB gzip
+- lazy Three.js material-world chunk: about 151KB gzip
+- lazy Matter.js ritual chunk: about 26KB gzip
 - each lazy lesson: about 10.0 to 11.3KB gzip
 - local fonts: loaded as separate WOFF2 assets
 - responsive WebP set: 4,392,238 bytes total and never loaded together
@@ -524,15 +573,55 @@ server actions, so the affected execution surface is absent.
 
 As of 2026-07-25:
 
-- latest `react-router-dom` is 7.18.1,
-- patched `react-router` 8.3.0 requires React and React DOM 19.2.7,
-- `react-router-dom` 7.18.1 pins `react-router` 7.18.1.
+- the installed `react-router-dom` and `react-router` are 7.18.1,
+- `npm audit --omit=dev` reports two high entries for that single advisory,
+- npm proposes a forced downgrade to `react-router-dom` 7.11.0,
+- the app does not import or expose the affected RSC/action runtime.
 
-Do not force an incompatible transitive override merely to make the audit count
-zero. Re-evaluate when a compatible patched `react-router-dom` is published or
-when the app intentionally upgrades to React 19.
+The forced downgrade was not applied because it would move the router outside
+the declared dependency range to address an execution surface this app does
+not ship. Re-evaluate when a compatible patched version is available or when
+the app intentionally adopts an RSC/server-action architecture.
 
 ## Rollback
+
+### Before the interactive-world expansion
+
+The exact application immediately before bilingual content, text-size
+controls, direct-manipulation rituals, kinetic type, distinct eight-region
+artifact families, and the Three.js/Matter.js layer is:
+
+```text
+commit: 29971d24ca9affe6bb0b04c826a5b69f142a97a0
+tag: pre-interactive-world-2026-07-25
+authoring branch: codex-material-world
+```
+
+Inspect or run that version without disturbing the current checkout:
+
+```bash
+git worktree add ../escuela-sabatica-pre-interactive-world \
+  pre-interactive-world-2026-07-25
+```
+
+Continue development from it:
+
+```bash
+git switch -c restore-pre-interactive-world \
+  pre-interactive-world-2026-07-25
+```
+
+The expansion is delivered as one release commit. Preserve history and undo
+only that release with:
+
+```bash
+git log --oneline --grep="Interactive material world expansion" -1
+git revert <interactive-world-release-commit>
+```
+
+The rollback removes the new visual/runtime code and generated English content;
+it does not alter any `escuela:*` browser key. New v2 settings and localization
+metadata are optional to the older code and can safely remain in stored data.
 
 ### Before the Corinto Vivo material-world rewrite
 
@@ -620,8 +709,6 @@ git clone /absolute/path/to/escuela-sabatica-pre-overhaul-2026-07-25-fbe35ba.bun
 cd escuela-sabatica-restored
 git switch -c main pre-overhaul-2026-07-25
 ```
-
-No push is part of this overhaul. The user decides when to push.
 
 ## Working agreements
 

@@ -6,7 +6,7 @@ import {
   adaptLessonToEpisodes,
   firstIncompleteEpisode,
 } from "../content/legacyEpisodeAdapter.js";
-import { LESSON_MANIFEST } from "../content/lessonManifest.generated.js";
+import { lessonManifestForLocale } from "../content/lessonManifest.generated.js";
 import { useJourney, journeyActions, selectors } from "../state/journey/index.js";
 import { useJourneyKit } from "../state/useJourneyKit.js";
 import { fillName } from "../lib/name.js";
@@ -19,22 +19,27 @@ import DailySpark from "../features/today/DailySpark.jsx";
 import ReturnThread from "../features/today/ReturnThread.jsx";
 import IntentionalExit from "../features/episode/IntentionalExit.jsx";
 import RouteLoading from "./RouteLoading.jsx";
+import { useI18n } from "../i18n/LocaleProvider.jsx";
+import { isRemovalLesson } from "../visual-world/lessonVisualManifest.js";
 
 export default function TodayRoute() {
-  const summary = currentLessonSummary();
-  const loaded = useLoadedLesson(summary.id);
+  const { locale, t } = useI18n();
+  const summary = currentLessonSummary(undefined, locale);
+  const loaded = useLoadedLesson(summary.id, locale);
 
-  if (loaded.loading) return <RouteLoading label="Preparando la chispa de hoy" />;
+  if (loaded.loading) return <RouteLoading label={t("today.loading")} />;
   if (loaded.error || !loaded.lesson) {
-    throw loaded.error || new Error("No se pudo abrir la lección de hoy");
+    throw loaded.error || new Error(t("today.openError"));
   }
   return <TodayReady lesson={loaded.lesson} />;
 }
 
 function TodayReady({ lesson }) {
+  const { locale, t } = useI18n();
   const navigate = useNavigate();
   const journey = useJourney();
   const kit = useJourneyKit(lesson);
+  const removal = isRemovalLesson(lesson.id);
   const [depth, setDepth] = useState(
     journey.state.profile.preferredDepth || "study"
   );
@@ -46,15 +51,15 @@ function TodayReady({ lesson }) {
       )
     : -1;
 
-  const previous = LESSON_MANIFEST[lesson.number - 2] || null;
+  const previous = lessonManifestForLocale(locale)[lesson.number - 2] || null;
   const returnItem = useMemo(() => {
     const commitment = latestOpenCommitment(journey.state);
     if (commitment?.action?.value) {
       return {
         kind: "commitment",
         id: commitment.id,
-        label: "Un paso que dejaste abierto",
-        body: `Te propusiste «${commitment.action.value}». Puede seguir en camino sin convertirse en una deuda.`,
+        label: t("today.openStep"),
+        body: t("today.openStepBody", { value: commitment.action.value }),
       };
     }
 
@@ -64,13 +69,13 @@ function TodayReady({ lesson }) {
     if (previousPhrase) {
       return {
         kind: "echo",
-        label: "Una pieza vuelve",
-        body: `La lección anterior dejó «${previousPhrase}». Hoy puede adquirir otro significado.`,
+        label: t("today.echo"),
+        body: t("today.echoBody", { value: previousPhrase }),
       };
     }
 
     return null;
-  }, [journey.state, previous]);
+  }, [journey.state, previous, t]);
 
   const resolveReturn = (commitmentId) => {
     journey.dispatch(
@@ -95,7 +100,8 @@ function TodayReady({ lesson }) {
       )
     );
     navigate(
-      `/leccion/${lesson.id}/episodio/${episode.id}?profundidad=${depth}`
+      `/leccion/${lesson.id}/episodio/${episode.id}?profundidad=${depth}`,
+      { viewTransition: true }
     );
   };
 
@@ -103,8 +109,8 @@ function TodayReady({ lesson }) {
     return (
       <div className="route-focus">
         <IntentionalExit
-          title="La piedra queda en su sitio"
-          body="No hay una racha que proteger. Cuando regreses, encontrarás esta misma pregunta y tu mosaico tal como lo dejaste."
+          title={t("today.pauseTitle")}
+          body={t("today.pauseBody")}
           onContinue={() => setPaused(false)}
           onClose={() => setPaused(false)}
         />
@@ -117,7 +123,7 @@ function TodayReady({ lesson }) {
       <div className="route-experience route-experience--today">
         <section className="daily-spark" aria-labelledby="daily-complete-title">
           <div className="daily-spark-meta">
-            <span>Semana preparada</span>
+            <span>{t("today.weekReady")}</span>
             <span>{lesson.verse.ref}</span>
           </div>
           <h1
@@ -125,11 +131,10 @@ function TodayReady({ lesson }) {
             className="daily-spark-question"
             data-route-heading
           >
-            Tu folio ya tiene forma
+            {t("today.folioReady")}
           </h1>
           <p className="daily-spark-cue">
-            Tus ocho piezas permanecen en el mosaico. Ahora puedes decidir qué
-            llevar a la conversación del sábado y qué conservar en privado.
+            {t(removal ? "today.completeRegionsBody" : "today.completeBody")}
           </p>
           <ReturnThread item={returnItem} onResolve={resolveReturn} />
           <button
@@ -138,8 +143,8 @@ function TodayReady({ lesson }) {
             onClick={() => navigate(`/sabado/${lesson.id}`)}
           >
             <span>
-              <small>Tu síntesis de la semana</small>
-              Abrir el folio del sábado
+              <small>{t("today.weekSummary")}</small>
+              {t("today.openFolio")}
             </span>
             <Icon name="arrow" size={20} />
           </button>
@@ -148,7 +153,7 @@ function TodayReady({ lesson }) {
             type="button"
             onClick={() => navigate("/mosaico")}
           >
-            Ver el mosaico del trimestre
+            {t("today.viewMosaic")}
           </button>
         </section>
       </div>
@@ -169,7 +174,7 @@ function TodayReady({ lesson }) {
             : "",
           canonicalDay:
             episodeIndex === 7
-              ? "Viernes"
+              ? t("today.friday")
               : episode.canonicalDay,
         }}
         depth={depth}

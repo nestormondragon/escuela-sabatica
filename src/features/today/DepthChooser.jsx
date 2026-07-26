@@ -1,10 +1,26 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { DEPTHS } from "../../content/legacyEpisodeAdapter.js";
+import { useArtifactProgress } from "../artifact/ArtifactProgressContext.jsx";
+import "./depth-motion.css";
+import { useI18n } from "../../i18n/LocaleProvider.jsx";
 
 export default function DepthChooser({ value = "study", availability, onChange }) {
+  const { t } = useI18n();
+  const artifact = useArtifactProgress();
+
+  React.useEffect(() => {
+    artifact.setDepth(value);
+  }, [artifact, value]);
+
+  const change = (depthId) => {
+    artifact.setDepth(depthId);
+    onChange(depthId);
+  };
+
   return (
     <fieldset className="depth-chooser">
-      <legend className="sr-only">Elige la profundidad de hoy</legend>
+      <legend className="sr-only">{t("today.chooseDepth")}</legend>
       {Object.values(DEPTHS).map((depth) => {
         const enabled = availability?.[depth.id] !== false;
         return (
@@ -15,10 +31,18 @@ export default function DepthChooser({ value = "study", availability, onChange }
             data-active={value === depth.id}
             aria-pressed={value === depth.id}
             disabled={!enabled}
-            onClick={() => enabled && onChange(depth.id)}
+            onClick={() => enabled && change(depth.id)}
           >
-            <span>{depth.label}</span>
-            <small>{depth.description}</small>
+            {value === depth.id ? (
+              <motion.i
+                className="depth-choice__inlay"
+                layoutId="depth-choice-inlay"
+                transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                aria-hidden="true"
+              />
+            ) : null}
+            <span>{t(`common.${depth.id === "minute" ? "oneMinute" : depth.id}`)}</span>
+            <small>{t(`depth.${depth.id}Description`)}</small>
           </button>
         );
       })}

@@ -1,5 +1,7 @@
 import React from "react";
 import Icon from "../../components/Icon.jsx";
+import { useI18n } from "../../i18n/LocaleProvider.jsx";
+import { isRemovalLesson } from "../../visual-world/lessonVisualManifest.js";
 
 /*
  * A visible text-first alternative to the spatial artifact. The closed
@@ -13,16 +15,18 @@ export default function SemanticMosaicList({
   defaultOpen = false,
   className = "",
 }) {
+  const { t } = useI18n();
   return (
     <details className={`qm-list ${className}`.trim()} open={defaultOpen || undefined}>
       <summary>
-        <span>Ver el trimestre como lista</span>
+        <span>{t("mosaic.asList")}</span>
         <Icon name="chevron" size={16} />
       </summary>
 
       <ol>
         {items.map(({ lesson, panel }) => {
           const selected = lesson.id === selectedLessonId;
+          const removal = isRemovalLesson(lesson.id);
           return (
             <li key={lesson.id} data-selected={String(selected)}>
               <button
@@ -37,7 +41,10 @@ export default function SemanticMosaicList({
                 <span className="qm-list__copy">
                   <strong>{lesson.title}</strong>
                   <span>
-                    {panel.statusLabel}. {panel.filledCount} de {panel.total} piezas.
+                    {panel.statusLabel}. {t(removal ? "common.regions" : "common.pieces", {
+                      filled: panel.filledCount,
+                      total: panel.total,
+                    })}.
                   </span>
                 </span>
                 <span className="qm-list__mark" aria-hidden="true">

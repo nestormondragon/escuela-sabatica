@@ -41,6 +41,14 @@
   --muted: #a19b92;
   --faint: #918b83;
 
+  /* Contextual inset surfaces. Components should not borrow page text tokens
+     when they sit on a physically different material. */
+  --inset-bed: #0e1013;
+  --inset-row: #17191d;
+  --inset-text: #eeeae3;
+  --inset-muted: #aaa8a2;
+  --inset-index: #2a2d32;
+
   /* THE accent. One hue, whole product. Clay from Corinth. */
   --clay: #df7554;
   --clay-hi: #ef8b67;
@@ -80,6 +88,11 @@
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --topbar-h: 54px;
+
+  /* Accessible metadata floor. Small uppercase labels still feel precise,
+     but no longer collapse into 9–10px text on a default browser. */
+  --type-micro: 0.75rem;
+  --type-caption: 0.8rem;
 }
 
 /* ---- DAY: cool quarried stone. Deliberately not cream, not parchment. ---- */
@@ -101,6 +114,12 @@
   --muted: #5c5f66;       /* AA 4.97 */
   --faint: #5f6269;       /* AA 4.7 */
 
+  --inset-bed: #c7c8c4;
+  --inset-row: #e8e8e4;
+  --inset-text: #202227;
+  --inset-muted: #55585f;
+  --inset-index: #d0d1cd;
+
   --clay: #9f3e25;
   --clay-hi: #b44a2d;
   --clay-deep: #812f1d;
@@ -121,13 +140,18 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; }
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+:root[data-text-size="large"] { font-size: 112.5%; }
+:root[data-text-size="x-large"] { font-size: 125%; }
 html, body, #root { min-height: 100%; }
 html { background: var(--bg-0); }
 
 body {
   font-family: var(--ui);
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.6;
   color: var(--text);
   background: var(--bg-0);
@@ -308,7 +332,7 @@ body {
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .brand .sub2 {
-  display: block; font-size: 0.68rem; color: var(--muted); font-weight: 400;
+  display: block; font-size: var(--type-micro); color: var(--muted); font-weight: 400;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
@@ -363,7 +387,7 @@ body {
 /* the tracked label. Rationed: at most one per view. */
 .tag {
   display: inline-block; font-family: var(--ui);
-  font-size: 0.63rem; font-weight: 600; letter-spacing: 0.15em;
+  font-size: var(--type-micro); font-weight: 600; letter-spacing: 0.15em;
   text-transform: uppercase; color: var(--muted);
 }
 .eyebrow {
@@ -391,7 +415,7 @@ body {
 }
 .verse .ref {
   display: block; margin-top: 7px; font-family: var(--ui); font-style: normal;
-  font-size: 0.66rem; font-weight: 600; letter-spacing: 0.13em;
+  font-size: var(--type-micro); font-weight: 600; letter-spacing: 0.13em;
   text-transform: uppercase; color: var(--clay);
 }
 
@@ -476,7 +500,7 @@ body {
 .tess[data-state="locked"] { opacity: 0.5; cursor: default; }
 .tess .n {
   position: absolute; top: 3px; left: 5px;
-  font-size: 0.55rem; font-weight: 600; color: var(--faint); letter-spacing: 0.04em;
+  font-size: var(--type-micro); font-weight: 600; color: var(--faint); letter-spacing: 0.04em;
 }
 /* a tessera settling into the wall */
 @keyframes tess-set {
@@ -515,7 +539,7 @@ body {
   background: color-mix(in srgb, var(--clay) 14%, transparent);
 }
 .piece-lbl {
-  display: block; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.13em;
+  display: block; font-size: var(--type-micro); font-weight: 600; letter-spacing: 0.13em;
   text-transform: uppercase; color: var(--muted);
 }
 .piece-val {
@@ -620,7 +644,7 @@ body {
   padding: 13px 15px;
 }
 .insight .meta {
-  font-family: var(--ui); font-size: 0.6rem; font-weight: 600;
+  font-family: var(--ui); font-size: var(--type-micro); font-weight: 600;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay);
   margin-bottom: 4px;
 }
@@ -631,7 +655,7 @@ body {
   border-radius: var(--r); padding: 14px 15px;
 }
 .detail .meta {
-  font-family: var(--ui); font-size: 0.6rem; font-weight: 600;
+  font-family: var(--ui); font-size: var(--type-micro); font-weight: 600;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
   margin-bottom: 4px;
 }
@@ -679,10 +703,10 @@ body {
 .switch {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 44px; min-width: 44px; padding: 0 6px; background: none; border: none;
-  font-family: var(--ui); font-size: 0.66rem; font-weight: 600; color: var(--muted);
+  font-family: var(--ui); font-size: var(--type-micro); font-weight: 600; color: var(--muted);
   cursor: pointer;
 }
-.switch-label { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.04em; white-space: nowrap; }
+.switch-label { font-size: var(--type-micro); font-weight: 600; letter-spacing: 0.04em; white-space: nowrap; }
 .switch[aria-pressed="true"] { color: var(--clay); }
 .switch .track {
   width: 36px; height: 20px; border-radius: 999px; background: var(--surface-3);
@@ -708,7 +732,7 @@ body {
 /* the sorting drill */
 .skill {
   display: inline-flex; align-items: center; gap: 7px;
-  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase;
+  font-size: var(--type-micro); font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase;
   color: var(--clay); background: color-mix(in srgb, var(--clay) 12%, transparent);
   border: 1px solid color-mix(in srgb, var(--clay) 34%, transparent);
   border-radius: var(--r-sm); padding: 6px 12px;
@@ -718,7 +742,7 @@ body {
   border-radius: var(--r); padding: 17px;
 }
 .seqcount {
-  font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+  font-size: var(--type-micro); letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--muted); margin-bottom: 7px;
 }
 .statementtxt { font-family: var(--letter); font-size: 1.14rem; line-height: 1.42; }

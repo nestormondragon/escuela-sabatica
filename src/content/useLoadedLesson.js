@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { loadLesson } from "./loadLesson.js";
 
-export function useLoadedLesson(lessonId) {
+export function useLoadedLesson(lessonId, locale = "es") {
   const [result, setResult] = useState(() => ({
     lesson: null,
     loading: true,
@@ -11,7 +11,7 @@ export function useLoadedLesson(lessonId) {
   useEffect(() => {
     let active = true;
     setResult({ lesson: null, loading: true, error: null });
-    loadLesson(lessonId)
+    loadLesson(lessonId, locale)
       .then((lesson) => {
         if (active) setResult({ lesson, loading: false, error: null });
       })
@@ -21,7 +21,7 @@ export function useLoadedLesson(lessonId) {
     return () => {
       active = false;
     };
-  }, [lessonId]);
+  }, [lessonId, locale]);
 
   return result;
 }

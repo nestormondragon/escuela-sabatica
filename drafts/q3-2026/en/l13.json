@@ -1,0 +1,667 @@
+{
+  "number": 13,
+  "slug": "gracia-amor-comunion",
+  "title": "Grace, Love, and Fellowship",
+  "forDate": "2026-09-26",
+  "subtitle": "What will you carry from this quarter, and over whom will you speak it aloud?",
+  "kitName": "My Fellowship",
+  "artifactNoun": "fellowship",
+  "motif": "mosaico",
+  "stages": [
+    "fragmentos",
+    "borde",
+    "figura",
+    "oro",
+    "entero"
+  ],
+  "stageLabels": [
+    "Loose fragments · each one apart",
+    "The border takes shape · joy returns",
+    "The figure appears · we restore one another",
+    "Gold enters · one shared mind",
+    "Mosaic made whole · grace, love, and fellowship"
+  ],
+  "verseRef": "2 Cor. 13:13",
+  "verseText": "May the grace of the Lord Jesus Christ, the love of God, and the fellowship of the Holy Spirit be with you all.",
+  "promise": "In a few minutes you will complete your Fellowship, {name}: you will gather what you carry from the whole quarter, choose which of Paul's five charges you will obey, leave at the door what separates you from someone, and put on the blessing. The final piece of the mosaic: what began in fragments ends as one image.",
+  "ui": {
+    "start": "Begin completing my fellowship",
+    "emptyKit": "Your fellowship",
+    "building": "Each piece completes the image",
+    "buildingHint": "Tap the glowing piece. Watch the quarter's fragments join into one mosaic.",
+    "lastPiece": "The final piece remains",
+    "patternLabel": "Your pattern in the mosaic",
+    "doneTitle": "Your mosaic is complete",
+    "doneSub": "Thirteen weeks in one image. Open it, save it, and speak it aloud over someone.",
+    "open": "Open my fellowship",
+    "back": "Back to my fellowship",
+    "kitName": "My Fellowship"
+  },
+  "slots": [
+    {
+      "id": "recojo",
+      "n": 1,
+      "label": "What I carry with me",
+      "teaser": "What remains after thirteen weeks in Corinth...",
+      "icon": "book"
+    },
+    {
+      "id": "gracia",
+      "n": 2,
+      "label": "The grace that reaches me",
+      "teaser": "Though rich, he became poor for me...",
+      "icon": "sun"
+    },
+    {
+      "id": "amor",
+      "n": 3,
+      "label": "Where I saw his love",
+      "teaser": "The particular place where God loved me...",
+      "icon": "heart"
+    },
+    {
+      "id": "imperativos",
+      "n": 4,
+      "label": "The charge I will obey",
+      "teaser": "One of the five, this week...",
+      "icon": "hand"
+    },
+    {
+      "id": "espiritu",
+      "n": 5,
+      "label": "What I ask of the Spirit",
+      "teaser": "The work I need for what comes next...",
+      "icon": "cloud"
+    },
+    {
+      "id": "restauracion",
+      "n": 6,
+      "label": "What I leave at the door",
+      "teaser": "What I release so something can be repaired...",
+      "icon": "path"
+    },
+    {
+      "id": "bendicion",
+      "n": 7,
+      "label": "The blessing I carry",
+      "teaser": "Grace, love, and fellowship over me...",
+      "icon": "anchor"
+    },
+    {
+      "id": "envio",
+      "n": 8,
+      "label": "My sending",
+      "teaser": "One step and one person to bless...",
+      "icon": "flame"
+    }
+  ],
+  "stations": [
+    {
+      "id": "recojo",
+      "day": "Saturday · What I carry from Corinth",
+      "tag": "Slot 1 · What I carry with me",
+      "title": "The correspondence began in brokenness and ended in blessing",
+      "story": "Thirteen weeks ago you opened the correspondence of a broken church: factions fighting over favorite teachers, tolerated sin, lawsuits before civil judges, a shared meal turned into contempt, gifts used for display, an unfinished collection, and persuasive false apostles. Paul wrote four letters and wept more than once. Look at how the correspondence closes: not with rebuke, but with blessing. \"May the grace of the Lord Jesus Christ, and the love of God, and the fellowship of the Holy Spirit be with you all\" (2 Cor. 13:13). The fragments have formed one image.",
+      "cue": "Before closing, {name}, gather what you will carry with you.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "What are you taking with you from this quarter in Corinth?",
+        "hint": "What really stuck with you, not what sounds best",
+        "saveLabel": "Save to my fellowship",
+        "seedSub": "What you take",
+        "closing": "All of it pointed to the same appeal: \"Let there be no divisions among you\" (1 Cor. 1:10). A mosaic is not made from one enormous piece, but from many small pieces that finally fit.",
+        "options": [
+          {
+            "id": "cruz",
+            "label": "That the cross seems crazy and it is power",
+            "insight": "\"The message of the cross is foolishness to those who are perishing, but to us who are being saved it is the power of God\" (1 Cor. 1:18). What the world discards still sustains your life.",
+            "tags": [
+              "theme:cross",
+              "theme:truth",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "amor13",
+            "label": "That without love everything else is noise",
+            "insight": "Eloquence, faith, sacrifice: without love, \"I am only a resounding gong\" (1 Cor. 13:1). It is the chapter most often read at weddings and least often practiced at home.",
+            "tags": [
+              "theme:love",
+              "posture:humble",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "barro",
+            "label": "That the treasure goes in clay glasses",
+            "insight": "\"We have this treasure in clay vessels, so that the excellence of power is from God\" (2 Cor. 4:7). Your cracks were never the problem: they are where the light comes from.",
+            "tags": [
+              "theme:humility",
+              "theme:grace",
+              "posture:humble"
+            ]
+          },
+          {
+            "id": "reconciliar",
+            "label": "That I received the ministry to reconcile",
+            "insight": "\"He gave us the ministry of reconciliation\" (2 Cor. 5:18). It is not only a pastor's task; it is the calling of everyone who has first been reconciled.",
+            "tags": [
+              "theme:mission",
+              "theme:service",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "dar",
+            "label": "That giving with joy makes me free",
+            "insight": "\"God loves a cheerful giver\" (2 Cor. 9:7). What you release with joy stops ruling you. You learned this by watching poor churches give beyond expectation.",
+            "tags": [
+              "theme:generosity",
+              "posture:surrendering",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "debilidad",
+            "label": "That his grace is enough for me in my weakness",
+            "insight": "\"My grace is enough, because my power is perfected in weakness\" (2 Cor. 12:9). You stopped hiding the thorn and found out where power lives.",
+            "tags": [
+              "theme:grace",
+              "posture:surrendering",
+              "tone:tender"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "gracia",
+      "day": "Sunday · The Grace of Jesus",
+      "tag": "Slot 2 · The grace that reaches me",
+      "title": "Being rich, he became poor",
+      "story": "Paul opens and closes nearly all his letters with the same gift: the grace of Jesus (2 Cor. 1:2; 13:13). He could not stop speaking about it. \"You know the grace of our Lord Jesus Christ, that though he was rich, yet for your sake he became poor, so that you through his poverty might become rich\" (2 Cor. 8:9). He left eternity's riches to walk Galilee's dusty roads and end on a cross, not to gain something, but to give you what you could never buy.",
+      "cue": "Stay here for a moment, {name}. This grace paid your ransom.",
+      "module": {
+        "type": "pickReveal",
+        "saveLabel": "Save to my fellowship",
+        "seedSub": "Your grace",
+        "prompt": "Touch every sentence and stay with the one you most need to believe today",
+        "hint": "Four ways Paul said the same thing",
+        "chooseLabel": "This is the one that I take",
+        "closing": "\"Only the grace of Jesus Christ can transform a heart of stone into one of flesh\" (Ellen G. White, Signs of the Times, May 2, 1892). It is not merely a theme of the quarter; it is the door through which everything else enters.",
+        "allowCustom": {
+          "label": "Write mine",
+          "placeholder": "The grace I need today is...",
+          "extraKey": "graciaPropia"
+        },
+        "items": [
+          {
+            "t": "Being rich, he became poor for you",
+            "ref": "2 Cor. 8:9",
+            "meaning": "He did not give up a salary; he gave up heaven. And he did it \"so that you through his poverty might become rich.\""
+          },
+          {
+            "t": "He humbled himself to death on a cross",
+            "ref": "Fil. 2:8",
+            "meaning": "Grace is not a pleasant feeling. It is a descent that ended on a cross, and love for you was the reason for the journey."
+          },
+          {
+            "t": "My grace is enough",
+            "ref": "2 Cor. 12:9",
+            "meaning": "The same grace that saved you holds you on an ordinary Tuesday, when no one is watching and everything feels heavy."
+          },
+          {
+            "t": "Grace be with all of you",
+            "ref": "2 Cor. 13:13",
+            "meaning": "With everyone, not only those who deserve it. Grace is the first and last gift Paul wants to place in your hands."
+          }
+        ]
+      }
+    },
+    {
+      "id": "amor",
+      "day": "Monday · God's Love",
+      "tag": "Slot 3 · Where I saw his love",
+      "title": "God is love, and he showed it",
+      "story": "\"God is love\" (1 John 4:8). Love is not something he does occasionally; it is who he is. Nor did he leave it in theory: \"God demonstrates his own love for us in this: while we were still sinners, Christ died for us\" (Rom. 5:8). Ellen G. White wrote that \"God is love\" is written \"upon every opening bud, upon every spire of springing grass\" (Steps to Christ, p. 10). That love appears in creation, is glimpsed in a sincere embrace, and was demonstrated once for all on the cross.",
+      "cue": "Do not respond in general, {name}. Think of a specific moment.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "Where have you seen the love of God in these months?",
+        "hint": "A place, a scene, something that did happen",
+        "saveLabel": "Save to my fellowship",
+        "seedSub": "His love",
+        "closing": "When you understand how deeply he loved you, something inside begins to open: \"We ought to lay down our lives for our brothers and sisters\" (1 John 3:16). Love received never remains still.",
+        "options": [
+          {
+            "id": "cruzamor",
+            "label": "On the cross, when I think about what it cost",
+            "insight": "\"God so loved the world that he gave his one and only Son\" (John 3:16). Nothing is more convincing than a Father who gives what he loves most.",
+            "tags": [
+              "theme:cross",
+              "theme:love",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "creacion",
+            "label": "In something small of nature",
+            "insight": "A cocoon, a bird, a morning. God could have made a merely functional world, but he made it beautiful. That too is a declaration of love.",
+            "tags": [
+              "theme:hope",
+              "posture:seeking",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "persona",
+            "label": "In a person who appeared just in time",
+            "insight": "This is often how God comforts us: he \"comforts us in all our troubles, so that we can comfort\" (2 Cor. 1:4). Someone became his hand beside you.",
+            "tags": [
+              "theme:relationship",
+              "theme:love",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "perdon",
+            "label": "In a pardon I didn't deserve",
+            "insight": "That is the exact taste of grace. If forgiveness reached you when you did not deserve it, you know what it can look like when offered to someone else.",
+            "tags": [
+              "theme:grace",
+              "posture:humble",
+              "tone:raw"
+            ]
+          },
+          {
+            "id": "sostuvo",
+            "label": "When he didn't let go when I failed him",
+            "insight": "\"Neither height nor depth, nor anything else in all creation, will be able to separate us from the love of God\" (Rom. 8:39). You failed, yet you still belonged to him.",
+            "tags": [
+              "theme:grace",
+              "react:doubt",
+              "posture:clinging"
+            ]
+          },
+          {
+            "id": "cuesta",
+            "label": "Honestly, it took me a while to see it",
+            "insight": "Thank you for saying so. His love does not depend on your feeling it today: \"Christ died for us\" while we were still sinners. That work is finished, and its gift is already yours.",
+            "tags": [
+              "react:doubt",
+              "theme:faith",
+              "tone:raw"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "imperativos",
+      "day": "Tuesday · The God of Peace and Love",
+      "tag": "Slot 4 · The order I obey",
+      "title": "Five things you can do",
+      "story": "Before the blessing, Paul leaves five charges: \"Rejoice! Strive for full restoration, encourage one another, be of one mind, live in peace\" (2 Cor. 13:11). None is merely a feeling; all five are actions. They come with an immense promise: where they are practiced, \"the God of love and peace will be with you.\" Across the ancient world, capricious gods had to be appeased. A God described as \"of love and peace\" was startling news, and the expression appears nowhere else in the Bible.",
+      "cue": "Here it gets concrete, {name}. Train the eye first.",
+      "module": {
+        "type": "skillThenCommit",
+        "saveLabel": "Save to my fellowship",
+        "seedSub": "Your order",
+        "skill": {
+          "prompt": "Does this build fellowship, or break it?",
+          "hint": "A healthy church is shaped by everyday choices, not only big decisions",
+          "badge": "You are learning to recognize what unites",
+          "cats": [
+            "Build fellowship",
+            "Break fellowship"
+          ],
+          "rounds": [
+            {
+              "t": "\"I know you don't think like me, but I'll listen to it until the end.\"",
+              "a": 0,
+              "fb": "Build. \"Be of one mind\" (2 Cor. 13:11) begins by truly listening, not by rushing to persuade."
+            },
+            {
+              "t": "\"I'd rather not say anything to me and keep the bother on myself.\"",
+              "a": 1,
+              "fb": "Break. Resentful silence is not peace: it is a division into slow motion."
+            },
+            {
+              "t": "\"I'm going to write to that person who hasn't come for months.\"",
+              "a": 0,
+              "fb": "Build. \"Encourage one another\" (2 Cor. 13:11). We receive comfort precisely so we can give it (2 Cor. 1:4)."
+            },
+            {
+              "t": "\"Let him apologize first, and then we'll see.\"",
+              "a": 1,
+              "fb": "Break. \"Strive for full restoration\" does not wait for the other person. Someone must take the first step, and it can be you."
+            },
+            {
+              "t": "\"I can have joy even though this year has been hard.\"",
+              "a": 0,
+              "fb": "Build. \"Have joy\" does not deny the pain: it rests on something firmer than the circumstances."
+            },
+            {
+              "t": "\"In the group I tell what they told me about him, just for us to pray.\"",
+              "a": 1,
+              "fb": "Breaks fellowship. Paul put slander and gossip on the list of what destroys a church (2 Cor. 12:20)."
+            }
+          ],
+          "summary": "Rejoice. Strive for full restoration. Encourage one another. Be of one mind. Live in peace. Five verbs, no feelings forced. Practice one well and step into the promise: \"The God of love and peace will be with you\" (2 Cor. 13:11)."
+        },
+        "commit": {
+          "prompt": "Which of the five charges will you obey this week?",
+          "hint": "Choose the one that costs you the most, not the one you already do",
+          "placeholder": "This week I'm going to...",
+          "extraKey": "imperativo",
+          "options": [
+            "To have joy even if the year has been hard",
+            "Look for restoration with someone",
+            "Cheer on someone who is slacking",
+            "Listen until you understand the one who thinks differently",
+            "Live in peace and drop an argument"
+          ]
+        }
+      }
+    },
+    {
+      "id": "espiritu",
+      "day": "Wednesday · The fellowship of the Holy Spirit",
+      "tag": "Slot 5 · What I ask of the Spirit",
+      "title": "A person, not a force",
+      "story": "First and Second Corinthians contain more than forty references to the Holy Spirit. He builds the church, equips for mission, reveals the deep things of God, dwells in us, seals us for salvation, writes on the heart, and gives freedom (1 Cor. 2:10-11; 3:16; 12:11; 2 Cor. 1:22; 3:3-17). Paul would not place an impersonal force beside the Father and the Son in one blessing. \"The fellowship of the Spirit\" means two things at once: fellowship with him, and fellowship among us as its consequence. The second does not exist without the first.",
+      "cue": "Ask for something concrete, {name}, for the season that begins tomorrow.",
+      "module": {
+        "type": "choiceInsight",
+        "privacy": false,
+        "prompt": "What work of the Spirit do you need for what lies ahead?",
+        "hint": "The Father gives the Spirit to those who ask for it (Luke 11:13)",
+        "saveLabel": "Save to my fellowship",
+        "seedSub": "Your request",
+        "closing": "Ask for it today, and ask again tomorrow. Fellowship among believers is not manufactured through meetings. It is received from the Spirit and then practiced.",
+        "options": [
+          {
+            "id": "sello",
+            "label": "Seal me and make sure I'm yours",
+            "insight": "\"He set his seal of ownership on us, and put his Spirit in our hearts as a deposit\" (2 Cor. 1:22). A seal is a signature: it tells you whose you are when you doubt.",
+            "tags": [
+              "theme:faith",
+              "posture:clinging",
+              "tone:tender"
+            ]
+          },
+          {
+            "id": "corazon",
+            "label": "Let him write his law in my heart",
+            "insight": "\"Written not on tablets of stone but on tablets of human hearts\" (2 Cor. 3:3). Obedience changes when desire itself begins to change.",
+            "tags": [
+              "theme:word",
+              "posture:surrendering",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "libertad",
+            "label": "Give me freedom from what dominates me",
+            "insight": "\"Where the Spirit of the Lord is, there is freedom\" (2 Cor. 3:17). He does not ask you to win the battle alone; he offers to fight beside you.",
+            "tags": [
+              "theme:sin",
+              "react:fear",
+              "posture:seeking"
+            ]
+          },
+          {
+            "id": "mision",
+            "label": "That I be able to talk about Jesus",
+            "insight": "Paul trusted not in eloquence but in \"a demonstration of the Spirit's power\" (1 Cor. 2:4). You do not need to be brilliant; you need to be filled.",
+            "tags": [
+              "theme:mission",
+              "theme:service",
+              "tone:resolute"
+            ]
+          },
+          {
+            "id": "union",
+            "label": "That I truly join my church",
+            "insight": "\"If any fellowship with the Spirit... make my joy complete by being like-minded\" (Phil. 2:1-2). Drawing closer is his work, not merely your decision.",
+            "tags": [
+              "theme:unity",
+              "react:withdraw",
+              "posture:seeking"
+            ]
+          },
+          {
+            "id": "amarcuesta",
+            "label": "Teach me to love the person I find difficult",
+            "insight": "That's the bravest request on the list. The love we reflect is an extension of his, and he knows how to give it even where there is no desire.",
+            "tags": [
+              "theme:love",
+              "posture:humble",
+              "tone:tender"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "restauracion",
+      "day": "Thursday · Strive for full restoration",
+      "tag": "Slot 6 · What I leave at the door",
+      "title": "Rejoin what was broken",
+      "story": "\"Strive for full restoration\" translates one Greek word, katartizō, which appears twice in this correspondence: here at the end (2 Cor. 13:11), and at the beginning (1 Cor. 1:10), when Paul pleaded that there be \"no divisions among you.\" It was the word for mending a broken net or setting a bone back into place. It hurts for a moment, and then you can walk. Paul prayed for people who had wounded him: \"Our prayer is that you may be fully restored\" (2 Cor. 13:9).",
+      "cue": "Climb carrying what you hold against someone, {name}, and do not set it down halfway.",
+      "module": {
+        "type": "stairs",
+        "saveLabel": "Save to my fellowship",
+        "seedSub": "Your restoration",
+        "climbPrompt": "Climb carrying what you have held against someone",
+        "climbHint": "Mend a broken net; set a bone back in place. That is what the word means.",
+        "leavePrompt": "What are you going to leave at the door for something to be repaired?",
+        "leaveHint": "The question is not who was right. He is the one who takes the first step.",
+        "leaveOptions": [
+          "A grudge that already weighs me down",
+          "The right to be right",
+          "A conversation I've been avoiding",
+          "The demand that the other person begin",
+          "The tag I put on someone"
+        ],
+        "allowCustom": {
+          "placeholder": "I leave on the door...",
+          "extraKey": "dejoPuerta"
+        },
+        "promisePrompt": "Receive what Paul asked for them",
+        "promiseOptions": [
+          {
+            "t": "\"We pray to God that they are fully restored.\"",
+            "w": "That was his prayer for people who had really hurt him. Let it be yours too."
+          },
+          {
+            "t": "\"The God of peace and love will be with you.\"",
+            "w": "It is not a prize for behaving well: it is the presence that is installed where someone decides peace."
+          },
+          {
+            "t": "\"Encourage one another.\"",
+            "w": "You received comfort so you would have something to give (2 Cor. 1:4). Do not keep it in a drawer."
+          },
+          {
+            "t": "\"Be of the same feeling, live in peace.\"",
+            "w": "Being of one mind does not mean thinking alike about everything. It means wanting for the other what you want for yourself."
+          }
+        ],
+        "verse": {
+          "text": "Rejoice, strive for full restoration, encourage one another, be of one mind, and live in peace.",
+          "ref": "2 Cor. 13:11"
+        },
+        "promiseExtraKey": "promesaRestauracion"
+      }
+    },
+    {
+      "id": "bendicion",
+      "day": "Thursday · Our Triune God",
+      "tag": "Slot 7 · The blessing I carry",
+      "title": "All three, with you",
+      "story": "It would be a mistake to read 2 Corinthians 13:13 as a division of labor, as though the Son gave only grace, the Father only love, and the Spirit only fellowship. All three work together at every step of salvation (Gal. 4:4-6): the Father sends, the Son redeems, and the Spirit confirms that you are God's child. \"There are three living persons of the heavenly trio\" (Ellen G. White, Evangelism, pp. 615-616). Now gather everything you assembled: what you carry, grace, love, the charge, the request, and what you left at the door. Everything hangs from this blessing.",
+      "cue": "This is what holds the entire mosaic, {name}. Receive it.",
+      "module": {
+        "type": "anchorChain",
+        "saveLabel": "Receive and save the blessing",
+        "seedSub": "Your blessing",
+        "chain": [
+          {
+            "word": "The grace of the Lord Jesus Christ",
+            "line": "Being rich, he became poor to enrich you (2 Cor. 8:9). That's where absolutely everything else starts."
+          },
+          {
+            "word": "God's love",
+            "line": "\"God is love\" (1 John 4:8), and he proved it \"being still sinners\" (Rom. 5:8), not the day you were ready."
+          },
+          {
+            "word": "The fellowship of the Holy Spirit",
+            "line": "A person, not a force: seals you, teaches you, dwells in you and unites you to others (2 Cor. 1:22; 1 Cor. 3:16)."
+          },
+          {
+            "word": "Be with all of you",
+            "line": "With everyone. With the entire church, including that part of the church that still costs you."
+          }
+        ],
+        "climax": "This is how the letter ends and thus ends the quarter: not with a reproach, but with a blessing. All three are yours, today and in the coming era.",
+        "prompt": "Which part of the blessing are you carrying?",
+        "hint": "The one you will need to repeat this week the most",
+        "options": [
+          "The grace of Jesus, which is enough for me",
+          "The love of the Father, which does not depend on me",
+          "The fellowship of the Spirit, which unites me with others",
+          "The three together, above all my house"
+        ],
+        "allowCustom": {
+          "placeholder": "I carry this blessing because...",
+          "extraKey": "bendicionPropia"
+        }
+      }
+    },
+    {
+      "id": "envio",
+      "day": "Friday · The blessing you carry away",
+      "tag": "Slot 8 · My sending",
+      "title": "Now say it about someone",
+      "story": "Just before blessing them, Paul left one task: \"Examine yourselves to see whether you are in the faith\" (2 Cor. 13:5). It was not a threat. It was a way of preparing open ground for the blessing. Then he spoke that blessing aloud over an imperfect church only beginning to mend. This is what remains for you: receive the blessing and speak it over another person. A mosaic does not exist to admire itself. It is made so someone else can see the whole image.",
+      "cue": "Last piece, {name}. One step, and one name.",
+      "module": {
+        "type": "commitDuo",
+        "saveLabel": "Close my fellowship",
+        "seedSub": "Your sending",
+        "stepPrompt": "My concrete step to start this stage",
+        "stepHint": "Touch an idea or write yours",
+        "stepOptions": [
+          "Look for the person with whom I have something pending",
+          "Return to the church group that had left",
+          "Ask for the presence of the Holy Spirit every day",
+          "Animate someone in writing every week",
+          "Keep studying the word without skipping days"
+        ],
+        "stepPlaceholder": "My concrete step...",
+        "stepExtraKey": "pasoTexto",
+        "personPrompt": "The person about whom I am going to say this blessing",
+        "personHint": "Say it out loud or by message, with your name and no ornaments",
+        "personPlaceholder": "A name...",
+        "personExtraKey": "compartir"
+      }
+    }
+  ],
+  "encourage": [
+    "\"May the grace of the Lord Jesus Christ, the love of God, and the fellowship of the Holy Spirit be with you all.\" (2 Cor. 13:13)",
+    "\"Be joy, seek your restoration, cheer each other, be of the same feeling and live in peace.\" (2 Cor. 13:11)",
+    "\"You already know the grace of our Lord Jesus Christ, who out of love for you became poor, being rich.\" (2 Cor. 8:9)",
+    "\"God is love.\" (1 John 4:8)",
+    "\"God shows his love for us in that, being still sinners, Christ died for us.\" (Rom. 5:8)",
+    "\"Let there be no divisions between you, but are perfectly united in the same mind.\" (1 Cor. 1:10)"
+  ],
+  "discussion": [
+    "A well-known hymn is called \"sublime grace.\" After this quarter, why would you say that the grace of Jesus is sublime? Give an example of your own life.",
+    "The parable of the prodigal son portrays the love of the Father. In what concrete details is it noticeable that that father loves, and which of those details do you need to believe today?",
+    "How can our local church show that \"the fellowship of the Spirit\" is real here and not merely a farewell phrase?",
+    "Of the five commissions of 2 Corinthians 13:11, which one is more missing from our group, and what would we do differently next quarter to live it?"
+  ],
+  "facilitator": [
+    {
+      "stationId": "recojo",
+      "apertura": "After thirteen weeks in Corinth, what has stayed with you that you did not know when you began?",
+      "seguimiento": "Why do you think Paul closes such a tough letter with a blessing and not with a warning?",
+      "ilustracion": "A mosaic is understood from a distance. Up close there are broken pieces; from farther away, one image.",
+      "transicion": "The first color of that mosaic is grace. Let's go there.",
+      "actividad": "Let each person say in one sentence what they carry from the quarter, without repeating another answer.",
+      "cierre": "Thank you, Lord, for what you sowed in us these thirteen weeks."
+    },
+    {
+      "stationId": "gracia",
+      "apertura": "What does it mean in practical terms that \"though he was rich, he became poor\" for us (2 Cor. 8:9)?",
+      "seguimiento": "Why does Paul start and finish almost all his letters mentioning grace?",
+      "ilustracion": "He did not give up a salary or a house: he gave up heaven, and with that he paid for the return ticket for us.",
+      "transicion": "Behind that grace is a Father who loved first. Let's continue.",
+      "actividad": "Look together at the greetings and farewells in three of Paul's letters and write down what repeats.",
+      "cierre": "May your grace be enough for us today, Lord, and overflow through what we give."
+    },
+    {
+      "stationId": "amor",
+      "apertura": "In the ancient world the gods did not love people. What changes everything if \"God is love\" (1 John 4:8)?",
+      "seguimiento": "Where have you seen the love of God in these last months, specifically?",
+      "ilustracion": "\"God is love\" is written in every flower bud that opens (The Way to Christ, p. 15), and signed on the cross.",
+      "transicion": "That love does not remain an inward feeling; it becomes five practical charges.",
+      "actividad": "Read Romans 8:35-39 and name aloud what threatens to separate you from that love today.",
+      "cierre": "Help us believe that you loved us while still sinners."
+    },
+    {
+      "stationId": "imperativos",
+      "apertura": "Read 2 Corinthians 13:11. Which of the five charges is hardest to practice in a church?",
+      "seguimiento": "What promise accompanies these five charges, and why is that no coincidence?",
+      "ilustracion": "None of the five is merely a feeling. They are verbs you can practice even on a difficult day.",
+      "transicion": "None of this can be sustained without the Spirit. Let's ask for his help.",
+      "actividad": "Assign the five charges to five people and let each one describe what theirs could look like this week.",
+      "cierre": "God of love and peace, remain among us as we practice these words."
+    },
+    {
+      "stationId": "espiritu",
+      "apertura": "Why is it important to understand that the Holy Spirit is a person and not a force?",
+      "seguimiento": "Of all the works of the Spirit in 1 and 2 Corinthians, which does our church need most right now?",
+      "ilustracion": "Paul would not have placed an impersonal force alongside the Father and the Son in the same blessing.",
+      "transicion": "The fellowship we receive from the Spirit is tested when it is time to restore something broken.",
+      "actividad": "Make a list together of the Spirit's work in 1 Cor. 2:10-11; 3:16; 2 Cor. 1:22; 3:3-17.",
+      "cierre": "Come, Holy Spirit, and make us one body."
+    },
+    {
+      "stationId": "restauracion",
+      "apertura": "\"Strive for full restoration\" uses the same word that appears in 1 Corinthians 1:10. What does it tell us that the correspondence begins and ends there?",
+      "seguimiento": "What does it take to go first when you believe the other person should make the first move?",
+      "ilustracion": "Katartizō meant mending a broken net or setting a bone in place. It hurts for a moment; then you can walk.",
+      "transicion": "Restored, we can now receive the complete blessing.",
+      "actividad": "Let each person silently write one initial and pray for that person for one minute.",
+      "cierre": "Restore, Lord, what was broken between us this year."
+    },
+    {
+      "stationId": "bendicion",
+      "apertura": "Why would it be a mistake to think that only the Son gives grace, only the Father gives love, and only the Spirit gives fellowship?",
+      "seguimiento": "How should our fellowship reflect the relationship among the three persons?",
+      "ilustracion": "In Galatians 4:4-6, the whole plan of salvation fits into three verses, with all three persons working together.",
+      "transicion": "All that remains is to take this blessing and speak it over someone.",
+      "actividad": "Recite together 2 Corinthians 13:13, slowly, looking at each other.",
+      "cierre": "May grace, love, and fellowship be with us all."
+    },
+    {
+      "stationId": "envio",
+      "apertura": "Why does Paul say \"examine yourselves\" just before giving the blessing (2 Cor. 13:5)?",
+      "seguimiento": "Over whom will you speak this blessing aloud by name this week?",
+      "ilustracion": "A blessing is not an ornament that closes a meeting. It is something spoken over a person.",
+      "transicion": "Let's close the quarter as Paul closed the letter.",
+      "actividad": "Form pairs, put a hand on each other's shoulder and say 2 Corinthians 13:13 using your name.",
+      "cierre": "May grace, love, and fellowship go with each of you."
+    }
+  ],
+  "patternTemplate": "{name}, you began the quarter with a broken church and close it carrying this truth: {slot:recojo|lower}. You saw his love {slot:amor|lower}, chose one concrete charge to obey, and left {slot:restauracion|lower} at the door. The fragments now form an image, and the signature is not yours.",
+  "outOracion": "Father, I close this quarter before you. I carry this truth: {slot:recojo|lower}. Thank you for your grace, which I understood more clearly when I saw that {slot:gracia|lower}. I saw your love {slot:amor|lower}, and I do not want to forget it. This week I want to obey you through {slot:imperativos|lower}, and I ask your Spirit for {slot:espiritu|lower}. I leave {slot:restauracion|lower} at your door. I put on your blessing: {slot:bendicion|lower}. Thank you that \"{verse}\" ({verseRef}). In Jesus' name, amen.",
+  "outAliento": "{name}, you began by reading the correspondence of a broken church and ended with a whole mosaic in your hands. You did not assemble it by willpower; it was given to you piece by piece. Now carry {slot:bendicion|lower} and speak it over someone else, because a blessing kept in storage blesses no one.",
+  "outAccion24": "In the next 24 hours I'm going to {slot:envio|lower}, and I'm going to say this blessing out loud about someone.",
+  "outPregunta": "After a full quarter in the letters to Corinth, I chose this truth: {slot:recojo|lower}. This week I will {slot:imperativos|lower}. What truth will you carry, and over whom will you speak the blessing?",
+  "outTarjeta": "My fellowship at the end of the quarter: I carry {slot:recojo|lower}, obey {slot:imperativos|lower}, and leave {slot:restauracion|lower} at the door. Verse: \"{verse}\" ({verseRef})."
+}
