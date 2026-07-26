@@ -76,6 +76,5 @@ export function contentForDepth(episode, depth) {
     ...episode,
     depth: selected,
     showStory: selected !== "minute",
-    showFacilitator: selected === "deep",
   };
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Icon from "../../components/Icon.jsx";
 import { useAppReducedMotion } from "../../lib/useAppReducedMotion.js";
@@ -38,14 +38,22 @@ export default function ArtifactMutation({
   const { t } = useI18n();
   const removal = isRemovalLesson(lesson?.id);
 
+  /* This screen fully replaces the question/ritual view in place (no route
+     change), so whatever scroll position the reader had while answering
+     carries over. Left alone, the reader lands mid-page or on blank space
+     below a shorter screen. The old fix animated a scrollIntoView after
+     mount, which reads as the page suddenly "jumping" out from under the
+     reader's thumb. Resetting to the top synchronously, before the browser
+     paints the new screen, gets the same result with no visible motion:
+     the reward is simply already there when they see it. useLayoutEffect
+     (not useEffect) is what makes that timing guarantee. */
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     headingRef.current?.focus({ preventScroll: true });
-    sectionRef.current?.scrollIntoView({
-      block: "start",
-      inline: "nearest",
-      behavior: reduced ? "auto" : "smooth",
-    });
-  }, [reduced]);
+  }, []);
 
   return (
     <motion.section

@@ -9,7 +9,7 @@ import {
 import { lessonManifestForLocale } from "../content/lessonManifest.generated.js";
 import { useJourney, journeyActions, selectors } from "../state/journey/index.js";
 import { useJourneyKit } from "../state/useJourneyKit.js";
-import { fillName } from "../lib/name.js";
+import { fillName, weave, warmCue } from "../lib/name.js";
 import {
   latestOpenCommitment,
   latestSavedPhrase,
@@ -160,18 +160,20 @@ function TodayReady({ lesson }) {
     );
   }
 
+  const readerName = kit.state.userName || selectors.selectProfileName(journey.state);
+  const dailyCue = episode.cue
+    ? episode.cue.includes("{name}")
+      ? fillName(episode.cue, readerName)
+      : weave(readerName, episode.cue, `${lesson.id}:${episode.id}`)
+    : warmCue(readerName, `${lesson.id}:${episode.id}`, locale);
+
   return (
     <div className="route-experience route-experience--today">
       <DailySpark
         lesson={lesson}
         episode={{
           ...episode,
-          cue: episode.cue
-            ? fillName(
-                episode.cue,
-                kit.state.userName || selectors.selectProfileName(journey.state)
-              )
-            : "",
+          cue: dailyCue,
           canonicalDay:
             episodeIndex === 7
               ? t("today.friday")

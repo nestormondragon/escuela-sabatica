@@ -2,6 +2,7 @@ import React, {
   useCallback,
   useEffect,
   useId,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -96,6 +97,19 @@ export default function RestorationRitual({
   const [settling, setSettling] = useState(false);
   const fired = useRef(false);
   const completionTimer = useRef(0);
+  const sectionRef = useRef(null);
+
+  /* This ritual replaces the question/option list in place, further down the
+     page than the "Guardar" button the reader just tapped. Left alone, the
+     reader's scroll position doesn't move, so the new drag-to-place puzzle
+     renders off-screen above where they're looking and tapping "Guardar"
+     reads as if it did nothing. Scrolling it into view synchronously, before
+     paint, means the puzzle is already what they see. */
+  useLayoutEffect(() => {
+    sectionRef.current?.scrollIntoView({ block: "start", behavior: "auto" });
+    // Only on mount — this ritual instance is fixed for its lifetime.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const family = ritualFamily(type, materialVerb);
   const copy = materialVerb
     ? materialCopy(family)
@@ -148,6 +162,7 @@ export default function RestorationRitual({
 
   return (
     <section
+      ref={sectionRef}
       className="restoration-ritual"
       data-type={type}
       data-material-verb={materialVerb || ""}

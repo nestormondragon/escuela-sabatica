@@ -160,6 +160,14 @@
   cursor: pointer;
 }
 
+.depth-chooser__legend {
+  padding: 0 1px 7px;
+  color: var(--text-soft);
+  font: 650 var(--type-micro)/1.2 var(--ui);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
 .depth-chooser {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

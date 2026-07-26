@@ -20,7 +20,7 @@ export default function DepthChooser({ value = "study", availability, onChange }
 
   return (
     <fieldset className="depth-chooser">
-      <legend className="sr-only">{t("today.chooseDepth")}</legend>
+      <legend className="depth-chooser__legend">{t("today.chooseDepth")}</legend>
       {Object.values(DEPTHS).map((depth) => {
         const enabled = availability?.[depth.id] !== false;
         return (

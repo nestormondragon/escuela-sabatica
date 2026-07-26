@@ -15,7 +15,7 @@ import {
   journeyActions,
   selectors,
 } from "../state/journey/index.js";
-import { fillName, lcFirst } from "../lib/name.js";
+import { fillName, lcFirst, weave, warmCue } from "../lib/name.js";
 import { capabilityForModule } from "../lib/journeyMeaning.js";
 import ArtifactMutation from "../features/episode/ArtifactMutation.jsx";
 import { visualForLesson } from "../visual-world/lessonVisualManifest.js";
@@ -39,6 +39,8 @@ function EpisodeReady({ lesson, episodeId }) {
   const [search] = useSearchParams();
   const journey = useJourney();
   const kit = useJourneyKit(lesson);
+  const role = journey.state.profile.role;
+  const teacherMode = role === "teacher" || role === "both";
   const requestedDepth =
     search.get("profundidad") || journey.state.profile.preferredDepth || "study";
   const episode = contentForDepth(
@@ -46,12 +48,17 @@ function EpisodeReady({ lesson, episodeId }) {
     requestedDepth
   );
   const [mutation, setMutation] = useState(null);
+  const readerName = kit.state.userName || selectors.selectProfileName(journey.state);
+  /* Only ~1 in 10 authored cues carries a literal {name} token, so most
+     episode screens never greeted the reader by name even though a name
+     was on file. Weaving the name into whichever cue text IS authored
+     (and falling back to a varied warm greeting when there's none at all)
+     restores a name on every screen without touching the authored copy. */
   const cue = episode?.cue
-    ? fillName(
-        episode.cue,
-        kit.state.userName || selectors.selectProfileName(journey.state)
-      )
-    : "";
+    ? episode.cue.includes("{name}")
+      ? fillName(episode.cue, readerName)
+      : weave(readerName, episode.cue, `${lesson.id}:${episode.id}`)
+    : warmCue(readerName, `${lesson.id}:${episode.id}`, locale);
 
   if (!episode?.id) throw new Error(t("episode.missing"));
 
@@ -227,7 +234,7 @@ function EpisodeReady({ lesson, episodeId }) {
           />
         </div>
 
-        {episode.showFacilitator && episode.facilitator ? (
+        {teacherMode && episode.facilitator ? (
           <MaestroPanel guide={episode.facilitator} />
         ) : null}
       </article>
