@@ -17,7 +17,6 @@ import {
 } from "../state/journey/index.js";
 import { fillName } from "../lib/name.js";
 import { capabilityForModule } from "../lib/journeyMeaning.js";
-import WorldStage from "../features/world/WorldStage.jsx";
 import ArtifactMutation from "../features/episode/ArtifactMutation.jsx";
 import RouteLoading from "./RouteLoading.jsx";
 
@@ -153,11 +152,6 @@ function EpisodeReady({ lesson, episodeId }) {
   if (mutation) {
     return (
       <div className="route-experience">
-        <WorldStage
-          lesson={lesson}
-          filled={kit.filledCount}
-          total={kit.total}
-        />
         <ArtifactMutation
           {...mutation}
           onContinue={() => navigate(`/leccion/${lesson.id}`)}
@@ -168,13 +162,6 @@ function EpisodeReady({ lesson, episodeId }) {
 
   return (
     <div className="route-experience">
-      <WorldStage
-        lesson={lesson}
-        filled={kit.filledCount}
-        total={kit.total}
-        compact
-      />
-
       <article className="episode-canvas" aria-labelledby="episode-title">
         <button type="button" className="route-back" onClick={back}>
           <Icon name="arrowLeft" size={17} />

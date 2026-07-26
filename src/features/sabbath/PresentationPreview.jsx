@@ -1,6 +1,7 @@
 import React, { useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 import Icon from "../../components/Icon.jsx";
+import LessonRelief from "../../visual-world/LessonRelief.jsx";
 
 export default function PresentationPreview({
   lesson,
@@ -71,9 +72,14 @@ export default function PresentationPreview({
       </div>
 
       <header className="sbf-presentation__header">
-        <span>Sábado en comunidad</span>
-        <h2 id={titleId}>{lesson.title}</h2>
-        <p>{lesson.verse?.ref}</p>
+        <div className="sbf-presentation__relief" aria-hidden="true">
+          <LessonRelief lesson={lesson} stage={4} priority />
+        </div>
+        <div className="sbf-presentation__title">
+          <span>Sábado en comunidad</span>
+          <h2 id={titleId}>{lesson.title}</h2>
+          <p>{lesson.verse?.ref}</p>
+        </div>
       </header>
 
       <div className="sbf-presentation__grid">

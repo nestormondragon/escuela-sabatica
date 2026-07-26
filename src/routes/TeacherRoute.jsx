@@ -4,6 +4,7 @@ import Icon from "../components/Icon.jsx";
 import MaestroPanel from "../components/MaestroPanel.jsx";
 import { useLoadedLesson } from "../content/useLoadedLesson.js";
 import { adaptLessonToEpisodes } from "../content/legacyEpisodeAdapter.js";
+import LessonRelief from "../visual-world/LessonRelief.jsx";
 import RouteLoading from "./RouteLoading.jsx";
 
 export default function TeacherRoute() {
@@ -25,6 +26,9 @@ export default function TeacherRoute() {
       </p>
 
       <div className="teacher-opening">
+        <div className="teacher-opening__relief" aria-hidden="true">
+          <LessonRelief lesson={lesson} stage={4} compact priority />
+        </div>
         <blockquote>
           {lesson.verse.text}
           <cite>{lesson.verse.ref}</cite>

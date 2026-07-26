@@ -15,7 +15,6 @@ import {
   latestSavedPhrase,
 } from "../lib/journeyMeaning.js";
 import Icon from "../components/Icon.jsx";
-import WorldStage from "../features/world/WorldStage.jsx";
 import DailySpark from "../features/today/DailySpark.jsx";
 import ReturnThread from "../features/today/ReturnThread.jsx";
 import IntentionalExit from "../features/episode/IntentionalExit.jsx";
@@ -48,7 +47,6 @@ function TodayReady({ lesson }) {
     : -1;
 
   const previous = LESSON_MANIFEST[lesson.number - 2] || null;
-  const next = LESSON_MANIFEST[lesson.number] || null;
   const returnItem = useMemo(() => {
     const commitment = latestOpenCommitment(journey.state);
     if (commitment?.action?.value) {
@@ -117,13 +115,6 @@ function TodayReady({ lesson }) {
   if (kit.done || !episode) {
     return (
       <div className="route-experience route-experience--today">
-        <WorldStage
-          lesson={lesson}
-          filled={kit.filledCount}
-          total={kit.total}
-          previous={previous}
-          next={next}
-        />
         <section className="daily-spark" aria-labelledby="daily-complete-title">
           <div className="daily-spark-meta">
             <span>Semana preparada</span>
@@ -166,13 +157,6 @@ function TodayReady({ lesson }) {
 
   return (
     <div className="route-experience route-experience--today">
-      <WorldStage
-        lesson={lesson}
-        filled={kit.filledCount}
-        total={kit.total}
-        previous={previous}
-        next={next}
-      />
       <DailySpark
         lesson={lesson}
         episode={{

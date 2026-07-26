@@ -1,0 +1,164 @@
+/*
+THESIS: One living Corinthian courtyard replaces the category's card stack.
+OWN-WORLD: Cool basalt, conserved limestone, fired terracotta, grout, papyrus,
+upper-left raking light, chipped planes, and museum-grade relief.
+STORY: A reader sets meaning into one durable artifact and later encounters
+the same changed object from another distance.
+FIRST VIEWPORT: The active relief owns the upper mobile field or left desktop
+bay; one readable study plane and one primary action remain immediately clear.
+FORM: User-pinned hybrid bas-relief direction, ranked first, with native
+architectural staging. Seed key: pinned-user-reference.
+*/
+
+.lesson-relief {
+  --relief-clip: polygon(42% 35%, 53% 31%, 59% 37%, 61% 50%, 58% 62%, 48% 66%, 39% 60%, 36% 49%);
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--basalt-deep, #0d0f12);
+}
+
+.lesson-relief__image-field,
+.lesson-relief__fallback,
+.lesson-relief__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.lesson-relief__image-field {
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 280ms var(--ease-out);
+}
+
+.lesson-relief[data-load-state="ready"] .lesson-relief__image-field {
+  opacity: 1;
+}
+
+.lesson-relief__fallback {
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  padding: 13%;
+  opacity: 1;
+  transition: opacity 220ms var(--ease-out);
+}
+
+.lesson-relief__fallback-mark {
+  display: block;
+  width: 38%;
+  aspect-ratio: 0.82;
+  border: 1px solid color-mix(in srgb, var(--clay) 42%, transparent);
+  background:
+    linear-gradient(130deg, transparent 0 47%, color-mix(in srgb, var(--clay) 62%, transparent) 48% 50%, transparent 51%),
+    color-mix(in srgb, var(--surface-3) 70%, #000);
+  clip-path: polygon(30% 0, 70% 0, 76% 20%, 96% 42%, 88% 100%, 12% 100%, 4% 42%, 24% 20%);
+  opacity: 0.74;
+}
+
+.lesson-relief[data-load-state="ready"] .lesson-relief__fallback {
+  opacity: 0;
+}
+
+.lesson-relief[data-load-state="failed"] .lesson-relief__fallback {
+  opacity: 1;
+}
+
+.lesson-relief__image {
+  object-fit: cover;
+  object-position: var(--relief-focal, 50% 50%);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.lesson-relief__image--base {
+  filter: saturate(0.08) brightness(0.48) contrast(1.14);
+  transform: scale(1.008);
+}
+
+.lesson-relief__image--revealed {
+  clip-path: var(--relief-clip);
+  filter: saturate(1.02) brightness(0.98) contrast(1.03);
+  transition: clip-path 720ms var(--ease-out);
+}
+
+.lesson-relief[data-stage="1"] {
+  --relief-clip: polygon(24% 30%, 50% 12%, 69% 24%, 76% 45%, 67% 68%, 48% 78%, 28% 65%, 18% 45%);
+}
+
+.lesson-relief[data-stage="2"] {
+  --relief-clip: polygon(10% 22%, 47% 5%, 82% 14%, 92% 45%, 84% 78%, 52% 92%, 17% 80%, 5% 50%);
+}
+
+.lesson-relief[data-stage="3"] {
+  --relief-clip: polygon(2% 8%, 50% 0%, 98% 3%, 100% 70%, 90% 96%, 54% 100%, 10% 94%, 0% 56%);
+}
+
+.lesson-relief[data-stage="4"] {
+  --relief-clip: polygon(0% 0%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 50%);
+}
+
+.lesson-relief__kiln-line,
+.lesson-relief__edge-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.lesson-relief__kiln-line {
+  background:
+    radial-gradient(
+      circle at 50% 53%,
+      color-mix(in srgb, var(--clay-hi, #ef8b67) 18%, transparent),
+      transparent 31%
+    );
+  mix-blend-mode: screen;
+  opacity: 0.18;
+  transition: opacity 720ms var(--ease-out);
+}
+
+.lesson-relief[data-stage="1"] .lesson-relief__kiln-line { opacity: 0.26; }
+.lesson-relief[data-stage="2"] .lesson-relief__kiln-line { opacity: 0.34; }
+.lesson-relief[data-stage="3"] .lesson-relief__kiln-line { opacity: 0.43; }
+.lesson-relief[data-stage="4"] .lesson-relief__kiln-line { opacity: 0.52; }
+
+.lesson-relief__edge-light {
+  box-shadow:
+    inset 1px 1px 0 rgb(255 255 255 / 0.12),
+    inset -2px -3px 5px rgb(0 0 0 / 0.48);
+}
+
+.lesson-relief.is-compact .lesson-relief__image--base {
+  filter: saturate(0.1) brightness(0.52) contrast(1.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lesson-relief__image-field,
+  .lesson-relief__fallback,
+  .lesson-relief__image--revealed,
+  .lesson-relief__kiln-line {
+    transition-duration: 0ms !important;
+  }
+}
+
+:root[data-motion="reduce"] .lesson-relief__image-field,
+:root[data-motion="reduce"] .lesson-relief__fallback,
+:root[data-motion="reduce"] .lesson-relief__image--revealed,
+:root[data-motion="reduce"] .lesson-relief__kiln-line {
+  transition-duration: 0ms !important;
+}
+
+@media (forced-colors: active) {
+  .lesson-relief__image-field {
+    display: none;
+  }
+
+  .lesson-relief__fallback {
+    opacity: 1;
+  }
+}

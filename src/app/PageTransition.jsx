@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -34,6 +34,11 @@ export default function PageTransition({
     routeKey ??
     `${location.key}:${location.pathname}${location.search}${location.hash}`;
 
+  useLayoutEffect(() => {
+    if (location.hash) return;
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.hash, location.pathname, location.search]);
+
   useEffect(() => {
     setFocusReadyKey(reduceMotion ? key : null);
 
@@ -41,7 +46,7 @@ export default function PageTransition({
 
     // Framer normally signals completion. This fallback also covers an
     // interrupted or initially suppressed animation.
-    const fallback = window.setTimeout(() => setFocusReadyKey(key), 360);
+    const fallback = window.setTimeout(() => setFocusReadyKey(key), 300);
     return () => window.clearTimeout(fallback);
   }, [key, reduceMotion]);
 
@@ -93,9 +98,9 @@ export default function PageTransition({
         exit: { opacity: 1 },
       }
     : {
-        initial: { opacity: 0, x: offset },
+        initial: { opacity: 0, x: offset * 0.65 },
         animate: { opacity: 1, x: 0 },
-        exit: { opacity: 0, x: offset * -0.55 },
+        exit: { opacity: 0, x: offset * -0.35 },
       };
 
   return (
@@ -110,7 +115,7 @@ export default function PageTransition({
         variants={states}
         onAnimationComplete={finishRouteTransition}
         transition={
-          reduceMotion ? { duration: 0 } : { duration: 0.28, ease: EASE_OUT }
+          reduceMotion ? { duration: 0 } : { duration: 0.23, ease: EASE_OUT }
         }
       >
         {content}

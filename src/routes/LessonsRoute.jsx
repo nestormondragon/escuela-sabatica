@@ -10,6 +10,8 @@ import {
 } from "../content/loadLesson.js";
 import { formatLong } from "../lib/date.js";
 import { useJourney } from "../state/journey/index.js";
+import { stageIndexFor } from "../components/Centerpiece.jsx";
+import LessonRelief from "../visual-world/LessonRelief.jsx";
 
 export default function LessonsRoute() {
   const { state } = useJourney();
@@ -40,6 +42,14 @@ export default function LessonsRoute() {
                 onMouseEnter={() => preloadLesson(lesson.id)}
                 onFocus={() => preloadLesson(lesson.id)}
               >
+                <span className="archive-line__relief" aria-hidden="true">
+                  <LessonRelief
+                    lesson={lesson}
+                    stage={stageIndexFor(progress)}
+                    compact
+                    priority={isCurrent}
+                  />
+                </span>
                 <span className="archive-line__number">
                   {String(lesson.number).padStart(2, "0")}
                 </span>

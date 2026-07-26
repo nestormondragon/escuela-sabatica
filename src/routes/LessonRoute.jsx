@@ -6,7 +6,6 @@ import { adaptLessonToEpisodes } from "../content/legacyEpisodeAdapter.js";
 import { lessonSummaryById } from "../content/lessonManifest.generated.js";
 import { useJourneyKit } from "../state/useJourneyKit.js";
 import { useJourney, journeyActions, selectors } from "../state/journey/index.js";
-import WorldStage from "../features/world/WorldStage.jsx";
 import RouteLoading from "./RouteLoading.jsx";
 
 export default function LessonRoute() {
@@ -58,12 +57,6 @@ function LessonReady({ lesson }) {
 
   return (
     <div className="route-experience">
-      <WorldStage
-        lesson={lesson}
-        filled={kit.filledCount}
-        total={kit.total}
-      />
-
       <section className="lesson-path" aria-labelledby="lesson-title">
         <div className="route-eyebrow">Lección {lesson.number}</div>
         <h1 id="lesson-title" data-route-heading>{lesson.title}</h1>

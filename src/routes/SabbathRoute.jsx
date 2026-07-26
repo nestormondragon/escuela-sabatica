@@ -11,6 +11,7 @@ import {
   useJourney,
 } from "../state/journey/index.js";
 import SabbathFolio from "../features/sabbath/SabbathFolio.jsx";
+import LessonRelief from "../visual-world/LessonRelief.jsx";
 import RouteLoading from "./RouteLoading.jsx";
 
 export default function SabbathRoute() {
@@ -35,6 +36,9 @@ function SabbathReady({ lesson }) {
   if (kit.filledCount === 0) {
     return (
       <section className="sabbath-empty" aria-labelledby="sabbath-empty-title">
+        <div className="sabbath-empty__relief" aria-hidden="true">
+          <LessonRelief lesson={lesson} stage={0} compact priority />
+        </div>
         <div className="route-eyebrow">Sábado</div>
         <h1 id="sabbath-empty-title" data-route-heading>El folio espera tu primera pieza</h1>
         <p className="route-deck">

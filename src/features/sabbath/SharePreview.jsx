@@ -1,5 +1,6 @@
 import React, { useId, useMemo, useRef, useState } from "react";
 import Icon from "../../components/Icon.jsx";
+import LessonRelief from "../../visual-world/LessonRelief.jsx";
 
 function safeFilePart(value) {
   return String(value || "folio")
@@ -159,6 +160,9 @@ export default function SharePreview({
       {fields.length ? (
         <>
           <article className="sbf-share-card" ref={previewRef}>
+            <div className="sbf-share-card__relief" aria-hidden="true">
+              <LessonRelief lesson={lesson} stage={4} compact priority />
+            </div>
             <header className="sbf-share-card__header">
               <p>Escuela Sabática</p>
               <span>Lección {lesson.number}</span>

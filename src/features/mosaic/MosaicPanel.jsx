@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import Icon from "../../components/Icon.jsx";
-import Motif from "../../components/Motif.jsx";
+import LessonRelief from "../../visual-world/LessonRelief.jsx";
 
 /*
  * One physical panel in the quarter artifact.
@@ -13,7 +13,6 @@ const MosaicPanel = forwardRef(function MosaicPanel(
     lesson,
     panel,
     selected = false,
-    renderMotif = false,
     tabIndex = -1,
     onSelect,
     onKeyDown,
@@ -73,19 +72,13 @@ const MosaicPanel = forwardRef(function MosaicPanel(
       </span>
 
       <span className="qm-panel__art" aria-hidden="true">
-        {renderMotif ? (
-          <Motif
-            kind={lesson.scene?.motif || lesson.motif || lesson.centerpiece || "mosaico"}
-            stageIndex={panel.stageIndex}
-            size={82}
-            arc={lesson.scene?.arc || lesson.arc || "reveal"}
-          />
-        ) : (
-          <span className="qm-panel__cut-mark">
-            <i />
-            <i />
-          </span>
-        )}
+        <LessonRelief
+          lesson={lesson}
+          stage={panel.stageIndex}
+          compact
+          priority={selected || panel.current}
+          className="qm-panel__relief"
+        />
       </span>
 
       <span className="qm-panel__copy">

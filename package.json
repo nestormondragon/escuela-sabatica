@@ -12,6 +12,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "build:visuals": "node scripts/build-visual-assets.mjs",
     "build:lessons": "node scripts/build-lessons.mjs",
     "qa:content": "node scripts/qa-structure.mjs && node scripts/qa-templates.mjs",
     "qa:browser": "node scripts/verify-overhaul.mjs",
@@ -37,6 +38,7 @@
     "paper": "^0.12.18",
     "playwright": "^1.62.0",
     "postcss": "^8.5.18",
+    "sharp": "^0.35.3",
     "svgo": "^4.0.2",
     "vite": "^8.1.5"
   }

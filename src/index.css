@@ -1,6 +1,6 @@
 /* =====================================================================
    ESCUELA SABÁTICA · Q3 2026 · 1 y 2 CORINTIOS
-   Design system: "Mosaico de Corinto"
+   Design system: "Corinto Vivo · El Atrio Restaurado"
 
    Art direction
    -------------
@@ -9,7 +9,7 @@
    into factions (1 Cor. 1:10) and calls the fragments into one image; he
    calls the people themselves clay jars carrying light (2 Cor. 4:7).
 
-   So: tesserae, not weather. Clay and slate, not parchment and brass.
+   So: tesserae, not weather. Clay, basalt, limestone, and papyrus.
    Architectural, squared-off geometry, not soft rounded pillows.
 
    Type      Outfit (geometric grotesque) frames the experience.
@@ -17,41 +17,49 @@
    Color     ONE accent, clay/terracotta, used on the whole product.
              Slate ink base at night, cool stone by day. Never warm parchment.
    Shape     One radius scale, deliberately sharp: 3 / 6 / 10px. Tesserae.
-   Motion    Placement, not ambience. Pieces settle, ink blooms, light
-             breathes through a crack. Every loop is CSS so it starts on
-             mount and never depends on a JS visibility flag.
+   Motion    Placement, not ambience. Pieces settle and restored material
+             appears causally. The still frame carries the visual quality.
    ===================================================================== */
 
 :root {
-  /* ---- NIGHT (default): slate ink ---- */
-  --bg-0: #14161b;
-  --bg-1: #191c22;
-  --bg-2: #1e212a;
-  --surface: rgba(233, 231, 226, 0.035);
-  --surface-2: #1e212a;
-  --surface-3: #252932;
-  --line: rgba(233, 231, 226, 0.10);
-  --line-2: rgba(233, 231, 226, 0.19);
+  /* ---- NIGHT (default): carved basalt under gallery light ---- */
+  --bg-0: #0d0f12;
+  --bg-1: #12151a;
+  --bg-2: #181c22;
+  --surface: rgba(232, 226, 217, 0.045);
+  --surface-2: #171a20;
+  --surface-3: #20242b;
+  --line: rgba(232, 226, 217, 0.12);
+  --line-2: rgba(232, 226, 217, 0.24);
+  --stone-highlight: rgba(241, 235, 226, 0.12);
+  --stone-shadow: rgba(0, 0, 0, 0.62);
+  --stone-groove: #080a0d;
 
   /* ink: bone, never pure white */
-  --text: #e9e7e2;
-  --text-soft: #c2c0ba;
-  --muted: #96948e;       /* AA 5.97 on base */
-  --faint: #8a8882;       /* AA 4.9 on base */
+  --text: #eee9e1;
+  --text-soft: #cbc4ba;
+  --muted: #a19b92;
+  --faint: #918b83;
 
   /* THE accent. One hue, whole product. Clay from Corinth. */
-  --clay: #e0785c;        /* AA 6.04 on base */
-  --clay-hi: #f0916f;
-  --clay-deep: #c05a3f;
-  --clay-ink: #14161b;    /* text that sits ON clay: AA 6.04 */
+  --clay: #df7554;
+  --clay-hi: #ef8b67;
+  --clay-deep: #b94d34;
+  --clay-ink: #111317;
 
   /* supporting, used only for state, never as a second brand accent */
   --ok: #7fb08a;
   --warn: #d8a657;
 
-  --shadow: 0 1px 2px rgba(0,0,0,0.42), 0 4px 12px rgba(0,0,0,0.34);
-  --shadow-lg: 0 2px 6px rgba(0,0,0,0.44), 0 18px 44px rgba(0,0,0,0.42);
-  --glow-clay: 0 0 0 1px rgba(224,120,92,0.30), 0 0 26px rgba(224,120,92,0.20);
+  --shadow:
+    0 2px 2px rgba(0, 0, 0, 0.46),
+    0 8px 18px rgba(0, 0, 0, 0.34);
+  --shadow-lg:
+    0 3px 5px rgba(0, 0, 0, 0.54),
+    0 22px 48px rgba(0, 0, 0, 0.44);
+  --glow-clay:
+    0 0 0 1px rgba(223, 117, 84, 0.36),
+    0 7px 18px rgba(82, 24, 12, 0.32);
 
   /* Shape lock: tesserae are cut, not moulded. */
   --r-sm: 3px;
@@ -76,31 +84,40 @@
 
 /* ---- DAY: cool quarried stone. Deliberately not cream, not parchment. ---- */
 :root[data-mode="day"] {
-  --bg-0: #e3e3e0;
-  --bg-1: #ebeae8;
-  --bg-2: #dcdcd8;
-  --surface: rgba(25, 27, 31, 0.035);
-  --surface-2: #edecea;
-  --surface-3: #d9d9d5;
-  --line: rgba(25, 27, 31, 0.14);
-  --line-2: rgba(25, 27, 31, 0.26);
+  --bg-0: #d5d5d1;
+  --bg-1: #e2e1dd;
+  --bg-2: #c9c9c4;
+  --surface: rgba(25, 27, 31, 0.045);
+  --surface-2: #e4e3df;
+  --surface-3: #cdcdc8;
+  --line: rgba(25, 27, 31, 0.17);
+  --line-2: rgba(25, 27, 31, 0.31);
+  --stone-highlight: rgba(255, 255, 255, 0.68);
+  --stone-shadow: rgba(38, 40, 44, 0.22);
+  --stone-groove: #aaa9a4;
 
   --text: #191b1f;
   --text-soft: #3d4046;
   --muted: #5c5f66;       /* AA 4.97 */
   --faint: #5f6269;       /* AA 4.7 */
 
-  --clay: #a8452a;        /* AA 4.60 on stone */
-  --clay-hi: #8f3a22;
-  --clay-deep: #8f3a22;
-  --clay-ink: #ffffff;    /* AA 5.92 on clay */
+  --clay: #9f3e25;
+  --clay-hi: #b44a2d;
+  --clay-deep: #812f1d;
+  --clay-ink: #ffffff;
 
   --ok: #3f7a52;
   --warn: #8a6216;
 
-  --shadow: 0 1px 2px rgba(25,27,31,0.07), 0 6px 16px rgba(25,27,31,0.08);
-  --shadow-lg: 0 2px 6px rgba(25,27,31,0.10), 0 20px 44px rgba(25,27,31,0.12);
-  --glow-clay: 0 0 0 1px rgba(168,69,42,0.32), 0 0 22px rgba(168,69,42,0.16);
+  --shadow:
+    0 2px 2px rgba(25, 27, 31, 0.10),
+    0 9px 20px rgba(25, 27, 31, 0.10);
+  --shadow-lg:
+    0 3px 5px rgba(25, 27, 31, 0.13),
+    0 22px 46px rgba(25, 27, 31, 0.15);
+  --glow-clay:
+    0 0 0 1px rgba(159, 62, 37, 0.36),
+    0 7px 16px rgba(104, 39, 23, 0.15);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -120,49 +137,137 @@ body {
   overflow-x: hidden;
 }
 
-/* =================== BACKDROP: quarried wall + light =================== */
-/* A still, architectural ground. Two slow-breathing light fields and a
-   tessellated plaster grain. No weather, no drifting clouds. */
-.backdrop { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-
-.bg-base {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(120% 78% at 50% -12%, var(--bg-1), var(--bg-0) 62%),
-    var(--bg-0);
+/* =================== BACKDROP: lintel, piers and plinth =================== */
+.backdrop {
+  --backdrop-stone: var(--backdrop-basalt);
+  --backdrop-wash: rgba(7, 9, 12, 0.54);
+  --backdrop-edge: rgba(238, 231, 221, 0.10);
+  --backdrop-groove: rgba(0, 0, 0, 0.66);
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--bg-0);
 }
 
-/* the light grows with progress but stays still. The active motif owns the
-   viewport's ambient motion budget. */
+:root[data-mode="day"] .backdrop {
+  --backdrop-stone: var(--backdrop-limestone);
+  --backdrop-wash: rgba(218, 217, 211, 0.22);
+  --backdrop-edge: rgba(255, 255, 255, 0.72);
+  --backdrop-groove: rgba(49, 51, 55, 0.24);
+}
+
+.bg-base {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0.06), transparent 28%),
+    linear-gradient(var(--backdrop-wash), var(--backdrop-wash)),
+    var(--backdrop-stone) center / 512px 512px repeat;
+}
+
+.bg-base::before,
+.bg-base::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  content: "";
+  background:
+    linear-gradient(180deg, var(--backdrop-edge), transparent 16%, rgba(0, 0, 0, 0.20)),
+    linear-gradient(var(--backdrop-wash), var(--backdrop-wash)),
+    var(--backdrop-stone) center / 512px 512px repeat;
+}
+
+.bg-base::before {
+  top: 0;
+  height: clamp(64px, 9svh, 104px);
+  border-bottom: 1px solid var(--backdrop-groove);
+  box-shadow:
+    inset 0 -2px 0 rgba(0, 0, 0, 0.28),
+    0 8px 22px rgba(0, 0, 0, 0.20);
+}
+
+.bg-base::after {
+  bottom: 0;
+  height: clamp(76px, 11svh, 118px);
+  border-top: 1px solid var(--backdrop-edge);
+  box-shadow:
+    inset 0 3px 0 var(--backdrop-groove),
+    0 -12px 28px rgba(0, 0, 0, 0.24);
+}
+
+/* Raking light gives the wall relief without a full-screen blend layer. */
+.bg-grain {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(122deg, rgba(255, 255, 255, 0.075), transparent 22% 72%, rgba(0, 0, 0, 0.20)),
+    radial-gradient(82% 58% at 12% -8%, rgba(255, 255, 255, 0.09), transparent 58%);
+}
+
+/* One fired-clay join crosses the architecture. It is the source of the
+   restrained warm reflection below, not a decorative neon line. */
+.bg-tess {
+  position: absolute;
+  top: -18svh;
+  left: 13vw;
+  width: 3px;
+  height: 142svh;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0 5%,
+      color-mix(in srgb, var(--clay) 58%, transparent) 15% 72%,
+      transparent 93%
+    ),
+    var(--backdrop-clay) center / 96px 96px repeat;
+  box-shadow:
+    -1px 0 0 rgba(0, 0, 0, 0.54),
+    1px 0 0 rgba(240, 156, 119, 0.18);
+  opacity: 0.46;
+  transform: rotate(-13deg);
+  transform-origin: top;
+}
+
 .bg-lume {
-  position: absolute; inset: -20%;
-  background: radial-gradient(42% 34% at 50% 34%,
-              color-mix(in srgb, var(--clay) 34%, transparent), transparent 68%);
-  opacity: var(--lume, 0.18);
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      32% 30% at 13% 16%,
+      color-mix(in srgb, var(--clay) 36%, transparent),
+      color-mix(in srgb, var(--clay-deep) 12%, transparent) 42%,
+      transparent 72%
+    );
+  opacity: var(--lume, 0.12);
   transition: opacity 1.2s var(--ease-out);
 }
 
-/* plaster grain: fixed + pointer-events-none so it never repaints on scroll */
-.bg-grain {
-  position: absolute; inset: 0; opacity: 0.30; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
-}
-
-/* One architectural seam field. The actual grid belongs to the quarter
-   artifact rather than becoming a generated-looking page wallpaper. */
-.bg-tess {
-  position: absolute; inset: 0; opacity: 0.26;
-  background-image:
-    linear-gradient(118deg, transparent 0 46%, var(--line) 46.2% 46.35%, transparent 46.6%),
-    linear-gradient(72deg, transparent 0 78%, color-mix(in srgb, var(--clay) 18%, transparent) 78.1% 78.2%, transparent 78.4%);
-  mask-image: radial-gradient(78% 72% at 50% 42%, #000 5%, transparent 78%);
-  -webkit-mask-image: radial-gradient(78% 72% at 50% 42%, #000 5%, transparent 78%);
-}
-
 .bg-scrim {
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 42%, color-mix(in srgb, var(--bg-0) 82%, transparent));
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.13), transparent 14% 86%, rgba(0, 0, 0, 0.16)),
+    linear-gradient(180deg, transparent 36%, color-mix(in srgb, var(--bg-0) 54%, transparent));
 }
+
+.bg-scrim::before,
+.bg-scrim::after {
+  position: absolute;
+  top: clamp(64px, 9svh, 104px);
+  bottom: clamp(76px, 11svh, 118px);
+  width: clamp(10px, 2.4vw, 38px);
+  content: "";
+  background:
+    linear-gradient(90deg, var(--backdrop-edge), transparent 20% 76%, var(--backdrop-groove)),
+    linear-gradient(var(--backdrop-wash), var(--backdrop-wash)),
+    var(--backdrop-stone) center / 384px 384px repeat;
+  box-shadow: 0 0 22px rgba(0, 0, 0, 0.18);
+}
+
+.bg-scrim::before { left: 0; }
+.bg-scrim::after { right: 0; transform: scaleX(-1); }
 
 /* =================== SHELL =================== */
 .app {
@@ -176,9 +281,18 @@ body {
   position: fixed; top: 0; left: 0; right: 0; z-index: 40;
   height: calc(var(--topbar-h) + var(--safe-top));
   padding-top: var(--safe-top);
-  background: color-mix(in srgb, var(--bg-0) 88%, transparent);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-3) 44%, transparent), var(--bg-0)),
+    var(--material-basalt, none) center / 384px repeat;
+  border-bottom: 1px solid var(--stone-groove);
+  box-shadow:
+    inset 0 -1px 0 var(--stone-highlight),
+    0 7px 18px rgba(0, 0, 0, 0.22);
+}
+:root[data-mode="day"] .topbar {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(213, 213, 209, 0.24)),
+    var(--material-limestone, none) center / 384px repeat;
 }
 .topbar-inner {
   max-width: var(--maxw); margin: 0 auto; height: var(--topbar-h);
@@ -200,11 +314,27 @@ body {
 
 .icon-btn {
   width: 44px; height: 44px; flex: none; display: grid; place-items: center;
-  background: none; border: none; color: var(--muted); cursor: pointer;
-  border-radius: var(--r-sm); transition: color 0.16s var(--ease-out), background 0.16s var(--ease-out);
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  transition:
+    color 0.16s var(--ease-out),
+    border-color 0.16s var(--ease-out),
+    background-color 0.16s var(--ease-out),
+    box-shadow 0.16s var(--ease-out),
+    transform 0.12s var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
-  .icon-btn:hover { color: var(--text); background: var(--surface); }
+  .icon-btn:hover {
+    border-color: var(--line);
+    color: var(--text);
+    background: color-mix(in srgb, var(--surface-3) 64%, transparent);
+    box-shadow:
+      inset 1px 1px 0 var(--stone-highlight),
+      inset -1px -1px 0 var(--stone-shadow);
+  }
 }
 .icon-btn:active { transform: scale(0.94); }
 
@@ -399,21 +529,52 @@ body {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 48px; padding: 12px 20px;
   font-family: var(--ui); font-size: 0.95rem; font-weight: 600; letter-spacing: -0.005em;
-  border-radius: var(--r); border: 1px solid transparent; cursor: pointer;
-  transition: transform 0.13s var(--ease-out), background 0.18s var(--ease-out),
-              border-color 0.18s var(--ease-out), color 0.18s var(--ease-out);
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  box-shadow:
+    inset 1px 1px 0 var(--stone-highlight),
+    inset -1px -1px 0 var(--stone-shadow),
+    0 5px 12px color-mix(in srgb, #000 24%, transparent);
+  transition:
+    transform 0.13s var(--ease-out),
+    filter 0.18s var(--ease-out),
+    border-color 0.18s var(--ease-out),
+    color 0.18s var(--ease-out),
+    box-shadow 0.18s var(--ease-out);
 }
 .btn:active { transform: scale(0.97); }
 .btn-block { width: 100%; }
-.btn-primary { background: var(--clay); color: var(--clay-ink); }
-@media (hover: hover) and (pointer: fine) {
-  .btn-primary:hover { background: var(--clay-hi); }
+.btn-primary {
+  border-color: color-mix(in srgb, var(--clay-hi) 72%, var(--clay-deep));
+  color: var(--clay-ink);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(92, 25, 11, 0.18)),
+    var(--material-terracotta, var(--clay)) center / 280px repeat;
 }
-.btn-ghost { background: transparent; color: var(--text); border-color: var(--line-2); }
 @media (hover: hover) and (pointer: fine) {
-  .btn-ghost:hover { border-color: var(--clay); color: var(--clay); }
+  .btn-primary:hover { filter: brightness(1.08) saturate(1.02); }
 }
-.btn:disabled { opacity: 0.42; cursor: not-allowed; transform: none; }
+.btn-ghost {
+  border-color: var(--line-2);
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface-3) 52%, transparent);
+  box-shadow:
+    inset 1px 1px 0 var(--stone-highlight),
+    inset -1px -1px 0 var(--stone-shadow);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-ghost:hover {
+    border-color: color-mix(in srgb, var(--clay) 72%, var(--line-2));
+    color: var(--clay);
+  }
+}
+.btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  filter: grayscale(0.45);
+  transform: none;
+}
 
 .skip {
   background: none; border: none; color: var(--muted); cursor: pointer;

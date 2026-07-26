@@ -1,4 +1,5 @@
 import React from "react";
+import { MATERIAL_TEXTURES } from "../assets/generated/visualManifest.generated.js";
 
 /* =====================================================================
    Backdrop — the wall the mosaic is set into.
@@ -14,16 +15,24 @@ import React from "react";
 
 export default function Backdrop({ stage = 0 }) {
   const p = Math.max(0, Math.min(1, stage));
-  // the light in the room grows as the image comes together
-  const lume = (0.14 + 0.34 * p).toFixed(3);
+  // The clay seam is the room's one warm source. Progress strengthens its
+  // reflected light without turning the entire wall into a generic halo.
+  const lume = (0.08 + 0.22 * p).toFixed(3);
+  const materialStyle = {
+    "--lume": lume,
+    "--backdrop-basalt": `url("${MATERIAL_TEXTURES.basaltInk}")`,
+    "--backdrop-limestone": `url("${MATERIAL_TEXTURES.coolLimestone}")`,
+    "--backdrop-grout": `url("${MATERIAL_TEXTURES.darkGrout}")`,
+    "--backdrop-clay": `url("${MATERIAL_TEXTURES.firedTerracotta}")`,
+  };
 
   return (
-    <div className="backdrop" style={{ "--lume": lume }} aria-hidden="true">
+    <div className="backdrop" style={materialStyle} aria-hidden="true">
       <div className="bg-base" />
+      <div className="bg-grain" />
       <div className="bg-tess" />
       <div className="bg-lume" />
       <div className="bg-scrim" />
-      <div className="bg-grain" />
     </div>
   );
 }

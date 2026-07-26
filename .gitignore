@@ -16,3 +16,6 @@ pnpm-debug.log*
 # Vite temp files (generated during build, should not be committed)
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Local visual QA renders are reproducible from the tracked masters.
+work/visual-qa/

@@ -1,85 +1,85 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-25T20:00:00.000Z",
-  "title": "Design System: Mosaico Vivo de Corinto",
+  "generatedAt": "2026-07-25T23:59:00.000Z",
+  "title": "Design System: Corinto Vivo · El Atrio Restaurado",
   "extensions": {
     "colorMeta": {
       "night-ground": {
         "role": "neutral",
-        "displayName": "Slate Ink",
-        "canonical": "#14161b",
+        "displayName": "Deep Basalt",
+        "canonical": "#0d0f12",
         "tonalRamp": ["oklch(15% 0.012 265)", "oklch(24% 0.012 265)", "oklch(35% 0.011 265)", "oklch(47% 0.010 265)", "oklch(59% 0.009 265)", "oklch(71% 0.008 265)", "oklch(83% 0.006 265)", "oklch(95% 0.004 265)"]
       },
       "night-surface": {
         "role": "neutral",
-        "displayName": "Raised Slate",
-        "canonical": "#191c22",
+        "displayName": "Quarried Basalt",
+        "canonical": "#12151a",
         "tonalRamp": ["oklch(15% 0.014 265)", "oklch(24% 0.014 265)", "oklch(35% 0.013 265)", "oklch(47% 0.012 265)", "oklch(59% 0.010 265)", "oklch(71% 0.008 265)", "oklch(83% 0.006 265)", "oklch(95% 0.004 265)"]
       },
       "night-panel": {
         "role": "neutral",
-        "displayName": "Panel Slate",
-        "canonical": "#1e212a",
+        "displayName": "Raised Basalt",
+        "canonical": "#181c22",
         "tonalRamp": ["oklch(15% 0.018 270)", "oklch(24% 0.018 270)", "oklch(35% 0.016 270)", "oklch(47% 0.014 270)", "oklch(59% 0.012 270)", "oklch(71% 0.010 270)", "oklch(83% 0.007 270)", "oklch(95% 0.004 270)"]
       },
       "night-surface-high": {
         "role": "neutral",
-        "displayName": "Lifted Slate",
-        "canonical": "#252932",
+        "displayName": "Relief Basalt",
+        "canonical": "#20242b",
         "tonalRamp": ["oklch(15% 0.020 270)", "oklch(24% 0.020 270)", "oklch(35% 0.018 270)", "oklch(47% 0.016 270)", "oklch(59% 0.013 270)", "oklch(71% 0.010 270)", "oklch(83% 0.007 270)", "oklch(95% 0.004 270)"]
       },
       "night-text": {
         "role": "neutral",
         "displayName": "Bone Ink",
-        "canonical": "#e9e7e2",
+        "canonical": "#eee9e1",
         "tonalRamp": ["oklch(15% 0.008 85)", "oklch(24% 0.008 85)", "oklch(35% 0.007 85)", "oklch(47% 0.007 85)", "oklch(59% 0.006 85)", "oklch(71% 0.006 85)", "oklch(83% 0.005 85)", "oklch(95% 0.004 85)"]
       },
       "night-text-soft": {
         "role": "neutral",
         "displayName": "Soft Bone",
-        "canonical": "#c2c0ba",
+        "canonical": "#cbc4ba",
         "tonalRamp": ["oklch(15% 0.008 85)", "oklch(24% 0.008 85)", "oklch(35% 0.007 85)", "oklch(47% 0.007 85)", "oklch(59% 0.006 85)", "oklch(71% 0.006 85)", "oklch(83% 0.005 85)", "oklch(95% 0.004 85)"]
       },
       "night-muted": {
         "role": "neutral",
         "displayName": "Weathered Bone",
-        "canonical": "#96948e",
+        "canonical": "#a19b92",
         "tonalRamp": ["oklch(15% 0.009 85)", "oklch(24% 0.009 85)", "oklch(35% 0.008 85)", "oklch(47% 0.007 85)", "oklch(59% 0.006 85)", "oklch(71% 0.006 85)", "oklch(83% 0.005 85)", "oklch(95% 0.004 85)"]
       },
       "clay": {
         "role": "primary",
         "displayName": "Corinthian Clay",
-        "canonical": "#e0785c",
+        "canonical": "#df7554",
         "tonalRamp": ["oklch(15% 0.09 35)", "oklch(24% 0.11 35)", "oklch(35% 0.13 35)", "oklch(47% 0.15 35)", "oklch(59% 0.16 35)", "oklch(71% 0.14 35)", "oklch(83% 0.09 35)", "oklch(95% 0.03 35)"]
       },
       "clay-highlight": {
         "role": "primary",
         "displayName": "Kiln Highlight",
-        "canonical": "#f0916f",
+        "canonical": "#ef8b67",
         "tonalRamp": ["oklch(15% 0.09 38)", "oklch(24% 0.11 38)", "oklch(35% 0.13 38)", "oklch(47% 0.15 38)", "oklch(59% 0.16 38)", "oklch(71% 0.14 38)", "oklch(83% 0.09 38)", "oklch(95% 0.03 38)"]
       },
       "clay-deep": {
         "role": "primary",
         "displayName": "Fired Clay Deep",
-        "canonical": "#c05a3f",
+        "canonical": "#b94d34",
         "tonalRamp": ["oklch(15% 0.09 34)", "oklch(24% 0.11 34)", "oklch(35% 0.13 34)", "oklch(47% 0.15 34)", "oklch(59% 0.16 34)", "oklch(71% 0.14 34)", "oklch(83% 0.09 34)", "oklch(95% 0.03 34)"]
       },
       "day-ground": {
         "role": "neutral",
         "displayName": "Quarried Stone",
-        "canonical": "#e3e3e0",
+        "canonical": "#d5d5d1",
         "tonalRamp": ["oklch(15% 0.004 100)", "oklch(24% 0.004 100)", "oklch(35% 0.004 100)", "oklch(47% 0.004 100)", "oklch(59% 0.004 100)", "oklch(71% 0.004 100)", "oklch(83% 0.004 100)", "oklch(95% 0.004 100)"]
       },
       "day-surface": {
         "role": "neutral",
         "displayName": "Raised Quarried Stone",
-        "canonical": "#ebeae8",
+        "canonical": "#e2e1dd",
         "tonalRamp": ["oklch(15% 0.005 90)", "oklch(24% 0.005 90)", "oklch(35% 0.005 90)", "oklch(47% 0.005 90)", "oklch(59% 0.005 90)", "oklch(71% 0.005 90)", "oklch(83% 0.005 90)", "oklch(95% 0.005 90)"]
       },
       "day-panel": {
         "role": "neutral",
         "displayName": "Inset Stone",
-        "canonical": "#dcdcd8",
+        "canonical": "#c9c9c4",
         "tonalRamp": ["oklch(15% 0.006 100)", "oklch(24% 0.006 100)", "oklch(35% 0.006 100)", "oklch(47% 0.006 100)", "oklch(59% 0.006 100)", "oklch(71% 0.006 100)", "oklch(83% 0.005 100)", "oklch(95% 0.004 100)"]
       },
       "day-text": {
@@ -103,8 +103,20 @@
       "day-clay": {
         "role": "primary",
         "displayName": "Day Corinthian Clay",
-        "canonical": "#a8452a",
+        "canonical": "#9f3e25",
         "tonalRamp": ["oklch(15% 0.09 35)", "oklch(24% 0.11 35)", "oklch(35% 0.13 35)", "oklch(47% 0.15 35)", "oklch(59% 0.16 35)", "oklch(71% 0.14 35)", "oklch(83% 0.09 35)", "oklch(95% 0.03 35)"]
+      },
+      "day-clay-highlight": {
+        "role": "primary",
+        "displayName": "Day Kiln Highlight",
+        "canonical": "#b44a2d",
+        "tonalRamp": ["oklch(15% 0.09 35)", "oklch(24% 0.11 35)", "oklch(35% 0.13 35)", "oklch(47% 0.15 35)", "oklch(59% 0.16 35)", "oklch(71% 0.14 35)", "oklch(83% 0.09 35)", "oklch(95% 0.03 35)"]
+      },
+      "day-clay-deep": {
+        "role": "primary",
+        "displayName": "Day Fired Clay Deep",
+        "canonical": "#812f1d",
+        "tonalRamp": ["oklch(15% 0.09 34)", "oklch(24% 0.11 34)", "oklch(35% 0.13 34)", "oklch(47% 0.15 34)", "oklch(59% 0.16 34)", "oklch(71% 0.14 34)", "oklch(83% 0.09 34)", "oklch(95% 0.03 34)"]
       },
       "success": {
         "role": "secondary",
@@ -130,12 +142,12 @@
     "shadows": [
       { "name": "contact", "value": "0 1px 2px rgba(0,0,0,0.42), 0 4px 12px rgba(0,0,0,0.34)", "purpose": "Ground an interactive material piece at rest." },
       { "name": "lifted-artifact", "value": "0 2px 6px rgba(0,0,0,0.44), 0 18px 44px rgba(0,0,0,0.42)", "purpose": "Temporary elevation for a selected panel, folio, or overlay." },
-      { "name": "clay-source", "value": "0 0 0 1px rgba(224,120,92,0.30), 0 0 26px rgba(224,120,92,0.20)", "purpose": "Restrained bloom around a physically credible warm source." }
+      { "name": "clay-source", "value": "0 0 0 1px rgba(223,117,84,0.30), 0 0 26px rgba(223,117,84,0.20)", "purpose": "Restrained bloom around a physically credible warm source." }
     ],
     "motion": [
       { "name": "press", "value": "120ms cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Immediate tactile response." },
       { "name": "selection", "value": "180ms cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Local choice and selected-state changes." },
-      { "name": "navigation", "value": "280ms cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Destination and page transitions." },
+      { "name": "navigation", "value": "230ms cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Destination and page transitions." },
       { "name": "discovery", "value": "520ms cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Ink, seam, and connection reveals." },
       { "name": "placement", "value": "720ms cubic-bezier(0.32, 0.72, 0, 1)", "purpose": "A tessera or material object settling into place." }
     ],
@@ -143,7 +155,7 @@
       { "name": "compact-controls", "value": "520px" },
       { "name": "wide-study", "value": "700px" },
       { "name": "desktop-shell", "value": "920px" },
-      { "name": "desktop-world", "value": "980px" },
+      { "name": "desktop-world", "value": "1120px" },
       { "name": "wide-courtyard", "value": "1280px" }
     ]
   },
@@ -153,8 +165,8 @@
       "kind": "button",
       "refersTo": "button-primary",
       "description": "The one dominant next action in a focused study viewport.",
-      "html": "<button class=\"ds-world-action\"><span><small>Tu siguiente pieza</small>Abrir la chispa de hoy</span><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
-      "css": ".ds-world-action{width:100%;min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;border:1px solid color-mix(in srgb,var(--clay) 72%,transparent);border-radius:var(--r);background:var(--clay);color:var(--clay-ink);font:600 1rem/1.2 var(--ui);text-align:left;cursor:pointer;transition:background 180ms var(--ease-out),transform 120ms var(--ease-out)}.ds-world-action span,.ds-world-action small{display:block}.ds-world-action small{margin-bottom:2px;font-size:.72rem;font-weight:550;opacity:.78}.ds-world-action svg{width:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform 180ms var(--ease-out)}.ds-world-action:hover svg{transform:translateX(3px)}.ds-world-action:active{transform:scale(.98)}.ds-world-action:focus-visible{outline:3px solid color-mix(in srgb,var(--clay-hi) 75%,white);outline-offset:3px}"
+      "html": "<button class=\"ds-world-action\"><span><small>Tu siguiente pieza</small>Abrir la chispa de hoy</span><span class=\"ds-icon\" data-icon=\"phosphor-arrow-right\" aria-hidden=\"true\"></span></button>",
+      "css": ".ds-world-action{width:100%;min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;border:1px solid color-mix(in srgb,var(--clay) 72%,transparent);border-radius:var(--r-sm);background:var(--material-terracotta),var(--clay);color:var(--clay-ink);font:600 1rem/1.2 var(--ui);text-align:left;cursor:pointer;box-shadow:inset 1px 1px 0 rgba(255,255,255,.16),inset -2px -3px 3px rgba(89,29,19,.36),0 4px 0 rgba(95,34,23,.48);transition:filter 180ms var(--ease-out),transform 120ms var(--ease-out)}.ds-world-action span,.ds-world-action small{display:block}.ds-world-action small{margin-bottom:2px;font-size:.72rem;font-weight:550;opacity:.78}.ds-world-action .ds-icon{width:20px;height:20px}.ds-world-action:active{transform:scale(.98)}.ds-world-action:focus-visible{outline:3px solid color-mix(in srgb,var(--clay-hi) 75%,white);outline-offset:3px}"
     },
     {
       "name": "Depth Choice",
@@ -169,14 +181,21 @@
       "kind": "nav",
       "description": "The durable Hoy, Mosaico, and Sábado destination model.",
       "html": "<nav class=\"ds-dock\" aria-label=\"Destinos principales\"><a href=\"#\">Hoy</a><a href=\"#\" aria-current=\"page\">Mosaico</a><a href=\"#\">Sábado</a></nav>",
-      "css": ".ds-dock{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:6px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--bg-0) 94%,transparent);font-family:var(--ui)}.ds-dock a{min-height:44px;display:grid;place-items:center;padding:8px 10px;border-radius:var(--r-sm);color:var(--muted);font-size:.78rem;font-weight:600;text-decoration:none;transition:color 160ms var(--ease-out),background 160ms var(--ease-out)}.ds-dock a[aria-current=\"page\"]{background:color-mix(in srgb,var(--clay) 11%,transparent);color:var(--text)}.ds-dock a:hover{color:var(--text)}.ds-dock a:focus-visible{outline:3px solid var(--clay);outline-offset:2px}"
+      "css": ".ds-dock{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:6px;border-top:1px solid var(--line);background:linear-gradient(rgba(13,15,18,.84),rgba(13,15,18,.84)),var(--material-basalt),var(--bg-0);box-shadow:inset 0 1px 0 rgba(255,255,255,.07);font-family:var(--ui)}.ds-dock a{min-height:44px;display:grid;place-items:center;padding:8px 10px;border-radius:var(--r-sm);color:var(--muted);font-size:.78rem;font-weight:600;text-decoration:none;transition:color 160ms var(--ease-out),background 160ms var(--ease-out)}.ds-dock a[aria-current=\"page\"]{box-shadow:inset 0 2px 0 var(--clay);color:var(--clay)}.ds-dock a:hover{color:var(--text)}.ds-dock a:focus-visible{outline:3px solid var(--clay);outline-offset:2px}"
+    },
+    {
+      "name": "Persistent Lesson Relief",
+      "kind": "custom",
+      "description": "The locally stored, responsive lesson bas-relief that remains mounted across the primary journey and visibly restores through five stages.",
+      "html": "<figure class=\"ds-lesson-relief\" data-stage=\"3\"><picture><source media=\"(min-width:1120px)\" srcset=\"relief-1024.webp\"><img src=\"relief-640.webp\" alt=\"Relieve de piedra de la lección en proceso de restauración\"></picture><figcaption class=\"sr-only\">Etapa 4 de 5</figcaption></figure>",
+      "css": ".ds-lesson-relief{position:relative;aspect-ratio:1;overflow:hidden;background:var(--bg-0);clip-path:polygon(1% 1%,99% 0,100% 96%,96% 100%,1% 98%,0 4%)}.ds-lesson-relief img{width:100%;height:100%;display:block;object-fit:cover;filter:saturate(.98) contrast(1.03)}.ds-lesson-relief:after{position:absolute;inset:0;content:\"\";pointer-events:none;box-shadow:inset 1px 1px 0 rgba(255,255,255,.12),inset -2px -3px 5px rgba(0,0,0,.48)}"
     },
     {
       "name": "Quarter Mosaic Panel",
       "kind": "custom",
       "description": "One durable lesson state embedded in the quarter artifact.",
-      "html": "<button class=\"ds-quarter-panel\" data-state=\"connected\"><span class=\"ds-quarter-panel__number\">04</span><strong>Tu Cuerpo, Su Templo</strong><span class=\"ds-quarter-panel__state\">Conectada con la semana anterior</span></button>",
-      "css": ".ds-quarter-panel{position:relative;min-height:136px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:5px;padding:16px;border:1px solid var(--line-2);border-radius:var(--r-sm);background:linear-gradient(145deg,var(--surface-3),var(--surface-2));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--text) 3%,transparent),var(--shadow);color:var(--text);font-family:var(--ui);text-align:left;cursor:pointer;overflow:hidden;transition:transform 280ms var(--ease-out),border-color 180ms var(--ease-out),box-shadow 280ms var(--ease-out)}.ds-quarter-panel:before{content:\"\";position:absolute;inset:0;border-left:3px solid var(--clay);opacity:.9}.ds-quarter-panel__number{position:absolute;top:12px;left:16px;color:var(--clay);font-size:.72rem;font-weight:700;letter-spacing:.12em}.ds-quarter-panel strong{font-size:1rem;line-height:1.15}.ds-quarter-panel__state{color:var(--muted);font-size:.72rem}.ds-quarter-panel:hover{transform:translateY(-3px);border-color:var(--clay);box-shadow:var(--shadow-lg)}.ds-quarter-panel:focus-visible{outline:3px solid var(--clay-hi);outline-offset:3px}"
+      "html": "<button class=\"ds-quarter-panel\" data-state=\"connected\"><img src=\"l4-320.webp\" alt=\"\"><span class=\"ds-quarter-panel__number\">04</span><span class=\"ds-quarter-panel__copy\"><strong>Tu Cuerpo, Su Templo</strong><span>Conectada con la semana anterior</span></span></button>",
+      "css": ".ds-quarter-panel{position:relative;min-height:190px;display:grid;padding:7px;border:1px solid var(--line-2);border-radius:var(--r-sm);background:var(--material-grout),var(--surface-2);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--text) 3%,transparent),var(--shadow);color:var(--text);font-family:var(--ui);text-align:left;cursor:pointer;overflow:hidden;transition:transform 280ms var(--ease-out),border-color 180ms var(--ease-out),box-shadow 280ms var(--ease-out)}.ds-quarter-panel img{position:absolute;inset:7px;width:calc(100% - 14px);height:calc(100% - 14px);object-fit:cover;filter:saturate(.3) brightness(.62)}.ds-quarter-panel__number,.ds-quarter-panel__copy{position:relative;z-index:1}.ds-quarter-panel__number{align-self:start;justify-self:start;padding:4px 6px;background:var(--bg-0);color:var(--clay);font-size:.72rem;font-weight:700;letter-spacing:.12em}.ds-quarter-panel__copy{align-self:end;display:grid;gap:3px;padding:30px 8px 8px;background:linear-gradient(transparent,rgba(8,10,13,.94) 55%)}.ds-quarter-panel__copy strong{font-size:1rem;line-height:1.15}.ds-quarter-panel__copy span{color:var(--text-soft);font-size:.72rem}.ds-quarter-panel:hover{transform:translateY(-3px);border-color:var(--clay);box-shadow:var(--shadow-lg)}.ds-quarter-panel:focus-visible{outline:3px solid var(--clay-hi);outline-offset:3px}"
     },
     {
       "name": "Sabbath Folio Field",
@@ -188,10 +207,13 @@
     }
   ],
   "narrative": {
-    "northStar": "El patio mosaico vivo de Corinto",
-    "overview": "The learner is standing at a quarried workshop table, not scrolling through a stack of devotional cards. Each honest response becomes a tessera, seam, inscription, or source of light in one persistent 13-panel courtyard mosaic. The world changes because the learner contributed something, then returns that contribution with more meaning.\n\nThe interface is reverent, tactile, authored, and quietly dramatic. Stone, grout, clay, papyrus, charcoal, timber, and credible light carry the story. Familiar controls live inside that world without pretending to be ancient objects. The result should feel more like inhabiting an evolving place than opening another Bible study app.",
+    "northStar": "Corinto Vivo · El Atrio Restaurado",
+    "overview": "The learner inhabits one Corinthian restoration courtyard rather than scrolling through a stack of devotional cards. Each honest response restores a visible part of a persistent lesson relief, sets a tessera, or returns as an inscription, commitment, capability, or cross-week join.\n\nThe interface is reverent, tactile, authored, and quietly dramatic. Local raster relief and material textures carry believable depth; semantic HTML owns all copy and controls; CSS owns architecture, light, and stage masks; SVG remains a graceful fallback. The result feels like entering an evolving place rather than opening another Bible study app.",
     "keyCharacteristics": [
       "One persistent quarter artifact, not thirteen disconnected progress cards.",
+      "Thirteen lesson-specific local reliefs with responsive 320, 640, and 1024 pixel sources.",
+      "Semantic DOM owns every word, control, focus state, and user investment.",
+      "CSS clip paths reveal five restoration stages; SVG remains a loading and failure fallback.",
       "Open editorial composition with structural stone and paper surfaces.",
       "One clay accent and one physically credible light source per scene.",
       "Strong causal transformations followed by a quiet resting state.",
@@ -218,7 +240,7 @@
       "Do keep focus, landmarks, live-region feedback, and keyboard operation intact through transitions.",
       "Do preserve local-first privacy and make sharing an explicit selection.",
       "Do use authored asymmetry, localized texture, and one coherent physical light source.",
-      "Do verify every narrative SVG in Chromium and WebKit at full and compact sizes."
+      "Do verify every responsive relief, crop, stage, and fallback in Chromium and WebKit at compact, mobile, and hero sizes."
     ],
     "donts": [
       "Don't build another centered card stack, bento grid, or collection of rounded devotional tiles.",

@@ -4,14 +4,22 @@ import { MotionConfig } from "framer-motion";
 import AppShell from "./AppShell.jsx";
 import PageTransition from "./PageTransition.jsx";
 import Backdrop from "../components/Backdrop.jsx";
+import WorldStage from "../features/world/WorldStage.jsx";
 import { currentLessonSummary } from "../content/loadLesson.js";
-import { lessonSummaryById } from "../content/lessonManifest.generated.js";
+import {
+  LESSON_MANIFEST,
+  lessonSummaryById,
+} from "../content/lessonManifest.generated.js";
 import { formatLong } from "../lib/date.js";
 import { setHaptics } from "../lib/haptics.js";
 import { journeyActions, useJourney } from "../state/journey/index.js";
 
 function routeLessonId(pathname) {
   return pathname.match(/^\/(?:leccion|maestro|presentar|sabado)\/(l\d+)/)?.[1] || null;
+}
+
+function routeOwnsWorld(pathname) {
+  return pathname === "/hoy" || /^\/leccion\/l\d+/.test(pathname);
 }
 
 function titleForRoute(nextLocation) {
@@ -59,6 +67,10 @@ export default function AppLayout() {
     ? Object.values(lessonRecord.legacyKit.slots || {}).filter(Boolean).length
     : 0;
   const progress = filledCount / 8;
+  const previous = LESSON_MANIFEST[lesson.number - 2] || null;
+  const next = LESSON_MANIFEST[lesson.number] || null;
+  const showWorld = routeOwnsWorld(location.pathname);
+  const episodeMode = location.pathname.includes("/episodio/");
   const configuredTheme = journey.state.settings.theme;
   const resolvedTheme =
     configuredTheme === "auto"
@@ -141,6 +153,20 @@ export default function AppLayout() {
         onToggleTeacher={toggleTeacher}
         onOpenSettings={() => navigate("/ajustes")}
         getRouteTitle={titleForRoute}
+        mainClassName={showWorld ? "mcv-app-shell__main--world" : ""}
+        world={
+          showWorld ? (
+            <WorldStage
+              lesson={lesson}
+              filled={filledCount}
+              total={8}
+              previous={previous}
+              next={next}
+              compact={episodeMode}
+              priority
+            />
+          ) : null
+        }
       >
         {journey.storageError ? (
           <div className="storage-warning" role="alert">

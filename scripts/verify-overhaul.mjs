@@ -550,6 +550,132 @@ async function verifyDirectRouteReload(browser, engineName) {
   }
 }
 
+async function verifyVisualAssetSystem(browser, engineName) {
+  const checkName = `${engineName}/local-relief-asset-system`;
+  const context = await createQaContext(browser, {
+    viewport: { width: 390, height: 844 },
+    colorScheme: "dark",
+  });
+  const page = await context.newPage();
+  const diagnostics = createPageDiagnostics(page);
+  page.setDefaultTimeout(ACTION_TIMEOUT);
+  page.setDefaultNavigationTimeout(NAVIGATION_TIMEOUT);
+
+  try {
+    await page.goto(relativeUrl("/mosaico"), {
+      waitUntil: "domcontentloaded",
+    });
+    await waitForRoute(page);
+
+    const reliefs = page.locator(".qm-panel .lesson-relief");
+    assert(
+      (await reliefs.count()) === 13,
+      `mosaic rendered ${await reliefs.count()} reliefs instead of 13`
+    );
+
+    for (let index = 0; index < 13; index += 1) {
+      const relief = reliefs.nth(index);
+      await relief.scrollIntoViewIfNeeded();
+      await relief.evaluate((element) => {
+        element.querySelector("img")?.scrollIntoView({
+          block: "center",
+          inline: "nearest",
+        });
+      });
+      await relief.waitFor({ state: "visible" });
+      await page.waitForFunction(
+        (position) =>
+          document.querySelectorAll(".qm-panel .lesson-relief")[position]
+            ?.dataset.loadState === "ready",
+        index
+      );
+    }
+
+    const mosaicAssets = await reliefs.evaluateAll((elements) =>
+      elements.map((element) => {
+        const image = element.querySelector(".lesson-relief__image--base");
+        const source = image?.currentSrc || image?.src || "";
+        const url = source ? new URL(source, location.href) : null;
+        return {
+          state: element.dataset.loadState,
+          source,
+          sameOrigin: url?.origin === location.origin,
+          naturalWidth: image?.naturalWidth || 0,
+          naturalHeight: image?.naturalHeight || 0,
+        };
+      })
+    );
+    const uniqueSources = new Set(
+      mosaicAssets.map((asset) => asset.source)
+    ).size;
+
+    assert(
+      mosaicAssets.every(
+        (asset) =>
+          asset.state === "ready" &&
+          asset.sameOrigin &&
+          asset.naturalWidth > 0 &&
+          asset.naturalHeight > 0 &&
+          asset.source.includes("/assets/")
+      ),
+      `one or more mosaic reliefs failed local production loading: ${JSON.stringify(
+        mosaicAssets
+      )}`
+    );
+    assert(
+      uniqueSources === 13,
+      `mosaic uses ${uniqueSources} unique relief sources instead of 13`
+    );
+
+    await page.goto(relativeUrl("/hoy"), { waitUntil: "domcontentloaded" });
+    await waitForRoute(page);
+    const activeRelief = page.locator(
+      ".world-stage .lesson-relief[data-load-state='ready']"
+    );
+    await activeRelief.first().waitFor({ state: "visible" });
+    const activeAsset = await activeRelief.first().evaluate((element) => {
+      const image = element.querySelector(".lesson-relief__image--base");
+      const source = image?.currentSrc || image?.src || "";
+      const url = source ? new URL(source, location.href) : null;
+      return {
+        stage: element.dataset.stage,
+        source,
+        sameOrigin: url?.origin === location.origin,
+        naturalWidth: image?.naturalWidth || 0,
+        naturalHeight: image?.naturalHeight || 0,
+      };
+    });
+    assert(
+      activeAsset.sameOrigin &&
+        activeAsset.naturalWidth > 0 &&
+        activeAsset.naturalHeight > 0,
+      `active world relief failed local production loading: ${JSON.stringify(
+        activeAsset
+      )}`
+    );
+    assert(
+      diagnostics.pageErrors.length === 0 &&
+        diagnostics.consoleErrors.length === 0 &&
+        diagnostics.requestFailures.length === 0,
+      `runtime errors while loading relief assets: ${JSON.stringify(
+        diagnostics
+      )}`
+    );
+
+    recordPass(checkName, {
+      mosaicReliefCount: mosaicAssets.length,
+      uniqueSources,
+      allSourcesLocal: true,
+      activeAsset,
+      diagnostics,
+    });
+  } catch (error) {
+    recordFailure(checkName, error, { diagnostics });
+  } finally {
+    await context.close();
+  }
+}
+
 async function longRunningAnimations(page) {
   return page.evaluate(() =>
     document
@@ -583,26 +709,64 @@ async function longRunningAnimations(page) {
   );
 }
 
-async function inspectReducedVesselRoute(page, routePath, expectedRootMode) {
+async function inspectReducedMaterialRoute(page, routePath, expectedRootMode) {
   await page.goto(relativeUrl(routePath), { waitUntil: "domcontentloaded" });
   await page.locator("main h1").first().waitFor({
     state: "visible",
     timeout: ACTION_TIMEOUT,
   });
-  await page.locator("svg.vessel[data-motion-mode]").first().waitFor({
-    state: "attached",
+  await page.locator(".lesson-relief[data-load-state='ready']").first().waitFor({
+    state: "visible",
     timeout: ACTION_TIMEOUT,
   });
 
   const sample = () =>
-    page.locator("svg.vessel[data-motion-mode]").evaluateAll((vessels) => ({
-      rootMode: document.documentElement.dataset.motion,
-      vessels: vessels.map((vessel) => ({
-        mode: vessel.dataset.motionMode,
-        progress: vessel.dataset.fractureProgress,
-        settled: vessel.dataset.fractureSettled,
-      })),
-    }));
+    page.locator(".lesson-relief").evaluateAll((reliefs) => {
+      const maxDurationMs = (value) =>
+        Math.max(
+          0,
+          ...value.split(",").map((duration) => {
+            const token = duration.trim();
+            if (token.endsWith("ms")) return Number.parseFloat(token);
+            if (token.endsWith("s")) return Number.parseFloat(token) * 1000;
+            return Number.parseFloat(token) || 0;
+          })
+        );
+      const transitionSample = (element) => {
+        if (!element) return null;
+        const style = getComputedStyle(element);
+        return {
+          durationMs: maxDurationMs(style.transitionDuration),
+          delayMs: maxDurationMs(style.transitionDelay),
+        };
+      };
+
+      return {
+        rootMode: document.documentElement.dataset.motion,
+        reliefs: reliefs.map((relief) => ({
+          stage: relief.dataset.stage,
+          loadState: relief.dataset.loadState,
+          clipPath: getComputedStyle(
+            relief.querySelector(".lesson-relief__image--revealed")
+          ).clipPath,
+          reveal: transitionSample(
+            relief.querySelector(".lesson-relief__image--revealed")
+          ),
+          imageField: transitionSample(
+            relief.querySelector(".lesson-relief__image-field")
+          ),
+          kilnLine: transitionSample(
+            relief.querySelector(".lesson-relief__kiln-line")
+          ),
+        })),
+        tesserae: [...document.querySelectorAll(".world-stage__tesserae i")].map(
+          (tile) => ({
+            set: tile.dataset.set,
+            transition: transitionSample(tile),
+          })
+        ),
+      };
+    });
 
   const immediate = await sample();
   await page.waitForTimeout(140);
@@ -613,21 +777,41 @@ async function inspectReducedVesselRoute(page, routePath, expectedRootMode) {
     immediate.rootMode === expectedRootMode,
     `${routePath} root motion mode is ${immediate.rootMode}, expected ${expectedRootMode}`
   );
-  assert(immediate.vessels.length > 0, `${routePath} rendered no vessel`);
+  assert(immediate.reliefs.length > 0, `${routePath} rendered no lesson relief`);
   assert(
-    immediate.vessels.every(
-      (vessel) =>
-        vessel.mode === "reduced" && vessel.settled === "true"
+    immediate.reliefs.every(
+      (relief) =>
+        relief.loadState === "ready" &&
+        relief.reveal.durationMs <= 1 &&
+        relief.reveal.delayMs <= 1 &&
+        relief.imageField.durationMs <= 1 &&
+        relief.imageField.delayMs <= 1 &&
+        relief.kilnLine.durationMs <= 1 &&
+        relief.kilnLine.delayMs <= 1
     ),
-    `${routePath} did not immediately settle all vessels: ${JSON.stringify(
-      immediate.vessels
+    `${routePath} did not immediately settle all relief transitions: ${JSON.stringify(
+      immediate.reliefs
     )}`
   );
   assert(
-    JSON.stringify(immediate.vessels) === JSON.stringify(later.vessels),
-    `${routePath} vessel geometry changed after reduction: ${JSON.stringify({
-      immediate: immediate.vessels,
-      later: later.vessels,
+    immediate.tesserae.every(
+      (tile) =>
+        tile.transition.durationMs <= 1 && tile.transition.delayMs <= 1
+    ),
+    `${routePath} did not immediately settle world tesserae: ${JSON.stringify(
+      immediate.tesserae
+    )}`
+  );
+  assert(
+    JSON.stringify(
+      immediate.reliefs.map(({ stage, clipPath }) => ({ stage, clipPath }))
+    ) ===
+      JSON.stringify(
+        later.reliefs.map(({ stage, clipPath }) => ({ stage, clipPath }))
+      ),
+    `${routePath} relief state changed after reduction: ${JSON.stringify({
+      immediate: immediate.reliefs,
+      later: later.reliefs,
     })}`
   );
   assert(
@@ -660,7 +844,7 @@ async function verifyReducedMotion(browser, engineName) {
     const samples = [];
     for (const routePath of ["/hoy", "/mosaico", "/leccion/l4"]) {
       samples.push(
-        await inspectReducedVesselRoute(page, routePath, "system")
+        await inspectReducedMaterialRoute(page, routePath, "system")
       );
     }
     assert(
@@ -712,7 +896,7 @@ async function verifyReducedMotion(browser, engineName) {
     const samples = [];
     for (const routePath of ["/hoy", "/mosaico", "/leccion/l4"]) {
       samples.push(
-        await inspectReducedVesselRoute(settingPage, routePath, "reduce")
+        await inspectReducedMaterialRoute(settingPage, routePath, "reduce")
       );
     }
     assert(
@@ -753,8 +937,8 @@ async function verifyAmbientMotionBudget(browser, engineName) {
       (animation) => animation.iterations === "Infinity"
     );
     assert(
-      ambientLoops.length <= 1,
-      `more than one ambient loop owns the viewport: ${JSON.stringify(
+      ambientLoops.length === 0,
+      `the loaded material world retains an ambient loop: ${JSON.stringify(
         ambientLoops
       )}`
     );
@@ -1799,6 +1983,7 @@ async function verifyBrowser(engineName, browserType) {
       }
     }
 
+    await verifyVisualAssetSystem(browser, engineName);
     await verifyDirectRouteReload(browser, engineName);
     await verifyReducedMotion(browser, engineName);
     await verifyAmbientMotionBudget(browser, engineName);

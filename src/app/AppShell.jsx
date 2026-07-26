@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import ContextRail from "./ContextRail.jsx";
 import PrimaryNav from "./PrimaryNav.jsx";
 import RouteAnnouncer from "./RouteAnnouncer.jsx";
+import { MATERIAL_TEXTURES } from "../assets/generated/visualManifest.generated.js";
 import "./app-shell.css";
 
 /**
@@ -31,9 +32,16 @@ export default function AppShell({
 }) {
   const content = children ?? <Outlet />;
   const navigation = <PrimaryNav variant="rail" />;
+  const materialStyle = {
+    "--material-basalt": `url("${MATERIAL_TEXTURES.basaltInk}")`,
+    "--material-limestone": `url("${MATERIAL_TEXTURES.coolLimestone}")`,
+    "--material-terracotta": `url("${MATERIAL_TEXTURES.firedTerracotta}")`,
+    "--material-grout": `url("${MATERIAL_TEXTURES.darkGrout}")`,
+    "--material-papyrus": `url("${MATERIAL_TEXTURES.papyrusFiber}")`,
+  };
 
   return (
-    <div className="mcv-app-shell">
+    <div className="mcv-app-shell" style={materialStyle}>
       <a className="mcv-skip-link" href="#contenido-principal">
         Saltar al contenido
       </a>
@@ -64,7 +72,7 @@ export default function AppShell({
             <div className="mcv-app-shell__split">
               <aside
                 className="mcv-app-shell__world"
-                aria-label="Mosaico y motivo de la lección"
+                aria-label="Relieve y progreso de la lección"
               >
                 {world}
               </aside>

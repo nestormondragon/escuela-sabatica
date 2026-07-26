@@ -1,64 +1,63 @@
 ---
-name: Mosaico Vivo de Corinto
-description: Una mesa de estudio adventista donde cada respuesta se vuelve una pieza visible de un mosaico trimestral.
+name: Corinto Vivo
+description: Un atrio de piedra, barro y luz donde cada respuesta restaura una obra viva.
 colors:
-  night-ground: "#14161b"
-  night-surface: "#191c22"
-  night-panel: "#1e212a"
-  night-surface-high: "#252932"
-  night-text: "#e9e7e2"
-  night-text-soft: "#c2c0ba"
-  night-muted: "#96948e"
-  clay: "#e0785c"
-  clay-highlight: "#f0916f"
-  clay-deep: "#c05a3f"
-  day-ground: "#e3e3e0"
-  day-surface: "#ebeae8"
-  day-panel: "#dcdcd8"
-  day-text: "#191b1f"
-  day-text-soft: "#3d4046"
-  day-muted: "#5c5f66"
-  day-clay: "#a8452a"
+  basalt-deep: "#0d0f12"
+  basalt: "#12151a"
+  basalt-raised: "#181c22"
+  limestone: "#d5d5d1"
+  limestone-raised: "#e2e1dd"
+  limestone-inset: "#c9c9c4"
+  limestone-ink: "#191b1f"
+  bone: "#eee9e1"
+  bone-soft: "#cbc4ba"
+  smoke: "#a19b92"
+  terracotta: "#df7554"
+  terracotta-hot: "#ef8b67"
+  terracotta-deep: "#b94d34"
+  day-terracotta: "#9f3e25"
+  day-terracotta-hot: "#b44a2d"
+  day-terracotta-deep: "#812f1d"
   success: "#7fb08a"
   warning: "#d8a657"
 typography:
   display:
-    fontFamily: "Outfit Variable, Outfit, system-ui, sans-serif"
-    fontSize: "clamp(2.1rem, 4.6vw, 4.6rem)"
-    fontWeight: 650
-    lineHeight: 1.04
-    letterSpacing: "-0.035em"
+    fontFamily: "EB Garamond Variable, EB Garamond, Iowan Old Style, Georgia, serif"
+    fontSize: "clamp(2.35rem, 7.2vw, 5.5rem)"
+    fontWeight: 500
+    lineHeight: 0.98
+    letterSpacing: "-0.028em"
   headline:
-    fontFamily: "Outfit Variable, Outfit, system-ui, sans-serif"
-    fontSize: "clamp(1.65rem, 3vw, 2.5rem)"
-    fontWeight: 620
-    lineHeight: 1.12
-    letterSpacing: "-0.025em"
+    fontFamily: "EB Garamond Variable, EB Garamond, Iowan Old Style, Georgia, serif"
+    fontSize: "clamp(1.9rem, 4.5vw, 3.25rem)"
+    fontWeight: 520
+    lineHeight: 1.05
+    letterSpacing: "-0.02em"
   title:
     fontFamily: "Outfit Variable, Outfit, system-ui, sans-serif"
-    fontSize: "1.125rem"
-    fontWeight: 600
+    fontSize: "1.12rem"
+    fontWeight: 650
     lineHeight: 1.25
   body:
     fontFamily: "Outfit Variable, Outfit, system-ui, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
-    lineHeight: 1.6
+    lineHeight: 1.62
   scripture:
-    fontFamily: "EB Garamond Variable, EB Garamond, Georgia, serif"
-    fontSize: "1.3rem"
+    fontFamily: "EB Garamond Variable, EB Garamond, Iowan Old Style, Georgia, serif"
+    fontSize: "1.32rem"
     fontWeight: 500
-    lineHeight: 1.5
+    lineHeight: 1.48
   label:
     fontFamily: "Outfit Variable, Outfit, system-ui, sans-serif"
-    fontSize: "0.74rem"
-    fontWeight: 650
+    fontSize: "0.7rem"
+    fontWeight: 700
     lineHeight: 1.2
-    letterSpacing: "0.09em"
+    letterSpacing: "0.12em"
 rounded:
-  small: "3px"
-  medium: "6px"
-  large: "10px"
+  chip: "3px"
+  control: "6px"
+  slab: "10px"
 spacing:
   xsmall: "4px"
   small: "8px"
@@ -68,238 +67,323 @@ spacing:
   xxlarge: "40px"
 components:
   button-primary:
-    backgroundColor: "{colors.clay}"
-    textColor: "{colors.night-ground}"
+    backgroundColor: "{colors.terracotta}"
+    textColor: "{colors.basalt-deep}"
     typography: "{typography.title}"
-    rounded: "{rounded.medium}"
+    rounded: "{rounded.control}"
     padding: "14px 18px"
     height: "48px"
   button-primary-day:
-    backgroundColor: "{colors.day-clay}"
-    textColor: "#ffffff"
+    backgroundColor: "{colors.terracotta-deep}"
+    textColor: "{colors.limestone-raised}"
     typography: "{typography.title}"
-    rounded: "{rounded.medium}"
+    rounded: "{rounded.control}"
     padding: "14px 18px"
     height: "48px"
-  button-ghost:
+  button-quiet:
     backgroundColor: "transparent"
-    textColor: "{colors.night-text}"
+    textColor: "{colors.bone-soft}"
     typography: "{typography.body}"
-    rounded: "{rounded.medium}"
-    padding: "12px 16px"
+    rounded: "{rounded.control}"
+    padding: "12px 14px"
     height: "44px"
-  depth-choice:
-    backgroundColor: "{colors.night-surface}"
-    textColor: "{colors.night-text}"
-    typography: "{typography.body}"
-    rounded: "{rounded.small}"
-    padding: "12px"
-    height: "64px"
   study-field:
-    backgroundColor: "{colors.night-panel}"
-    textColor: "{colors.night-text}"
+    backgroundColor: "{colors.basalt-raised}"
+    textColor: "{colors.bone}"
     typography: "{typography.body}"
-    rounded: "{rounded.medium}"
+    rounded: "{rounded.control}"
     padding: "14px 16px"
     height: "48px"
 ---
 
-# Design System: Mosaico Vivo de Corinto
+# Design System: Corinto Vivo
 
 ## Overview
 
-**Creative North Star: "El patio mosaico vivo de Corinto"**
+**Creative North Star: "El Atrio Restaurado"**
 
-The learner is standing at a quarried workshop table, not scrolling through a stack of devotional cards. Each honest response becomes a tessera, seam, inscription, or source of light in one persistent 13-panel courtyard mosaic. The world changes because the learner contributed something, then returns that contribution with more meaning.
+The product is one living Corinthian courtyard viewed from different distances.
+Hoy stands before the active relief. Mosaico steps back to the whole wall.
+Lección removes one panel to the restoration table. Episodio moves closer to
+one join. Sábado opens the written folio beside the same work. The artifact
+never feels copied between routes. It remains one object carrying the reader's
+investment.
 
-The interface is reverent, tactile, authored, and quietly dramatic. Stone, grout, clay, papyrus, charcoal, timber, and credible light carry the story. Familiar controls live inside that world without pretending to be ancient objects. The result should feel more like inhabiting an evolving place than opening another Bible study app.
+The world is physically credible before it is spectacular. Local raster
+materials provide stone pores, clay grain, papyrus fiber, relief, edge wear,
+and contact occlusion. HTML owns every word, control, and state. CSS clip paths
+own the five-stage reveal, seams, lighting, and load states. SVG supplies the
+full-size loading and error fallback plus retained topology for legacy
+narrative artwork. Motion shows causal placement and continuity. None of those
+layers pretends to replace another.
+
+All raster assets are checked in, responsive, offline-capable, and require no
+runtime API, key, CDN, or generation service.
 
 **Key Characteristics:**
 
-- One persistent quarter artifact, not thirteen disconnected progress cards.
-- Open editorial composition with structural stone and paper surfaces.
-- One clay accent and one physically credible light source per scene.
-- Strong causal transformations followed by a quiet resting state.
-- Saved language, commitments, skills, and connections return later.
-- No points, ranks, loss-aversion streaks, or spiritual-performance scoring.
+- Charcoal basalt at night and cool limestone by day.
+- Museum-grade bas-relief rather than flat decorative illustration.
+- Thirteen lesson-specific artworks inside one persistent courtyard.
+- One terracotta light source following real seams and restored joins.
+- Live text and familiar controls on stable, readable material planes.
+- A still image already carries the wow factor; motion explains change.
 
-**The Artifact Is the Reward Rule.** Ordinary completion changes the persistent mosaic inline. It does not trigger a generic reward modal or confetti.
+**The One Courtyard Rule.** Every primary route must feel like a different
+distance or working position inside the same physical place.
 
-**The Meaning Before Spectacle Rule.** Motion and illustration may amplify a real learning consequence, but they never substitute for one.
-
-### Product surfaces
-
-- **Hoy** answers why to return and what can be completed now.
-- **Mosaico** shows the evolving quarter, cross-week joins, and each lesson's durable evidence.
-- **Sábado** assembles a private and selectively shareable folio from the learner's work.
-- **Lesson path** presents one Chispa and one meaningful interaction at a time.
-- **Teacher and presentation modes** support class use without exposing private material by default.
+**The Meaning Owns the Material Rule.** Texture and relief may amplify a true
+learning consequence. They never substitute for one.
 
 ## Colors
 
-The palette joins slate ink, cool quarried stone, bone text, and one terracotta clay voice. Night and day modes change the material ground, not the identity.
+The palette is cool mineral darkness, conserved limestone, bone ink, and one
+fired-clay voice. Terracotta is both the only brand accent and the believable
+warm source inside repaired joins.
 
 ### Primary
 
-- **Corinthian Clay** (`clay`, `day-clay`): primary action, selected state, a newly placed tessera, and light reflected from a meaningful change.
-- **Kiln Highlight** (`clay-highlight`): a restrained hot edge inside clay-lit narrative art.
-- **Fired Clay Deep** (`clay-deep`): pressed states, material occlusion, and low edges.
+- **Fired Terracotta** (`terracotta`): primary actions, a newly set tessera,
+  selected joins, and local reflected light.
+- **Kiln Edge** (`terracotta-hot`): the narrow bright core of a physical seam.
+- **Deep Clay** (`terracotta-deep`): pressed controls, occlusion, and day-mode
+  action contrast.
 
 ### Neutral
 
-- **Slate Ink** (`night-ground`): the night foundation.
-- **Raised Slate** (`night-surface`, `night-panel`): shallow material layers, not floating cards.
-- **Bone Ink** (`night-text`, `night-text-soft`, `night-muted`): readable hierarchy without pure white.
-- **Quarried Stone** (`day-ground`, `day-surface`, `day-panel`): the day foundation, deliberately cool rather than parchment-like.
-- **Charcoal Ink** (`day-text`, `day-text-soft`, `day-muted`): the day reading hierarchy.
+- **Deep Basalt** (`basalt-deep`): night foundation and deepest carved void.
+- **Quarried Basalt** (`basalt`, `basalt-raised`): architectural planes and
+  relief faces.
+- **Conserved Limestone** (`limestone`, `limestone-raised`): day foundation and
+  reading slabs. It is cool stone, never parchment.
+- **Bone and Smoke** (`bone`, `bone-soft`, `smoke`): night reading hierarchy.
+- **Limestone Ink** (`limestone-ink`): day reading hierarchy.
 
-### State colors
+### Named Rules
 
-- **Restored Green** (`success`): verification or successful system state only.
-- **Ochre Warning** (`warning`): caution that must not compete with clay as brand color.
+**The One Warm Source Rule.** Terracotta is the only warm brand color. A scene
+may intensify it at a real fire, seam, seal, or placed piece, but may not add a
+second accent family.
 
-**The One Clay Voice Rule.** Clay is the only brand accent. Supporting state colors communicate status and never become a second decorative palette.
+**The Stone Is Not a Scrim Rule.** Body copy never sits directly over variable
+relief photography. Reading regions use a stable opaque basalt, limestone, or
+papyrus plane with verified contrast.
 
-**The Credible Light Rule.** Glow belongs to fire, dawn, a restored join, or a newly placed piece. Never put a radial halo behind an object merely to make it look important.
+**The Day Is Mineral Rule.** Day mode is pale cool limestone surrounded by
+dark structural stone. It is not beige paper, sepia, cream, or warm parchment.
 
 ## Typography
 
-**Display Font:** Outfit Variable, with system sans-serif fallbacks
+**Editorial Display Font:** EB Garamond Variable, with Iowan Old Style and
+Georgia fallbacks
 
-**Body Font:** Outfit Variable, with system sans-serif fallbacks
+**Operational Display Font:** Outfit Variable for Mosaico, Sábado, navigation,
+and compact workshop headings
 
-**Scripture Font:** EB Garamond Variable, with Georgia as fallback
+**Interface Font:** Outfit Variable, with system sans-serif fallbacks
 
-**Character:** Outfit gives navigation and decisions a direct geometric voice. EB Garamond separates Scripture, Paul's voice, and preserved reflection from interface copy without making the whole application look like a church bulletin.
+**Character:** EB Garamond carries Scripture, questions, preserved responses,
+and inscriptions with the authority of a letter read aloud. Outfit keeps
+navigation, choices, labels, and operational text direct and contemporary.
 
 ### Hierarchy
 
-- **Display** (650, fluid, 1.04): rare route and world statements.
-- **Headline** (620, fluid, 1.12): surface titles and major questions.
-- **Title** (600, 1.125rem, 1.25): action and component titles.
-- **Body** (400, 1rem, 1.6): prompts and explanations, with a reading measure of 58 to 66 characters.
-- **Scripture** (500, 1.3rem, 1.5): Bible text, Paul's voice, and meaningful preserved excerpts.
-- **Label** (650, 0.74rem, 0.09em): compact metadata and status, generally uppercase.
+- **Editorial display** (500, fluid, 0.98): one decisive question, Scripture,
+  or weekly synthesis.
+- **Operational display** (650, fluid): Mosaico, Sábado, navigation, and
+  workshop headings that must stay direct.
+- **Headline** (520, fluid, 1.05): route and section headings.
+- **Title** (650, 1.12rem, 1.25): actions, episode titles, and material labels.
+- **Body** (400, 1rem, 1.62): prompts and explanation, capped near 66
+  characters.
+- **Scripture** (500, 1.32rem, 1.48): biblical text and preserved contemplative
+  language.
+- **Label** (700, 0.7rem, 0.12em): sparse metadata carved into a lintel or
+  margin.
 
-**The Two Voices Rule.** Outfit is the learner and the interface. EB Garamond is Scripture, Paul, or a preserved contemplative voice. Serif is never a generic badge of spirituality.
+**The Two Living Voices Rule.** Serif is the letter, Scripture, and reflection.
+Sans serif is the learner and the interface. A surface may use both, but never
+for arbitrary variety.
 
-**The Whole Phrase Rule.** Kinetic type splits by meaningful phrase or line and preserves one complete accessible string. Scripture is never animated character by character.
+**The Whole Thought Rule.** Questions and Scripture remain whole accessible
+strings. Kinetic type may reveal a line or phrase, never split sacred text into
+decorative characters.
 
 ## Layout
 
-Mobile is a focus canvas with a compact context rail and a safe-area bottom dock. The active lesson artifact appears before one Chispa, one depth choice, and one clear action. Decoration yields before text or touch targets when height is constrained.
+Mobile uses an architectural sequence rather than a card stack: compact stone
+lintel, active relief occupying roughly 34 to 42 percent of the initial
+viewport, one clean reading plane, one depth chooser, one primary action, and a
+basalt plinth navigation dock. Decorative detail yields before the question,
+the action, or a 44 pixel touch target.
 
-Tablet may place world context beside the study canvas. Desktop uses a 12-column composition: approximately five columns for the persistent world, six for reading and interaction, and one for breathing room. The quarter mosaic may use the full viewport. The app must never remain a narrow phone strip in empty desktop space.
+Desktop keeps a twelve-column spatial model. The persistent artifact occupies
+about five columns, the study plane about six, and one column remains air or a
+structural seam. Mosaico may own the full canvas. Teacher mode is a quieter
+restoration desk. Presentation mode is a high-contrast lectern.
 
 Breakpoints are behavioral:
 
-- Below `520px`, simplify utilities and reduce decorative world context.
-- At `700px` to `760px`, introduce wider folio and study arrangements.
-- At `920px` to `980px`, switch the shell and mosaic to the desktop spatial model.
-- At `1280px`, allow the full quarter artifact more surrounding air.
-- Narrative motifs below `96px` use an explicit compact variant.
+- Below 520px: artifact first, single reading column, simplified ornament.
+- At 700 to 760px: diagonal/interlocking stone and limestone planes may appear.
+- At 1120px: persistent world and study plane share the viewport.
+- At 1280px: relief reaches 480 to 560 CSS pixels with more architectural air.
 
-The spacing rhythm is 4, 8, 12, 18, 28, and 40 pixels. Small controls remain at least 44 by 44 CSS pixels. The main reading measure stays within 58 to 66 characters.
+The spacing rhythm is 4, 8, 12, 18, 28, and 40 pixels. More space appears above
+a heading than below it. Primary controls remain at least 44 by 44 CSS pixels.
 
-**The One Main Action Rule.** Every focused viewport has one primary next action. Secondary exits remain honest and visible but subordinate.
+**The Object Continuity Rule.** Hoy, Lección, Episodio, Mosaico, and Sábado
+must preserve the sense that the same panel is approached, worked, changed, and
+returned.
 
-**The Object Continuity Rule.** Moving among Hoy, Mosaico, a lesson, and Sábado should preserve the sense that the same panel is being approached, worked, and returned.
+**The One Immediate Action Rule.** A focused viewport presents one clear next
+action and one honest way to stop. Material richness never creates competing
+CTAs.
 
 ## Elevation & Depth
 
-Depth is hybrid: tonal layering establishes most hierarchy, while short directional contact shadows ground lifted panels, folios, and controls in motion. Materials may be carved, inset, folded, or laid into the world. Broad floating-card shadows and uniform backdrop blur are not part of the language.
+Depth is built from physically plausible layers: local raster microtexture,
+upper-left raking light, contact occlusion, beveled stone edges, inset grout,
+and short directional shadows. Large soft floating-card shadows and ornamental
+glows are not part of the language.
 
-The ambient light direction is upper left. A scene may add one narrative source, such as fire inside clay or dawn through an opening. Highlights, occlusion, reflected color, and cast shadows must agree with it. Grain stays localized to material and never covers body copy.
+The persistent scene has three depth bands: architectural ground, active
+artifact, and interaction plane. Temporary lift belongs to selection,
+placement, or presentation. Steady state returns to embedded stillness.
 
-### Shadow vocabulary
+### Shadow Vocabulary
 
-- **Contact** (`--shadow`): a short grounding shadow for an interactive piece at rest.
-- **Lifted artifact** (`--shadow-lg`): temporary elevation for a selected mosaic panel, folio, or overlay.
-- **Clay source** (`--glow-clay`): restrained bloom only around a credible warm source.
+- **Inset Carving:** a dark lower-right inner edge plus a narrow cool
+  upper-left highlight.
+- **Set Piece:** a short downward contact shadow beneath a tessera or relief.
+- **Lifted Panel:** a deeper directional shadow used only while selecting or
+  moving a quarter panel.
+- **Kiln Spill:** a small local terracotta reflection around a real opening or
+  seam. It is never a radial halo around the entire subject.
 
-**The Grounded by Default Rule.** Surfaces begin embedded in the composition. Lift is a state change, not the default treatment of every section.
+**The Still Frame Test.** Every surface must reach the visual bar with all
+motion paused. Animation cannot rescue flat material, weak hierarchy, or an
+unconvincing object.
 
-**The Local Grain Rule.** Texture belongs to stone, clay, paper, or grout. It never becomes a full-screen noise veil over text.
+**The One Light Direction Rule.** Ambient light comes from the upper left.
+Narrative fire may add one local warm source. Every highlight and shadow must
+agree with those sources.
 
 ## Shapes
 
-The radius scale is deliberately sharp: 3, 6, and 10 pixels. Tesserae may use deterministic irregular cuts. Folios use clipped or folded paper geometry. Ordinary buttons and inputs stay recognizably interactive.
+Architectural surfaces are cut, chipped, inset, or folded. The radius scale is
+3, 6, and 10 pixels. Large pills are reserved for compact segmented controls;
+they are not a universal container language.
 
-Pills are reserved for compact status or mutually exclusive depth choices. Sheets, dialogs, and cards do not introduce unrelated 20 to 28 pixel radii. The quarter mosaic must read as one authored composition, never as a responsive grid of rounded product cards.
+Quarter panels and hero slabs use authored clip paths and deterministic edge
+variation. Irregularity remains stable between renders. Ordinary buttons,
+inputs, switches, and dialogs remain recognizable and preserve their focus
+geometry.
 
-Narrative SVG follows structural truth:
+Narrative artwork is lesson-specific. Raster relief provides the final
+material. CSS clip paths supply stage masks, seams, light, and load-state
+treatment. Full-size loading and error states use the legacy SVG Centerpiece;
+compact placements use a simplified CSS fallback mark. Small previews use
+deliberate crops and do not shrink fragile hero detail.
 
-- stable ground plane and coherent light direction,
-- semantic material, structure, narrative, and light groups,
-- instance-safe IDs,
-- filled geometry for physical material and tapering fractures,
-- strokes only for ink, seams, routes, and reveal mechanisms,
-- compact variants with intentional simplification,
-- no continuously animated filter parameters.
-
-**The Silhouette First Rule.** A narrative object must read at flat silhouette before shading, texture, glow, or motion is added.
+**The Structural Truth Rule.** Openings show thickness, parts have weight,
+handles join, paper curls, blocks bear on other blocks, and light originates
+from a real gap or source.
 
 ## Components
 
-### App shell and navigation
+### Architectural Shell
 
-The context rail carries quarter, lesson, progress, theme, and facilitator utilities. On mobile it compresses into a top context bar; on desktop it becomes a persistent rail. The destination dock contains only Hoy, Mosaico, and Sábado, each with a Phosphor icon and text label.
+The mobile header is a carved lintel and the destination dock is a basalt
+plinth. Desktop utilities live in a temple pier. Both use the same local stone
+material and Phosphor glyph family.
 
-### Primary action
+### Primary Action
 
-Clay-filled, 48 pixels high, gently cut corners, and one directional arrow where movement follows. Hover changes local color or the arrow, not the layout. Press feedback is 100 to 140 milliseconds and may scale no lower than 0.97.
+- **Shape:** gently cut control corners (3px in the production `.btn`).
+- **Material:** fired terracotta texture under live HTML text.
+- **Depth:** one inset top highlight and a short contact shadow.
+- **Press:** scale to 0.98 over about 120ms and return immediately.
+- **Focus:** a high-contrast outer line independent of texture.
 
-### Depth chooser
+### Depth Chooser
 
-Three equally valid choices: 1 minuto, Estudiar, and A fondo. Selection uses clay edge, tonal change, and `aria-pressed`; it never implies moral superiority or hides what each depth includes.
+Three equally valid depths share one inset stone channel. Selection moves a
+terracotta inlay beneath the label. It communicates preference, not spiritual
+status. Text never waits for the inlay animation.
 
-### Quarter mosaic
+### Persistent Artifact
 
-Thirteen panels form one spatial artifact with a parallel semantic list. Current, complete, upcoming, connected, and revisited states differ through structure, label, and pattern as well as color. The selected panel lifts from the grout bed and expands into the same motif.
+One lesson-specific relief remains mounted through the primary study journey.
+Progress controls material visibility, physical joins, and local light. The
+full-size SVG Centerpiece is the loading and failure fallback; compact
+placements use a simplified CSS mark. Neither fallback is the hero.
 
-### Study canvas
+### Quarter Mosaic
 
-One focused interaction uses open composition and material separators rather than a universal card wrapper. Attempt comes before explanation where pedagogy allows. Saving creates a local material mutation and announces it in a polite live region.
+Thirteen unique panels interlock in one grout bed. Selected panels lift;
+completed and connected panels differ through join structure, relief, and
+labels as well as color. A semantic list remains available beside the visual
+artifact.
 
-### Sabbath folio
+### Study Plane
 
-The week's prayer, question, action, pattern, and class contribution are editable. Private material and chosen share material are visually distinct. Another person's name or story requires explicit consent before presentation or export.
+Questions and input sit on stable stone, limestone, wax, or papyrus inserts
+appropriate to the lesson. Attempt precedes explanation where pedagogy permits.
+Saving creates one visible causal placement in the artifact.
 
-### Iconography
+### Sabbath Folio
 
-Use Phosphor regular weight for interface actions. Fill is reserved for selected or complete state. Keep one optical size and stroke family within a surface. Narrative meaning belongs to motif art, not a grid of glyphs. No emoji.
+Private notes, selected class material, Scripture, and consent-sensitive names
+remain live editable fields on layered papyrus or limestone sheets over a dark
+restoration table. Generated imagery never contains user text.
+
+### Icons
+
+Phosphor regular weight remains the sole interface family. CSS provides inset
+or embossed material treatment without changing the paths. Fill is reserved
+for active or complete state. Narrative relief is not replaced by icon tiles.
 
 ### Motion
 
-The three verbs are **Set**, **Reveal**, and **Return**:
+The material verbs remain **Set**, **Reveal**, and **Return**.
 
-- **Set:** place, join, seal, or ground something in 600 to 850 milliseconds.
-- **Reveal:** expose evidence, light, ink, or a connection in 420 to 620 milliseconds.
-- **Return:** bring back the learner's earlier words or commitment with new context.
+- Press: about 120ms.
+- Selection: about 180ms.
+- Content enter: about 230ms; content exit: about 140ms.
+- Theme material crossfade: about 420ms.
+- Mosaic match cut: about 520ms.
+- Piece placement: about 720ms.
+- Weekly completion: no more than 1000ms.
 
-Navigation lasts 240 to 340 milliseconds. Selection lasts 140 to 200 milliseconds. A rare weekly completion stays below 1100 milliseconds. Ambient motion is low-amplitude, has a useful still frame, and is limited to one visible owner per viewport. Reduced motion removes paths, particles, parallax, depth travel, and loops while preserving content and immediate interactivity.
-
-Particles are finite causal events only: 12 to 24 deterministically seeded pieces, 500 to 900 milliseconds, transform and opacity only, and never under reduced motion.
+Repeated controls stay fast. Rare placement may use a bounded tessera transfer
+and 8 to 14 deterministic dust fragments. Only transform and opacity change
+continuously. Reduced motion removes travel, particles, parallax, path drawing,
+and loops while retaining immediate state and short color or opacity feedback.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** make the persistent artifact both navigation and reward.
-- **Do** show one immediate next action and an honest way to stop.
-- **Do** return prior language, commitments, capabilities, and cross-week connections with clear context.
-- **Do** keep focus, landmarks, live-region feedback, and keyboard operation intact through transitions.
-- **Do** preserve local-first privacy and make sharing an explicit selection.
-- **Do** use authored asymmetry, localized texture, and one coherent physical light source.
-- **Do** verify every narrative SVG in Chromium and WebKit at full and compact sizes.
+- **Do** use local raster assets for material credibility and responsive image
+  sizes for memory control.
+- **Do** keep every title, question, quotation, label, progress state, and user
+  response as live semantic content.
+- **Do** create thirteen distinct lesson compositions, even when lessons share
+  one material grammar.
+- **Do** let one meaningful answer visibly change the persistent artifact.
+- **Do** keep reading planes quieter than relief regions.
+- **Do** verify material crops, image failure, offline use, day/night,
+  reduced motion, keyboard focus, 200 percent zoom, Chromium, and WebKit.
 
 ### Don't:
 
-- **Don't** build another centered card stack, bento grid, or collection of rounded devotional tiles.
-- **Don't** use points, ranks, loss-aversion streaks, variable loot, or spiritual-performance status.
-- **Don't** use the same modal, confetti, or generic radial glow after every answer.
-- **Don't** add WebGL, CDN scripts, or an animation library without a demonstrated product gap.
-- **Don't** animate Scripture per character or make controls wait for choreography.
-- **Don't** expose another person's information without explicit consent.
-- **Don't** hand-edit generated lesson modules or break their verified eight-station semantics.
-- **Don't** encode completion, connection, or selection by clay color alone.
+- **Don't** use a generated full-screen UI screenshot as the application.
+- **Don't** present the old inline SVG motif as the final hero artwork.
+- **Don't** place body copy directly over variable photographic texture.
+- **Don't** add glass cards, neon, purple-blue gradients, generic halos,
+  universal pills, or broad floating shadows.
+- **Don't** animate grain, large blur, blend modes, filter parameters, or full
+  screen camera drift.
+- **Don't** let ornament delay controls or obscure task state.
+- **Don't** turn the quarter artifact into thirteen disconnected product cards.

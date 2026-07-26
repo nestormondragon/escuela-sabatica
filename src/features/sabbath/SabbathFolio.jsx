@@ -1,6 +1,7 @@
 import React, { useEffect, useId, useMemo, useState } from "react";
-import Centerpiece from "../../components/Centerpiece.jsx";
+import { stageIndexFor } from "../../components/Centerpiece.jsx";
 import Icon from "../../components/Icon.jsx";
+import LessonRelief from "../../visual-world/LessonRelief.jsx";
 import PresentationPreview from "./PresentationPreview.jsx";
 import SharePreview from "./SharePreview.jsx";
 import "./sabbath.css";
@@ -338,10 +339,11 @@ export default function SabbathFolio({
           </div>
 
           <div className="sbf-hero__motif" aria-hidden="true">
-            <Centerpiece
+            <LessonRelief
               lesson={lesson}
-              filled={pack.sourceFilledCount}
-              size={220}
+              stage={stageIndexFor(pack.sourceFilledCount)}
+              compact
+              priority
             />
           </div>
         </header>
