@@ -275,43 +275,27 @@ export default function MaterialWorldCanvas({
           root.add(revealed);
           disposables.push(revealedGeometry, revealedMaterial);
         } else {
-          const guideMaterial = new THREE.MeshStandardMaterial({
-            map: reliefMap,
-            bumpMap: reliefMap,
-            bumpScale: 0.006,
-            displacementMap: reliefMap,
-            displacementScale: 0.006,
-            displacementBias: -0.002,
-            color: "#80756f",
-            roughness: 0.96,
+          /* This used to be a "guide": the entire finished relief drawn at 30%
+             opacity behind the pieces. It meant the reader could read the
+             completed artwork on day one, and every earned piece merely
+             brightened a region of a picture they had already seen. The bed is
+             now blank grout — the artwork exists only where the reader has
+             actually earned it. */
+          const bedMaterial = new THREE.MeshStandardMaterial({
+            map: basaltMap,
+            bumpMap: basaltMap,
+            bumpScale: 0.03,
+            color: "#6b5647",
+            roughness: 0.97,
             metalness: 0,
-            envMapIntensity: 0.18,
-            transparent: true,
-            opacity: 0.3,
-            depthWrite: false,
+            envMapIntensity: 0.34,
           });
-          guideMaterial.onBeforeCompile = (shader) => {
-            shader.fragmentShader = shader.fragmentShader.replace(
-              "#include <map_fragment>",
-              `#include <map_fragment>
-              float corinthGuideLuma = dot(
-                diffuseColor.rgb,
-                vec3(0.2126, 0.7152, 0.0722)
-              );
-              diffuseColor.rgb = mix(
-                vec3(corinthGuideLuma),
-                diffuseColor.rgb,
-                0.08
-              );`
-            );
-          };
-          guideMaterial.customProgramCacheKey = () => "corinth-guide-v1";
-          const guideGeometry = new THREE.PlaneGeometry(2, 2, 24, 24);
-          const guide = new THREE.Mesh(guideGeometry, guideMaterial);
-          guide.name = "material-guide";
-          guide.position.z = -0.045;
-          root.add(guide);
-          disposables.push(guideGeometry, guideMaterial);
+          const bedGeometry = new THREE.PlaneGeometry(2, 2, 4, 4);
+          const bed = new THREE.Mesh(bedGeometry, bedMaterial);
+          bed.name = "material-bed";
+          bed.position.z = -0.062;
+          root.add(bed);
+          disposables.push(bedGeometry, bedMaterial);
         }
 
         const order = visual.pieceOrder;
@@ -366,6 +350,38 @@ export default function MaterialWorldCanvas({
           mesh.add(edges);
           root.add(mesh);
           meshes.push(mesh);
+
+          /* The empty cell this piece will drop into. Built from the piece's
+             own polygon shrunk about its centroid, so the untouched gap between
+             neighbouring cells reads as a grout rib — that is what makes eight
+             distinct holes legible instead of one dark square. Shrinking a flat
+             shape avoids cutting real holes in a slab, which collapses on the
+             narrow piece sets (papyrus strips, tessera triangles). */
+          if (visual.progression !== "remove") {
+            const [first, ...rest] = piece.points;
+            const socketShape = new THREE.Shape();
+            socketShape.moveTo(first[0] * 2 - 1, 1 - first[1] * 2);
+            rest.forEach(([x, y]) => socketShape.lineTo(x * 2 - 1, 1 - y * 2));
+            socketShape.closePath();
+            const socketGeometry = new THREE.ShapeGeometry(socketShape);
+            socketGeometry.translate(-center.x, -center.y, 0);
+            const socketMaterial = new THREE.MeshStandardMaterial({
+              map: basaltMap,
+              bumpMap: basaltMap,
+              bumpScale: 0.03,
+              color: "#0e0b09",
+              roughness: 1,
+              metalness: 0,
+              envMapIntensity: 0.05,
+            });
+            const socket = new THREE.Mesh(socketGeometry, socketMaterial);
+            socket.position.set(center.x, center.y, -0.05);
+            socket.scale.setScalar(0.955);
+            socket.name = "material-socket";
+            root.add(socket);
+            mesh.userData.socket = socket;
+            disposables.push(socketGeometry, socketMaterial);
+          }
           disposables.push(
             geometry,
             faceMaterial,
@@ -446,18 +462,38 @@ export default function MaterialWorldCanvas({
         const placementProgress =
           visual.progression === "remove" ? 1 - progress : progress;
         const [entryX, entryY, entryRotation, entryTilt] = data.piece.entry;
+        const away = 1 - placementProgress;
+        /* An unearned piece used to wait ~0.8 units from its slot, close
+           enough to read as part of the picture. It now starts well outside
+           the frame and travels in, so the artwork only exists where the
+           reader has earned it. */
+        const approach = away * 2.4;
         mesh.position.set(
-          data.center.x + entryX * (1 - placementProgress),
-          data.center.y + entryY * (1 - placementProgress),
-          data.center.z + (1 - placementProgress) * 0.34
+          data.center.x + entryX * approach,
+          data.center.y + entryY * approach,
+          data.center.z + away * 0.92
         );
         mesh.rotation.set(
-          entryTilt * (1 - placementProgress),
-          -entryTilt * 0.72 * (1 - placementProgress),
-          entryRotation * (1 - placementProgress)
+          entryTilt * 1.7 * away,
+          -entryTilt * 1.2 * away,
+          entryRotation * 1.9 * away
         );
-        const settledScale = 0.84 + placementProgress * 0.16;
+        /* The seat: a small in-plane swell as the piece meets the bed. The
+           camera looks straight down the z axis, so an overshoot along z is
+           invisible — it has to happen in the plane to be felt at all. */
+        const seating =
+          placementProgress > 0.86
+            ? Math.sin((placementProgress - 0.86) * (Math.PI / 0.14))
+            : 0;
+        const settledScale =
+          (0.84 + placementProgress * 0.16) * (1 + seating * 0.035);
         mesh.scale.setScalar(settledScale);
+
+        if (data.socket) {
+          data.socket.visible = progress < 0.985;
+        }
+        mesh.visible =
+          visual.progression === "remove" ? true : progress > 0.002;
         data.faceMaterial.color.lerpColors(
           DARK_CLAY,
           FIRED_CLAY,
@@ -465,14 +501,12 @@ export default function MaterialWorldCanvas({
             ? 0.18
             : 0.22 + progress * 0.78
         );
+        /* Assembly pieces start at 0, not 0.16 — an unearned piece is absent,
+           not a faint preview of itself. */
         data.faceMaterial.opacity =
-          visual.progression === "remove"
-            ? 1 - progress * 0.98
-            : 0.16 + progress * 0.84;
+          visual.progression === "remove" ? 1 - progress * 0.98 : progress;
         data.sideMaterial.opacity =
-          visual.progression === "remove"
-            ? 1 - progress * 0.98
-            : 0.1 + progress * 0.9;
+          visual.progression === "remove" ? 1 - progress * 0.98 : progress;
         data.faceMaterial.bumpScale = 0.008 + progress * 0.014;
         const edge = mesh.children[0]?.userData.edgeMaterial;
         if (edge) {

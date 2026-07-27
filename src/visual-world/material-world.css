@@ -44,6 +44,7 @@
 }
 
 .relief-assembly__underpainting,
+.relief-assembly__socket,
 .relief-assembly__piece,
 .relief-assembly__raking-light {
   position: absolute;
@@ -51,12 +52,46 @@
   display: block;
 }
 
+/* Assembly bed. No artwork — just the grout the pieces will be set into.
+   The relief URL is applied inline by ReliefAssembly for removal lessons
+   only, where the artwork is the thing being uncovered. */
 .relief-assembly__underpainting {
-  background-position: var(--relief-focal, 50% 50%);
-  background-size: cover;
-  filter: grayscale(0.88) brightness(0.31) contrast(1.3);
-  opacity: 0.3;
-  transform: scale(0.985);
+  background-color: var(--inset-bed, #16130f);
+  background-image:
+    radial-gradient(120% 88% at 50% 118%, rgb(224 96 48 / 0.16), transparent 62%),
+    var(--material-grout, none);
+  background-position: center, var(--relief-focal, 50% 50%);
+  background-size: auto, 360px 360px;
+  background-blend-mode: normal, soft-light;
+  filter: none;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* The empty cell a piece has not been earned into yet. Scaled slightly in
+   from the piece polygon so the untouched grout between cells reads as a
+   rib, which is what makes eight separate holes legible rather than one
+   dark square. */
+.relief-assembly__socket {
+  z-index: 1;
+  clip-path: var(--piece-clip);
+  background-color: #0d0b09;
+  background-image:
+    linear-gradient(155deg, rgb(0 0 0 / 0.72), rgb(0 0 0 / 0.24) 46%, rgb(0 0 0 / 0.66)),
+    var(--material-grout, none);
+  background-size: auto, 300px 300px;
+  background-blend-mode: normal, multiply;
+  box-shadow: inset 0 2px 5px rgb(0 0 0 / 0.7);
+  opacity: 0.96;
+  transform: scale(0.955);
+  transform-origin: center;
+  transition: opacity 320ms var(--ease-out);
+}
+
+/* Once the piece is seated it covers the cell; fading the cell out keeps its
+   inner shadow from darkening the artwork edge. */
+.relief-assembly__socket[data-filled="true"] {
+  opacity: 0;
 }
 
 .relief-assembly[data-progression="remove"] .relief-assembly__underpainting {
